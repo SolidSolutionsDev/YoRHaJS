@@ -6,6 +6,8 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
+    "react-whs": "^0.1.9",
+    "three": "^0.94.0",
     "whs": "^2.1.9",
     "yorha": "^1.2.0"
   },

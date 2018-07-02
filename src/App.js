@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 // import logo from './logo.svg';
 import logo from './yorha.png';
 import './App.css';
-import {YoRHa} from './game/YoRHa';
+import YoRHa from './game/YoRHa';
 
 class App extends Component {
   render()
