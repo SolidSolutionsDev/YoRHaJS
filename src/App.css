@@ -12,6 +12,11 @@
     height: auto;
     padding: 20px;
     color: white;
+    background-size: .3rem .3rem;
+    background-image: -webkit-linear-gradient(left, #ccc8b1 1px, transparent 1px), -webkit-linear-gradient(top, #ccc8b1 1px, transparent 1px);
+    background-image: -o-linear-gradient(left, #ccc8b1 1px, transparent 1px), -o-linear-gradient(top, #ccc8b1 1px, transparent 1px);
+    background-image: linear-gradient(to right, #ccc8b1 1px, transparent 1px), linear-gradient(to bottom, #ccc8b1 1px, transparent 1px);
+    background-color: #d1cdb7;
 }
 
 .App-title {
@@ -20,6 +25,11 @@
 
 .App-intro {
     font-size: large;
+    background-size: .3rem .3rem;
+    background-image: -webkit-linear-gradient(left, #ccc8b1 1px, transparent 1px), -webkit-linear-gradient(top, #ccc8b1 1px, transparent 1px);
+    background-image: -o-linear-gradient(left, #ccc8b1 1px, transparent 1px), -o-linear-gradient(top, #ccc8b1 1px, transparent 1px);
+    background-image: linear-gradient(to right, #ccc8b1 1px, transparent 1px), linear-gradient(to bottom, #ccc8b1 1px, transparent 1px);
+    background-color: #d1cdb7;
 }
 
 @keyframes App-logo-spin {
@@ -29,4 +39,12 @@
     to {
         transform: rotate(360deg);
     }
+}
+
+#app {
+width: inherit;
+height: inherit;
+position: absolute;
+top: 0px;
+z-index: -10;
 }
