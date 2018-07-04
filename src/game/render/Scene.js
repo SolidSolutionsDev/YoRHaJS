@@ -140,26 +140,26 @@ export class Scene extends Component {
     {
       console.log( 'Scene render props:', this.props );
       return <div>
-        <BallPrefab getGameDirector={this.props.getGameDirector}
-                    getAudioManager={this.props.getAudioManager}
-                    getPhysicsManager={this.props.getPhysicsManager}
-                    ref={this.addBall}></BallPrefab>
-        <BoardPrefab getGameDirector={this.props.getGameDirector}
-                     getPhysicsManager={this.props.getPhysicsManager}
-                     getAudioManager={this.props.getAudioManager}
-                     ref={this.addBoard}></BoardPrefab>
-        <ShooterPrefab getGameDirector={this.props.getGameDirector}
-                       getPhysicsManager={this.props.getPhysicsManager}
-                       getAudioManager={this.props.getAudioManager}
-                       ref={this.addShooter}></ShooterPrefab>
-        <SkyboxPrefab getGameDirector={this.props.getGameDirector}
-                      getPhysicsManager={this.props.getPhysicsManager}
-                      getAudioManager={this.props.getAudioManager}
-                      ref={this.addSkybox}></SkyboxPrefab>
-          <GameDirector
-          ref={gameDirector => this.setGameDirector( gameDirector )}
-          gamePrefabs={this.gamePrefabs}
-          key="gameDirector"></GameDirector> ;
+        {/*<BallPrefab getGameDirector={this.props.getGameDirector}*/}
+                    {/*getAudioManager={this.props.getAudioManager}*/}
+                    {/*getPhysicsManager={this.props.getPhysicsManager}*/}
+                    {/*ref={this.addBall}></BallPrefab>*/}
+        {/*<BoardPrefab getGameDirector={this.props.getGameDirector}*/}
+                     {/*getPhysicsManager={this.props.getPhysicsManager}*/}
+                     {/*getAudioManager={this.props.getAudioManager}*/}
+                     {/*ref={this.addBoard}></BoardPrefab>*/}
+        {/*<ShooterPrefab getGameDirector={this.props.getGameDirector}*/}
+                       {/*getPhysicsManager={this.props.getPhysicsManager}*/}
+                       {/*getAudioManager={this.props.getAudioManager}*/}
+                       {/*ref={this.addShooter}></ShooterPrefab>*/}
+        {/*<SkyboxPrefab getGameDirector={this.props.getGameDirector}*/}
+                      {/*getPhysicsManager={this.props.getPhysicsManager}*/}
+                      {/*getAudioManager={this.props.getAudioManager}*/}
+                      {/*ref={this.addSkybox}></SkyboxPrefab>*/}
+          {/*<GameDirector*/}
+          {/*ref={gameDirector => this.setGameDirector( gameDirector )}*/}
+          {/*gamePrefabs={this.gamePrefabs}*/}
+          {/*key="gameDirector"></GameDirector> ;*/}
           Scene </div>;
     }
 }
