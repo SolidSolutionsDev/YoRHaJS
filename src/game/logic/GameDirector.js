@@ -30,8 +30,8 @@ export class GameDirector extends Component {
 
     componentDidMount = () => {
         console.log(this);
-        document.addEventListener( 'ballCollided',this.ballCollided );
-        document.addEventListener( 'restartGame',this.restartGame );
+        // document.addEventListener( 'ballCollided',this.ballCollided );
+        // document.addEventListener( 'restartGame',this.restartGame );
     }
 
     restartGame =(e)=> {

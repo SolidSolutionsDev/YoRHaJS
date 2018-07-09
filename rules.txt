@@ -1,0 +1,29 @@
+
+- levels have waves
+- sets of objects trigger other - scenario change
+- end of level - destroy all balls
+               - activate trigger
+
+- game element: staticbox
+                movement ai
+                movement random
+                shooting pattern
+                  types of balls
+                  directions
+                  function
+                model3d
+                mousecontrol
+                health
+
+
+- high order component - transform
+
+- level : coordinates clockwise, anti clockwise, height
+
+redux actions:
+- add remove object from scene
+- trigger change on wave or end level
+
+
+types of objects: from redux come only as type
+react : create geometry

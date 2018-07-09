@@ -174,7 +174,6 @@ export class Renderer extends Component {
     return this.physicsManager;
   };
 
-
   setAudioManager = ( audioManager ) => {
     this.audioManager = audioManager;
     this.initAudio();
@@ -195,7 +194,7 @@ export class Renderer extends Component {
           key="audioManager"/> );
       _children.push( <DynamicCameraPrefab
           ref={camera => this.setCamera( camera )}
-          key="testForUpdate"></DynamicCameraPrefab> );
+          key="dynamicCamera"></DynamicCameraPrefab> );
       _children.push( <PhysicsManager
           ref={physicsManager => this.setPhysics( physicsManager )}
           key="physicsManager"></PhysicsManager> );

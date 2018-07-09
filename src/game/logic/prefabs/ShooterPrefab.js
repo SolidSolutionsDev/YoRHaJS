@@ -20,7 +20,6 @@ export class ShooterPrefab extends GameObject {
     }
 
     update = ()=> {
-
         // this.mesh.rotation.z += 0.1;
     }
 
