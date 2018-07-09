@@ -8,6 +8,7 @@ import {ShooterPrefab} from '../logic/prefabs/ShooterPrefab';
 import {BallPrefab} from '../logic/prefabs/BallPrefab';
 import {GameDirector} from '../logic/GameDirector';
 import {BoardEntity} from '../nier/Board/BoardEntity';
+import {ShooterEntity} from '../nier/Shooter/ShooterEntity';
 
 export class Scene extends Component {
 
@@ -154,6 +155,9 @@ export class Scene extends Component {
         <BoardEntity
             {..._commonProps} dimensions={{x: 50, y: 50, z: 2}} mass={0}
             ref={this.addBoard}></BoardEntity>
+        <ShooterEntity  {..._commonProps} dimensions={{x: 1, y: 1, z: 1}}
+                        position={{x: 0, y: 0, z: 10}} mass={1}
+                        ref={this.addBoard}/>
         {/*<ShooterPrefab*/}
         {/*{..._commonProps} ref={this.addShooter}></ShooterPrefab>*/}
         {/*<SkyboxPrefab*/}
