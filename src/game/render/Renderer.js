@@ -90,7 +90,7 @@ export class Renderer extends Component {
       this.renderer.shadowMap.renderReverseSided = true;
       this.renderer.shadowMap.renderSingleSided = true;
       this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
-      this.renderer.setClearColor( 0xdddddd, 0.5 );
+      this.renderer.setClearColor( 0x544c41, 0.9 );
       this.renderer.sortObjects = false;
 
     }

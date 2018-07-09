@@ -40,8 +40,12 @@ export class Scene extends Component {
 
       this.scene.add( light );
 
-      const ambient_light = new THREE.AmbientLight( 0x222222, 5 ); // soft white light
+      const ambient_light = new THREE.AmbientLight( 0x222222, 1 ); // soft white light
       this.scene.add( ambient_light );
+
+      const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
+      directionalLight.position.set( 0, 0, 1 );
+      this.scene.add( directionalLight );
 
       // const light2 = new THREE.PointLight( 0xFFFFFF, 1, 100 );
       // light2.position.set( 0, 0, 0 );

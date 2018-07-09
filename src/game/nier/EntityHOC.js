@@ -7,7 +7,7 @@ export function makeEntity( WrappedComponent )
     return class extends React.Component {
 
       pivot = new THREE.Object3D();
-      components = [];
+      components = {};
 
       componentWillMount = () => {
         if ( this.props.transform && this.props.transform.position )
@@ -22,12 +22,13 @@ export function makeEntity( WrappedComponent )
           console.log( 'Next props: ', nextProps );
         }
 
-      registerComponent = ( component ) => {
-        this.components.push( component );
+      registerComponent = ( component, _displayName ) => {
+        this.components[_displayName] = component;
       };
 
       _update = () => {
-        this.components.forEach( component => component.update() );
+        Object.values( this.components ).
+            forEach( component => component.update() );
       };
 
       render()

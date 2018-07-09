@@ -8,8 +8,14 @@ export function makeComponent( WrappedComponent )
 
       component;
 
+      getDisplayName = ( WrappedComponent ) => {
+        return WrappedComponent.displayName || WrappedComponent.name ||
+            'Component';
+      };
+
       componentWillMount = () => {
-        this.props.registerComponent( this );
+        const _displayName = this.getDisplayName( WrappedComponent );
+        this.props.registerComponent( this, _displayName );
       };
 
       registerComponent = ( component ) => {

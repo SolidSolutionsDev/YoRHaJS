@@ -17,6 +17,7 @@
     background-image: -o-linear-gradient(left, #ccc8b1 1px, transparent 1px), -o-linear-gradient(top, #ccc8b1 1px, transparent 1px);
     background-image: linear-gradient(to right, #ccc8b1 1px, transparent 1px), linear-gradient(to bottom, #ccc8b1 1px, transparent 1px);
     background-color: #d1cdb7;
+    background: transparent;
 }
 
 .App-title {
@@ -30,6 +31,7 @@
     background-image: -o-linear-gradient(left, #ccc8b1 1px, transparent 1px), -o-linear-gradient(top, #ccc8b1 1px, transparent 1px);
     background-image: linear-gradient(to right, #ccc8b1 1px, transparent 1px), linear-gradient(to bottom, #ccc8b1 1px, transparent 1px);
     background-color: #d1cdb7;
+    background: transparent;
 }
 
 @keyframes App-logo-spin {
@@ -42,9 +44,9 @@
 }
 
 #app {
-width: inherit;
-height: inherit;
-position: absolute;
-top: 0px;
-z-index: -10;
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 0px;
+    z-index: -10;
 }
