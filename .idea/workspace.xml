@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="262946d4-53bc-4304-894d-36049adfd949" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.css" afterPath="$PROJECT_DIR$/src/App.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/logic/PhysicsManager.js" afterPath="$PROJECT_DIR$/src/game/logic/PhysicsManager.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/nier/Board/Board.js" afterPath="$PROJECT_DIR$/src/game/nier/Board/Board.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/nier/Board/PlaneGeometry.js" afterPath="$PROJECT_DIR$/src/game/nier/Board/PlaneGeometry.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/nier/ComponentHOC.js" afterPath="$PROJECT_DIR$/src/game/nier/ComponentHOC.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/nier/EntityHOC.js" afterPath="$PROJECT_DIR$/src/game/nier/EntityHOC.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/render/Camera.js" afterPath="$PROJECT_DIR$/src/game/render/Camera.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/render/Renderer.js" afterPath="$PROJECT_DIR$/src/game/render/Renderer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/game/render/Scene.js" afterPath="$PROJECT_DIR$/src/game/render/Scene.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -24,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Scene.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Scene.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/game/render/Scene.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="45" column="72" lean-forward="false" selection-start-line="45" selection-start-column="72" selection-end-line="45" selection-end-column="72" />
+            <state relative-caret-position="261">
+              <caret line="154" column="64" lean-forward="false" selection-start-line="154" selection-start-column="64" selection-end-line="154" selection-end-column="64" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -39,8 +34,8 @@
       <file leaf-file-name="Renderer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/render/Renderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="194" column="31" lean-forward="true" selection-start-line="194" selection-start-column="31" selection-end-line="194" selection-end-column="31" />
+            <state relative-caret-position="261">
+              <caret line="199" column="25" lean-forward="true" selection-start-line="199" selection-start-column="25" selection-end-line="199" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -81,9 +76,11 @@
       <file leaf-file-name="Board.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/nier/Board/Board.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="39" lean-forward="true" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
-              <folding />
+            <state relative-caret-position="221">
+              <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#39#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,8 +88,8 @@
       <file leaf-file-name="PhysicsManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/logic/PhysicsManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2295">
-              <caret line="185" column="47" lean-forward="true" selection-start-line="185" selection-start-column="47" selection-end-line="185" selection-end-column="47" />
+            <state relative-caret-position="2091">
+              <caret line="173" column="47" lean-forward="false" selection-start-line="173" selection-start-column="47" selection-end-line="173" selection-end-column="47" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
                 <element signature="n#!!block;n#addNewSphereBody#0;n#PhysicsManager#0" expanded="false" />
@@ -101,14 +98,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlaneGeometry.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PlaneGeometry.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/nier/Board/PlaneGeometry.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-58">
+              <caret line="2" column="35" lean-forward="false" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -126,8 +121,8 @@
       <file leaf-file-name="ComponentHOC.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/game/nier/ComponentHOC.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="17" column="56" lean-forward="false" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
+            <state relative-caret-position="401">
+              <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -156,10 +151,17 @@
       <find>mesh</find>
       <find>upda</find>
       <find>back</find>
-      <find>addNewBoxBody</find>
       <find>light</find>
+      <find>instance</find>
       <find>camera</find>
       <find>camer</find>
+      <find>addNewBoxBody</find>
+      <find>physicsObject.up</find>
+      <find>update</find>
+      <find>generateUpdateFunction</find>
+      <find>physicsUpdateFunctions</find>
+      <find>addNewSphere</find>
+      <find>groundM</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Rui_A\YoRHaJS\node_modules\react-whs</dir>
@@ -192,12 +194,13 @@
         <option value="$PROJECT_DIR$/src/game/nier/Board/PlaneGeometryComponent.js" />
         <option value="$PROJECT_DIR$/src/game/render/Renderer.js" />
         <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/game/nier/Board/Board.js" />
-        <option value="$PROJECT_DIR$/src/game/render/Scene.js" />
         <option value="$PROJECT_DIR$/src/game/render/Camera.js" />
         <option value="$PROJECT_DIR$/src/game/nier/ComponentHOC.js" />
         <option value="$PROJECT_DIR$/src/game/nier/EntityHOC.js" />
         <option value="$PROJECT_DIR$/src/game/nier/Board/PlaneGeometry.js" />
+        <option value="$PROJECT_DIR$/src/game/logic/PhysicsManager.js" />
+        <option value="$PROJECT_DIR$/src/game/nier/Board/Board.js" />
+        <option value="$PROJECT_DIR$/src/game/render/Scene.js" />
       </list>
     </option>
   </component>
@@ -338,7 +341,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="33317000" />
+    <option name="totallyTimeSpent" value="35476000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -581,24 +584,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/render/Renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="194" column="31" lean-forward="true" selection-start-line="194" selection-start-column="31" selection-end-line="194" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/render/Scene.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="45" column="72" lean-forward="false" selection-start-line="45" selection-start-column="72" selection-end-line="45" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/game/render/Camera.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -607,21 +592,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/logic/PhysicsManager.js">
+    <entry file="file://$PROJECT_DIR$/src/game/render/Renderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2295">
-          <caret line="185" column="47" lean-forward="true" selection-start-line="185" selection-start-column="47" selection-end-line="185" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-            <element signature="n#!!block;n#addNewSphereBody#0;n#PhysicsManager#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="261">
+          <caret line="199" column="25" lean-forward="true" selection-start-line="199" selection-start-column="25" selection-end-line="199" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/nier/Board/PlaneGeometry.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-58">
+          <caret line="2" column="35" lean-forward="false" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/game/nier/ComponentHOC.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="17" column="56" lean-forward="false" selection-start-line="17" selection-start-column="56" selection-end-line="17" selection-end-column="56" />
+        <state relative-caret-position="401">
+          <caret line="25" column="27" lean-forward="false" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -638,18 +628,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/nier/Board/Board.js">
+    <entry file="file://$PROJECT_DIR$/src/game/logic/PhysicsManager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="39" lean-forward="true" selection-start-line="0" selection-start-column="39" selection-end-line="0" selection-end-column="39" />
-          <folding />
+        <state relative-caret-position="2091">
+          <caret line="173" column="47" lean-forward="false" selection-start-line="173" selection-start-column="47" selection-end-line="173" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="n#!!block;n#addNewSphereBody#0;n#PhysicsManager#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/game/nier/Board/PlaneGeometry.js">
+    <entry file="file://$PROJECT_DIR$/src/game/nier/Board/Board.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+        <state relative-caret-position="221">
+          <caret line="13" column="12" lean-forward="false" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/game/render/Scene.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="154" column="64" lean-forward="false" selection-start-line="154" selection-start-column="64" selection-end-line="154" selection-end-column="64" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

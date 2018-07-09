@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 
+import PropTypes from 'prop-types';
 import * as THREE from 'three';
 
 export class PlaneGeometry extends React.Component {
@@ -8,7 +9,8 @@ export class PlaneGeometry extends React.Component {
 
   componentWillMount = () => {
     // let geometry = new THREE.PlaneGeometry( 50, 50, 32 );
-    let geometry = new THREE.BoxGeometry( 50, 50, 2 );
+    let geometry = new THREE.BoxGeometry( this.props.dimensions.x,
+        this.props.dimensions.y, this.props.dimensions.z );
     let material = new THREE.MeshLambertMaterial(
         {color: 0xd1cdb7, side: THREE.DoubleSide} );
     this.mesh = new THREE.Mesh( geometry, material );
@@ -25,3 +27,7 @@ export class PlaneGeometry extends React.Component {
       return null;
     }
 }
+
+PlaneGeometry.propTypes = {
+  dimensions: PropTypes.object.isRequired,
+};

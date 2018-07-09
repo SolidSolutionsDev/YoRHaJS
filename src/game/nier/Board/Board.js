@@ -8,7 +8,10 @@ export default class Board extends Component {
 
   addPlane = ( plane ) => {
     this.plane = plane;
-    console.info( plane.component.plane );
+    console.info( plane.component.mesh );
+    this.plane.physicsObject = this.props.getPhysicsManager().
+        addNewBoxBody( plane.component.mesh,
+            this.props, plane.component );
   };
 
   render = () => {

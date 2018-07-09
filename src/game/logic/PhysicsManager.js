@@ -6,7 +6,7 @@ export class PhysicsManager extends Component {
 
   world = new CANNON.World( {
     // gravity: new CANNON.Vec3( 0, -9.82, 0 )
-    gravity: new CANNON.Vec3( 0, 0, 0 ),
+    gravity: new CANNON.Vec3( 0, 0, -9 ),
   } );
 
   groundMaterial = new CANNON.Material( 'groundMaterial' );
@@ -15,6 +15,7 @@ export class PhysicsManager extends Component {
   fixedTimeStep = 1.0 / 60.0; // seconds
   maxSubSteps = 3;
   TimeOfLastUpdateCallInMilliseconds;
+  physicsUpdateFunctions = [];
 
   componentDidMount = () => {
     this.slipperyMaterial.restitution = 1.0;
@@ -75,7 +76,7 @@ export class PhysicsManager extends Component {
         } );
 
     this.world.addContactMaterial( slippery_ground_cm );
-    
+
     const slippery_slippery_cm = new CANNON.ContactMaterial(
         this.slipperyMaterial, this.slipperyMaterial,
         {
@@ -90,15 +91,15 @@ export class PhysicsManager extends Component {
   generateUpdateFunction = ( mesh, body ) => {
 
     return function updateFunction() {
-      const _oldPosition=body.position.clone();
+      const _oldPosition = body.position.clone();
       body.mesh.position.x = body.position.x;
       body.mesh.position.y = body.position.y;
       body.mesh.position.z = body.position.z;
-      body.mesh.quaternion.set(body.quaternion.x,
-       body.quaternion.y,
-       body.quaternion.z,
-       body.quaternion.w,)
-        console.log(body.position );
+      body.mesh.quaternion.set( body.quaternion.x,
+          body.quaternion.y,
+          body.quaternion.z,
+          body.quaternion.w, );
+      // console.log( body.position );
       //WIP HERE!!!
     };
   };
@@ -109,7 +110,7 @@ export class PhysicsManager extends Component {
 
   typeEnum = Object.freeze( {'kinematic': CANNON.Body.KINEMATIC} );
 
-  addNewSphereBody( mesh, parameters,instance )
+  addNewSphereBody( mesh, parameters, instance )
     {
 
       let thisSphereParameters = {
@@ -154,7 +155,7 @@ export class PhysicsManager extends Component {
       _sphereBody.mesh = mesh;
       _sphereBody.instance = instance;
       const _updateFunction = this.generateUpdateFunction( mesh, _sphereBody );
-
+      this.physicsUpdateFunctions.push( _updateFunction );
       return {
         body: _sphereBody,
         update: _updateFunction,
@@ -162,15 +163,15 @@ export class PhysicsManager extends Component {
       };
     }
 
-  addNewBoxBody( mesh, parameters,instance )
+  addNewBoxBody( mesh, parameters, instance )
     {
 
       let thisBoxParameters = {
         mass: 1,
         position: {x: 0, y: 0, z: 0},
         dimensions: {x: 1, y: 1, z: 1},
-        linearFactor: new CANNON.Vec3( 1, 1, 0 ),
-        angularFactor: new CANNON.Vec3( 1, 1, 0 ),
+        linearFactor: new CANNON.Vec3( 1, 1, 1 ),
+        angularFactor: new CANNON.Vec3( 1, 1, 1 ),
         material: this.groundMaterial,
       };
 
@@ -193,6 +194,7 @@ export class PhysicsManager extends Component {
       _boxBody.mesh = mesh;
       _boxBody.instance = instance;
       const _updateFunction = this.generateUpdateFunction( mesh, _boxBody );
+      this.physicsUpdateFunctions.push( _updateFunction );
 
       _boxBody.beginContactFunction = parameters.beginContactFunction;
       _boxBody.endContactFunction = parameters.endContactFunction;
@@ -206,13 +208,15 @@ export class PhysicsManager extends Component {
     }
 
   update = ( timeOfCurrentUpdateCallInMilliseconds ) => {
-
+    // console.log( 'here' );
     if ( this.TimeOfLastUpdateCallInMilliseconds !== undefined )
       {
         const deltaTimeSinceLastUpdateInMilliseconds = (timeOfCurrentUpdateCallInMilliseconds -
             this.TimeOfLastUpdateCallInMilliseconds) / 1000;
         this.world.step( this.fixedTimeStep,
             deltaTimeSinceLastUpdateInMilliseconds, this.maxSubSteps );
+        this.physicsUpdateFunctions.forEach(
+            ( updateFunction ) => updateFunction() );
       }
     this.TimeOfLastUpdateCallInMilliseconds = timeOfCurrentUpdateCallInMilliseconds;
   };
