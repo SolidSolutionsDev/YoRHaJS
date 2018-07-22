@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {ShooterGeometryComponent} from './ShooterGeometryComponent';
+import {ShooterControlsComponent} from './ShooterControlsComponent';
 
 export default class Shooter extends Component {
 
@@ -19,6 +20,7 @@ export default class Shooter extends Component {
     return <div key="div">board
       <ShooterGeometryComponent key="shooter"
                                 ref={this.addPlane} {...this.props}/>
+      <ShooterControlsComponent {...this.props}/>
     </div>;
   };
 }

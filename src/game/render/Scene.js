@@ -157,7 +157,9 @@ export class Scene extends Component {
             ref={this.addBoard}></BoardEntity>
         <ShooterEntity  {..._commonProps} dimensions={{x: 1, y: 1, z: 1}}
                         position={{x: 0, y: 0, z: 10}} mass={1}
-                        ref={this.addBoard}/>
+                        ref={this.addBoard}
+                        debug={true}
+        />
         {/*<ShooterPrefab*/}
         {/*{..._commonProps} ref={this.addShooter}></ShooterPrefab>*/}
         {/*<SkyboxPrefab*/}

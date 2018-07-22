@@ -5,8 +5,17 @@ export class Input extends Component {
   componentWillMount()
     {
 
+      window.addEventListener('mousemove', function(event){
+        const _mouse3D = {
+          x: ( event.clientX / window.innerWidth ) * 2 - 1 ,
+          y: - ( event.clientY / window.innerHeight ) * 2 + 1,
+          z: 0.5,
+        };
+        document.dispatchEvent( new CustomEvent( 'mousem', {detail: {coordinates:_mouse3D} }));
+      });
+
       document.addEventListener( 'keydown', function( event ) {
-        // console.log( 'Pressed: ', event.keyCode );
+         // console.log( 'Pressed: ', event.key );
 
         if ( event.key === 'ArrowLeft' )
           {
@@ -18,6 +27,20 @@ export class Input extends Component {
         if ( event.key === 'ArrowRight' )
           {
             document.dispatchEvent( new Event( 'moveright' )
+
+            )
+            ;
+          }
+        if ( event.key === 'ArrowUp' )
+          {
+            document.dispatchEvent( new Event( 'moveup' )
+            )
+            ;
+          }
+
+        if ( event.key === 'ArrowDown' )
+          {
+            document.dispatchEvent( new Event( 'movedown' )
 
             )
             ;
@@ -46,6 +69,7 @@ export class Input extends Component {
   render()
     {
       return null;
+      // return <div  tabIndex="0"  onKeyDown={(keys,prevState)=> {console.log("a",keys);}}  />; // other way
     }
 
 }

@@ -7,6 +7,7 @@ export function makeEntity( WrappedComponent )
     return class extends React.Component {
 
       pivot = new THREE.Object3D();
+      axesHelper = new THREE.AxesHelper( 5 );
       components = {};
 
       componentWillMount = () => {
@@ -14,6 +15,8 @@ export function makeEntity( WrappedComponent )
           {
             this.pivot.position.set( ...this.props.transform.position );
           }
+
+        this.pivot.add(this.axesHelper);
       };
 
       componentWillReceiveProps( nextProps )
@@ -33,6 +36,7 @@ export function makeEntity( WrappedComponent )
 
       render()
         {
+          this.axesHelper.visible = this.props.debug;
           const {transform, ...passThroughProps} = this.props;
           // Wraps the input component in a container, without mutating it. Good!
           return <WrappedComponent
