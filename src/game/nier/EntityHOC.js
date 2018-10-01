@@ -16,6 +16,8 @@ export function makeEntity( WrappedComponent )
             this.pivot.position.set( ...this.props.transform.position );
           }
 
+          this.pivot.name = `${WrappedComponent.name}_pivot`
+
         this.pivot.add(this.axesHelper);
       };
 

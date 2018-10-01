@@ -4,22 +4,24 @@ import {ShooterControlsComponent} from './ShooterControlsComponent';
 
 export default class Shooter extends Component {
 
-  plane;
-  planePhysics;
+  shooter;
+  shooterPhysics;
 
-  addPlane = ( plane ) => {
-    this.plane = plane;
-    console.info( plane.component.mesh );
-    this.plane.physicsObject = this.props.getPhysicsManager().
-        addNewBoxBody( plane.component.mesh,
-            this.props, plane.component );
+  addShooter = (shooter ) => {
+    this.shooter = shooter;
+    console.info( shooter.component.mesh );
+    this.shooter.physicsObject = this.props.getPhysicsManager().
+        // addNewBoxBody( shooter.component.mesh,
+        //     this.props, shooter.component );
+    addNewBoxBody( this.props.pivot,
+            this.props, shooter.component );
   };
 
   render = () => {
     // return <div key="div">board</div>;
     return <div key="div">board
       <ShooterGeometryComponent key="shooter"
-                                ref={this.addPlane} {...this.props}/>
+                                ref={this.addShooter} {...this.props}/>
       <ShooterControlsComponent {...this.props}/>
     </div>;
   };

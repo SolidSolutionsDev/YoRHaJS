@@ -15,7 +15,7 @@ export class Input extends Component {
       });
 
       document.addEventListener( 'keydown', function( event ) {
-         // console.log( 'Pressed: ', event.key );
+         // console.log( 'Pressed: ', event,event.key );
 
         if ( event.key === 'ArrowLeft' )
           {
@@ -62,6 +62,56 @@ export class Input extends Component {
         if ( event.key === 'c' )
           {
             document.dispatchEvent( new Event( 'camera_change' ) );
+          }
+      } );
+      document.addEventListener( 'keyup', function( event ) {
+         // console.log( 'Pressed: ', event.key );
+
+        if ( event.key === 'ArrowLeft' )
+          {
+            document.dispatchEvent( new Event( 'moveleft_keyup' )
+            )
+            ;
+          }
+
+        if ( event.key === 'ArrowRight' )
+          {
+            document.dispatchEvent( new Event( 'moveright_keyup' )
+
+            )
+            ;
+          }
+        if ( event.key === 'ArrowUp' )
+          {
+            document.dispatchEvent( new Event( 'moveup_keyup' )
+            )
+            ;
+          }
+
+        if ( event.key === 'ArrowDown' )
+          {
+            document.dispatchEvent( new Event( 'movedown_keyup' )
+
+            )
+            ;
+          }
+
+        if ( event.key === 'r' )
+          {
+            document.dispatchEvent( new Event( 'restartGame_keyup' )
+
+            )
+            ;
+          }
+
+        if ( event.key === ' ')
+          {
+            document.dispatchEvent( new Event( 'shoot_keyup' ) );
+          }
+
+        if ( event.key === 'c' )
+          {
+            document.dispatchEvent( new Event( 'camera_change_keyup' ) );
           }
       } );
     }

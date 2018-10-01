@@ -155,8 +155,8 @@ export class Scene extends Component {
         <BoardEntity
             {..._commonProps} dimensions={{x: 50, y: 50, z: 2}} mass={0}
             ref={this.addBoard}></BoardEntity>
-        <ShooterEntity  {..._commonProps} dimensions={{x: 1, y: 1, z: 1}}
-                        position={{x: 0, y: 0, z: 10}} mass={1}
+        <ShooterEntity  {..._commonProps} dimensions={{x: 2, y: 2, z: 2}}
+                        position={{x: 0, y: 0, z: 4}} mass={1}
                         ref={this.addBoard}
                         debug={true}
         />
