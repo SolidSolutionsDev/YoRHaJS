@@ -182,8 +182,8 @@ export class PhysicsManager extends Component {
         position: new CANNON.Vec3( _parameters.position.x,
             _parameters.position.y, _parameters.position.z ), // m
         shape: new CANNON.Box(
-            new CANNON.Vec3( _parameters.dimensions.x, _parameters.dimensions.y,
-                _parameters.dimensions.z ) ),
+            new CANNON.Vec3( _parameters.dimensions.x/2, _parameters.dimensions.y/2,
+                _parameters.dimensions.z/2 ) ),
         linearFactor: _parameters.linearFactor,
         angularFactor: _parameters.angularFactor,
         material: _parameters.material,
@@ -198,6 +198,9 @@ export class PhysicsManager extends Component {
 
       _boxBody.beginContactFunction = parameters.beginContactFunction;
       _boxBody.endContactFunction = parameters.endContactFunction;
+
+        mesh.physicsBody= _boxBody;
+        console.log(mesh);
 
       return {body: _boxBody, update: _updateFunction, parameters: _parameters};
     }
