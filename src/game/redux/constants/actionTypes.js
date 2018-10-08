@@ -1,0 +1,10 @@
+export const GAME_LOAD = "GAME_LOAD";
+export const GAME_START = "GAME_START";
+export const GAME_END = "GAME_END";
+export const RESTART = "RESTART";
+export const SHOOT = "SHOOT";
+export const DESTROY = "DESTROY";
+export const HIT = "HIT";
+export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
+export const CAMERA_CHANGE = "CAMERA_CHANGE";
+export const CHANGE_LEVEL = "CHANGE_LEVEL";
