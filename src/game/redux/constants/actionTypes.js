@@ -8,3 +8,4 @@ export const HIT = "HIT";
 export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
 export const CAMERA_CHANGE = "CAMERA_CHANGE";
 export const CHANGE_LEVEL = "CHANGE_LEVEL";
+export const CHANGE_SETTING = "CHANGE_SETTING";

@@ -8,7 +8,8 @@ import {
   HIT,
   TOGGLE_PAUSE,
   CAMERA_CHANGE,
-  CHANGE_LEVEL
+  CHANGE_LEVEL,
+  CHANGE_SETTING
 } from "../constants/actionTypes";
 
 export default (state = {}, action) => {
@@ -32,6 +33,8 @@ export default (state = {}, action) => {
     case CAMERA_CHANGE:
       return state;
     case CHANGE_LEVEL:
+      return state;
+    case CHANGE_SETTING:
       return state;
     default:
       return state;
