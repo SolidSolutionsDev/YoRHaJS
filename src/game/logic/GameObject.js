@@ -1,25 +1,22 @@
-import React, {Component} from 'react';
-import * as THREE from 'three';
+import React, { Component } from "react";
+import * as THREE from "three";
 
 export class GameObject extends Component {
-
   mesh = new THREE.Object3D();
   components = {};
   childGameObjects = [];
-  id = '';
+  id = "";
   i = 0;
 
-  componentDidMount()
-    {
-      this.id = this.props.id || this.constructor.name;
-      this.mesh.name = this.id + 'Mesh';
-      this.buildComponents();
-      this.initComponents();
-      this.start();
-    }
+  componentDidMount() {
+    this.id = this.props.id || this.constructor.name;
+    this.mesh.name = this.id + "Mesh";
+    this.buildComponents();
+    this.initComponents();
+    this.start();
+  }
 
-  start = () => {
-  };
+  start = () => {};
 
   _update = () => {
     this.updateComponents();
@@ -28,54 +25,44 @@ export class GameObject extends Component {
   };
 
   updateChildren = () => {
-    this.childGameObjects.forEach( ( gameobject ) => {
+    this.childGameObjects.forEach(gameobject => {
       gameobject._update();
-    } );
+    });
   };
 
   updateComponents = () => {
-    for ( const componentID in this.components )
-      {
-        if ( this.components[componentID].update )
-          {
-            this.components[componentID].update(
-                //    this.props.components[componentID]
-            );
-          }
+    for (const componentID in this.components) {
+      if (this.components[componentID].update) {
+        this.components[componentID]
+          .update
+          //    this.props.components[componentID]
+          ();
       }
+    }
   };
 
-  update = () => {
-  };
+  update = () => {};
 
-  buildComponents()
-    {
-    }
+  buildComponents() {}
 
-  initComponents()
-    {
-    }
+  initComponents() {}
 
-  buildChildren = ( children ) => {
+  buildChildren = children => {
     const _children = [];
-    if ( !children )
-      {
-        console.log( 'GameObject ${this.id} has no children to build.' );
-      }
-
-    this.childGameObjects = this.buildChildGameObjects( children.gameobjects );
-  };
-
-  buildChildGameObjects = ( children ) => {
-
-  };
-
-  render()
-    {
-      this.i++;
-      console.log( 'render i:${this.i}' );
-      return null;
+    if (!children) {
+      console.log("GameObject ${this.id} has no children to build.");
     }
+
+    this.childGameObjects = this.buildChildGameObjects(children.gameobjects);
+  };
+
+  buildChildGameObjects = children => {};
+
+  render() {
+    this.i++;
+    console.log("render i:${this.i}");
+    return null;
+  }
 
   /*+
    {
@@ -119,7 +106,6 @@ export class GameObject extends Component {
    return <div key={this.id}>{result}</div>;
    }
    */
-
 }
 
 export default GameObject;
