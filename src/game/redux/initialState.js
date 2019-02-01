@@ -1,16 +1,18 @@
 const initialState = {
-    settings: {
-        speed:1,
-        current_level:0
-    },
-    levels: {
-        byId:{
-            'zero': {
-                walls:{},
-                groups:{}
-            },
+    game: {
+        settings: {
+            speed: 1,
+            current_level: 0
         },
-        allIds: ['zero']
+        levels: {
+            byId: {
+                'zero': {
+                    walls: {},
+                    groups: {}
+                },
+            },
+            allIds: ['zero']
+        },
     },
-
+    engine: {}
 }
