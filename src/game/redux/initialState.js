@@ -1,6 +1,6 @@
 const initialState = {
     settings: {
-        speed:1
+        speed:1,
         current_level:0
     },
     levels: {
@@ -11,5 +11,6 @@ const initialState = {
             },
         },
         allIds: ['zero']
-    }
+    },
+
 }
