@@ -9,3 +9,6 @@ export const TOGGLE_PAUSE = "TOGGLE_PAUSE";
 export const CAMERA_CHANGE = "CAMERA_CHANGE";
 export const CHANGE_LEVEL = "CHANGE_LEVEL";
 export const CHANGE_SETTING = "CHANGE_SETTING";
+export const START_WAVE = "START_WAVE";
+export const FINISHED_WAVE = "FINISHED_WAVE";
+export const SPAWN_ENTITY = "SPAWN_ENTITY";
