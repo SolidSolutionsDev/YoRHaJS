@@ -1,0 +1,22 @@
+.text-label {
+  color: #fff;
+  font-family: "Fira Mono", Monaco, "Andale Mono", "Lucida Console",
+    "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+  margin: -5px 0 0 15px;
+  pointer-events: none;
+
+  position: absolute;
+  width: 100px;
+  height: 10px;
+  top: -1000px;
+  left: -1000px;
+  font-size:70%;
+  transform: translate(-45%, 0%);
+}
+
+.text-label span {
+  margin-left: 10px;
+  /*font-weight: bold;*/
+  font-size: 60%;
+  vertical-align: middle;
+}
