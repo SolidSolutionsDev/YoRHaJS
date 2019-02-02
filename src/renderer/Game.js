@@ -4,9 +4,9 @@ import React from "react";
 import Renderer from "./RendererContainer";
 import Scene from "./core/Scene/SceneContainer";
 import Camera from "./core/Camera/CameraContainer";
-import {PhysicsService} from "./PhysicsService";
-import {AudioService} from "./AudioService";
-import {AnimationService} from "./AnimationService";
+import {PhysicsService} from "./services/PhysicsService";
+import {AudioService} from "./services/AudioService";
+import {AnimationService} from "./services/AnimationService";
 
 export class Game extends React.Component {
   frame = null;

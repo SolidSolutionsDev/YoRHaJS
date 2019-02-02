@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Renderer } from "./Renderer";
-import { addObject } from "../new_renderer_stores/scene/actions";
+import { addObject } from "../stores/scene/actions";
 
 const getAssetLoadState = (state) => {
   console.log(state);

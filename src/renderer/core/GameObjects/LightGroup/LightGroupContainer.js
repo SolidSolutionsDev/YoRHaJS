@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { LightGroup } from "./LightGroup";
-import { emitLoadingAsset } from "../../../../new_renderer_stores/scene/actions";
+import { emitLoadingAsset } from "../../../../stores/scene/actions";
 
 const getModel = (state) => {
   const { scene } = state;

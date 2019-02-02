@@ -1,5 +1,5 @@
 // import { defaultState } from "../defaultState";
-import { initialState } from "../../../game/redux/initialState";
+import { initialState } from "../../../game_old/redux/initialState";
 
 export const mainReducer = (state = initialState, action) => {
   let _parameters;

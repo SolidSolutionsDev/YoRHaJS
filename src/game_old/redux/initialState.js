@@ -65,7 +65,11 @@ export const initialState = {
                         children: [],
                     },
                 },
-                allIds: ["Camera", "DirectionalLight"],
+                allIds: [
+                    // "Camera",
+                    "DirectionalLight",
+                    "Cube"
+                ],
             }
         }
     },

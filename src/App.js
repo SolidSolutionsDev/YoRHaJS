@@ -3,13 +3,13 @@ import React, { Component } from "react";
 
 import logo from "./yorha-black.png";
 import "./App.css";
-import YoRHa from "./game/YoRHa";
+import YoRHa from "./game_old/YoRHa";
 
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import rootReducer from "./new_renderer_stores";
-import {Game} from "./new_renderer_gameobject/Game";
+import rootReducer from "./stores";
+import {Game} from "./renderer/Game";
 
 const store = createStore(
     rootReducer /* preloadedState, */,

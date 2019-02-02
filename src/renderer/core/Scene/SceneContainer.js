@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Scene } from "./Scene";
-import { addObject, updateSceneObject } from "../../../new_renderer_stores/scene/actions";
+import { addObject, updateSceneObject } from "../../../stores/scene/actions";
 
 // const getObjects = (state) => {
 //     return state.scene.objects;
@@ -8,7 +8,7 @@ import { addObject, updateSceneObject } from "../../../new_renderer_stores/scene
 
 const mapStateToProps = (state) => ({
   // objects: getObjects(state),
-  ...state.scene,
+  ...state.mainReducer.game,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -45,50 +45,59 @@ export class Scene extends React.Component {
     this.children.push(child);
   };
 
-  render = () => {
+
+  buildChildGameObjects = () => {
     const {
       addObject,
       availableComponent,
       objects,
-      shoes,
+      // shoes,
       selectObject,
       selectCorner,
-      unspecified_selectedObjectId,
-      unspecified_selectedCornerId,
-      unspecified_viewerActive,
-      user_shoes,
-      shoes_types,
-      shoes_color_sets,
-      color_options,
-      current_selected_shoe,
+      // unspecified_selectedObjectId,
+      // unspecified_selectedCornerId,
+      // unspecified_viewerActive,
+      // user_shoes,
+      // shoes_types,
+      // shoes_color_sets,
+      // color_options,
+      // current_selected_shoe,
+        scene
     } = this.props;
     const _editorProps = {
       ref: this.registerChild,
       addObject,
       availableComponent,
       objects,
-      shoes,
+      // shoes,
       selectObject,
       selectCorner,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
-      selectedObjectId: unspecified_selectedObjectId,
-      selectedCornerId: unspecified_selectedCornerId,
-    };
-
-    const _shoesProps = {
-      user_shoes,
-      shoes_types,
-      shoes_color_sets,
-      color_options,
-      current_selected_shoe,
+      // selectedObjectId: unspecified_selectedObjectId,
+      // selectedCornerId: unspecified_selectedCornerId,
     };
 
     const _viewerProps = {
       ref: this.registerChild,
-      unspecified_viewerActive,
       objects,
     };
+
+    const gameObjects = scene && scene.gameObjects ? scene.gameObjects.allIds
+        .filter((gameObjectId)=> {console.log(gameObjectId); return !scene.gameObjects.byId[gameObjectId].parent})
+        .map(gameObjectId=> {
+          const GameObject = GameObjectFactory.create(gameObjectId);
+          return <GameObject {..._editorProps} key={gameObjectId}/>} )
+        : []
+
+    return gameObjects;
+  }
+
+  render = () => {
+
+    console.log(this.scene);
+
+    const _gameObjects = this.buildChildGameObjects();
 
     return (
       <div
@@ -96,7 +105,7 @@ export class Scene extends React.Component {
         className="scene"
         style={{ width: "100%", height: "100%" }}
       >
-
+        {_gameObjects}
       </div>
        /* {[
           <ShoeGroupGameObject key="ShoeGroupGameObject" {..._editorProps} {..._shoesProps}/>
