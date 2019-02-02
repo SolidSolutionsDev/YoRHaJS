@@ -13,6 +13,12 @@ const initialState = {
             },
             allIds: ['zero']
         },
+        scene:{
+            gameObjects: {
+                byId: {},
+                allIds: [],
+            }
+        }
     },
     //TODO: migrate this to json or static js
     engine: {
@@ -23,7 +29,7 @@ const initialState = {
                 },
                 children:{},
             },
-            camera: {
+            dynamicCamera: {
                 components: {
                     perspectiveCamera:{
                         fov: 45,
