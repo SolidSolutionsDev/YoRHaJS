@@ -1,26 +1,27 @@
 import { connect } from "react-redux";
 import { makeGameObject } from "../../HOC/GameObjectHOC";
-import { addObject, updateSceneObject } from "../../../stores/scene/actions";
-
 
 const getGameObjects = (state) => {
-    return state.game.scene.gameObjects;
+    console.log(state.mainReducer.game.scene);
+    return state.mainReducer.game.scene.gameObjects;
 }
 
 const getSelf = (state,id) => {
-  return state.game.scene.gameObjects.byId[id];
+    console.log(state,id,state.mainReducer.game.scene.gameObjects.byId[id]);
+    console.log(state.mainReducer.game.scene);
+  return state.mainReducer.game.scene.gameObjects.byId[id];
 }
 
 const getPrefabs = (state) => {
-  return state.engine.prefabs;
+  return state.mainReducer.engine.prefabs;
 }
 
 const mapStateToProps = (state,props) => ({
     objects: getGameObjects(state),
     selfSettings: getSelf(state,props.id),
-    transform: getSelf(state,props.id).transform,
+    transform: getSelf(state,props.id) ? getSelf(state,props.id).transform : undefined,
     prefabs: getPrefabs(state,props.id),
-  ...state.game.scene,
+  // ...state.mainReducer.game.scene,
 });
 
 const mapDispatchToProps = (dispatch) => ({

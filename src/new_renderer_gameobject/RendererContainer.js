@@ -1,9 +1,10 @@
 import { connect } from "react-redux";
 import { Renderer } from "./Renderer";
-import { addObject } from "../stores/scene/actions";
+import { addObject } from "../new_renderer_stores/scene/actions";
 
 const getAssetLoadState = (state) => {
-  return state.scene.assetsLoadState;
+  console.log(state);
+  return state.mainReducer.engine.assetsLoadState;
 }
 
 const mapStateToProps = (state, ownProps) => {

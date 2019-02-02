@@ -135,6 +135,6 @@ export class Renderer extends React.Component {
 Renderer.propTypes = {
   availableWidth: PropTypes.number,
   availableHeight: PropTypes.number,
-  backgroundColor: PropTypes.string.isRequired,
-  availableComponent: PropTypes.object.isRequired,
+  // backgroundColor: PropTypes.string.isRequired,
+  // availableComponent: PropTypes.object.isRequired,
 };

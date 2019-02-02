@@ -27,7 +27,7 @@ export function makeGameObject(id) {
       if (transform && transform.position) {
         this.transform.position.set(...transform.position);
       }
-      this.transform.name = `${WrappedComponent.name}_transform`;
+      this.transform.name = `${id}_transform`;
 
       this.transform.gameObject = this;
 
@@ -141,7 +141,7 @@ export function makeGameObject(id) {
     buildGameComponents = () => {
       const { transform,debug, ...passThroughProps } = this.props;
       const {objects, selfSettings, prefabs}  = this.props;
-      const components = Object.keys( selfSettings.components)
+      const components = selfSettings && selfSettings.components ? Object.keys( selfSettings.components)
           .map(componentId=> {
             const GameObjectComponent = GameComponentFactory.create(componentId,this);
             return <GameObjectComponent
@@ -161,21 +161,23 @@ export function makeGameObject(id) {
 
             />
           }
-          );
+          ) : [];
       return components;
+
     }
 
     render() {
+      const { debug } = this.props;
       if (this.unmounting) {
         return null;
       }
       this.axesHelper.visible = !!debug;
       const _gameObjectComponents = this.buildGameComponents();
       return (
-        <div key={this.props.id}>
-          {..._gameObjectComponents}
+        [
+          {..._gameObjectComponents},
           {...this.childGameObjects}
-        </div>
+        ]
       );
     }
   };

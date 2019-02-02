@@ -22,11 +22,23 @@ export class Game extends React.Component {
   updateCallbacksArray = [];
 
   availableComponent = {};
+  availableService = {};
+
+  addGameService= (gameService) => {
+    if (!gameService) {
+      return;
+    }
+    console.log(gameService);
+    this.setState({[gameService.props.id]: gameService });
+    this.availableService[gameService.props.id] = gameService;
+    this.registerUpdate(this.availableService[gameService.props.id].update);
+  };
 
   addGameComponent = (gameComponent) => {
     if (!gameComponent) {
       return;
     }
+    console.log(gameComponent);
     this.setState({[gameComponent.props.id]: gameComponent.getWrappedInstance() });
     this.availableComponent[gameComponent.props.id] = gameComponent.getWrappedInstance();
     this.registerUpdate(this.availableComponent[gameComponent.props.id].update);
@@ -126,9 +138,9 @@ export class Game extends React.Component {
       <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
       <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
       <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
-      <PhysicsService {..._propsList} ref={this.addGameComponent} key="physics" id="physics" />,
-      <AudioService {..._propsList} ref={this.addGameComponent} key="audio" id="audio" />,
-      <AnimationService {..._propsList} ref={this.addGameComponent} key="animation" id="animation" />,
+      <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
+      <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
+      <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
     ];
   };
 }

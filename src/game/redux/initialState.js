@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
     game: {
         settings: {
             speed: 1,
@@ -13,10 +13,59 @@ const initialState = {
             },
             allIds: ['zero']
         },
+        renderer: {
+            alpha: true,
+            antialias: true
+        },
         scene:{
             gameObjects: {
-                byId: {},
-                allIds: [],
+                byId: {
+                    // Camera: {
+                    //     id:"Camera",
+                    //     transform:{
+                    //     },
+                    //     fromPrefab: "dynamicCamera",
+                    //     components: {
+                    //         perspectiveCamera:{
+                    //             fov: 45,
+                    //             near: 0.1,
+                    //             far: 10000,
+                    //             position:{x:0,y: -55,z: 35},
+                    //             lookAt:{x:0,y: 0,z: 0},
+                    //         },
+                    //     },
+                    //     children: [],
+                    // },
+                    Cube: {
+                        id:"Cube",
+                        transform:{
+                        },
+                        components: {
+                            cube:{
+                                rotationX:0.01,
+                            },
+                        },
+                        children: [],
+                    },
+                    DirectionalLight: {
+                        id:"DirectionalLight",
+                        transform:{
+                        },
+                        components:{
+                            directionalLight: {
+                                color: 0xffffff,
+                                intensity:0.7,
+                                position: {
+                                    x:0,
+                                    y:0,
+                                    z:1,
+                                }
+                            }
+                        },
+                        children: [],
+                    },
+                },
+                allIds: ["Camera", "DirectionalLight"],
             }
         }
     },
@@ -40,6 +89,7 @@ const initialState = {
                     },
                     dynamicCameraManager:{
                         cameraSoundPath: "./assets/sound/camera_change.mp3",
+                        cameraAllowedPositions: {}
                     },
                 },
                 children: {

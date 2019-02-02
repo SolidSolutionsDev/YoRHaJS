@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { ShoeModel } from "./ShoeModel";
-import { emitLoadingAsset } from "../../../../stores/scene/actions";
+import { emitLoadingAsset } from "../../../../new_renderer_stores/scene/actions";
 
 const getShoe = (state, ownProps) => state.scene.user_shoes.byId[ownProps.id];
 const getShoeType = (state, ownProps) =>

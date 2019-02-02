@@ -2,8 +2,8 @@ import React from "react";
 import * as THREE from "three";
 
 import * as GameObjectFactory from "../Factories/GameObjectFactory";
-const LightGroupGameObject = GameObjectFactory.create("lightGroup");
-const ShoeGroupGameObject = GameObjectFactory.create("shoeGroup");
+// const LightGroupGameObject = GameObjectFactory.create("lightGroup");
+// const ShoeGroupGameObject = GameObjectFactory.create("shoeGroup");
 
 export class Scene extends React.Component {
   scene = new THREE.Scene();
@@ -96,11 +96,13 @@ export class Scene extends React.Component {
         className="scene"
         style={{ width: "100%", height: "100%" }}
       >
-        {[
-          <ShoeGroupGameObject key="ShoeGroupGameObject" {..._editorProps} {..._shoesProps}/>,
-          <LightGroupGameObject key="LightGroupGameObject" {..._editorProps} />,
-        ]}
+
       </div>
+       /* {[
+          <ShoeGroupGameObject key="ShoeGroupGameObject" {..._editorProps} {..._shoesProps}/>
+          <LightGroupGameObject key="LightGroupGameObject" {..._editorProps} />
+        ]}
+        */
     );
   };
 }

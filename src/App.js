@@ -6,6 +6,15 @@ import "./App.css";
 import YoRHa from "./game/YoRHa";
 
 
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./new_renderer_stores";
+import {Game} from "./new_renderer_gameobject/Game";
+
+const store = createStore(
+    rootReducer /* preloadedState, */,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 class App extends Component {
   render() {
@@ -17,7 +26,10 @@ class App extends Component {
           {/*<h2></h2>*/}
         </header>
         <p className="App-intro">Hacking mini game </p>
-        <YoRHa />
+        {/*<YoRHa />*/}
+          <Provider store={store}>
+            <Game key={"game"}/>
+          </Provider>
       </div>
     );
   }

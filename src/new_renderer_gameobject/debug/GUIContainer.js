@@ -4,7 +4,7 @@ import {
   updateSceneObject,
   updateShoe,
   updateShoeMaterial,
-} from "../../stores/scene/actions/index";
+} from "../../new_renderer_stores/scene/actions/index";
 
 const getApplicationState = (state) => {
   const _currentSelectedType =
