@@ -1,16 +1,15 @@
 import React, { Component } from "react";
 
 import * as THREE from "three";
+import * as GameComponentFactory from "../Factories/GameComponentFactory";
 
 //TODO: add available component here maybe using contexts
 
-export function makeGameObject(WrappedComponent, alias) {
+export function makeGameObject(id) {
   return class extends React.Component {
-    transform = new THREE.Object3D();
-
     _type = "GameObject";
 
-    _name = alias || WrappedComponent.name;
+    transform = new THREE.Object3D();
 
     axesHelper = new THREE.AxesHelper(5);
 
@@ -20,10 +19,14 @@ export function makeGameObject(WrappedComponent, alias) {
 
     componentWillMount = () => {
       const { transform, id } = this.props;
+
+     this._name = id;
+     this.displayName = id;
+     this.id = id;
+
       if (transform && transform.position) {
         this.transform.position.set(...transform.position);
       }
-      this.id = id;
       this.transform.name = `${WrappedComponent.name}_transform`;
 
       this.transform.gameObject = this;
@@ -135,28 +138,69 @@ export function makeGameObject(WrappedComponent, alias) {
       );
     };
 
+    buildGameComponents = () => {
+      const { transform,debug, ...passThroughProps } = this.props;
+      const {objects, selfSettings, prefabs}  = this.props;
+      const components = Object.keys( selfSettings.components)
+          .map(componentId=> {
+            const GameObjectComponent = GameComponentFactory.create(componentId,this);
+            return <GameObjectComponent
+                key={componentId}
+                id={componentId}
+                _parentId={this.id}
+                gameObject={this}
+                {...passThroughProps}
+                transform={this.transform}
+                scene={this.scene}
+                registerComponent={this.registerComponent}
+                registerChildGameObject={this.registerChildGameObject}
+                getChildComponent={this.getChildComponent}
+                getChildGameObjectByType={this.getChildGameObjectByType}
+                getChildGameObjectsByType={this.getChildGameObjectsByType}
+                getAllGameObject3DChildren={this.getAllGameObject3DChildren}
+
+            />
+          }
+          );
+      return components;
+    }
+
     render() {
       if (this.unmounting) {
         return null;
       }
-      const { transform,debug, ...passThroughProps } = this.props;
       this.axesHelper.visible = !!debug;
-      // Wraps the input component in a container, without mutating it. Good!
+      const _gameObjectComponents = this.buildGameComponents();
       return (
-        <WrappedComponent
-          {...passThroughProps}
-          transform={this.transform}
-          scene={this.scene}
-          registerComponent={this.registerComponent}
-          registerChildGameObject={this.registerChildGameObject}
-          getChildComponent={this.getChildComponent}
-          getChildGameObjectByType={this.getChildGameObjectByType}
-          getChildGameObjectsByType={this.getChildGameObjectsByType}
-          getAllGameObject3DChildren={this.getAllGameObject3DChildren}
-        >
+        <div key={this.props.id}>
+          {..._gameObjectComponents}
           {...this.childGameObjects}
-        </WrappedComponent>
+        </div>
       );
     }
   };
 }
+
+
+/*
+import React from "react";
+import * as ComponentFactory from "../../Factories/GameComponentFactory";
+
+const ObjectLoaderMeshComponent = ComponentFactory.create("objectLoader");
+const ShoeManagerComponent = ComponentFactory.create(
+  "shoeController",
+);
+// const TransformUpdateComponent = ComponentFactory.create("transformUpdate");
+
+export class ShoeModel extends React.Component {
+  render = () => (
+    <div>
+      {[
+        <ObjectLoaderMeshComponent key="objectloadershoe" {...this.props} />,
+        <ShoeManagerComponent key="shoemanager" {...this.props}/>,
+      ]}
+    </div>
+  );
+}
+
+*/
