@@ -131,9 +131,9 @@ export const isGridBoard = (gameObject, parameters) => {
           _border.left.mesh.name = _.uniqueId("Border_left");
           // physics
 
-          const _physicsManager = gameObject.props.getPhysicsManager();
+          const _physicsService = gameObject.props.getPhysicsService();
 
-          _border.left.physicsObject = _physicsManager.addNewBoxBody(
+          _border.left.physicsObject = _physicsService.addNewBoxBody(
             _border.left.mesh,
             {
               mass: 0,
@@ -147,7 +147,7 @@ export const isGridBoard = (gameObject, parameters) => {
             _border.left
           );
 
-          _border.right.physicsObject = _physicsManager.addNewBoxBody(
+          _border.right.physicsObject = _physicsService.addNewBoxBody(
             _border.right.mesh,
             {
               mass: 0,
@@ -162,7 +162,7 @@ export const isGridBoard = (gameObject, parameters) => {
             _border.right
           );
 
-          _border.top.physicsObject = _physicsManager.addNewBoxBody(
+          _border.top.physicsObject = _physicsService.addNewBoxBody(
             _border.top.mesh,
             {
               mass: 0,
@@ -337,7 +337,7 @@ export const isGridBoard = (gameObject, parameters) => {
   function GridPosition(geometry, color, radius, position) {
     this.collides = false;
     this.attaches = true;
-    const _physicsManager = gameObject.props.getPhysicsManager();
+    const _physicsService = gameObject.props.getPhysicsService();
     const material = new THREE.MeshPhongMaterial({
       color: color,
       opacity: 0,
@@ -349,14 +349,14 @@ export const isGridBoard = (gameObject, parameters) => {
     this.ball = null;
     _mesh.visible = false;
     this.debugTween;
-    const _physicsRepresentation = _physicsManager.addNewSphereBody(
+    const _physicsRepresentation = _physicsService.addNewSphereBody(
       _mesh,
       {
         radius: radius,
         position: position,
         mass: Math.random() > 0.2 ? 50 : 0,
-        linearFactor: new _physicsManager.Vec3(1, 1, 0),
-        angularFactor: new _physicsManager.Vec3(1, 1, 0),
+        linearFactor: new _physicsService.Vec3(1, 1, 0),
+        angularFactor: new _physicsService.Vec3(1, 1, 0),
         type: "kinematic",
         beginContactFunction: body2 => {
           // if ( body2.mesh.name.includes( 'Border' ) )

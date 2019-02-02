@@ -6,7 +6,7 @@ export class GameDirector extends Component {
   shooter = null;
   board = null;
   activeBall = null;
-  physicsManager = null;
+  physicsService = null;
 
   //TODO: ADD REDUX!!! - board positions, arrow direction, camera position and animation or not, ball animation or not
 

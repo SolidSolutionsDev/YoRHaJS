@@ -22,7 +22,7 @@ export const hasCollisions = (gameObject, shape, opts) => {
   const gridGeoRadius = (step - 0.1) / 2;
 
   const _physicsRepresentation = gameObject.props
-    .getPhysicsManager()
+    .getPhysicsService()
     .addNewSphereBody(gameObject.mesh, {
       radius: config.space,
       position: getLowerHeightPositionFromBoardDimensions(dimensions),

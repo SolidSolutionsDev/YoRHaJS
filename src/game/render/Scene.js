@@ -136,8 +136,8 @@ export class Scene extends Component {
   render() {
     const _commonProps = {
       getGameDirector: this.props.getGameDirector,
-      getAudioManager: this.props.getAudioManager,
-      getPhysicsManager: this.props.getPhysicsManager
+      getAudioService: this.props.getAudioService,
+      getPhysicsService: this.props.getPhysicsService
     };
     console.log("Scene render props:", this.props);
     return (

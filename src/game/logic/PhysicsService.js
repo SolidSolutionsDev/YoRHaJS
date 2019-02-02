@@ -2,7 +2,7 @@ import { Component } from "react";
 import * as CANNON from "cannon";
 import * as _ from "lodash";
 
-export class PhysicsManager extends Component {
+export class PhysicsService extends Component {
   world = new CANNON.World({
     // gravity: new CANNON.Vec3( 0, -9.82, 0 )
     gravity: new CANNON.Vec3(0, 0, -9)

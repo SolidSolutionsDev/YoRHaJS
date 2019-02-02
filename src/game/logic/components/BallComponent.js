@@ -19,8 +19,8 @@ export const isBall = (gameObject, parameters) => {
     {}
   );
 
-  const _audioManager = gameObject.props.getAudioManager();
-  this.sound = _audioManager.buildPositionalSound(config.soundLocation);
+  const _audioService = gameObject.props.getAudioService();
+  this.sound = _audioService.buildPositionalSound(config.soundLocation);
   this.bodiesInContact = [];
 
   const linearDamping = 0.0;
@@ -80,16 +80,16 @@ export const isBall = (gameObject, parameters) => {
   //     getLowerHeightPositionFromBoardDimensions( dimensions ) );
   //this.mesh.scale.set( dimensions.scale, dimensions.scale, dimensions.scale );
 
-  const _physicsManager = gameObject.props.getPhysicsManager();
-  this.physicsRepresentation = _physicsManager.addNewSphereBody(
+  const _physicsService = gameObject.props.getPhysicsService();
+  this.physicsRepresentation = _physicsService.addNewSphereBody(
     this.mesh,
     {
       radius: gridGeoRadius,
       position: getLowerHeightPositionFromBoardDimensions(dimensions),
       mass: 0,
       type: CANNON.Body.DYNAMIC,
-      linearFactor: new _physicsManager.Vec3(1, 1, 0),
-      angularFactor: new _physicsManager.Vec3(1, 1, 0),
+      linearFactor: new _physicsService.Vec3(1, 1, 0),
+      angularFactor: new _physicsService.Vec3(1, 1, 0),
       linearDamping: linearDamping,
       angularDamping: angularDamping,
       beginContactFunction: body2 => {

@@ -10,7 +10,7 @@ export default class Shooter extends Component {
     this.shooter = shooter;
     console.info(shooter.component.mesh);
     this.shooter.physicsObject = this.props
-      .getPhysicsManager()
+      .getPhysicsService()
       // addNewBoxBody( shooter.component.mesh,
       //     this.props, shooter.component );
       .addNewBoxBody(this.props.pivot, this.props, shooter.component);

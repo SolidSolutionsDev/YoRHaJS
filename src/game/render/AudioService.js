@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import * as THREE from "three";
 
-export class Audio extends Component {
+export class AudioService extends Component {
   attribs = {
     distance: 10,
     backgroundMusic: {}

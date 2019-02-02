@@ -25,12 +25,12 @@ export const isShooter = (object, parameters) => {
     // backGroundMusicPath: '/assets/music/po.mp3',
   };
 
-  const _audioManager = object.props.getAudioManager();
-  const sound = _audioManager.buildNonPositionalSound(
+  const _audioService = object.props.getAudioService();
+  const sound = _audioService.buildNonPositionalSound(
     _parameters.backGroundMusicPath
   );
 
-  const analyser = _audioManager.buildAnalyserFromSound(sound, 32);
+  const analyser = _audioService.buildAnalyserFromSound(sound, 32);
 
   this.THREE = THREE;
   this.mesh;

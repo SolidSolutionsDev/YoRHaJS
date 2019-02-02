@@ -9,7 +9,7 @@ export default class Board extends Component {
     this.plane = plane;
     console.info(plane.component.mesh);
     this.plane.physicsObject = this.props
-      .getPhysicsManager()
+      .getPhysicsService()
       .addNewBoxBody(this.props.pivot, this.props, plane.component);
   };
 

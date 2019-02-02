@@ -7,15 +7,15 @@ import * as THREE from "three";
 import { Scene } from "./Scene";
 import { DynamicCameraPrefab } from "../logic/prefabs/DynamicCameraPrefab";
 
-import { PhysicsManager } from "../logic/PhysicsManager";
+import { PhysicsService } from "../logic/PhysicsService";
 // import {GameDirector} from '../logic/GameDirector';
 
-import { Audio } from "./Audio";
+import { AudioService } from "./AudioService";
 
 // import { Controls } from './Controls';
 
 export class Renderer extends Component {
-  physicsManager;
+  physicsService;
   registeredUpdates = [];
   renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -51,8 +51,8 @@ export class Renderer extends Component {
   };
 
   renderLoop = timeRenderLoopWasCalled => {
-    if (this.physicsManager) {
-      this.physicsManager.update(timeRenderLoopWasCalled);
+    if (this.physicsService) {
+      this.physicsService.update(timeRenderLoopWasCalled);
     }
 
     if (this.gameDirector) {
@@ -104,10 +104,10 @@ export class Renderer extends Component {
   };
 
   initAudio = () => {
-    if (this.camera && this.audioManager) {
-      this.camera.add(this.audioManager.listener);
+    if (this.camera && this.audioService) {
+      this.camera.add(this.audioService.listener);
 
-      const _sound = this.audioManager.buildPositionalSound(
+      const _sound = this.audioService.buildPositionalSound(
         this.cameraComponent.attribs.cameraSoundPath
       );
       this.cameraComponent.initCameraSound(_sound);
@@ -147,21 +147,21 @@ export class Renderer extends Component {
     }
   };
 
-  setPhysics = physicsManager => {
-    this.physicsManager = physicsManager;
+  setPhysics = physicsService => {
+    this.physicsService = physicsService;
   };
 
-  getPhysicsManager = () => {
-    return this.physicsManager;
+  getPhysicsService = () => {
+    return this.physicsService;
   };
 
-  setAudioManager = audioManager => {
-    this.audioManager = audioManager;
+  setAudioService = audioService => {
+    this.audioService = audioService;
     this.initAudio();
   };
 
-  getAudioManager = () => {
-    return this.audioManager;
+  getAudioService = () => {
+    return this.audioService;
   };
 
   render() {
@@ -170,9 +170,9 @@ export class Renderer extends Component {
     // _children.push( <DatGui pipeUpdate={this.pipeUpdated} flareTipUpdated={this.flareTipUpdated}
     //                         ref={ui => this.setUI( ui )} key="testForUpdate4"></DatGui> );
     _children.push(
-      <Audio
-        ref={audioManager => this.setAudioManager(audioManager)}
-        key="audioManager"
+      <AudioService
+        ref={audioService => this.setAudioService(audioService)}
+        key="audioService"
       />
     );
     _children.push(
@@ -182,17 +182,17 @@ export class Renderer extends Component {
       />
     );
     _children.push(
-      <PhysicsManager
-        ref={physicsManager => this.setPhysics(physicsManager)}
-        key="physicsManager"
+      <PhysicsService
+        ref={physicsService => this.setPhysics(physicsService)}
+        key="physicsService"
       />
     );
 
     _children.push(
       <Scene
-        getPhysicsManager={this.getPhysicsManager}
+        getPhysicsService={this.getPhysicsService}
         getGameDirector={this.getGameDirector}
-        getAudioManager={this.getAudioManager}
+        getAudioService={this.getAudioService}
         parameters={this.sceneParameters}
         ref={scene => this.setScene(scene)}
         key="testForUpdate2"

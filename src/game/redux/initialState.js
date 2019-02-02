@@ -54,12 +54,42 @@ const initialState = {
                 components:{},
                 children:{},
             },
-            directionalLight:{
-                components:{},
+            pointLight:{
+                components:{
+                    pointLight:{
+                        color: 0xffffff,
+                        distance:1,
+                        decay:100,
+                        position: {x:10, y:7, z:5},
+                        castShadow:true,
+                        shadow:{
+                            mapSize:{x:1024, y:1024}
+                        }
+                    }
+                },
                 children:{},
             },
-            pointLight:{
-                components:{},
+            directionalLight:{
+                components:{
+                    directionalLight: {
+                        color: 0xffffff,
+                        intensity:0.7,
+                        position: {
+                            x:0,
+                            y:0,
+                            z:1,
+                        }
+                    }
+                },
+                children:{},
+            },
+            ambientLight:{
+                components:{
+                    ambientLight:{
+                        color: 0x222222,
+                        intensity:1,
+                    },
+                },
                 children:{},
             },
             board: {
