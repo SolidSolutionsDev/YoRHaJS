@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tweenjs/tween.js": "^17.2.0",
+    "babel-plugin-import-directory": "^1.0.3",
     "cannon": "github:schteppe/cannon.js",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.0",
