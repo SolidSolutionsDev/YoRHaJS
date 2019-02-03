@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Camera } from "./Camera";
-import { updateSceneObject } from "../../../stores/scene/actions";
+import { updateSceneObject } from "../../../../stores/scene/actions";
 
 const getAllowedPositions = (state) => state.mainReducer.engine.prefabs["dynamicCamera"].components.dynamicCameraManager.cameraAllowedPositions;
 
