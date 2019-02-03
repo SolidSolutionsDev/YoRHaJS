@@ -28,7 +28,7 @@ export class Game extends React.Component {
     if (!gameService) {
       return;
     }
-    console.log(gameService);
+    // console.log(gameService);
     this.setState({[gameService.props.id]: gameService });
     this.availableService[gameService.props.id] = gameService;
     this.registerUpdate(this.availableService[gameService.props.id].update);
@@ -38,47 +38,12 @@ export class Game extends React.Component {
     if (!gameComponent) {
       return;
     }
-    console.log(gameComponent);
+    // console.log(gameComponent);
     this.setState({[gameComponent.props.id]: gameComponent.getWrappedInstance() });
     this.availableComponent[gameComponent.props.id] = gameComponent.getWrappedInstance();
     this.registerUpdate(this.availableComponent[gameComponent.props.id].update);
+    console.log(this);
   };
-  //
-  // addRenderer = (renderer) => {
-  //   if (!renderer) {
-  //     return;
-  //   }
-  //   this.setState({ renderer: renderer.getWrappedInstance() });
-  //   this.availableComponent.renderer = renderer.getWrappedInstance();
-  //   this.registerUpdate(this.availableComponent.renderer.update);
-  // };
-  //
-  // addCamera = (camera) => {
-  //   if (!camera) {
-  //     return;
-  //   }
-  //   this.setState({ camera: camera.getWrappedInstance() });
-  //   this.availableComponent.camera = camera.getWrappedInstance();
-  //   this.registerUpdate(this.availableComponent.camera.update);
-  // };
-  //
-  // addScene = (scene) => {
-  //   if (!scene) {
-  //     return;
-  //   }
-  //   this.setState({ scene: scene.getWrappedInstance() });
-  //   this.availableComponent.scene = scene.getWrappedInstance();
-  //   this.registerUpdate(this.availableComponent.scene.update);
-  // };
-  //
-  // addPhysics = (physics) => {
-  //   if (!physics) {
-  //     return;
-  //   }
-  //   this.setState({ physics: physics.getWrappedInstance() });
-  //   this.availableComponent.physics = physics.getWrappedInstance();
-  //   this.registerUpdate(this.availableComponent.physics.update);
-  // };
 
   start = () => {
     const { renderer, scene, camera } = this.state;

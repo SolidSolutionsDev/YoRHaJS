@@ -34,7 +34,7 @@ export class Scene extends React.Component {
   };
 
   registerChild = (child) => {
-    console.log("register child in parent", child);
+    // console.log("register child in parent", child);
     if (!child) {
       return;
     }
@@ -85,17 +85,12 @@ export class Scene extends React.Component {
     return gameObjects;
   }
 
-  componentDidCatch(error, info) {
-    // You can also log the error to an error reporting service
-    console.log(error, info);
-  }
-
   render = () => {
 
     console.log(this.scene);
 
     const _gameObjects = this.buildChildGameObjects();
-    console.log("here",_gameObjects,this);
+    // console.log("here",_gameObjects,this);
 
     return _gameObjects;
   }

@@ -31,13 +31,11 @@ export class Renderer extends React.Component {
   componentDidMount = () => {};
 
   init = () => {
+    ReactDOM.findDOMNode(this).appendChild(this.canvas);
     this.registerEventListeners();
-    // this.animate();
-
     this.setState({ ready: true });
 
     window.THREE = THREE;
-    ReactDOM.findDOMNode(this).appendChild(this.canvas);
     this.onWindowResize();
   };
 
