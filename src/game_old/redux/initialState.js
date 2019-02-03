@@ -1,3 +1,5 @@
+import {BoardEntity} from "../nier/Board/BoardEntity";
+
 export const initialState = {
     game: {
         settings: {
@@ -21,7 +23,6 @@ export const initialState = {
             gameObjects: {
                 byId: {
                     // Camera: {
-                    //     id:"Camera",
                     //     transform:{
                     //     },
                     //     fromPrefab: "dynamicCamera",
@@ -36,8 +37,7 @@ export const initialState = {
                     //     },
                     //     children: [],
                     // },
-                    KubeGameObject: {
-                        id:"KubeGameObject",
+                    TestCube: {
                         transform:{
                         },
                         components: {
@@ -47,8 +47,19 @@ export const initialState = {
                         },
                         children: [],
                     },
+                    Board: {
+                        transform:{
+                        },
+                        components: {
+                            boardPlaneGeometry:{
+                                rotationX:0.01,
+                                dimensions:{ x: 50, y: 50, z: 2 },
+                                mass: 0,
+                            },
+                        },
+                        children: [],
+                    },
                     DirectionalLight: {
-                        id:"DirectionalLight",
                         transform:{
                         },
                         components:{
@@ -68,7 +79,8 @@ export const initialState = {
                 allIds: [
                     // "Camera",
                     // "DirectionalLight",
-                    "KubeGameObject"
+                    "Board",
+                    "TestCube",
                 ],
             }
         }
@@ -93,10 +105,14 @@ export const initialState = {
                     },
                     dynamicCameraManager:{
                         cameraSoundPath: "./assets/sound/camera_change.mp3",
-                        cameraAngle: "isometric",
+                        cameraAngle: "nier",
                         cameraAutoRotate: false,
                         cameraMinDistance: 10,
                         cameraPanLock: true,
+                        lookAt: {x:0,y:0,z:0},
+                        near: 0.1,
+                        far: 10000,
+                        fov: 45,
                         unspecified_supportedCameraAngles: [
                             "",
                             "left",
@@ -106,6 +122,7 @@ export const initialState = {
                             "top",
                             "bottom",
                             "isometric",
+                            "nier",
                         ],
                         cameraAllowedPositions: {
                             left: {
@@ -140,6 +157,9 @@ export const initialState = {
                             },
                             "top-left": {
                                 position: {x: -10, y: 10, z: 0},
+                            },
+                            "nier": {
+                                position: {x: 0, y: -55, z: 35},
                             },
                             custom: {
                                 position: {

@@ -1,9 +1,6 @@
 import { connect } from "react-redux";
-// import components from "../../GameComponents/*";
 import { makeGameComponent } from "../../HOC/GameComponentHOC";
 
-// import { addObject, updateSceneObject } from "../../../stores/scene/actions";
-//
 // import { OBJMeshGeometry } from "../../GameComponents/OBJMeshGeometry/OBJMeshGeometry";
 import { ObjectLoaderMesh } from "../../GameComponents/ObjectLoaderMesh/ObjectLoaderMesh";
 import { TransformUpdate } from "../../GameComponents/TransformUpdate/TransformUpdate";
@@ -13,7 +10,7 @@ import { SpriteComponent } from "../../GameComponents/Sprite/SpriteComponent";
 import { ShoeGroup } from "../../GameComponents/ShoeGroup/ShoeGroup";
 import { ShoeController } from "../../GameComponents/ShoeController/ShoeController";
 import { Cube } from "../../GameComponents/Cube/Cube";
-import {GameObject} from "../../GameObject/GameObject";
+import {BoardPlaneGeometry} from "../../GameComponents/BoardPlaneGeometry/BoardPlaneGeometry";
 
 
 const components = {
@@ -25,6 +22,7 @@ const components = {
   shoeGroup: ShoeGroup,
   shoeController: ShoeController,
   cube: Cube,
+  boardPlaneGeometry: BoardPlaneGeometry,
   // directionalLight: DirectionalLight(),
 };
 
@@ -39,7 +37,6 @@ const mapStateToProps = (state,props) => ({
   ...props,
   ...state.mainReducer.game.scene,
   selfSettings: getSelf(state,props.id,props._parentId),
-  // selfSettings: "getSelf(state,props.id,props._parentId)",
 
 });
 
@@ -57,6 +54,5 @@ export const create = (type) => {
         { withRef: true },
     )(component);
   }
-  console.log("components",components);
   return component;
 };
