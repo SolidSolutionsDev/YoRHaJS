@@ -20,6 +20,10 @@ export const initialState = {
             antialias: true
         },
         scene:{
+            children:[
+                "LightGroup",
+                "Board",
+                "TestCube"],
             gameObjects: {
                 byId: {
                     // Camera: {
@@ -59,26 +63,42 @@ export const initialState = {
                         },
                         children: [],
                     },
+                    LightGroup: {
+                      transform:{},
+                      components: {},
+                      children: ["DirectionalLight", "AmbientLight"]
+                    },
                     DirectionalLight: {
                         transform:{
                         },
                         components:{
-                            // directionalLight: {
-                            //     color: 0xffffff,
-                            //     intensity:0.7,
-                            //     position: {
-                            //         x:0,
-                            //         y:0,
-                            //         z:1,
-                            //     }
-                            // }
+                            directionalLight: {
+                                color: 0xffffff,
+                                intensity:0.7,
+                                position: {
+                                    x:0,
+                                    y:0,
+                                    z:1,
+                                }
+                            }
+                        },
+                    },
+                    AmbientLight: {
+                        transform:{
+                        },
+                        components:{
+                            ambientLight: {
+                                color: 0x222222,
+                            }
                         },
                         children: [],
                     },
                 },
                 allIds: [
                     // "Camera",
-                    // "DirectionalLight",
+                    "DirectionalLight",
+                    "AmbientLight",
+                    "LightGroup",
                     "Board",
                     "TestCube",
                 ],

@@ -11,6 +11,8 @@ import { ShoeGroup } from "../../GameComponents/ShoeGroup/ShoeGroup";
 import { ShoeController } from "../../GameComponents/ShoeController/ShoeController";
 import { Cube } from "../../GameComponents/Cube/Cube";
 import {BoardPlaneGeometry} from "../../GameComponents/BoardPlaneGeometry/BoardPlaneGeometry";
+import {DirectionalLight} from "../../GameComponents/DirectionalLight/DirectionalLight";
+import {AmbientLight} from "../../GameComponents/AmbientLight/AmbientLight";
 
 
 const components = {
@@ -23,6 +25,8 @@ const components = {
   shoeController: ShoeController,
   cube: Cube,
   boardPlaneGeometry: BoardPlaneGeometry,
+  directionalLight: DirectionalLight,
+  ambientLight: AmbientLight,
   // directionalLight: DirectionalLight(),
 };
 
