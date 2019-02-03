@@ -32,6 +32,8 @@ export class Renderer extends React.Component {
 
   init = () => {
     ReactDOM.findDOMNode(this).appendChild(this.canvas);
+    this.setupRendererDefaults();
+    this.setupCanvasDefaults();
     this.registerEventListeners();
     this.setState({ ready: true });
 
@@ -51,6 +53,25 @@ export class Renderer extends React.Component {
       this.renderer.setClearColor(backgroundColor,0);
     }
   };
+
+
+  setupCanvasDefaults() {
+    this.canvas.parentNode.style.position = "absolute";
+    this.canvas.parentElement.style.heigh = "100%";
+    this.canvas.parentElement.style.left = 0;
+    this.canvas.parentElement.style.top = 0;
+    this.canvas.parentElement.style.zIndex = -1;
+  }
+
+
+  setupRendererDefaults() {
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.renderReverseSided = true;
+    this.renderer.shadowMap.renderSingleSided = true;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+    this.renderer.setClearColor(0x544c41, 0.9);
+    this.renderer.sortObjects = false;
+  }
 
   registerEventListeners = () => {
     // document.addEventListener("mousedown", this.onDocumentMouseDown, false);

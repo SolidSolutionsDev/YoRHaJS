@@ -14,6 +14,7 @@ const mapStateToProps = (state, ownProps) => {
     ...state.scene,
     scene,
     camera,
+    ...state.mainReducer.game.renderer,
   };
 };
 
