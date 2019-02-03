@@ -51,6 +51,7 @@ export class Game extends React.Component {
     scene.init();
     camera.init();
     this.animate();
+    this.setState({started:true})
   };
 
   animate = (time) => {
