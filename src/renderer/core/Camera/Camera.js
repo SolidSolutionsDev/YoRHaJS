@@ -23,7 +23,6 @@ export class Camera extends React.Component {
     //   this.frustumSize / -2,
     this.camera = new THREE.PerspectiveCamera();
     const { renderer } = availableComponent;
-
     this.controls = new OrbitControls(
       this.camera,
       renderer.renderer.domElement,
@@ -78,7 +77,7 @@ export class Camera extends React.Component {
     const { cameraAutoRotate, cameraMinDistance, cameraPanLock } = this.props;
     this.controls.enablePan = !cameraPanLock;
     this.controls.autoRotate = cameraAutoRotate;
-    this.controls.minDistance = cameraMinDistance;
+    this.controls.minDistance = cameraMinDistance || this.controls.minDistance;
     this.controls.update();
   };
 

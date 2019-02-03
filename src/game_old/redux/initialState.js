@@ -93,7 +93,62 @@ export const initialState = {
                     },
                     dynamicCameraManager:{
                         cameraSoundPath: "./assets/sound/camera_change.mp3",
-                        cameraAllowedPositions: {}
+                        cameraAngle: "isometric",
+                        cameraAutoRotate: false,
+                        cameraMinDistance: 10,
+                        cameraPanLock: true,
+                        unspecified_supportedCameraAngles: [
+                            "",
+                            "left",
+                            "right",
+                            "front",
+                            "back",
+                            "top",
+                            "bottom",
+                            "isometric",
+                        ],
+                        cameraAllowedPositions: {
+                            left: {
+                                position: {x: -10, y: 0, z: 0},
+                            },
+                            right: {
+                                position: {x: 10, y: 0, z: 0},
+                            },
+                            front: {
+                                position: {x: 0, y: 0, z: 10},
+                            },
+                            back: {
+                                position: {x: 0, y: 0, z: -10},
+                            },
+                            top: {
+                                position: {x: 0, y: 10, z: 0},
+                            },
+                            bottom: {
+                                position: {x: 0, y: -10, z: 0},
+                            },
+                            isometric: {
+                                position: {x: 10, y: 10, z: 10},
+                            },
+                            "top-front": {
+                                position: {x: 0, y: 10, z: 10},
+                            },
+                            "top-right": {
+                                position: {x: 10, y: 10, z: 0},
+                            },
+                            "top-back": {
+                                position: {x: 0, y: 10, z: -10},
+                            },
+                            "top-left": {
+                                position: {x: -10, y: 10, z: 0},
+                            },
+                            custom: {
+                                position: {
+                                    x: 21.57972466572975,
+                                    y: 21.0286001424227,
+                                    z: 84.80632912348827,
+                                },
+                            },
+                        }
                     },
                 },
                 children: {

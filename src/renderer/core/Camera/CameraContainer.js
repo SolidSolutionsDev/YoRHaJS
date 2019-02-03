@@ -6,7 +6,7 @@ const getAllowedPositions = (state) => state.mainReducer.engine.prefabs["dynamic
 
 const mapStateToProps = (state) => ({
   allowedPositions: getAllowedPositions(state),
-  ...state.scene,
+  ...state.mainReducer.engine.prefabs["dynamicCamera"].components.dynamicCameraManager,
 });
 
 const mapDispatchToProps = (dispatch) => ({
