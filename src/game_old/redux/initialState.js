@@ -52,22 +52,22 @@ export const initialState = {
                         transform:{
                         },
                         components:{
-                            directionalLight: {
-                                color: 0xffffff,
-                                intensity:0.7,
-                                position: {
-                                    x:0,
-                                    y:0,
-                                    z:1,
-                                }
-                            }
+                            // directionalLight: {
+                            //     color: 0xffffff,
+                            //     intensity:0.7,
+                            //     position: {
+                            //         x:0,
+                            //         y:0,
+                            //         z:1,
+                            //     }
+                            // }
                         },
                         children: [],
                     },
                 },
                 allIds: [
                     // "Camera",
-                    "DirectionalLight",
+                    // "DirectionalLight",
                     "Cube"
                 ],
             }

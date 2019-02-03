@@ -27,7 +27,7 @@ class App extends Component {
         </header>
         <p className="App-intro">Hacking mini game </p>
         {/*<YoRHa />*/}
-          <Provider store={store}>
+          <Provider store={store} key={"provider"}>
             <Game key={"game"}/>
           </Provider>
       </div>

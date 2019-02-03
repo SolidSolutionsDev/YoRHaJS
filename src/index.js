@@ -9,9 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./game_old/redux/store";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+    <App key={"app"}/>,
   document.getElementById("root")
 );
 registerServiceWorker();
