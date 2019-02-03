@@ -66,7 +66,7 @@ export const initialState = {
                     LightGroup: {
                       transform:{},
                       components: {},
-                      children: ["DirectionalLight", "AmbientLight"]
+                      children: ["DirectionalLight", "AmbientLight","PointLight"]
                     },
                     DirectionalLight: {
                         transform:{
@@ -80,6 +80,23 @@ export const initialState = {
                                     y:0,
                                     z:1,
                                 }
+                            }
+                        },
+                    },
+                    PointLight: {
+                        transform:{
+                            position: {
+                                    x:10,
+                                    y:7,
+                                    z:5,
+                                }
+                        },
+                        components:{
+                            pointLight: {
+                                castShadow:true,
+                                color: 0xffffff,
+                                intensity:1,
+                                distance:100,
                             }
                         },
                     },
@@ -97,6 +114,7 @@ export const initialState = {
                 allIds: [
                     // "Camera",
                     "DirectionalLight",
+                    "PointLight",
                     "AmbientLight",
                     "LightGroup",
                     "Board",

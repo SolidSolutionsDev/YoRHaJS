@@ -13,6 +13,7 @@ import { Cube } from "../../GameComponents/Cube/Cube";
 import {BoardPlaneGeometry} from "../../GameComponents/BoardPlaneGeometry/BoardPlaneGeometry";
 import {DirectionalLight} from "../../GameComponents/DirectionalLight/DirectionalLight";
 import {AmbientLight} from "../../GameComponents/AmbientLight/AmbientLight";
+import {PointLight} from "../../GameComponents/PointLight/PointLight";
 
 
 const components = {
@@ -26,8 +27,8 @@ const components = {
   cube: Cube,
   boardPlaneGeometry: BoardPlaneGeometry,
   directionalLight: DirectionalLight,
+  pointLight: PointLight,
   ambientLight: AmbientLight,
-  // directionalLight: DirectionalLight(),
 };
 
 

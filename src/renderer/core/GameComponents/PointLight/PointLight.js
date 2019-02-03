@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 
-export class DirectionalLight extends React.Component {
+export class PointLight extends React.Component {
   light;
 
   initLight = () => {
     const { transform } = this.props;
-    this.light = new THREE.DirectionalLight(0xffffff, 1);
+    this.light = new THREE.PointLight(0xffffff, 1);
     transform.add(this.light);
   };
 
@@ -18,7 +18,7 @@ export class DirectionalLight extends React.Component {
   };
 
   updateLight = () => {
-    const { castShadow, color, intensity, position } = this.props;
+    const { castShadow, color, intensity, distance, position } = this.props;
 
     if (castShadow) {
       this.light.castShadow = true;
@@ -33,10 +33,8 @@ export class DirectionalLight extends React.Component {
       this.light.intensity = intensity;
     }
 
-    if (position) {
-      this.light.position.x = position.x || this.light.position.x ;
-      this.light.position.y = position.y || this.light.position.y ;
-      this.light.position.z = position.z || this.light.position.z ;
+    if (distance) {
+      this.light.distance = distance;
     }
   };
 
@@ -48,6 +46,6 @@ export class DirectionalLight extends React.Component {
   }
 }
 
-DirectionalLight.propTypes = {
+PointLight.propTypes = {
   transform: PropTypes.object.isRequired,
 };
