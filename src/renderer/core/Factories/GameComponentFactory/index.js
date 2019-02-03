@@ -14,6 +14,7 @@ import {BoardPlaneGeometry} from "../../GameComponents/BoardPlaneGeometry/BoardP
 import {DirectionalLight} from "../../GameComponents/DirectionalLight/DirectionalLight";
 import {AmbientLight} from "../../GameComponents/AmbientLight/AmbientLight";
 import {PointLight} from "../../GameComponents/PointLight/PointLight";
+import {Camera} from "../../GameComponents/Camera/Camera";
 
 
 const components = {
@@ -29,6 +30,7 @@ const components = {
   directionalLight: DirectionalLight,
   pointLight: PointLight,
   ambientLight: AmbientLight,
+  dynamicCameraManager: Camera,
 };
 
 

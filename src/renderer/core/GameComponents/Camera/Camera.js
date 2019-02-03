@@ -106,7 +106,11 @@ export class Camera extends React.Component {
     const { scene } = availableComponent;
     const cameraPositionData = allowedPositions[cameraAngle];
 
+    // alert(cameraPositionData);
     if (!cameraPositionData) {
+
+      // this.camera.position.set(10,10,10);
+      // this.camera.lookAt(new THREE.Vector3());
       return;
     }
 

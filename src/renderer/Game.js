@@ -3,7 +3,7 @@ import React from "react";
 // import PropTypes from 'prop-types'; // ES6
 import Renderer from "./RendererContainer";
 import Scene from "./core/Scene/SceneContainer";
-import Camera from "./core/Camera/CameraContainer";
+import Camera from "./core/GameComponents/Camera/CameraContainer";
 import {PhysicsService} from "./services/PhysicsService";
 import {AudioService} from "./services/AudioService";
 import {AnimationService} from "./services/AnimationService";
@@ -34,14 +34,16 @@ export class Game extends React.Component {
     this.registerUpdate(this.availableService[gameService.props.id].update);
   };
 
-  addGameComponent = (gameComponent) => {
+  addGameComponent = (gameComponent,alias) => {
     if (!gameComponent) {
       return;
     }
+
+    const componentPropretyName = alias ? alias : gameComponent.props.id;
     // console.log(gameComponent);
-    this.setState({[gameComponent.props.id]: gameComponent.getWrappedInstance() });
-    this.availableComponent[gameComponent.props.id] = gameComponent.getWrappedInstance();
-    this.registerUpdate(this.availableComponent[gameComponent.props.id].update);
+    this.setState({[componentPropretyName]: gameComponent.getWrappedInstance() });
+    this.availableComponent[componentPropretyName] = gameComponent.getWrappedInstance();
+    this.registerUpdate(this.availableComponent[componentPropretyName].update);
     console.log(this);
   };
 
@@ -98,6 +100,7 @@ export class Game extends React.Component {
     const _propsList = {
       availableComponent: this.availableComponent,
       availableService: this.availableService,
+      game:this,
       loadedCallback: this.props.loadedCallback,
     };
 
