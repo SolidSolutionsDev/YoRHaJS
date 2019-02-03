@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { GameObject } from "./GameObject";
 
 const getGameObjects = (state) => {
-    console.log(state.mainReducer.game.scene);
+    // console.log("child test0",state.mainReducer.game.scene.gameObjects);
     return state.mainReducer.game.scene.gameObjects;
 }
 
@@ -15,12 +15,12 @@ const getPrefabs = (state) => {
 }
 
 const mapStateToProps = (state,props) => ({
+    ...props,
     objects: getGameObjects(state),
     selfSettings: getSelf(state,props.id),
     transform: getSelf(state,props.id) ? getSelf(state,props.id).transform : undefined,
     prefabs: getPrefabs(state,props.id),
-    ...props
-  // ...state.mainReducer.game.scene,
+    // ...state.mainReducer.game.scene,
 });
 
 const mapDispatchToProps = (dispatch) => ({

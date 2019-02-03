@@ -90,17 +90,9 @@ export class Scene extends React.Component {
     console.log(this.scene);
 
     const _gameObjects = this.buildChildGameObjects();
-    // console.log("here",_gameObjects,this);
 
     return _gameObjects;
   }
-       /* {[
-          <ShoeGroupGameObject key="ShoeGroupGameObject" {..._editorProps} {..._shoesProps}/>
-          <LightGroupGameObject key="LightGroupGameObject" {..._editorProps} />
-        ]}
-        */
-
-
 }
 
 Scene.propTypes = {};

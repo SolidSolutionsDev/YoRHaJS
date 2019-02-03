@@ -73,12 +73,11 @@ import * as GameComponentFactory from "../Factories/GameComponentFactory";
 
     _getScene = (object) => {
       const { parent } = this.state;
+
       if (!parent) {
-        console.log("no scene parent found",object,object.parent);
         return null;
       }
       if (parent.type === "Scene") {
-        console.log(`found parent`,parent);
         return parent;
       }
       return this._getScene(parent);
