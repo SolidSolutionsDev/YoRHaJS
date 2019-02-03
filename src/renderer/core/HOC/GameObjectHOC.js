@@ -175,13 +175,12 @@ export function makeGameObject(id) {
       const _gameObjectComponents = this.buildGameComponents();
       return (
         [
-          {..._gameObjectComponents},
-          {...this.childGameObjects}
+          ..._gameObjectComponents,
+          ...this.childGameObjects
         ]
       );
     }
   };
-}
 
 
 /*
