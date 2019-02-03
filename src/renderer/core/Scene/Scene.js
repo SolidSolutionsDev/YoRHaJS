@@ -76,8 +76,7 @@ export class Scene extends React.Component {
       objects,
     };
 
-    const gameObjects = scene && scene.gameObjects ? scene.gameObjects.allIds
-        .filter((gameObjectId)=> {console.log(gameObjectId); return !scene.gameObjects.byId[gameObjectId].parent})
+    const gameObjects = scene && scene.children ? scene.children
         .map(gameObjectId=> {
           return <GameObject {..._editorProps} key={gameObjectId} id={gameObjectId}/>} )
         : []

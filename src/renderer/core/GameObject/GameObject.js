@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import * as THREE from "three";
 import * as GameComponentFactory from "../Factories/GameComponentFactory";
+import ConnectedGameObject from "./index";
 
 //TODO: add available component here maybe using contexts
 
@@ -80,7 +81,7 @@ import * as GameComponentFactory from "../Factories/GameComponentFactory";
       if (parent.type === "Scene") {
         return parent;
       }
-      return this._getScene(parent);
+      return parent.gameObject._getScene(parent);
     }
 
     getAllGameObject3DChildren = (object = this.transform) => {
@@ -105,7 +106,7 @@ import * as GameComponentFactory from "../Factories/GameComponentFactory";
       if (!gameObject) {
         return;
       }
-      const _wrappedGameObject = this.getWrappedGameObject(gameObject);
+      const _wrappedGameObject = gameObject.transform ? gameObject : this.getWrappedGameObject(gameObject);
       this.transform.add(_wrappedGameObject.transform);
       _wrappedGameObject.registerParent(this.transform);
       this.childGameObjects.push(gameObject);
@@ -172,7 +173,18 @@ import * as GameComponentFactory from "../Factories/GameComponentFactory";
           }
           ) : [];
       return components;
+    }
 
+
+    buildChildGameObjects = () => {
+      const { transform,debug, ...passThroughProps } = this.props;
+      const {objects, selfSettings, prefabs}  = this.props;
+      const gameObjects = selfSettings && selfSettings.children ? selfSettings.children
+              .map(gameObjectId=> {
+                return <ConnectedGameObject ref={this.registerChildGameObject} parent={this} key={gameObjectId} id={gameObjectId} scene={this.scene}
+                />} )
+          : []
+      return gameObjects;
     }
 
     render() {
@@ -182,10 +194,12 @@ import * as GameComponentFactory from "../Factories/GameComponentFactory";
       }
       this.axesHelper.visible = !!debug;
       const _gameObjectComponents = this.buildGameComponents();
+      const _childGameObjects = this.buildChildGameObjects();
       return (
         [
           ..._gameObjectComponents,
-          ...this.childGameObjects
+          ..._childGameObjects,
+          // ...this.childGameObjects
         ]
       );
     }
