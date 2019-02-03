@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .App-logo {

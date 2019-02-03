@@ -27,6 +27,7 @@ export class Camera extends React.Component {
       this.camera,
       renderer.renderer.domElement,
     );
+    this.setDomElementReadyToEvents();
     this.controls.update();
 
     this.setCameraPosition();
@@ -39,6 +40,15 @@ export class Camera extends React.Component {
 
     this.cameraOnResize();
   };
+
+  setDomElementReadyToEvents = ()=> {
+    const { availableComponent } = this.props;
+    const { renderer } = availableComponent;
+    const element = renderer.renderer.domElement;
+    element.style.pointerEvents = "all";
+    element.style.userSelect = "all";
+    element.style.webkitUserDrag = "auto";
+  }
 
   getObject = () => this.camera;
 
