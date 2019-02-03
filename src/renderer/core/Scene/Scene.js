@@ -53,6 +53,7 @@ export class Scene extends React.Component {
     const {
       addObject,
       availableComponent,
+      availableService,
       objects,
       // shoes,
       selectObject,
@@ -63,6 +64,7 @@ export class Scene extends React.Component {
       ref: this.registerChild,
       addObject,
       availableComponent,
+      availableService ,
       objects,
       // shoes,
       selectObject,

@@ -97,6 +97,7 @@ export class Game extends React.Component {
     }
     const _propsList = {
       availableComponent: this.availableComponent,
+      availableService: this.availableService,
       loadedCallback: this.props.loadedCallback,
     };
 

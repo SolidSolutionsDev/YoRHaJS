@@ -7,8 +7,7 @@ export class BoardPlaneGeometry extends React.Component {
   mesh;
 
   initBoard = () => {
-
-    const { transform } = this.props;
+    const { transform, gameObject} = this.props;
     // let geometry = new THREE.PlaneGeometry( 50, 50, 32 );
     let geometry = new THREE.BoxGeometry(
       this.props.dimensions.x,
@@ -21,6 +20,9 @@ export class BoardPlaneGeometry extends React.Component {
     });
     this.mesh = new THREE.Mesh(geometry, material);
     transform.add(this.mesh);
+
+    this.props.availableService.physics
+        .addNewBoxBody(gameObject.transform, this.props, this);
   };
 
   start = () => {
