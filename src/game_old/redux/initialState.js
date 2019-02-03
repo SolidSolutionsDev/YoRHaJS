@@ -36,8 +36,8 @@ export const initialState = {
                     //     },
                     //     children: [],
                     // },
-                    Cube: {
-                        id:"Cube",
+                    KubeGameObject: {
+                        id:"KubeGameObject",
                         transform:{
                         },
                         components: {
@@ -68,7 +68,7 @@ export const initialState = {
                 allIds: [
                     // "Camera",
                     // "DirectionalLight",
-                    "Cube"
+                    "KubeGameObject"
                 ],
             }
         }

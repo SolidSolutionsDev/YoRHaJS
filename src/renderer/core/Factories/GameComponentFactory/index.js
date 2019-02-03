@@ -13,6 +13,7 @@ import { SpriteComponent } from "../../GameComponents/Sprite/SpriteComponent";
 import { ShoeGroup } from "../../GameComponents/ShoeGroup/ShoeGroup";
 import { ShoeController } from "../../GameComponents/ShoeController/ShoeController";
 import { Cube } from "../../GameComponents/Cube/Cube";
+import {GameObject} from "../../GameObject/GameObject";
 
 
 const components = {
@@ -35,8 +36,11 @@ const getSelf = (state,id,parentId) => {
 
 
 const mapStateToProps = (state,props) => ({
+  ...props,
+  ...state.mainReducer.game.scene,
   selfSettings: getSelf(state,props.id,props._parentId),
-  ...state.game.scene,
+  // selfSettings: "getSelf(state,props.id,props._parentId)",
+
 });
 
 export const create = (type) => {
@@ -46,6 +50,12 @@ export const create = (type) => {
   }
   else {
     component = makeGameComponent(component,type);
+    component = connect(
+        mapStateToProps,
+        null,
+        null,
+        { withRef: true },
+    )(component);
   }
   console.log("components",components);
   return component;

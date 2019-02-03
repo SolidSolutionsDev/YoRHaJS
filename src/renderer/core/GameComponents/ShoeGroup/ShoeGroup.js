@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import * as GameObjectFactory from "../../Factories/GameObjectFactory";
+import * as GameObject from "../../GameObject";
 
 export class ShoeGroup extends React.Component {
   // getShoes = () => {
@@ -31,9 +31,9 @@ export class ShoeGroup extends React.Component {
         availableComponent,
       };
 
-      const ShoeGameObject = GameObjectFactory.create("shoe");
+      // const ShoeGameObject = GameObject.create("shoe");
 
-      return <ShoeGameObject ref={registerChildGameObject} {...objectProps} />;
+      return <GameObject id={"shoe"} ref={registerChildGameObject} {...objectProps} />;
     });
   };
 

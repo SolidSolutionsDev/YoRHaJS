@@ -1,7 +1,7 @@
 import React from "react";
 import * as THREE from "three";
 
-import * as GameObjectFactory from "../Factories/GameObjectFactory";
+import GameObject from "../GameObject";
 // const LightGroupGameObject = GameObjectFactory.create("lightGroup");
 // const ShoeGroupGameObject = GameObjectFactory.create("shoeGroup");
 
@@ -34,15 +34,18 @@ export class Scene extends React.Component {
   };
 
   registerChild = (child) => {
+    console.log("register child in parent", child);
     if (!child) {
       return;
     }
-    if (child.transform) {
-      this.scene.add(child.transform);
+    const childGameObject = child.getWrappedInstance();
+    if (childGameObject.transform) {
+      this.scene.add(childGameObject.transform);
     } else {
-      this.scene.add(child);
+      this.scene.add(childGameObject);
     }
-    this.children.push(child);
+    childGameObject.registerParent(this.scene);
+    this.children.push(childGameObject);
   };
 
 
@@ -54,14 +57,6 @@ export class Scene extends React.Component {
       // shoes,
       selectObject,
       selectCorner,
-      // unspecified_selectedObjectId,
-      // unspecified_selectedCornerId,
-      // unspecified_viewerActive,
-      // user_shoes,
-      // shoes_types,
-      // shoes_color_sets,
-      // color_options,
-      // current_selected_shoe,
         scene
     } = this.props;
     const _editorProps = {
@@ -74,8 +69,6 @@ export class Scene extends React.Component {
       selectCorner,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
-      // selectedObjectId: unspecified_selectedObjectId,
-      // selectedCornerId: unspecified_selectedCornerId,
     };
 
     const _viewerProps = {
@@ -86,11 +79,15 @@ export class Scene extends React.Component {
     const gameObjects = scene && scene.gameObjects ? scene.gameObjects.allIds
         .filter((gameObjectId)=> {console.log(gameObjectId); return !scene.gameObjects.byId[gameObjectId].parent})
         .map(gameObjectId=> {
-          const GameObject = GameObjectFactory.create(gameObjectId);
-          return <GameObject {..._editorProps} key={gameObjectId}/>} )
+          return <GameObject {..._editorProps} key={gameObjectId} id={gameObjectId}/>} )
         : []
 
     return gameObjects;
+  }
+
+  componentDidCatch(error, info) {
+    // You can also log the error to an error reporting service
+    console.log(error, info);
   }
 
   render = () => {
@@ -98,22 +95,17 @@ export class Scene extends React.Component {
     console.log(this.scene);
 
     const _gameObjects = this.buildChildGameObjects();
+    console.log("here",_gameObjects,this);
 
-    return (
-      <div
-        id="scene"
-        className="scene"
-        style={{ width: "100%", height: "100%" }}
-      >
-        {_gameObjects}
-      </div>
+    return _gameObjects;
+  }
        /* {[
           <ShoeGroupGameObject key="ShoeGroupGameObject" {..._editorProps} {..._shoesProps}/>
           <LightGroupGameObject key="LightGroupGameObject" {..._editorProps} />
         ]}
         */
-    );
-  };
+
+
 }
 
 Scene.propTypes = {};

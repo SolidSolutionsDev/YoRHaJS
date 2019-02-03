@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { makeGameObject } from "../../HOC/GameObjectHOC";
+import { GameObject } from "./GameObject";
 
 const getGameObjects = (state) => {
     console.log(state.mainReducer.game.scene);
@@ -7,8 +7,6 @@ const getGameObjects = (state) => {
 }
 
 const getSelf = (state,id) => {
-    console.log(state,id,state.mainReducer.game.scene.gameObjects.byId[id]);
-    console.log(state.mainReducer.game.scene);
   return state.mainReducer.game.scene.gameObjects.byId[id];
 }
 
@@ -21,6 +19,7 @@ const mapStateToProps = (state,props) => ({
     selfSettings: getSelf(state,props.id),
     transform: getSelf(state,props.id) ? getSelf(state,props.id).transform : undefined,
     prefabs: getPrefabs(state,props.id),
+    ...props
   // ...state.mainReducer.game.scene,
 });
 
@@ -28,15 +27,13 @@ const mapDispatchToProps = (dispatch) => ({
     // TODO : add here dispatch to use Instatiate https://docs.unity3d.com/ScriptReference/Object.Instantiate.html
  });
 
-export const create = (id) => {
-  let _gameObject = connect(
+export default connect(
       mapStateToProps,
-      mapDispatchToProps,
+      // mapDispatchToProps,
+     null,
       null,
       { withRef: true },
-  )(makeGameObject(id));
-  return _gameObject;
-};
+  )(GameObject);
 
 //
 // const _gameObjects = {

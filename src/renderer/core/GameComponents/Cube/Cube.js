@@ -8,8 +8,8 @@ export class Cube extends React.Component {
 
   loadCube = () => {
     const { transform } = this.props;
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    const geometry = new THREE.BoxGeometry( 10, 10, 10 );
+    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
     this.cube = new THREE.Mesh( geometry, material );
     transform.add(this.cube);
   };

@@ -5,8 +5,7 @@ import * as GameComponentFactory from "../Factories/GameComponentFactory";
 
 //TODO: add available component here maybe using contexts
 
-export function makeGameObject(id) {
-  return class extends React.Component {
+  export class GameObject extends React.Component {
     _type = "GameObject";
 
     transform = new THREE.Object3D();
@@ -16,6 +15,10 @@ export function makeGameObject(id) {
     components = {};
 
     childGameObjects = [];
+
+    state = {
+      parent:null,
+    }
 
     componentWillMount = () => {
       const { transform, id } = this.props;
@@ -60,18 +63,22 @@ export function makeGameObject(id) {
       scene.remove(this.transform);
     };
 
+    registerParent = (parent) => {
+      this.setState({parent:parent})
+    }
+
     get scene() {
       return this._getScene(this.transform);
     }
 
     _getScene = (object) => {
-      const { parent } = object;
+      const { parent } = this.state;
       if (!parent) {
-        console.log("no scene parent found");
+        console.log("no scene parent found",object,object.parent);
         return null;
       }
       if (parent.type === "Scene") {
-        // console.log(`found scene`,parent);
+        console.log(`found parent`,parent);
         return parent;
       }
       return this._getScene(parent);
@@ -101,6 +108,7 @@ export function makeGameObject(id) {
       }
       const _wrappedGameObject = this.getWrappedGameObject(gameObject);
       this.transform.add(_wrappedGameObject.transform);
+      _wrappedGameObject.registerParent(this.transform);
       this.childGameObjects.push(gameObject);
     };
 
@@ -141,15 +149,17 @@ export function makeGameObject(id) {
     buildGameComponents = () => {
       const { transform,debug, ...passThroughProps } = this.props;
       const {objects, selfSettings, prefabs}  = this.props;
+      console.log("component",this.props);
       const components = selfSettings && selfSettings.components ? Object.keys( selfSettings.components)
           .map(componentId=> {
             const GameObjectComponent = GameComponentFactory.create(componentId,this);
+            GameObjectComponent.displayName = "Component_"+componentId;
             return <GameObjectComponent
+                {...passThroughProps}
                 key={componentId}
                 id={componentId}
                 _parentId={this.id}
                 gameObject={this}
-                {...passThroughProps}
                 transform={this.transform}
                 scene={this.scene}
                 registerComponent={this.registerComponent}
