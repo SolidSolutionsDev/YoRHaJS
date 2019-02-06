@@ -7,6 +7,7 @@ import Camera from "./Core/GameComponents/Camera/CameraContainer";
 import {PhysicsService} from "./Services/PhysicsService";
 import {AudioService} from "./Services/AudioService";
 import {AnimationService} from "./Services/AnimationService";
+import {InputManager} from "./Core/InputManager";
 
 export class Game extends React.Component {
   frame = null;
@@ -111,6 +112,7 @@ export class Game extends React.Component {
       <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
       <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
       <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
+      <InputManager key="input" />,
     ];
   };
 }
