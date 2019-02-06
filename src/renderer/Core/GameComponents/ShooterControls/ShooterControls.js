@@ -23,30 +23,38 @@ export class ShooterControls extends React.Component {
   };
 
   moveLeft = () => {
+
+    const { transform } = this.props;
     // console.log('moveLeft');
     // this.activeMovements.left=true;
-    this.props.pivot.physicsBody.position.x -= this.moveRatio;
+    transform.physicsBody.position.x -= this.moveRatio;
   };
 
   moveRight = () => {
+
+    const { transform } = this.props;
     // console.log('moveRight');
-    this.props.pivot.physicsBody.position.x += this.moveRatio;
+    transform.physicsBody.position.x += this.moveRatio;
   };
 
   moveUp = () => {
+
+    const { transform } = this.props;
     // console.log('moveUp');
-    this.props.pivot.physicsBody.position.y += this.moveRatio;
+    transform.physicsBody.position.y += this.moveRatio;
   };
 
   moveDown = () => {
-    // console.log('moveDown',this.props.pivot.physicsBody);
-    // this.props.pivot.position.y-=this.moveRatio;
-    this.props.pivot.physicsBody.position.y -= this.moveRatio;
-    // //   this.props.pivot.physicsBody.angularDamping = 0;
-    //   this.props.pivot.physicsBody.linearFactor.x =0;
-    //   this.props.pivot.physicsBody.linearFactor.z =0;
-    //   this.props.pivot.physicsBody.linearFactor.y =0;
-    //   this.props.pivot.physicsBody.velocity.y += 1;
+
+    const { transform } = this.props;
+    // console.log('moveDown',transform.physicsBody);
+    // transform.position.y-=this.moveRatio;
+    transform.physicsBody.position.y -= this.moveRatio;
+    // //   transform.physicsBody.angularDamping = 0;
+    //   transform.physicsBody.linearFactor.x =0;
+    //   transform.physicsBody.linearFactor.z =0;
+    //   transform.physicsBody.linearFactor.y =0;
+    //   transform.physicsBody.velocity.y += 1;
   };
 
   shoot = () => {
@@ -54,17 +62,18 @@ export class ShooterControls extends React.Component {
   };
 
   mouseLook = e => {
+    const { transform } = this.props;
     // console.log('mouseLook',e);
     const _coords = e.detail.coordinates;
-    // this.props.pivot.lookAt(new THREE.Vector3(_coords.x,_coords.y,_coords.z ));
-    //console.log(this.props.pivot);
-    // this.props.pivot.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0), _coords.z * 2);
-    this.props.pivot.physicsBody.quaternion.setFromAxisAngle(
+    // transform.lookAt(new THREE.Vector3(_coords.x,_coords.y,_coords.z ));
+    //console.log(transform);
+    // transform.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0), _coords.z * 2);
+    transform.physicsBody.quaternion.setFromAxisAngle(
       new CANNON.Vec3(0, 0, 1),
       _coords.x * 2
     );
-    // this.props.pivot.physicsBody.rotation.y += _coords.x * 0.002;
-    // this.props.pivot.physicsBody.rotation.x += _coords.y * 0.002;
+    // transform.physicsBody.rotation.y += _coords.x * 0.002;
+    // transform.physicsBody.rotation.x += _coords.y * 0.002;
   };
 
   eventsMap = {
@@ -82,28 +91,25 @@ export class ShooterControls extends React.Component {
 
   registerEvents = () => {
     Object.keys(this.eventsMap).forEach(event => {
-      console.log(`here ${event.toString()}`, this.eventsMap[event]);
+      // console.log(`here ${event.toString()}`, this.eventsMap[event]);
       document.addEventListener(event, this.eventsMap[event]);
     });
   };
 
-  componentWillMount = () => {
+  start = () => {
     this.registerEvents();
-    // this.props.pivot.add( this.mesh );
+    // transform.add( this.mesh );
   };
 
   update = () => {
-    // this.props.pivot.rotation.y += 0.01;
+    // transform.rotation.y += 0.01;
     if (this.state.activeLeft) this.moveLeft();
     if (this.state.activeRight) this.moveRight();
     if (this.state.activeUp) this.moveUp();
     if (this.state.activeDown) this.moveDown();
   };
 
-  render() {
-    // Wraps the input component in a container, without mutating it. Good!
-    return null;
-  }
+    render = () => null;
 }
 
 ShooterControls.propTypes = {};

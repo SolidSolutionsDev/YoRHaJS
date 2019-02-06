@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 import logo from "./yorha-black.png";
 import "./App.css";
-import YoRHa from "./game_old/YoRHa";
+// import YoRHa from "../game_old/YoRHa";
 
 
 import { createStore } from "redux";

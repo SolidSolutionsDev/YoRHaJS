@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-
 import * as THREE from "three";
+
 import * as GameComponentFactory from "../Factories/GameComponentFactory";
 import ConnectedGameObject from "./index";
 
@@ -29,8 +29,13 @@ import ConnectedGameObject from "./index";
      this.id = id;
 
       if (transform && transform.position) {
-        this.transform.position.set(...transform.position);
+        // this.transform.position.set(...transform.position);
+        this.transform.position.x = transform.position && transform.position.x ? transform.position.x : this.transform.position.x;
+        this.transform.position.y = transform.position && transform.position.y ? transform.position.y : this.transform.position.y;
+        this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
       }
+      console.log("shooter",this.id);
+
       this.transform.name = `${id}_transform`;
 
       this.transform.gameObject = this;
@@ -149,7 +154,7 @@ import ConnectedGameObject from "./index";
     buildGameComponents = () => {
       const { transform,debug, ...passThroughProps } = this.props;
       const {objects, selfSettings, prefabs}  = this.props;
-      console.log("component",this.props);
+      // console.log("component",this.props);
       const components = selfSettings && selfSettings.components ? Object.keys( selfSettings.components)
           .map(componentId=> {
             const GameObjectComponent = GameComponentFactory.create(componentId,this);
@@ -161,6 +166,7 @@ import ConnectedGameObject from "./index";
                 _parentId={this.id}
                 gameObject={this}
                 transform={this.transform}
+                transformState={transform}
                 scene={this.scene}
                 registerComponent={this.registerComponent}
                 registerChildGameObject={this.registerChildGameObject}

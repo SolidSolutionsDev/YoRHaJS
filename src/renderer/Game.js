@@ -2,8 +2,8 @@
 import React from "react";
 // import PropTypes from 'prop-types'; // ES6
 import Renderer from "./RendererContainer";
-import Scene from "./core/Scene/SceneContainer";
-import Camera from "./core/GameComponents/Camera/CameraContainer";
+import Scene from "./Core/Scene/SceneContainer";
+import Camera from "./Core/GameComponents/Camera/CameraContainer";
 import {PhysicsService} from "./Services/PhysicsService";
 import {AudioService} from "./Services/AudioService";
 import {AnimationService} from "./Services/AnimationService";

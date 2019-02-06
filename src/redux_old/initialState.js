@@ -1,4 +1,4 @@
-import {BoardEntity} from "../nier/Board/BoardEntity";
+import React from "react";
 
 export const initialState = {
     game: {
@@ -23,7 +23,9 @@ export const initialState = {
             children:[
                 "LightGroup",
                 "Board",
-                "TestCube"],
+                "TestCube",
+                "TestShooter",
+            ],
             gameObjects: {
                 byId: {
                     // Camera: {
@@ -47,6 +49,22 @@ export const initialState = {
                         components: {
                             cube:{
                                 rotationX:0.01,
+                                opacity:0.9,
+                            },
+                        },
+                        children: [],
+                    },
+                    TestShooter: {
+                        transform:{
+                            position:{ x: 0, y: 0, z: 4 }
+                        },
+                        components: {
+                            shooterControls:{
+                            },
+                            shooterGeometry:{
+                                dimensions:{ x: 2, y: 2, z: 2 },
+                                // position:{ x: 0, y: 0, z: 4 },
+                                mass: 1
                             },
                         },
                         children: [],

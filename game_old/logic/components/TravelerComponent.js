@@ -32,7 +32,7 @@ export const isTraveler = object => {
         }
       })
       .onComplete(function() {
-        // TODO: emit event or dispatch to redux
+        // TODO: emit event or dispatch to redux_old
       })
       .start();
   }
@@ -80,7 +80,7 @@ export const isTraveler = object => {
         _object.rotation.fromArray([_from.x, _from.y, _from.z]);
       })
       .onComplete(function() {
-        // TODO: emit event or dispatch to redux
+        // TODO: emit event or dispatch to redux_old
       })
       .start();
   }

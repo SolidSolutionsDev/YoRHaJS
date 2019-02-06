@@ -2,9 +2,9 @@ import { connect } from "react-redux";
 import { makeGameComponent } from "../../HOC/GameComponentHOC";
 
 // import { OBJMeshGeometry } from "../../GameComponents/OBJMeshGeometry/OBJMeshGeometry";
+// import { EditorTransformObjectUpdate } from "../../Components/EditorTransformObjectUpdate/EditorTransformObjectUpdate";
 import { ObjectLoaderMesh } from "../../GameComponents/ObjectLoaderMesh/ObjectLoaderMesh";
 import { TransformUpdate } from "../../GameComponents/TransformUpdate/TransformUpdate";
-// import { EditorTransformObjectUpdate } from "../../Components/EditorTransformObjectUpdate/EditorTransformObjectUpdate";
 import { CSSLabelTo3D } from "../../GameComponents/CSSLabelTo3D/CSSLabelTo3D";
 import { SpriteComponent } from "../../GameComponents/Sprite/SpriteComponent";
 import { ShoeGroup } from "../../GameComponents/ShoeGroup/ShoeGroup";
@@ -15,6 +15,8 @@ import {DirectionalLight} from "../../GameComponents/DirectionalLight/Directiona
 import {AmbientLight} from "../../GameComponents/AmbientLight/AmbientLight";
 import {PointLight} from "../../GameComponents/PointLight/PointLight";
 import {Camera} from "../../GameComponents/Camera/Camera";
+import {ShooterControls} from "../../GameComponents/ShooterControls/ShooterControls";
+import {ShooterGeometry} from "../../GameComponents/ShooterGeometry/ShooterGeometry";
 
 
 const components = {
@@ -31,6 +33,8 @@ const components = {
   pointLight: PointLight,
   ambientLight: AmbientLight,
   dynamicCameraManager: Camera,
+  shooterControls: ShooterControls,
+  shooterGeometry: ShooterGeometry,
 };
 
 
