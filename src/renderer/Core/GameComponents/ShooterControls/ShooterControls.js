@@ -62,18 +62,34 @@ export class ShooterControls extends React.Component {
   };
 
   mouseLook = e => {
-    const { transform } = this.props;
+    const { transform, availableComponent,availableService } = this.props;
     // console.log('mouseLook',e);
     const _coords = e.detail.coordinates;
     // transform.lookAt(new THREE.Vector3(_coords.x,_coords.y,_coords.z ));
     //console.log(transform);
     // transform.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0), _coords.z * 2);
+
+ /*
     transform.physicsBody.quaternion.setFromAxisAngle(
       new CANNON.Vec3(0, 0, 1),
       _coords.x * 2
     );
+*/
+
     // transform.physicsBody.rotation.y += _coords.x * 0.002;
     // transform.physicsBody.rotation.x += _coords.y * 0.002;
+
+      const positionClone = transform.position.clone();
+
+      let vector = positionClone.project(availableComponent.camera.camera);
+      const _coordsVec3 = availableService.physics.Vec3(_coords.x, _coords.y, 0);
+      const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
+      // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
+      transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
+
+      // var canvas = availableComponent.renderer.canvas;
+      // vector.x = (vector.x + 1) / 2 * canvas.width;
+      // vector.y = -(vector.y - 1) / 2 * canvas.height;
   };
 
   eventsMap = {
