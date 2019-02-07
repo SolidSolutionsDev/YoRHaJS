@@ -119,7 +119,21 @@ export class ShooterControls extends React.Component {
       // var canvas = availableComponent.renderer.canvas;
       // vector.x = (vector.x + 1) / 2 * canvas.width;
       // vector.y = -(vector.y - 1) / 2 * canvas.height;
+
+      this.updateMovement();
   };
+
+  updateMovement = () => {
+      // transform.rotation.y += 0.01;s
+      if (this.state.activeLeft) this.moveLeft();
+      if (this.state.activeRight) this.moveRight();
+      if (this.state.activeUp) this.moveUp();
+      if (this.state.activeDown) this.moveDown();
+      if (this.state.activeLookUp) this.lookUp();
+      if (this.state.activeLookDown) this.lookDown();
+      if (this.state.activeLookLeft) this.lookLeft();
+      if (this.state.activeLookRight) this.lookRight();
+  }
 
   eventsMap = {
     moveleft: () => this.setState({ activeLeft: true }),
@@ -155,15 +169,7 @@ export class ShooterControls extends React.Component {
   };
 
   update = () => {
-    // transform.rotation.y += 0.01;
-    if (this.state.activeLeft) this.moveLeft();
-    if (this.state.activeRight) this.moveRight();
-    if (this.state.activeUp) this.moveUp();
-    if (this.state.activeDown) this.moveDown();
-    if (this.state.activeLookUp) this.lookUp();
-    if (this.state.activeLookDown) this.lookDown();
-    if (this.state.activeLookLeft) this.lookLeft();
-    if (this.state.activeLookRight) this.lookRight();
+    this.updateMovement()
   };
 
     render = () => null;
