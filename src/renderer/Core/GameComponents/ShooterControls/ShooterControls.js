@@ -22,6 +22,35 @@ export class ShooterControls extends React.Component {
     movementCallback: null
   };
 
+  lookDown = () => {
+    const { transform } = this.props;
+      transform.physicsBody.quaternion.setFromAxisAngle(
+          new CANNON.Vec3(0, 0, 1),
+          Math.PI/2
+      );
+  };
+  lookUp = () => {
+    const { transform } = this.props;
+      transform.physicsBody.quaternion.setFromAxisAngle(
+          new CANNON.Vec3(0, 0, 1),
+          -Math.PI/2
+      );
+  };
+
+  lookLeft = () => {
+    const { transform } = this.props;
+      transform.physicsBody.quaternion.setFromAxisAngle(
+          new CANNON.Vec3(0, 0, 1),
+          Math.PI
+      );
+  };
+  lookRight = () => {
+    const { transform } = this.props;
+      transform.physicsBody.quaternion.setFromAxisAngle(
+          new CANNON.Vec3(0, 0, 1),
+          0
+      );
+  };
   moveLeft = () => {
 
     const { transform } = this.props;
@@ -101,6 +130,14 @@ export class ShooterControls extends React.Component {
     moveright_keyup: () => this.setState({ activeRight: false }),
     moveup_keyup: () => this.setState({ activeUp: false }),
     movedown_keyup: () => this.setState({ activeDown: false }),
+    lookup: () => this.setState({ activeLookUp: true }),
+    lookup_keyup: () => this.setState({ activeLookUp: false }),
+    lookdown: () => this.setState({ activeLookDown: true }),
+    lookdown_keyup: () => this.setState({ activeLookDown: false }),
+    lookleft: () => this.setState({ activeLookLeft: true }),
+    lookleft_keyup: () => this.setState({ activeLookLeft: false }),
+    lookright: () => this.setState({ activeLookRight: true }),
+    lookright_keyup: () => this.setState({ activeLookRight: false }),
     shoot: this.shoot,
     mousem: this.mouseLook
   };
@@ -123,6 +160,10 @@ export class ShooterControls extends React.Component {
     if (this.state.activeRight) this.moveRight();
     if (this.state.activeUp) this.moveUp();
     if (this.state.activeDown) this.moveDown();
+    if (this.state.activeLookUp) this.lookUp();
+    if (this.state.activeLookDown) this.lookDown();
+    if (this.state.activeLookLeft) this.lookLeft();
+    if (this.state.activeLookRight) this.lookRight();
   };
 
     render = () => null;
