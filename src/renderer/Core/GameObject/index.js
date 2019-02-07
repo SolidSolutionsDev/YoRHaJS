@@ -19,6 +19,7 @@ const mapStateToProps = (state,props) => ({
     objects: getGameObjects(state),
     selfSettings: getSelf(state,props.id),
     transform: getSelf(state,props.id) ? getSelf(state,props.id).transform : undefined,
+    debug: getSelf(state,props.id) ? getSelf(state,props.id).debug : undefined,
     prefabs: getPrefabs(state,props.id),
     // ...state.mainReducer.game.scene,
 });

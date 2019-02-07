@@ -44,6 +44,7 @@ export const initialState = {
                     //     children: [],
                     // },
                     TestCube: {
+                        debug:true,
                         transform:{
                         },
                         components: {
@@ -55,6 +56,7 @@ export const initialState = {
                         children: [],
                     },
                     TestShooter: {
+                        debug:true,
                         transform:{
                             position:{ x: 0, y: 0, z: 4 }
                         },
@@ -70,6 +72,7 @@ export const initialState = {
                         children: [],
                     },
                     Board: {
+                        debug:true,
                         transform:{
                         },
                         components: {
