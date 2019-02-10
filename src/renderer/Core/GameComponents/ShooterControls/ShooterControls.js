@@ -91,9 +91,9 @@ export class ShooterControls extends React.Component {
   };
 
   mouseLook = e => {
-    const { transform, availableComponent,availableService } = this.props;
     // console.log('mouseLook',e);
     const _coords = e.detail.coordinates;
+    this.coords = _coords;
     // transform.lookAt(new THREE.Vector3(_coords.x,_coords.y,_coords.z ));
     //console.log(transform);
     // transform.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0), _coords.z * 2);
@@ -108,13 +108,7 @@ export class ShooterControls extends React.Component {
     // transform.physicsBody.rotation.y += _coords.x * 0.002;
     // transform.physicsBody.rotation.x += _coords.y * 0.002;
 
-      const positionClone = transform.position.clone();
-
-      let vector = positionClone.project(availableComponent.camera.camera);
-      const _coordsVec3 = availableService.physics.Vec3(_coords.x, _coords.y, 0);
-      const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
-      // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
-      transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
+      this.updateMouseLook();
 
       // var canvas = availableComponent.renderer.canvas;
       // vector.x = (vector.x + 1) / 2 * canvas.width;
@@ -122,6 +116,19 @@ export class ShooterControls extends React.Component {
 
       this.updateMovement();
   };
+
+  updateMouseLook = () => {
+      const { transform, availableComponent,availableService } = this.props;
+    if (this.coords) {
+        const positionClone = transform.position.clone();
+
+        let vector = positionClone.project(availableComponent.camera.camera);
+        const _coordsVec3 = availableService.physics.Vec3(this.coords.x, this.coords.y, 0);
+        const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
+        // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
+        transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
+    }
+  }
 
   updateMovement = () => {
       // transform.rotation.y += 0.01;s
@@ -169,7 +176,8 @@ export class ShooterControls extends React.Component {
   };
 
   update = () => {
-    this.updateMovement()
+    this.updateMovement();
+    this.updateMouseLook();
   };
 
     render = () => null;
