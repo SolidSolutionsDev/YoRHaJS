@@ -21,10 +21,10 @@ export const initialState = {
         },
         scene:{
             children:[
-                "LightGroup",
-                "Board",
+                "lightGroup",
+                "board1",
                 "testCubeGameObject1",
-                "TestShooter",
+                "testShooter1",
             ],
             gameObjects: {
                 byId: {
@@ -47,100 +47,53 @@ export const initialState = {
                     testCubeGameObject1: {
                         debug:true,
                         prefab:"TestCube",
-                        transform:{
-                        },
-                        components: {
-                            cube:{
-                                opacity:0.5,
-                            },
-                        },
-                        children: [],
                     },
-                    TestShooter: {
+                    testShooter1: {
                         debug:true,
                         transform:{
                             position:{ x: 0, y: 0, z: 4 }
                         },
-                        components: {
-                            shooterControls:{
-                            },
-                            shooterGeometry:{
-                                dimensions:{ x: 2, y: 2, z: 2 },
-                                // position:{ x: 0, y: 0, z: 4 },
-                                mass: 1
-                            },
-                        },
-                        children: [],
+                        prefab:"TestShooter",
                     },
-                    Board: {
+                    board1: {
                         debug:true,
-                        transform:{
-                        },
                         components: {
                             boardPlaneGeometry:{
                                 rotationX:0.01,
                                 dimensions:{ x: 50, y: 50, z: 2 },
                                 mass: 0,
-                            },
-                        },
-                        children: [],
+                            },},
+                        prefab:"Board",
                     },
-                    LightGroup: {
+                    lightGroup: {
                       transform:{},
                       components: {},
-                      children: ["DirectionalLight", "AmbientLight","PointLight"]
+                      children: ["directionalLight1", "ambientLight1","pointLight1"]
                     },
-                    DirectionalLight: {
-                        transform:{
-                        },
-                        components:{
-                            directionalLight: {
-                                color: 0xffffff,
-                                intensity:0.7,
-                                position: {
-                                    x:0,
-                                    y:0,
-                                    z:1,
-                                }
-                            }
-                        },
+                    directionalLight1: {
+                      transform:{},
+                      components: {},
+                            prefab:"DirectionalLight",
                     },
-                    PointLight: {
-                        transform:{
-                            position: {
-                                    x:10,
-                                    y:7,
-                                    z:5,
-                                }
-                        },
-                        components:{
-                            pointLight: {
-                                castShadow:true,
-                                color: 0xffffff,
-                                intensity:1,
-                                distance:100,
-                            }
-                        },
+                    ambientLight1: {
+                      transform:{},
+                      components: {},
+                        prefab:"AmbientLight",
                     },
-                    AmbientLight: {
-                        transform:{
-                        },
-                        components:{
-                            ambientLight: {
-                                color: 0x222222,
-                            }
-                        },
-                        children: [],
+                    pointLight1: {
+                      transform:{},
+                      components: {},
+                        prefab:"PointLight",
                     },
                 },
                 allIds: [
                     // "Camera",
-                    "DirectionalLight",
-                    "PointLight",
-                    "AmbientLight",
-                    "LightGroup",
-                    "Board",
                     "testCubeGameObject1",
+                    "testShooter1",
+                    "board1",
+                    "lightGroup",
+                    "directionalLight1",
+                    "ambientLight1",
                 ],
             },
         },
@@ -161,9 +114,6 @@ export const initialState = {
                 },
                 TestShooter: {
                     debug:true,
-                    transform:{
-                        position:{ x: 0, y: 0, z: 4 }
-                    },
                     components: {
                         shooterControls:{
                         },
@@ -181,17 +131,9 @@ export const initialState = {
                     },
                     components: {
                         boardPlaneGeometry:{
-                            rotationX:0.01,
-                            dimensions:{ x: 50, y: 50, z: 2 },
-                            mass: 0,
                         },
                     },
                     children: [],
-                },
-                LightGroup: {
-                    transform:{},
-                    components: {},
-                    children: ["DirectionalLight", "AmbientLight","PointLight"]
                 },
                 DirectionalLight: {
                     transform:{
