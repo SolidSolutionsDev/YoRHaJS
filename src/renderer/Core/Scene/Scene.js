@@ -8,13 +8,9 @@ import GameObject from "../GameObject";
 export class Scene extends React.Component {
   scene = new THREE.Scene();
 
-  size = 10;
-
   children = [];
 
   updateCallbacksArray = [];
-
-  cornerCubes = [];
 
   state = {
     // loaded: false,
@@ -55,29 +51,17 @@ export class Scene extends React.Component {
       availableComponent,
       availableService,
       game,
-      objects,
-      // shoes,
-      selectObject,
-      selectCorner,
-        scene
+      scene
     } = this.props;
+  
     const _editorProps = {
       ref: this.registerChild,
       addObject,
       availableComponent,
       availableService ,
       game,
-      objects,
-      // shoes,
-      selectObject,
-      selectCorner,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
-    };
-
-    const _viewerProps = {
-      ref: this.registerChild,
-      objects,
     };
 
     const gameObjects = scene && scene.children ? scene.children

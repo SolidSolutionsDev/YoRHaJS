@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 const THREE = require("three");
 
 export class Renderer extends React.Component {
-
-  
   renderer = new THREE.WebGLRenderer({
     antialias: this.props.antialias,
     shadowMap: true,
