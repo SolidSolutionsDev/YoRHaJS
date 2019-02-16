@@ -10,6 +10,8 @@ import {AudioService} from "./Services/AudioService";
 import {AnimationService} from "./Services/AnimationService";
 import {InputService} from "./Core/InputService";
 
+import * as GameContext from "./GameContext";
+
 export class Game extends React.Component {
   frame = null;
 
@@ -106,15 +108,19 @@ export class Game extends React.Component {
       loadedCallback: this.props.loadedCallback,
     };
 
-    return [
-      <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
-      <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
-      <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
-      <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
-      <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
-      <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
-      <InputService key="input" ref={this.addGameService} key="input" id="input"/>,
-    ];
+    const t= "a";
+
+    return (
+      <GameContext.Provider value={t}>
+        <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
+        <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
+        <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
+        <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
+        <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
+        <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
+        <InputService ref={this.addGameService} key="input" id="input"/>,
+    </GameContext.Provider>
+    );
   };
 }
 

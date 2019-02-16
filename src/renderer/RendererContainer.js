@@ -6,7 +6,6 @@ const getAssetLoadState = (state) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { scene, camera } = ownProps.availableComponent;
   return {
     assetsLoadState: getAssetLoadState(state),
     ...state.mainReducer.game.renderer,

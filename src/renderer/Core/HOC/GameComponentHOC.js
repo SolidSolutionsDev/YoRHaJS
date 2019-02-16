@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import * as THREE from "three";
+import * as GameContext from "../../GameContext";
 
 export function makeGameComponent(WrappedComponent, name) {
   return class extends React.Component {
@@ -57,7 +57,15 @@ export function makeGameComponent(WrappedComponent, name) {
 
     render() {
       // Wraps the input component in a container, without mutating it. Good!
-      return <WrappedComponent {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />;
+      return (
+      <GameContext.Consumer>
+        {(context) => { console.log(context); return (
+          <WrappedComponent {...context} {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />
+        )}}
+      </GameContext.Consumer>
+
+      )
     }
   };
 }
+
