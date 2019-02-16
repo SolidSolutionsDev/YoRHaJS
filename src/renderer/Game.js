@@ -1,6 +1,7 @@
 /* eslint-disable react/default-props-match-prop-types */
 import React from "react";
-// import PropTypes from 'prop-types'; // ES6
+import PropTypes from 'prop-types'; // ES6
+
 import Renderer from "./RendererContainer";
 import Scene from "./Core/Scene/SceneContainer";
 import Camera from "./Core/GameComponents/Camera/CameraContainer";
@@ -97,6 +98,7 @@ export class Game extends React.Component {
     if (this.unmounting) {
       return null;
     }
+    // TODO: convert to "react context"
     const _propsList = {
       availableComponent: this.availableComponent,
       availableService: this.availableService,
@@ -115,3 +117,7 @@ export class Game extends React.Component {
     ];
   };
 }
+
+Game.propTypes = {
+  loadedCallback: PropTypes.func,
+};

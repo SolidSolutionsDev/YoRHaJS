@@ -5,10 +5,12 @@ import PropTypes from "prop-types";
 const THREE = require("three");
 
 export class Renderer extends React.Component {
+
+  
   renderer = new THREE.WebGLRenderer({
-    antialias: true,
+    antialias: this.props.antialias,
     shadowMap: true,
-    alpha: true,
+    alpha: this.props.alpha,
     preserveDrawingBuffer: true,
   });
 
@@ -154,6 +156,7 @@ export class Renderer extends React.Component {
 Renderer.propTypes = {
   availableWidth: PropTypes.number,
   availableHeight: PropTypes.number,
+  assetsLoadState: PropTypes.object,
   // backgroundColor: PropTypes.string.isRequired,
   // availableComponent: PropTypes.object.isRequired,
 };

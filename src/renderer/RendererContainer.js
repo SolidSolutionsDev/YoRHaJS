@@ -3,29 +3,22 @@ import { Renderer } from "./Renderer";
 import { addObject } from "../stores/scene/actions";
 
 const getAssetLoadState = (state) => {
-  return state.mainReducer.engine.assetsLoadState;
+  return state.mainReducer.game.assetsLoadState;
 }
 
 const mapStateToProps = (state, ownProps) => {
   const { scene, camera } = ownProps.availableComponent;
   return {
     assetsLoadState: getAssetLoadState(state),
-    ...state.scene,
     scene,
     camera,
     ...state.mainReducer.game.renderer,
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addObject: (parameters) => {
-    dispatch(addObject(parameters));
-  },
-});
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  null,
   null,
   { withRef: true },
 )(Renderer);
