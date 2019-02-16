@@ -47,7 +47,6 @@ export class Scene extends React.Component {
 
   buildChildGameObjects = () => {
     const {
-      addObject,
       availableComponent,
       availableService,
       game,
@@ -56,7 +55,6 @@ export class Scene extends React.Component {
   
     const _editorProps = {
       ref: this.registerChild,
-      addObject,
       availableComponent,
       availableService ,
       game,

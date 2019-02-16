@@ -19,6 +19,11 @@ export const mainReducer = (state = initialState, action) => {
         ...state,
         assetsLoadState,
       };
+    case "INSTANTIATE":
+
+      return {
+        ...state,
+      };
     default:
       return state;
   }
