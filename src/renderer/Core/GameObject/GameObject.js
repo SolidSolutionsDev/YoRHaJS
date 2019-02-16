@@ -34,7 +34,6 @@ import ConnectedGameObject from "./index";
         this.transform.position.y = transform.position && transform.position.y ? transform.position.y : this.transform.position.y;
         this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
       }
-      console.log("shooter",this.id);
 
       this.transform.name = `${id}_transform`;
 
@@ -157,7 +156,6 @@ import ConnectedGameObject from "./index";
       const selfGameObjectComponents = selfSettings && selfSettings.components ? selfSettings.components : {};
       const prefabGameObjectComponents = prefabSettings && prefabSettings.components ? prefabSettings.components : {};
       const compoundGameObjectComponents = {...prefabGameObjectComponents,...selfGameObjectComponents };
-      console.log("bcg",this.props,compoundGameObjectComponents);
       const components = Object.keys(compoundGameObjectComponents)
           .map(componentId=> {
             const GameObjectComponent = GameComponentFactory.create(componentId,this);

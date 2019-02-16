@@ -3,7 +3,6 @@ import { Renderer } from "./Renderer";
 import { addObject } from "../stores/scene/actions";
 
 const getAssetLoadState = (state) => {
-  console.log(state);
   return state.mainReducer.engine.assetsLoadState;
 }
 

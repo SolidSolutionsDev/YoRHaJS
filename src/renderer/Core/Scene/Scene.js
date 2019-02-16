@@ -90,8 +90,6 @@ export class Scene extends React.Component {
 
   render = () => {
 
-    console.log(this.scene);
-
     const _gameObjects = this.buildChildGameObjects();
 
     return _gameObjects;

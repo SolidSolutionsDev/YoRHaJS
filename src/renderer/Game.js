@@ -7,7 +7,7 @@ import Camera from "./Core/GameComponents/Camera/CameraContainer";
 import {PhysicsService} from "./Services/PhysicsService";
 import {AudioService} from "./Services/AudioService";
 import {AnimationService} from "./Services/AnimationService";
-import {InputManager} from "./Core/InputManager";
+import {InputService} from "./Core/InputService";
 
 export class Game extends React.Component {
   frame = null;
@@ -45,7 +45,6 @@ export class Game extends React.Component {
     this.setState({[componentPropretyName]: gameComponent.getWrappedInstance() });
     this.availableComponent[componentPropretyName] = gameComponent.getWrappedInstance();
     this.registerUpdate(this.availableComponent[componentPropretyName].update);
-    console.log(this);
   };
 
   start = () => {
@@ -73,7 +72,7 @@ export class Game extends React.Component {
 
   updateChildren = (time) => {
     this.updateCallbacksArray.forEach((update) => {
-      update(time);
+      update && update(time);
     });
   };
 
@@ -112,7 +111,7 @@ export class Game extends React.Component {
       <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
       <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
       <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
-      <InputManager key="input" />,
+      <InputService key="input" ref={this.addGameService} key="input" id="input"/>,
     ];
   };
 }

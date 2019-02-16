@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-export class InputManager extends Component {
+export class InputService extends Component {
 
     componentWillMount() {
         window.addEventListener("mousemove", function (event) {

@@ -1,5 +1,5 @@
 import React from "react";
-import * as ComponentFactory from "../../Factories/GameComponentFactory";
+import * as ComponentFactory from "../../../src/renderer/Core/Factories/GameComponentFactory";
 
 const ObjectLoaderMeshComponent = ComponentFactory.create("objectLoader");
 const ShoeManagerComponent = ComponentFactory.create(
