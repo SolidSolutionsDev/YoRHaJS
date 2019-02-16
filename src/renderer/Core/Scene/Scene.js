@@ -2,8 +2,8 @@ import React from "react";
 import * as THREE from "three";
 
 import GameObject from "../GameObject";
-// const LightGroupGameObject = GameObjectFactory.create("lightGroup");
-// const ShoeGroupGameObject = GameObjectFactory.create("shoeGroup");
+
+import * as GameContext from "../../GameContext";
 
 export class Scene extends React.Component {
   scene = new THREE.Scene();
@@ -44,6 +44,14 @@ export class Scene extends React.Component {
     this.children.push(childGameObject);
   };
 
+  getGameObjectDataById = (id) => {
+    return this.props.gameObjects[id];
+  }
+
+  getPrefabDataById = (id) => {
+    return this.props.prefabs[id];
+  }
+
 
   buildChildGameObjects = () => {
     const {
@@ -52,19 +60,19 @@ export class Scene extends React.Component {
       game,
       scene
     } = this.props;
-  
-    const _editorProps = {
+
+    const _gameObjectProps = {
       ref: this.registerChild,
-      availableComponent,
-      availableService ,
-      game,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
     };
 
     const gameObjects = scene && scene.children ? scene.children
         .map(gameObjectId=> {
-          return <GameObject {..._editorProps} key={gameObjectId} id={gameObjectId}/>} )
+          return  <GameContext.Consumer>
+            {(context) => { console.log(context); return ( <GameObject {...context} {..._gameObjectProps} key={gameObjectId} id={gameObjectId}/>) }  }
+          </GameContext.Consumer>
+            })
         : []
 
     return gameObjects;

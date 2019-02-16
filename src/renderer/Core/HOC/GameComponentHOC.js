@@ -59,7 +59,7 @@ export function makeGameComponent(WrappedComponent, name) {
       // Wraps the input component in a container, without mutating it. Good!
       return (
       <GameContext.Consumer>
-        {(context) => { console.log(context); return (
+        {(context) => { return (
           <WrappedComponent {...context} {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />
         )}}
       </GameContext.Consumer>

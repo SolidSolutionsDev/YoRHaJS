@@ -111,7 +111,7 @@ export class Game extends React.Component {
     const t= "a";
 
     return (
-      <GameContext.Provider value={t}>
+      <GameContext.Provider value={{..._propsList}}>
         <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
         <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
         <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
