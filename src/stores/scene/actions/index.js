@@ -11,18 +11,6 @@ export const emitLoadingAsset = (filename, total) => ({
   filename,
   total,
 });
-export const updateObject = (id, parameters) => ({
-  type: "UPDATE_SHOE",
-  id,
-  parameters,
-});
-
-export const updateShoeMaterial = (id, materialId, parameters) => ({
-  type: "UPDATE_SHOE_MATERIAL",
-  id,
-  materialId,
-  parameters,
-});
 
 export const updateSceneObject = (parametersObject) => ({
   type: "UPDATE_SCENE_PARAMETERS",

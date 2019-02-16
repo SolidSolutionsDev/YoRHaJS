@@ -57,7 +57,7 @@ export function makeGameComponent(WrappedComponent, name) {
 
     render() {
       // Wraps the input component in a container, without mutating it. Good!
-      return <WrappedComponent {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />;
+      return <WrappedComponent {...this.props} {...this.props.prefabSettings} {...this.props.selfSettings} ref={this.registerComponent} />;
     }
   };
 }

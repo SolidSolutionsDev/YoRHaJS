@@ -153,9 +153,12 @@ import ConnectedGameObject from "./index";
 
     buildGameComponents = () => {
       const { transform,debug, ...passThroughProps } = this.props;
-      const {objects, selfSettings, prefabs}  = this.props;
-      // console.log("component",this.props);
-      const components = selfSettings && selfSettings.components ? Object.keys( selfSettings.components)
+      const { selfSettings, prefabSettings}  = this.props;
+      const selfGameObjectComponents = selfSettings && selfSettings.components ? selfSettings.components : {};
+      const prefabGameObjectComponents = prefabSettings && prefabSettings.components ? prefabSettings.components : {};
+      const compoundGameObjectComponents = {...prefabGameObjectComponents,...selfGameObjectComponents };
+      console.log("bcg",this.props,compoundGameObjectComponents);
+      const components = Object.keys(compoundGameObjectComponents)
           .map(componentId=> {
             const GameObjectComponent = GameComponentFactory.create(componentId,this);
             GameObjectComponent.displayName = "Component_"+componentId;
@@ -177,19 +180,19 @@ import ConnectedGameObject from "./index";
 
             />
           }
-          ) : [];
+          );
       return components;
     }
 
 
     buildChildGameObjects = () => {
-      const { transform,debug, ...passThroughProps } = this.props;
-      const {objects, selfSettings, prefabs}  = this.props;
-      const gameObjects = selfSettings && selfSettings.children ? selfSettings.children
+      const { selfSettings, prefabSettings}  = this.props;
+      const selfChildGameObjects = selfSettings && selfSettings.children ? selfSettings.children : [];
+      const prefabChildGameObjects = prefabSettings && prefabSettings.children ? prefabSettings.children : [];
+      const gameObjects = [...prefabChildGameObjects,...selfChildGameObjects]
               .map(gameObjectId=> {
                 return <ConnectedGameObject ref={this.registerChildGameObject} parent={this} key={gameObjectId} id={gameObjectId} scene={this.scene}
-                />} )
-          : []
+                />} );
       return gameObjects;
     }
 
