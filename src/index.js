@@ -5,9 +5,6 @@ import "yorha/dist/yorha.min.css";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
-//import { Provider } from "react-redux";
-//import { store } from "./redux_old/store";
-
 ReactDOM.render(
     <App key={"app"}/>,
   document.getElementById("root")
