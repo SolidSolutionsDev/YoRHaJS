@@ -23,6 +23,7 @@ export const mainReducer = (state = initialState, action) => {
         assetsLoadState,
       };
       // TODO: refactor this and prefab as they share same logic with var name changes (attention to newId)
+      // TODO FIRST: restructure state so we don't need this quantity of nesting
     case "INSTANTIATE_FROM_GO":
       reducerStorageTemporaryObject.state = state;
       reducerStorageTemporaryObject.scene = state.game.scene;
