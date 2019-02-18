@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as _ from 'lodash';
 
 import PropTypes from "prop-types";
 
@@ -10,6 +11,8 @@ export function makeGameComponent(WrappedComponent, name) {
 
     state = { started: false };
 
+    uniqueComponentId = _.uniqueId("component") // for debug purposes
+
     static propTypes = {
       transform: PropTypes.object.isRequired,
     };
@@ -20,10 +23,12 @@ export function makeGameComponent(WrappedComponent, name) {
     componentWillMount = () => {
       const _displayName = this.getDisplayName();
       this.props.registerComponent(this, _displayName);
+
+      console.log(this.uniqueId + " component will mount " + this.getDisplayName());
     };
 
     componentWillUnmount() {
-      console.log("component will unmount", this);
+      console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
       this._onDestroy();
     }
 
@@ -58,9 +63,9 @@ export function makeGameComponent(WrappedComponent, name) {
     render() {
       // Wraps the input component in a container, without mutating it. Good!
       return (
-      <GameContext.Consumer>
+      <GameContext.Consumer  key={`${this.props._parentId}_component_${this.props.id}_consumer`} >
         {(context) => { return (
-          <WrappedComponent {...context} {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />
+          <WrappedComponent key={`${this.props._parentId}_component_${this.props.id}`} {...context} {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />
         )}}
       </GameContext.Consumer>
 

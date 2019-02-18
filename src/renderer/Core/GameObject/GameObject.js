@@ -14,6 +14,7 @@ import ConnectedGameObject from "./index";
     axesHelper = new THREE.AxesHelper(5);
 
     components = {};
+    componentsDictionary = {};
 
     childGameObjects = [];
 
@@ -49,7 +50,7 @@ import ConnectedGameObject from "./index";
     };
 
     componentWillUnmount() {
-      console.log("gameObject will unmount", this);
+      console.log("gameobject will unmount", this.id);
       this.unmounting = true;
       this._onDestroy();
       Object.values(this.components).forEach((component) => component._onDestroy());
@@ -150,36 +151,49 @@ import ConnectedGameObject from "./index";
       );
     };
 
-    buildGameComponents = () => {
+    buildComponent = (componentId)=> {
+
       const { transform,debug, ...passThroughProps } = this.props;
+      const GameObjectComponent = GameComponentFactory.create(componentId,this);
+      GameObjectComponent.displayName = "Component_"+componentId;
+      console.log(this.id + " gameobject will build component " + componentId );
+
+      return <GameObjectComponent
+          {...passThroughProps}
+          key={componentId}
+          id={componentId}
+          _parentId={this.id}
+          gameObject={this}
+          transform={this.transform}
+          transformState={transform}
+          scene={this.scene}
+          registerComponent={this.registerComponent}
+          registerChildGameObject={this.registerChildGameObject}
+          getChildComponent={this.getChildComponent}
+          getChildGameObjectByType={this.getChildGameObjectByType}
+          getChildGameObjectsByType={this.getChildGameObjectsByType}
+          getAllGameObject3DChildren={this.getAllGameObject3DChildren}
+
+      />
+    }
+
+    buildGameComponentsDictionary = () => {
       const { selfSettings, prefabSettings}  = this.props;
       const selfGameObjectComponents = selfSettings && selfSettings.components ? selfSettings.components : {};
       const prefabGameObjectComponents = prefabSettings && prefabSettings.components ? prefabSettings.components : {};
       const compoundGameObjectComponents = {...prefabGameObjectComponents,...selfGameObjectComponents };
-      const components = Object.keys(compoundGameObjectComponents)
-          .map(componentId=> {
-            const GameObjectComponent = GameComponentFactory.create(componentId,this);
-            GameObjectComponent.displayName = "Component_"+componentId;
-            return <GameObjectComponent
-                {...passThroughProps}
-                key={componentId}
-                id={componentId}
-                _parentId={this.id}
-                gameObject={this}
-                transform={this.transform}
-                transformState={transform}
-                scene={this.scene}
-                registerComponent={this.registerComponent}
-                registerChildGameObject={this.registerChildGameObject}
-                getChildComponent={this.getChildComponent}
-                getChildGameObjectByType={this.getChildGameObjectByType}
-                getChildGameObjectsByType={this.getChildGameObjectsByType}
-                getAllGameObject3DChildren={this.getAllGameObject3DChildren}
 
-            />
-          }
+      // we need to save internally all generated components otherwise
+      // as redux connect mounts and unmounts components, they will be reseted and re created
+      // that means repeated threejs objects appearing
+      const _newComponentsDictionary = Object.keys(compoundGameObjectComponents)
+          .reduce((accumulatorArray, componentId)=> {
+            const component = this.componentsDictionary[componentId] || this.buildComponent(componentId);
+            return  {...accumulatorArray, [componentId]:component};
+          },{}
           );
-      return components;
+
+      this.componentsDictionary = _newComponentsDictionary;
     }
 
 
@@ -197,10 +211,12 @@ import ConnectedGameObject from "./index";
     render() {
       const { debug } = this.props;
       if (this.unmounting) {
+        console.log(this.id, " GO IS UNMOUNTING ");
         return null;
       }
       this.axesHelper.visible = !!debug;
-      const _gameObjectComponents = this.buildGameComponents();
+      this.buildGameComponentsDictionary();
+      const _gameObjectComponents = Object.values(this.componentsDictionary);
       const _childGameObjects = this.buildChildGameObjects();
       return (
         [

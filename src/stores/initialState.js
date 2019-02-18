@@ -1,6 +1,7 @@
 import React from "react";
 
 export const initialState = {
+    // TODO: split data in a better high level state strucuture (game, engine)
     game: {
         settings: {
             speed: 1,

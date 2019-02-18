@@ -69,8 +69,8 @@ export class Scene extends React.Component {
 
     const gameObjects = scene && scene.children ? scene.children
         .map(gameObjectId=> {
-          return  <GameContext.Consumer>
-            {(context) => { console.log(context); return ( <GameObject {...context} {..._gameObjectProps} key={gameObjectId} id={gameObjectId}/>) }  }
+          return  <GameContext.Consumer key={gameObjectId+"_consumer"}>
+            {(context) => { return ( <GameObject {...context} {..._gameObjectProps} key={gameObjectId} id={gameObjectId}/>) }  }
           </GameContext.Consumer>
             })
         : []

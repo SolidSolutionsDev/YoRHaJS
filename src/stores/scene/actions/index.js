@@ -1,7 +1,17 @@
 const nextObjectId = 0;
-export const instantiate = (parameters) => ({
-  type: "INSTANTIATE",
-  ...parameters,
+
+export const instantiateFromGameObject = (gameObjectId, transform, parentId) => ({
+  type: "INSTANTIATE_FROM_GO",
+  gameObjectId,
+  transform,
+  parentId,
+});
+
+export const instantiateFromPrefab = (prefabId, transform, parentId) => ({
+  type: "INSTANTIATE_FROM_PREFAB",
+  prefabId,
+  transform,
+  parentId,
 });
 
 export const updateSceneObject = (parametersObject) => ({
