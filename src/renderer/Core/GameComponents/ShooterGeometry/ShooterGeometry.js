@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import PropTypes from "prop-types";
 import * as THREE from "three";
@@ -7,7 +7,7 @@ export class ShooterGeometry extends React.Component {
   mesh;
 
   start = () => {
-    const { transform, gameObject, transformState} = this.props;
+    const { transform, gameObject} = this.props;
     // let geometry = new THREE.PlaneGeometry( 50, 50, 32 );
     // let geometry = new THREE.TetrahedronGeometry( this.props.dimensions.x, 0 );
     let geometry = new THREE.BoxGeometry(

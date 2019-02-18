@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import * as THREE from "three";
 
 import * as GameComponentFactory from "../Factories/GameComponentFactory";
@@ -79,7 +79,7 @@ import ConnectedGameObject from "./index";
       return this._getScene(this.transform);
     }
 
-    _getScene = (object) => {
+    _getScene = () => {
       const { parent } = this.state;
 
       if (!parent) {
@@ -158,7 +158,7 @@ import ConnectedGameObject from "./index";
       const { transform,debug, ...passThroughProps } = this.props;
       const GameObjectComponent = GameComponentFactory.create(componentId,this);
       GameObjectComponent.displayName = "Component_"+componentId;
-      console.log(this.id + " gameobject will build component " + componentId );
+      //console.log(this.id + " gameobject will build component " + componentId );
 
       return <GameObjectComponent
           {...passThroughProps}

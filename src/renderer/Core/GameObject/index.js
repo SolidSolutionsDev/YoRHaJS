@@ -34,9 +34,9 @@ const mapStateToProps = (state,props) => ({
     // ...state.mainReducer.game.scene,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+//const mapDispatchToProps = (dispatch) => ({
     // TODO : add here dispatch to use Instatiate https://docs.unity3d.com/ScriptReference/Object.Instantiate.html
- });
+ //});
 
 export default connect(
       mapStateToProps,

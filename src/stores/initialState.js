@@ -1,5 +1,3 @@
-import React from "react";
-
 export const initialState = {
     // TODO: split data in a better high level state strucuture (game, engine)
     game: {
@@ -76,7 +74,7 @@ export const initialState = {
                 directionalLight1: {
                     transform:{},
                     components: {},
-                        prefab:"DirectionalLight",
+                    prefab:"DirectionalLight",
                 },
                 ambientLight1: {
                     transform:{},

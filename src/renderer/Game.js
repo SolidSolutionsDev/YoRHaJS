@@ -108,8 +108,6 @@ export class Game extends React.Component {
       loadedCallback: this.props.loadedCallback,
     };
 
-    const t= "a";
-
     return (
       <GameContext.Provider value={{..._propsList}}>
         <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,

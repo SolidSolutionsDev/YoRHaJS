@@ -1,6 +1,5 @@
 import { Component } from "react";
 import * as CANNON from "cannon";
-import * as _ from "lodash";
 
 export class PhysicsService extends Component {
   world = new CANNON.World({
@@ -93,7 +92,7 @@ export class PhysicsService extends Component {
 
   generateUpdateFunction = (mesh, body) => {
     return function updateFunction() {
-      const _oldPosition = body.position.clone();
+      //const _oldPosition = body.position.clone();
       body.mesh.position.x = body.position.x;
       body.mesh.position.y = body.position.y;
       body.mesh.position.z = body.position.z;
