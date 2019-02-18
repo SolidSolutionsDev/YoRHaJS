@@ -11,7 +11,7 @@ export function makeGameComponent(WrappedComponent, name) {
 
     state = { started: false };
 
-    uniqueComponentId = _.uniqueId("component") // for debug purposes
+    uniqueId = _.uniqueId("component") // for debug purposes
 
     static propTypes = {
       transform: PropTypes.object.isRequired,

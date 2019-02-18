@@ -7,8 +7,9 @@ export const instantiateFromGameObject = (gameObjectId, transform, parentId) => 
   parentId,
 });
 
-export const instantiateFromPrefab = (prefabId, transform, parentId) => ({
+export const instantiateFromPrefab = (prefabId, newId, transform, parentId) => ({
   type: "INSTANTIATE_FROM_PREFAB",
+  newId,
   prefabId,
   transform,
   parentId,
