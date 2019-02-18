@@ -48,6 +48,9 @@ export const initialState = {
                     testCubeGameObject1: {
                         debug:true,
                         prefab:"TestCube",
+                        transform:{
+                            position:{ x: 10, y: 0, z: 4 }
+                        },
                     },
                     testShooter1: {
                         debug:true,
