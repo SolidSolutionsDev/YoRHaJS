@@ -1,7 +1,7 @@
 const nextObjectId = 0;
 
 export const instantiateFromGameObject = (gameObjectId, transform, parentId) => ({
-  type: "INSTANTIATE_FROM_GO",
+  type: "INSTANTIATE_FROM_GAMEOBJ",
   gameObjectId,
   transform,
   parentId,

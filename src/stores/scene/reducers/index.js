@@ -24,7 +24,7 @@ export const mainReducer = (state = initialState, action) => {
       };
       // TODO: refactor this and prefab as they share same logic with var name changes (attention to newId)
       // TODO FIRST: restructure state so we don't need this quantity of nesting
-    case "INSTANTIATE_FROM_GO":
+    case "INSTANTIATE_FROM_GAMEOBJ":
       reducerStorageTemporaryObject.state = state;
       reducerStorageTemporaryObject.scene = state.game.scene;
       reducerStorageTemporaryObject.gameObjects = reducerStorageTemporaryObject.scene.gameObjects.byId;
@@ -62,12 +62,12 @@ export const mainReducer = (state = initialState, action) => {
       return reducerStorageTemporaryObject.state;
       /*
       {
-        type: 'INSTANTIATE_FROM_GO',
+        type: 'INSTANTIATE_FROM_GAMEOBJ',
         gameObjectId:"testShooter1",
         transform: {position: {x:0,y:0,z:10}}
       }
       {
-        type: 'INSTANTIATE_FROM_GO',
+        type: 'INSTANTIATE_FROM_GAMEOBJ',
         gameObjectId:"testCubeGameObject1",
         transform: {position: {x:0,y:0,z:10}},
         parentId: "testShooter1"
