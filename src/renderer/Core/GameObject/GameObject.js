@@ -13,8 +13,10 @@ import ConnectedGameObject from "./index";
 
     axesHelper = new THREE.AxesHelper(5);
 
-    components = {};
+    // the full components to be renderered. includes connect to redux and context react components.
     componentsDictionary = {};
+    // the inside components scripts. they contain the update and destroy calls
+    componentsScriptsDictionary = {};
 
     childGameObjects = [];
 
@@ -46,14 +48,14 @@ import ConnectedGameObject from "./index";
     componentWillReceiveProps(nextProps) {}
 
     registerComponent = (component, _displayName) => {
-      this.components[_displayName] = component;
+      this.componentsScriptsDictionary[_displayName] = component;
     };
 
     componentWillUnmount() {
       console.log("gameobject will unmount", this.id);
       this.unmounting = true;
       this._onDestroy();
-      Object.values(this.components).forEach((component) => component._onDestroy());
+      Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
     }
 
     _onDestroy() {
@@ -100,7 +102,7 @@ import ConnectedGameObject from "./index";
       return children;
     };
 
-    getChildComponent = (componentID) => this.components[componentID];
+    getChildComponent = (componentID) => this.componentsScriptsDictionary[componentID];
 
     getWrappedGameObject = (gameObject) =>
       gameObject._type === "GameObject"
@@ -145,7 +147,7 @@ import ConnectedGameObject from "./index";
         return;
       }
       this.transform.visible= true;
-      Object.values(this.components).forEach((component) => component.update());
+      Object.values(this.componentsScriptsDictionary).forEach((component) => component.update());
       this.childGameObjects.forEach((gameObject) =>
         this.getWrappedGameObject(gameObject)._update(),
       );
@@ -186,14 +188,13 @@ import ConnectedGameObject from "./index";
       // we need to save internally all generated components otherwise
       // as redux connect mounts and unmounts components, they will be reseted and re created
       // that means repeated threejs objects appearing
-      const _newComponentsDictionary = Object.keys(compoundGameObjectComponents)
+      const components = Object.keys(compoundGameObjectComponents)
           .reduce((accumulatorArray, componentId)=> {
             const component = this.componentsDictionary[componentId] || this.buildComponent(componentId);
             return  {...accumulatorArray, [componentId]:component};
           },{}
           );
-
-      this.componentsDictionary = _newComponentsDictionary;
+      this.componentsDictionary = components;
     }
 
 
