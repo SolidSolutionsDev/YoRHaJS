@@ -8,7 +8,7 @@ import Camera from "./Core/GameComponents/Camera/CameraContainer";
 import {PhysicsService} from "./Services/PhysicsService";
 import {AudioService} from "./Services/AudioService";
 import {AnimationService} from "./Services/AnimationService";
-import {InputService} from "./Core/InputService";
+import {InputService} from "./Services/InputService";
 
 import * as GameContext from "./GameContext";
 
