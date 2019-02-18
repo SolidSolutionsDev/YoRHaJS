@@ -43,16 +43,7 @@ export class Scene extends React.Component {
     childGameObject.registerParent(this.scene);
     this.children.push(childGameObject);
   };
-
-  getGameObjectDataById = (id) => {
-    return this.props.gameObjects[id];
-  }
-
-  getPrefabDataById = (id) => {
-    return this.props.prefabs[id];
-  }
-
-
+  
   buildChildGameObjects = () => {
     const {
       availableComponent,

@@ -1,5 +1,9 @@
 import { connect } from "react-redux";
 import { makeGameComponent } from "../../HOC/GameComponentHOC";
+import {
+  instantiateFromGameObject,
+  instantiateFromPrefab,
+} from "../../../../stores/scene/actions";
 
 // import { OBJMeshGeometry } from "../../GameComponents/OBJMeshGeometry/OBJMeshGeometry";
 // import { EditorTransformObjectUpdate } from "../../Components/EditorTransformObjectUpdate/EditorTransformObjectUpdate";
@@ -17,6 +21,7 @@ import {PointLight} from "../../GameComponents/PointLight/PointLight";
 import {Camera} from "../../GameComponents/Camera/Camera";
 import {ShooterControls} from "../../GameComponents/ShooterControls/ShooterControls";
 import {ShooterGeometry} from "../../GameComponents/ShooterGeometry/ShooterGeometry";
+
 
 
 const components = {
@@ -55,6 +60,15 @@ const getPrefabs = (state) => {
   return state.mainReducer.game.prefabs;
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  instantiateFromGameObject: (gameObjectId, transform, parentId) => {
+    dispatch(instantiateFromGameObject(gameObjectId, transform, parentId));
+  },
+  instantiateFromPrefab: (prefabId, newId, transform, parentId) => {
+    dispatch(instantiateFromPrefab(prefabId, newId, transform, parentId));
+  },
+});
+
 
 const mapStateToProps = (state,props) => ({
   ...props,
@@ -72,7 +86,7 @@ export const create = (type) => {
     component = makeGameComponent(component,type);
     component = connect(
         mapStateToProps,
-        null,
+        mapDispatchToProps,
         null,
         { withRef: true },
     )(component);
