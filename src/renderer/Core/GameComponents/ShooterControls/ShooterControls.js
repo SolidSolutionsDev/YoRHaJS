@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as THREE from "three";
 import * as CANNON from "cannon";
+import * as _ from 'lodash';
 
 export class ShooterControls extends React.Component {
   moveRatio = this.props.moveRatio || 0.3;
@@ -87,7 +88,18 @@ export class ShooterControls extends React.Component {
   };
 
   shoot = () => {
+    const {instantiateFromPrefab, transform} = this.props;
+    const {position, rotation, scale} = transform;
     console.log("shoot");
+    instantiateFromPrefab(
+        "TestCube",
+        _.uniqueId( "bullet" ),
+        {
+          position,
+          rotation,
+          scale,
+        },
+        );
   };
 
   mouseLook = e => {
