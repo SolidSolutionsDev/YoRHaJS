@@ -10,8 +10,17 @@ const getSelf = (state,id) => {
   return state.mainReducer.game.scene.gameObjects.byId[id];
 }
 
+const getSelfPrefab = (state, id) => {
+    const _prefabId = getSelf(state,id).prefab;
+    if (!_prefabId) {
+        return null;
+    }
+    const _prefab = getPrefabs(state).byId[_prefabId];
+    return _prefab;
+}
+
 const getPrefabs = (state) => {
-  return state.mainReducer.engine.prefabs;
+  return state.mainReducer.game.prefabs;
 }
 
 const mapStateToProps = (state,props) => ({
@@ -20,7 +29,8 @@ const mapStateToProps = (state,props) => ({
     selfSettings: getSelf(state,props.id),
     transform: getSelf(state,props.id) ? getSelf(state,props.id).transform : undefined,
     debug: getSelf(state,props.id) ? getSelf(state,props.id).debug : undefined,
-    prefabs: getPrefabs(state,props.id),
+    prefabs: getPrefabs(state),
+    prefabSettings: getSelfPrefab(state,props.id),
     // ...state.mainReducer.game.scene,
 });
 
@@ -35,11 +45,3 @@ export default connect(
       null,
       { withRef: true },
   )(GameObject);
-
-//
-// const _gameObjects = {
-//   lightGroup: makeGameObject(LightGroupContainer, "lightGroup"),
-//   default: makeGameObject(EmptyGameObject, "default"),
-//   shoe: makeGameObject(ShoeModelContainer, "shoe"),
-//   shoeGroup: makeGameObject(ShoeGroup, "shoeGroup"),
-// };

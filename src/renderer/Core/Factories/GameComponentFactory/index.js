@@ -1,5 +1,9 @@
 import { connect } from "react-redux";
 import { makeGameComponent } from "../../HOC/GameComponentHOC";
+import {
+  instantiateFromGameObject,
+  instantiateFromPrefab,
+} from "../../../../stores/scene/actions";
 
 // import { OBJMeshGeometry } from "../../GameComponents/OBJMeshGeometry/OBJMeshGeometry";
 // import { EditorTransformObjectUpdate } from "../../Components/EditorTransformObjectUpdate/EditorTransformObjectUpdate";
@@ -17,6 +21,7 @@ import {PointLight} from "../../GameComponents/PointLight/PointLight";
 import {Camera} from "../../GameComponents/Camera/Camera";
 import {ShooterControls} from "../../GameComponents/ShooterControls/ShooterControls";
 import {ShooterGeometry} from "../../GameComponents/ShooterGeometry/ShooterGeometry";
+
 
 
 const components = {
@@ -39,16 +44,37 @@ const components = {
 
 
 const getSelf = (state,id,parentId) => {
-  return state.mainReducer.game.scene.gameObjects.byId[parentId].components[id];
+  return state.mainReducer.game.scene.gameObjects.byId[parentId].components ? state.mainReducer.game.scene.gameObjects.byId[parentId].components[id]: {};
 }
 
+const getSelfPrefab = (state, id,parentId) => {
+  const _prefabId = state.mainReducer.game.scene.gameObjects.byId[parentId].prefab;
+  if (!_prefabId) {
+    return {};
+  }
+  const _prefab = getPrefabs(state).byId[_prefabId];
+  return _prefab.components && _prefab.components[id] ? _prefab.components[id] : {};
+}
+
+const getPrefabs = (state) => {
+  return state.mainReducer.game.prefabs;
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  instantiateFromGameObject: (gameObjectId, transform, parentId) => {
+    dispatch(instantiateFromGameObject(gameObjectId, transform, parentId));
+  },
+  instantiateFromPrefab: (prefabId, newId, transform, parentId) => {
+    dispatch(instantiateFromPrefab(prefabId, newId, transform, parentId));
+  },
+});
 
 
 const mapStateToProps = (state,props) => ({
   ...props,
-  ...state.mainReducer.game.scene,
-  selfSettings: getSelf(state,props.id,props._parentId),
-
+  gameObjects : state.mainReducer.game.scene.gameObjects.byId,
+  prefabs : state.mainReducer.game.prefabs,
+  selfSettings: {...getSelfPrefab(state,props.id,props._parentId), ...getSelf(state,props.id,props._parentId)},
 });
 
 export const create = (type) => {
@@ -60,7 +86,7 @@ export const create = (type) => {
     component = makeGameComponent(component,type);
     component = connect(
         mapStateToProps,
-        null,
+        mapDispatchToProps,
         null,
         { withRef: true },
     )(component);

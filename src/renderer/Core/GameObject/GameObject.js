@@ -13,7 +13,10 @@ import ConnectedGameObject from "./index";
 
     axesHelper = new THREE.AxesHelper(5);
 
-    components = {};
+    // the full components to be renderered. includes connect to redux and context react components.
+    componentsDictionary = {};
+    // the inside components scripts. they contain the update and destroy calls
+    componentsScriptsDictionary = {};
 
     childGameObjects = [];
 
@@ -34,7 +37,6 @@ import ConnectedGameObject from "./index";
         this.transform.position.y = transform.position && transform.position.y ? transform.position.y : this.transform.position.y;
         this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
       }
-      console.log("shooter",this.id);
 
       this.transform.name = `${id}_transform`;
 
@@ -46,14 +48,14 @@ import ConnectedGameObject from "./index";
     componentWillReceiveProps(nextProps) {}
 
     registerComponent = (component, _displayName) => {
-      this.components[_displayName] = component;
+      this.componentsScriptsDictionary[_displayName] = component;
     };
 
     componentWillUnmount() {
-      console.log("gameObject will unmount", this);
+      console.log("gameobject will unmount", this.id);
       this.unmounting = true;
       this._onDestroy();
-      Object.values(this.components).forEach((component) => component._onDestroy());
+      Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
     }
 
     _onDestroy() {
@@ -100,7 +102,7 @@ import ConnectedGameObject from "./index";
       return children;
     };
 
-    getChildComponent = (componentID) => this.components[componentID];
+    getChildComponent = (componentID) => this.componentsScriptsDictionary[componentID];
 
     getWrappedGameObject = (gameObject) =>
       gameObject._type === "GameObject"
@@ -145,61 +147,77 @@ import ConnectedGameObject from "./index";
         return;
       }
       this.transform.visible= true;
-      Object.values(this.components).forEach((component) => component.update());
+      Object.values(this.componentsScriptsDictionary).forEach((component) => component.update());
       this.childGameObjects.forEach((gameObject) =>
         this.getWrappedGameObject(gameObject)._update(),
       );
     };
 
-    buildGameComponents = () => {
-      const { transform,debug, ...passThroughProps } = this.props;
-      const {objects, selfSettings, prefabs}  = this.props;
-      // console.log("component",this.props);
-      const components = selfSettings && selfSettings.components ? Object.keys( selfSettings.components)
-          .map(componentId=> {
-            const GameObjectComponent = GameComponentFactory.create(componentId,this);
-            GameObjectComponent.displayName = "Component_"+componentId;
-            return <GameObjectComponent
-                {...passThroughProps}
-                key={componentId}
-                id={componentId}
-                _parentId={this.id}
-                gameObject={this}
-                transform={this.transform}
-                transformState={transform}
-                scene={this.scene}
-                registerComponent={this.registerComponent}
-                registerChildGameObject={this.registerChildGameObject}
-                getChildComponent={this.getChildComponent}
-                getChildGameObjectByType={this.getChildGameObjectByType}
-                getChildGameObjectsByType={this.getChildGameObjectsByType}
-                getAllGameObject3DChildren={this.getAllGameObject3DChildren}
+    buildComponent = (componentId)=> {
 
-            />
-          }
-          ) : [];
-      return components;
+      const { transform,debug, ...passThroughProps } = this.props;
+      const GameObjectComponent = GameComponentFactory.create(componentId,this);
+      GameObjectComponent.displayName = "Component_"+componentId;
+      console.log(this.id + " gameobject will build component " + componentId );
+
+      return <GameObjectComponent
+          {...passThroughProps}
+          key={componentId}
+          id={componentId}
+          _parentId={this.id}
+          gameObject={this}
+          transform={this.transform}
+          transformState={transform}
+          scene={this.scene}
+          registerComponent={this.registerComponent}
+          registerChildGameObject={this.registerChildGameObject}
+          getChildComponent={this.getChildComponent}
+          getChildGameObjectByType={this.getChildGameObjectByType}
+          getChildGameObjectsByType={this.getChildGameObjectsByType}
+          getAllGameObject3DChildren={this.getAllGameObject3DChildren}
+
+      />
+    }
+
+    buildGameComponentsDictionary = () => {
+      const { selfSettings, prefabSettings}  = this.props;
+      const selfGameObjectComponents = selfSettings && selfSettings.components ? selfSettings.components : {};
+      const prefabGameObjectComponents = prefabSettings && prefabSettings.components ? prefabSettings.components : {};
+      const compoundGameObjectComponents = {...prefabGameObjectComponents,...selfGameObjectComponents };
+
+      // we need to save internally all generated components otherwise
+      // as redux connect mounts and unmounts components, they will be reseted and re created
+      // that means repeated threejs objects appearing
+      const components = Object.keys(compoundGameObjectComponents)
+          .reduce((accumulatorArray, componentId)=> {
+            const component = this.componentsDictionary[componentId] || this.buildComponent(componentId);
+            return  {...accumulatorArray, [componentId]:component};
+          },{}
+          );
+      this.componentsDictionary = components;
     }
 
 
     buildChildGameObjects = () => {
-      const { transform,debug, ...passThroughProps } = this.props;
-      const {objects, selfSettings, prefabs}  = this.props;
-      const gameObjects = selfSettings && selfSettings.children ? selfSettings.children
+      const { selfSettings, prefabSettings}  = this.props;
+      const selfChildGameObjects = selfSettings && selfSettings.children ? selfSettings.children : [];
+      const prefabChildGameObjects = prefabSettings && prefabSettings.children ? prefabSettings.children : [];
+      const gameObjects = [...prefabChildGameObjects,...selfChildGameObjects]
               .map(gameObjectId=> {
                 return <ConnectedGameObject ref={this.registerChildGameObject} parent={this} key={gameObjectId} id={gameObjectId} scene={this.scene}
-                />} )
-          : []
+                />} );
       return gameObjects;
     }
 
     render() {
       const { debug } = this.props;
       if (this.unmounting) {
+        console.log(this.id, " GO IS UNMOUNTING ");
         return null;
       }
       this.axesHelper.visible = !!debug;
-      const _gameObjectComponents = this.buildGameComponents();
+      this.buildGameComponentsDictionary();
+      const _gameObjectComponents = Object.values(this.componentsDictionary);
       const _childGameObjects = this.buildChildGameObjects();
       return (
         [

@@ -1,6 +1,7 @@
 import React from "react";
 
 export const initialState = {
+    // TODO: split data in a better high level state strucuture (game, engine)
     game: {
         settings: {
             speed: 1,
@@ -21,10 +22,10 @@ export const initialState = {
         },
         scene:{
             children:[
-                "LightGroup",
-                "Board",
-                "TestCube",
-                "TestShooter",
+                "lightGroup",
+                "board1",
+                "testCubeGameObject1",
+                "testShooter1",
             ],
             gameObjects: {
                 byId: {
@@ -40,119 +41,161 @@ export const initialState = {
                     //             position:{x:0,y: -55,z: 35},
                     //             lookAt:{x:0,y: 0,z: 0},
                     //         },
+                    //          travellerCamera:{},
                     //     },
                     //     children: [],
                     // },
-                    TestCube: {
+                    testCubeGameObject1: {
                         debug:true,
+                        prefab:"TestCube",
                         transform:{
+                            position:{ x: 10, y: 0, z: 4 }
                         },
-                        components: {
-                            cube:{
-                                rotationX:0.01,
-                                opacity:0.9,
-                            },
-                        },
-                        children: [],
                     },
-                    TestShooter: {
+                    testShooter1: {
                         debug:true,
                         transform:{
                             position:{ x: 0, y: 0, z: 4 }
                         },
-                        components: {
-                            shooterControls:{
-                            },
-                            shooterGeometry:{
-                                dimensions:{ x: 2, y: 2, z: 2 },
-                                // position:{ x: 0, y: 0, z: 4 },
-                                mass: 1
-                            },
-                        },
-                        children: [],
+                        prefab:"TestShooter",
                     },
-                    Board: {
+                    board1: {
                         debug:true,
-                        transform:{
-                        },
                         components: {
                             boardPlaneGeometry:{
                                 rotationX:0.01,
                                 dimensions:{ x: 50, y: 50, z: 2 },
                                 mass: 0,
-                            },
-                        },
-                        children: [],
+                            },},
+                        prefab:"Board",
                     },
-                    LightGroup: {
+                    lightGroup: {
                       transform:{},
                       components: {},
-                      children: ["DirectionalLight", "AmbientLight","PointLight"]
+                      children: ["directionalLight1", "ambientLight1","pointLight1"]
                     },
-                    DirectionalLight: {
-                        transform:{
-                        },
-                        components:{
-                            directionalLight: {
-                                color: 0xffffff,
-                                intensity:0.7,
-                                position: {
-                                    x:0,
-                                    y:0,
-                                    z:1,
-                                }
-                            }
-                        },
+                    directionalLight1: {
+                      transform:{},
+                      components: {},
+                            prefab:"DirectionalLight",
                     },
-                    PointLight: {
-                        transform:{
-                            position: {
-                                    x:10,
-                                    y:7,
-                                    z:5,
-                                }
-                        },
-                        components:{
-                            pointLight: {
-                                castShadow:true,
-                                color: 0xffffff,
-                                intensity:1,
-                                distance:100,
-                            }
-                        },
+                    ambientLight1: {
+                      transform:{},
+                      components: {},
+                        prefab:"AmbientLight",
                     },
-                    AmbientLight: {
-                        transform:{
-                        },
-                        components:{
-                            ambientLight: {
-                                color: 0x222222,
-                            }
-                        },
-                        children: [],
+                    pointLight1: {
+                      transform:{},
+                      components: {},
+                        prefab:"PointLight",
                     },
                 },
                 allIds: [
                     // "Camera",
-                    "DirectionalLight",
-                    "PointLight",
-                    "AmbientLight",
-                    "LightGroup",
-                    "Board",
-                    "TestCube",
+                    "testCubeGameObject1",
+                    "testShooter1",
+                    "board1",
+                    "lightGroup",
+                    "directionalLight1",
+                    "ambientLight1",
                 ],
-            }
+            },
+        },
+
+        prefabs: {
+            byId: {
+                TestCube: {
+                    debug:true,
+                    transform:{
+                    },
+                    components: {
+                        cube:{
+                            rotationX:0.01,
+                            opacity:0.9,
+                        },
+                    },
+                    children: [],
+                },
+                TestShooter: {
+                    debug:true,
+                    components: {
+                        shooterControls:{
+                        },
+                        shooterGeometry:{
+                            dimensions:{ x: 2, y: 2, z: 2 },
+                            // position:{ x: 0, y: 0, z: 4 },
+                            mass: 1
+                        },
+                    },
+                    children: [],
+                },
+                Board: {
+                    debug:true,
+                    transform:{
+                    },
+                    components: {
+                        boardPlaneGeometry:{
+                        },
+                    },
+                    children: [],
+                },
+                DirectionalLight: {
+                    transform:{
+                    },
+                    components:{
+                        directionalLight: {
+                            color: 0xffffff,
+                            intensity:0.7,
+                            position: {
+                                x:0,
+                                y:0,
+                                z:1,
+                            }
+                        }
+                    },
+                },
+                PointLight: {
+                    transform:{
+                        position: {
+                            x:10,
+                            y:7,
+                            z:5,
+                        }
+                    },
+                    components:{
+                        pointLight: {
+                            castShadow:true,
+                            color: 0xffffff,
+                            intensity:1,
+                            distance:100,
+                        }
+                    },
+                },
+                AmbientLight: {
+                    transform:{
+                    },
+                    components:{
+                        ambientLight: {
+                            color: 0x222222,
+                        }
+                    },
+                    children: [],
+                },
+            },
+            allIds: [
+                // "Camera",
+                "DirectionalLight",
+                "PointLight",
+                "AmbientLight",
+                "LightGroup",
+                "Board",
+                "TestCube",
+            ],
         }
     },
     //TODO: migrate this to json or static js
     engine: {
         prefabs:{
-            inputManager:{
-                components:{
-                    gameInputDispatcher:{}
-                },
-                children:{},
-            },
             dynamicCamera: {
                 components: {
                     perspectiveCamera:{

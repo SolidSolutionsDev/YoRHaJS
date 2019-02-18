@@ -208,7 +208,6 @@ export class PhysicsService extends Component {
     _boxBody.endContactFunction = parameters.endContactFunction;
 
     mesh.physicsBody = _boxBody;
-    console.log(mesh);
 
     return { body: _boxBody, update: _updateFunction, parameters: _parameters };
   }

@@ -2,19 +2,15 @@ import React from "react";
 import * as THREE from "three";
 
 import GameObject from "../GameObject";
-// const LightGroupGameObject = GameObjectFactory.create("lightGroup");
-// const ShoeGroupGameObject = GameObjectFactory.create("shoeGroup");
+
+import * as GameContext from "../../GameContext";
 
 export class Scene extends React.Component {
   scene = new THREE.Scene();
 
-  size = 10;
-
   children = [];
 
   updateCallbacksArray = [];
-
-  cornerCubes = [];
 
   state = {
     // loaded: false,
@@ -47,50 +43,33 @@ export class Scene extends React.Component {
     childGameObject.registerParent(this.scene);
     this.children.push(childGameObject);
   };
-
-
+  
   buildChildGameObjects = () => {
     const {
-      addObject,
       availableComponent,
       availableService,
       game,
-      objects,
-      // shoes,
-      selectObject,
-      selectCorner,
-        scene
+      scene
     } = this.props;
-    const _editorProps = {
+
+    const _gameObjectProps = {
       ref: this.registerChild,
-      addObject,
-      availableComponent,
-      availableService ,
-      game,
-      objects,
-      // shoes,
-      selectObject,
-      selectCorner,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
     };
 
-    const _viewerProps = {
-      ref: this.registerChild,
-      objects,
-    };
-
     const gameObjects = scene && scene.children ? scene.children
         .map(gameObjectId=> {
-          return <GameObject {..._editorProps} key={gameObjectId} id={gameObjectId}/>} )
+          return  <GameContext.Consumer key={gameObjectId+"_consumer"}>
+            {(context) => { return ( <GameObject {...context} {..._gameObjectProps} key={gameObjectId} id={gameObjectId}/>) }  }
+          </GameContext.Consumer>
+            })
         : []
 
     return gameObjects;
   }
 
   render = () => {
-
-    console.log(this.scene);
 
     const _gameObjects = this.buildChildGameObjects();
 

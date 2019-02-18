@@ -1,13 +1,16 @@
 /* eslint-disable react/default-props-match-prop-types */
 import React from "react";
-// import PropTypes from 'prop-types'; // ES6
+import PropTypes from 'prop-types'; // ES6
+
 import Renderer from "./RendererContainer";
 import Scene from "./Core/Scene/SceneContainer";
 import Camera from "./Core/GameComponents/Camera/CameraContainer";
 import {PhysicsService} from "./Services/PhysicsService";
 import {AudioService} from "./Services/AudioService";
 import {AnimationService} from "./Services/AnimationService";
-import {InputManager} from "./Core/InputManager";
+import {InputService} from "./Core/InputService";
+
+import * as GameContext from "./GameContext";
 
 export class Game extends React.Component {
   frame = null;
@@ -45,7 +48,6 @@ export class Game extends React.Component {
     this.setState({[componentPropretyName]: gameComponent.getWrappedInstance() });
     this.availableComponent[componentPropretyName] = gameComponent.getWrappedInstance();
     this.registerUpdate(this.availableComponent[componentPropretyName].update);
-    console.log(this);
   };
 
   start = () => {
@@ -73,7 +75,7 @@ export class Game extends React.Component {
 
   updateChildren = (time) => {
     this.updateCallbacksArray.forEach((update) => {
-      update(time);
+      update && update(time);
     });
   };
 
@@ -98,6 +100,7 @@ export class Game extends React.Component {
     if (this.unmounting) {
       return null;
     }
+    // TODO: convert to "react context"
     const _propsList = {
       availableComponent: this.availableComponent,
       availableService: this.availableService,
@@ -105,14 +108,22 @@ export class Game extends React.Component {
       loadedCallback: this.props.loadedCallback,
     };
 
-    return [
-      <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
-      <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
-      <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
-      <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
-      <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
-      <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
-      <InputManager key="input" />,
-    ];
+    const t= "a";
+
+    return (
+      <GameContext.Provider value={{..._propsList}}>
+        <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
+        <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
+        <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
+        <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
+        <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
+        <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
+        <InputService ref={this.addGameService} key="input" id="input"/>,
+    </GameContext.Provider>
+    );
   };
 }
+
+Game.propTypes = {
+  loadedCallback: PropTypes.func,
+};

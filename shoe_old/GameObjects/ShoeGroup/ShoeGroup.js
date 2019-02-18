@@ -1,5 +1,5 @@
 import React from "react";
-import * as ComponentFactory from "../../Factories/GameComponentFactory/index";
+import * as ComponentFactory from "../../../src/renderer/Core/Factories/GameComponentFactory";
 
 const ShoeGroupComp = ComponentFactory.create("shoeGroup");
 
