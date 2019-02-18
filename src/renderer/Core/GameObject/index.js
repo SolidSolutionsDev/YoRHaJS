@@ -7,7 +7,7 @@ const getGameObjects = (state) => {
 }
 
 const getSelf = (state,id) => {
-  return state.mainReducer.game.scene.gameObjects.byId[id];
+  return state.mainReducer.game.scene.gameObjects[id];
 }
 
 const getSelfPrefab = (state, id) => {
