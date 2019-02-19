@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
   // objects: getObjects(state),
   ...state.mainReducer.game,
   gameObjects: state.mainReducer.game.scene.gameObjects,
-  prefabs: state.mainReducer.game.prefabs.byId,
+  prefabs: state.mainReducer.prefabs.byId,
 });
 
 export default connect(

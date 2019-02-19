@@ -99,97 +99,96 @@ export const initialState = {
                 ],
             },
         },
-
-        prefabs: {
-            byId: {
-                TestCube: {
-                    debug:true,
-                    transform:{
-                    },
-                    components: {
-                        cube:{
-                            rotationX:0.01,
-                            opacity:0.9,
-                        },
-                    },
-                    children: [],
+    },
+    prefabs: {
+        byId: {
+            TestCube: {
+                debug:true,
+                transform:{
                 },
-                TestShooter: {
-                    debug:true,
-                    components: {
-                        shooterControls:{
-                        },
-                        shooterGeometry:{
-                            dimensions:{ x: 2, y: 2, z: 2 },
-                            // position:{ x: 0, y: 0, z: 4 },
-                            mass: 1
-                        },
-                    },
-                    children: [],
-                },
-                Board: {
-                    debug:true,
-                    transform:{
-                    },
-                    components: {
-                        boardPlaneGeometry:{
-                        },
-                    },
-                    children: [],
-                },
-                DirectionalLight: {
-                    transform:{
-                    },
-                    components:{
-                        directionalLight: {
-                            color: 0xffffff,
-                            intensity:0.7,
-                            position: {
-                                x:0,
-                                y:0,
-                                z:1,
-                            }
-                        }
+                components: {
+                    cube:{
+                        rotationX:0.01,
+                        opacity:0.9,
                     },
                 },
-                PointLight: {
-                    transform:{
+                children: [],
+            },
+            TestShooter: {
+                debug:true,
+                components: {
+                    shooterControls:{
+                    },
+                    shooterGeometry:{
+                        dimensions:{ x: 2, y: 2, z: 2 },
+                        // position:{ x: 0, y: 0, z: 4 },
+                        mass: 1
+                    },
+                },
+                children: [],
+            },
+            Board: {
+                debug:true,
+                transform:{
+                },
+                components: {
+                    boardPlaneGeometry:{
+                    },
+                },
+                children: [],
+            },
+            DirectionalLight: {
+                transform:{
+                },
+                components:{
+                    directionalLight: {
+                        color: 0xffffff,
+                        intensity:0.7,
                         position: {
-                            x:10,
-                            y:7,
-                            z:5,
+                            x:0,
+                            y:0,
+                            z:1,
                         }
-                    },
-                    components:{
-                        pointLight: {
-                            castShadow:true,
-                            color: 0xffffff,
-                            intensity:1,
-                            distance:100,
-                        }
-                    },
-                },
-                AmbientLight: {
-                    transform:{
-                    },
-                    components:{
-                        ambientLight: {
-                            color: 0x222222,
-                        }
-                    },
-                    children: [],
+                    }
                 },
             },
-            allIds: [
-                // "Camera",
-                "DirectionalLight",
-                "PointLight",
-                "AmbientLight",
-                "LightGroup",
-                "Board",
-                "TestCube",
-            ],
-        }
+            PointLight: {
+                transform:{
+                    position: {
+                        x:10,
+                        y:7,
+                        z:5,
+                    }
+                },
+                components:{
+                    pointLight: {
+                        castShadow:true,
+                        color: 0xffffff,
+                        intensity:1,
+                        distance:100,
+                    }
+                },
+            },
+            AmbientLight: {
+                transform:{
+                },
+                components:{
+                    ambientLight: {
+                        color: 0x222222,
+                    }
+                },
+                children: [],
+            },
+        },
+        allIds: [
+            // "Camera",
+            "DirectionalLight",
+            "PointLight",
+            "AmbientLight",
+            "LightGroup",
+            "Board",
+            "TestCube",
+        ],
     },
     //TODO: migrate this to json or static js
     engine: {

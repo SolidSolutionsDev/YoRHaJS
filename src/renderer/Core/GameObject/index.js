@@ -20,7 +20,7 @@ const getSelfPrefab = (state, id) => {
 }
 
 const getPrefabs = (state) => {
-  return state.mainReducer.game.prefabs;
+  return state.mainReducer.prefabs;
 }
 
 const mapStateToProps = (state,props) => ({
