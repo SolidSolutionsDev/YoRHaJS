@@ -110,13 +110,13 @@ export class Game extends React.Component {
 
     return (
       <GameContext.Provider value={{..._propsList}}>
-        <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />,
-        <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />,
-        <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />,
-        <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />,
-        <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />,
-        <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />,
-        <InputService ref={this.addGameService} key="input" id="input"/>,
+        <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />
+        <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />
+        <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />
+        <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />
+        <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />
+        <AnimationService {..._propsList} ref={this.addGameService} key="animation" id="animation" />
+        <InputService ref={this.addGameService} key="input" id="input"/>
     </GameContext.Provider>
     );
   };
