@@ -102,6 +102,86 @@ export const initialState = {
     },
     prefabs: {
         byId: {
+            DynamicCamera: {
+                components: {
+                    perspectiveCamera:{
+                        fov: 45,
+                        near: 0.1,
+                        far: 10000,
+                        position:{x:0,y: -55,z: 35},
+                        lookAt:{x:0,y: 0,z: 0},
+                    },
+                    dynamicCameraManager:{
+                        cameraSoundPath: "./assets/sound/camera_change.mp3",
+                        cameraAngle: "nier",
+                        cameraAutoRotate: false,
+                        cameraMinDistance: 10,
+                        cameraPanLock: true,
+                        lookAt: {x:0,y:0,z:0},
+                        near: 0.1,
+                        far: 10000,
+                        fov: 45,
+                        unspecified_supportedCameraAngles: [
+                            "",
+                            "left",
+                            "right",
+                            "front",
+                            "back",
+                            "top",
+                            "bottom",
+                            "isometric",
+                            "nier",
+                        ],
+                        cameraAllowedPositions: {
+                            left: {
+                                position: {x: -10, y: 0, z: 0},
+                            },
+                            right: {
+                                position: {x: 10, y: 0, z: 0},
+                            },
+                            front: {
+                                position: {x: 0, y: 0, z: 10},
+                            },
+                            back: {
+                                position: {x: 0, y: 0, z: -10},
+                            },
+                            top: {
+                                position: {x: 0, y: 10, z: 0},
+                            },
+                            bottom: {
+                                position: {x: 0, y: -10, z: 0},
+                            },
+                            isometric: {
+                                position: {x: 10, y: 10, z: 10},
+                            },
+                            "top-front": {
+                                position: {x: 0, y: 10, z: 10},
+                            },
+                            "top-right": {
+                                position: {x: 10, y: 10, z: 0},
+                            },
+                            "top-back": {
+                                position: {x: 0, y: 10, z: -10},
+                            },
+                            "top-left": {
+                                position: {x: -10, y: 10, z: 0},
+                            },
+                            "nier": {
+                                position: {x: 0, y: -55, z: 35},
+                            },
+                            custom: {
+                                position: {
+                                    x: 21.57972466572975,
+                                    y: 21.0286001424227,
+                                    z: 84.80632912348827,
+                                },
+                            },
+                        }
+                    },
+                },
+                children: {
+                },
+            },
             TestCube: {
                 debug:true,
                 transform:{
@@ -188,10 +268,11 @@ export const initialState = {
             "LightGroup",
             "Board",
             "TestCube",
+            "DynamicCamera",
         ],
     },
     //TODO: migrate this to json or static js
-    engine: {
+    /*engine: {
         prefabs:{
             dynamicCamera: {
                 components: {
@@ -345,5 +426,5 @@ export const initialState = {
             },
 
         },
-    }
+    }*/
 }

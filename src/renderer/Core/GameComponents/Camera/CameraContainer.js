@@ -2,11 +2,11 @@ import { connect } from "react-redux";
 import { Camera } from "./Camera";
 import { updateSceneObject } from "../../../../stores/scene/actions";
 
-const getAllowedPositions = (state) => state.mainReducer.engine.prefabs["dynamicCamera"].components.dynamicCameraManager.cameraAllowedPositions;
+const getAllowedPositions = (state) => state.mainReducer.prefabs.byId["DynamicCamera"].components.dynamicCameraManager.cameraAllowedPositions;
 
 const mapStateToProps = (state) => ({
   allowedPositions: getAllowedPositions(state),
-  ...state.mainReducer.engine.prefabs["dynamicCamera"].components.dynamicCameraManager,
+  ...state.mainReducer.prefabs.byId["DynamicCamera"].components.dynamicCameraManager,
 });
 
 const mapDispatchToProps = (dispatch) => ({
