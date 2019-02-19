@@ -26,7 +26,7 @@ export const mainReducer = (state = initialState, action) => {
       // TODO FIRST: restructure state so we don't need this quantity of nesting
     case "INSTANTIATE_FROM_GAMEOBJ":
       reducerStorageTemporaryObject.state = state;
-      reducerStorageTemporaryObject.scene = state.game.scene;
+      reducerStorageTemporaryObject.scene = state.scene;
       reducerStorageTemporaryObject.gameObjects = reducerStorageTemporaryObject.scene.gameObjects.byId;
       if (gameObjectId) {
         reducerStorageTemporaryObject.gameObjectToClone = _.cloneDeep( reducerStorageTemporaryObject.gameObjects[gameObjectId]);
@@ -36,27 +36,24 @@ export const mainReducer = (state = initialState, action) => {
         reducerStorageTemporaryObject.newId = _.uniqueId(gameObjectId);
         reducerStorageTemporaryObject.state = {
           ...reducerStorageTemporaryObject.state,
-          game: {
-            ...reducerStorageTemporaryObject.state.game,
-            scene: {
-              ...reducerStorageTemporaryObject.state.game.scene,
-              gameObjects: {
-                byId: {
-                    ...reducerStorageTemporaryObject.state.game.scene.gameObjects.byId,
-                  [reducerStorageTemporaryObject.newId] : reducerStorageTemporaryObject.gameObjectToClone
-                },
-                allIds: [...reducerStorageTemporaryObject.state.game.scene.gameObjects.allIds, reducerStorageTemporaryObject.newId]
+          scene: {
+            ...reducerStorageTemporaryObject.state.scene,
+            gameObjects: {
+              byId: {
+                  ...reducerStorageTemporaryObject.state.scene.gameObjects.byId,
+                [reducerStorageTemporaryObject.newId] : reducerStorageTemporaryObject.gameObjectToClone
               },
-            }
+              allIds: [...reducerStorageTemporaryObject.state.scene.gameObjects.allIds, reducerStorageTemporaryObject.newId]
+            },
           }
         };
         if (parentId) {
-          reducerStorageTemporaryObject.parent = reducerStorageTemporaryObject.state.game.scene.gameObjects.byId[parentId];
+          reducerStorageTemporaryObject.parent = reducerStorageTemporaryObject.state.scene.gameObjects.byId[parentId];
           const _currentChildren = reducerStorageTemporaryObject.parent.children || [];
           reducerStorageTemporaryObject.parent.children= [..._currentChildren, reducerStorageTemporaryObject.newId  ];
         }
         else {
-           reducerStorageTemporaryObject.state.game.scene.children = [...reducerStorageTemporaryObject.state.game.scene.children, reducerStorageTemporaryObject.newId]
+           reducerStorageTemporaryObject.state.scene.children = [...reducerStorageTemporaryObject.state.scene.children, reducerStorageTemporaryObject.newId]
         }
       }
       return reducerStorageTemporaryObject.state;
@@ -75,7 +72,7 @@ export const mainReducer = (state = initialState, action) => {
        */
     case "INSTANTIATE_FROM_PREFAB":
       reducerStorageTemporaryObject.state = state;
-      reducerStorageTemporaryObject.scene = state.game.scene;
+      reducerStorageTemporaryObject.scene = state.scene;
       reducerStorageTemporaryObject.gameObjects = reducerStorageTemporaryObject.scene.gameObjects.byId;
       if (prefabId && newId) {
           reducerStorageTemporaryObject.newGameObject = {
@@ -85,27 +82,24 @@ export const mainReducer = (state = initialState, action) => {
           },
           reducerStorageTemporaryObject.state = {
             ...reducerStorageTemporaryObject.state,
-            game: {
-              ...reducerStorageTemporaryObject.state.game,
-              scene: {
-                ...reducerStorageTemporaryObject.state.game.scene,
-                gameObjects: {
-                  byId: {
-                    ...reducerStorageTemporaryObject.state.game.scene.gameObjects.byId,
-                    [newId] : reducerStorageTemporaryObject.newGameObject
-                  },
-                  allIds: [...reducerStorageTemporaryObject.state.game.scene.gameObjects.allIds, newId]
+            scene: {
+              ...reducerStorageTemporaryObject.state.scene,
+              gameObjects: {
+                byId: {
+                  ...reducerStorageTemporaryObject.state.scene.gameObjects.byId,
+                  [newId] : reducerStorageTemporaryObject.newGameObject
                 },
-              }
+                allIds: [...reducerStorageTemporaryObject.state.scene.gameObjects.allIds, newId]
+              },
             }
           };
           if (parentId) {
-            reducerStorageTemporaryObject.parent = reducerStorageTemporaryObject.state.game.scene.gameObjects.byId[parentId];
+            reducerStorageTemporaryObject.parent = reducerStorageTemporaryObject.state.scene.gameObjects.byId[parentId];
             const _currentChildren = reducerStorageTemporaryObject.parent.children || [];
             reducerStorageTemporaryObject.parent.children= [..._currentChildren, newId  ];
           }
           else {
-            reducerStorageTemporaryObject.state.game.scene.children = [...reducerStorageTemporaryObject.state.game.scene.children, newId]
+            reducerStorageTemporaryObject.state.scene.children = [...reducerStorageTemporaryObject.state.scene.children, newId]
           }
         }
       return reducerStorageTemporaryObject.state;

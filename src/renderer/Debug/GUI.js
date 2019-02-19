@@ -24,7 +24,7 @@ export class GUI extends React.Component {
   };
 
   buildColorList = () => {
-    const { applicationState } = this.props;
+    //const { applicationState } = this.props;
   }
 
 
