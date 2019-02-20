@@ -18,7 +18,7 @@ export class PointLight extends React.Component {
   };
 
   updateLight = () => {
-    const { castShadow, color, intensity, distance, position } = this.props;
+    const { castShadow, color, intensity, distance} = this.props;
 
     if (castShadow) {
       this.light.castShadow = true;

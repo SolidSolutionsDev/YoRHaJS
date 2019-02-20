@@ -35,7 +35,7 @@ export class Camera extends React.Component {
     // this.controls.enableRotate = false;
     renderer.subscribeResize(this.cameraOnResize);
     updateSceneObject({
-      unspecified_cameraReady: true,
+      //unspecified_cameraReady: true,
     });
 
     this.cameraOnResize();
@@ -122,9 +122,9 @@ export class Camera extends React.Component {
 
     this.camera.lookAt(scene.scene.position);
 
-    updateSceneObject({
-      cameraAngle: "",
-    });
+    // updateSceneObject({
+    //   cameraAngle: "",
+    // });
   };
 
   controls;

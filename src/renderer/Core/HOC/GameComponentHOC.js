@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import * as _ from 'lodash';
 
 import PropTypes from "prop-types";

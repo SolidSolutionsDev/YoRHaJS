@@ -44,11 +44,11 @@ const components = {
 
 
 const getSelf = (state,id,parentId) => {
-  return state.mainReducer.game.scene.gameObjects.byId[parentId].components ? state.mainReducer.game.scene.gameObjects.byId[parentId].components[id]: {};
+  return state.mainReducer.gameObjects.byId[parentId].components ? state.mainReducer.gameObjects.byId[parentId].components[id]: {};
 }
 
 const getSelfPrefab = (state, id,parentId) => {
-  const _prefabId = state.mainReducer.game.scene.gameObjects.byId[parentId].prefab;
+  const _prefabId = state.mainReducer.gameObjects.byId[parentId].prefab;
   if (!_prefabId) {
     return {};
   }
@@ -57,7 +57,7 @@ const getSelfPrefab = (state, id,parentId) => {
 }
 
 const getPrefabs = (state) => {
-  return state.mainReducer.game.prefabs;
+  return state.mainReducer.prefabs;
 }
 
 const mapDispatchToProps = (dispatch) => ({
@@ -72,8 +72,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state,props) => ({
   ...props,
-  gameObjects : state.mainReducer.game.scene.gameObjects.byId,
-  prefabs : state.mainReducer.game.prefabs,
+  gameObjects : state.mainReducer.gameObjects.byId,
+  prefabs : state.mainReducer.prefabs,
   selfSettings: {...getSelfPrefab(state,props.id,props._parentId), ...getSelf(state,props.id,props._parentId)},
 });
 

@@ -46,9 +46,6 @@ export class Scene extends React.Component {
   
   buildChildGameObjects = () => {
     const {
-      availableComponent,
-      availableService,
-      game,
       scene
     } = this.props;
 

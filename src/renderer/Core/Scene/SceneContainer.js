@@ -7,9 +7,9 @@ import { Scene } from "./Scene";
 
 const mapStateToProps = (state) => ({
   // objects: getObjects(state),
-  ...state.mainReducer.game,
-  gameObjects: state.mainReducer.game.scene.gameObjects.byId,
-  prefabs: state.mainReducer.game.prefabs.byId,
+  ...state.mainReducer,
+  gameObjects: state.mainReducer.gameObjects,
+  prefabs: state.mainReducer.prefabs.byId,
 });
 
 export default connect(

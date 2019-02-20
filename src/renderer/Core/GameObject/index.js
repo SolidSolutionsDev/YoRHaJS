@@ -2,12 +2,12 @@ import { connect } from "react-redux";
 import { GameObject } from "./GameObject";
 
 const getGameObjects = (state) => {
-    // console.log("child test0",state.mainReducer.game.scene.gameObjects);
-    return state.mainReducer.game.scene.gameObjects;
+    // console.log("child test0",state.mainReducer.scene.gameObjects);
+    return state.mainReducer.gameObjects;
 }
 
 const getSelf = (state,id) => {
-  return state.mainReducer.game.scene.gameObjects.byId[id];
+  return state.mainReducer.gameObjects.byId[id];
 }
 
 const getSelfPrefab = (state, id) => {
@@ -20,7 +20,7 @@ const getSelfPrefab = (state, id) => {
 }
 
 const getPrefabs = (state) => {
-  return state.mainReducer.game.prefabs;
+  return state.mainReducer.prefabs;
 }
 
 const mapStateToProps = (state,props) => ({
@@ -31,12 +31,12 @@ const mapStateToProps = (state,props) => ({
     debug: getSelf(state,props.id) ? getSelf(state,props.id).debug : undefined,
     prefabs: getPrefabs(state),
     prefabSettings: getSelfPrefab(state,props.id),
-    // ...state.mainReducer.game.scene,
+    // ...state.mainReducer.scene,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+//const mapDispatchToProps = (dispatch) => ({
     // TODO : add here dispatch to use Instatiate https://docs.unity3d.com/ScriptReference/Object.Instantiate.html
- });
+ //});
 
 export default connect(
       mapStateToProps,
