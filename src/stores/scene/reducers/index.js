@@ -23,32 +23,28 @@ export const mainReducer = (state = initialState, action) => {
         assetsLoadState,
       };
       // TODO: refactor this and prefab as they share same logic with var name changes (attention to newId)
-      // TODO FIRST: restructure state so we don't need this quantity of nesting
     case "INSTANTIATE_FROM_GAMEOBJ":
       temp.state = state;
-      temp.scene = state.scene;
-      temp.gameObjects = temp.scene.gameObjects.byId;
+      //temp.state.gameObjects = temp.state.gameObjects.byId;
       if (gameObjectId) {
-        temp.gameObjectToClone = _.cloneDeep( temp.gameObjects[gameObjectId]);
+        temp.gameObjectToClone = _.cloneDeep( temp.state.gameObjects.byId[gameObjectId]);
         if (transform) {
-          temp.gameObjectToClone.transform = {...temp.gameObjects[gameObjectId].transform, ...transform};
+          temp.gameObjectToClone.transform = {...temp.state.gameObjects.byId[gameObjectId].transform, ...transform};
         }
         temp.newId = _.uniqueId(gameObjectId);
         temp.state = {
           ...temp.state,
-          scene: {
-            ...temp.state.scene,
-            gameObjects: {
-              byId: {
-                  ...temp.state.scene.gameObjects.byId,
-                [temp.newId] : temp.gameObjectToClone
-              },
-              allIds: [...temp.state.scene.gameObjects.allIds, temp.newId]
+          gameObjects: {
+            byId: {
+                ...temp.state.gameObjects.byId,
+              [temp.newId] : temp.gameObjectToClone
             },
-          }
+            allIds: [...temp.state.gameObjects.allIds, temp.newId]
+          },
         };
+        //this is not being used
         if (parentId) {
-          temp.parent = temp.state.scene.gameObjects.byId[parentId];
+          temp.parent = temp.state.gameObjects.byId[parentId];
           const _currentChildren = temp.parent.children || [];
           temp.parent.children= [..._currentChildren, temp.newId  ];
         }
@@ -72,8 +68,6 @@ export const mainReducer = (state = initialState, action) => {
        */
     case "INSTANTIATE_FROM_PREFAB":
       temp.state = state;
-      temp.scene = state.scene;
-      temp.gameObjects = temp.scene.gameObjects.byId;
       if (prefabId && newId) {
         temp.newGameObject = {
             debug:true,
@@ -82,21 +76,19 @@ export const mainReducer = (state = initialState, action) => {
           },
           temp.state = {
             ...temp.state,
-            scene: {
-              ...temp.state.scene,
-              gameObjects: {
-                byId: {
-                  ...temp.state.scene.gameObjects.byId,
-                  [newId] : temp.newGameObject
-                },
-                allIds: [...temp.state.scene.gameObjects.allIds, newId]
+            gameObjects: {
+              byId: {
+                ...temp.state.gameObjects.byId,
+                [newId] : temp.newGameObject
               },
-            }
+              allIds: [...temp.state.gameObjects.allIds, newId]
+            },
           };
+          //this is not being used
           if (parentId) {
-            temp.parent = temp.state.scene.gameObjects.byId[parentId];
-            const _currentChildren = temp.parent.children || [];
-            temp.parent.children= [..._currentChildren, newId  ];
+             temp.parent = temp.state.scene.gameObjects.byId[parentId];
+             const _currentChildren = temp.parent.children || [];
+             temp.parent.children= [..._currentChildren, newId  ];
           }
           else {
             temp.state.scene.children = [...temp.state.scene.children, newId]

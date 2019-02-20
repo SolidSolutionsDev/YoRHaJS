@@ -8,7 +8,7 @@ import { Scene } from "./Scene";
 const mapStateToProps = (state) => ({
   // objects: getObjects(state),
   ...state.mainReducer,
-  gameObjects: state.mainReducer.scene.gameObjects,
+  gameObjects: state.mainReducer.gameObjects,
   prefabs: state.mainReducer.prefabs.byId,
 });
 

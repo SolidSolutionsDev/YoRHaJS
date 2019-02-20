@@ -3,11 +3,11 @@ import { GameObject } from "./GameObject";
 
 const getGameObjects = (state) => {
     // console.log("child test0",state.mainReducer.scene.gameObjects);
-    return state.mainReducer.scene.gameObjects;
+    return state.mainReducer.gameObjects;
 }
 
 const getSelf = (state,id) => {
-  return state.mainReducer.scene.gameObjects.byId[id];
+  return state.mainReducer.gameObjects.byId[id];
 }
 
 const getSelfPrefab = (state, id) => {

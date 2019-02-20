@@ -26,79 +26,79 @@ export const initialState = {
             "testCubeGameObject1",
             "testShooter1",
         ],
-        gameObjects: {
-            byId: {
-                // Camera: {
-                //     transform:{
-                //     },
-                //     fromPrefab: "dynamicCamera",
-                //     components: {
-                //         perspectiveCamera:{
-                //             fov: 45,
-                //             near: 0.1,
-                //             far: 10000,
-                //             position:{x:0,y: -55,z: 35},
-                //             lookAt:{x:0,y: 0,z: 0},
-                //         },
-                //          travellerCamera:{},
-                //     },
-                //     children: [],
-                // },
-                testCubeGameObject1: {
-                    debug:true,
-                    prefab:"TestCube",
-                    transform:{
-                        position:{ x: 10, y: 0, z: 4 }
-                    },
-                },
-                testShooter1: {
-                    debug:true,
-                    transform:{
-                        position:{ x: 0, y: 0, z: 4 }
-                    },
-                    prefab:"TestShooter",
-                },
-                board1: {
-                    debug:true,
-                    components: {
-                        boardPlaneGeometry:{
-                            rotationX:0.01,
-                            dimensions:{ x: 50, y: 50, z: 2 },
-                            mass: 0,
-                        },},
-                    prefab:"Board",
-                },
-                lightGroup: {
-                  transform:{},
-                  components: {},
-                  children: ["directionalLight1", "ambientLight1","pointLight1"]
-                },
-                directionalLight1: {
-                  transform:{},
-                  components: {},
-                        prefab:"DirectionalLight",
-                },
-                ambientLight1: {
-                  transform:{},
-                  components: {},
-                    prefab:"AmbientLight",
-                },
-                pointLight1: {
-                  transform:{},
-                  components: {},
-                    prefab:"PointLight",
+    },
+    gameObjects: {
+        byId: {
+            // Camera: {
+            //     transform:{
+            //     },
+            //     fromPrefab: "dynamicCamera",
+            //     components: {
+            //         perspectiveCamera:{
+            //             fov: 45,
+            //             near: 0.1,
+            //             far: 10000,
+            //             position:{x:0,y: -55,z: 35},
+            //             lookAt:{x:0,y: 0,z: 0},
+            //         },
+            //          travellerCamera:{},
+            //     },
+            //     children: [],
+            // },
+            testCubeGameObject1: {
+                debug:true,
+                prefab:"TestCube",
+                transform:{
+                    position:{ x: 10, y: 0, z: 4 }
                 },
             },
-            allIds: [
-                // "Camera",
-                "testCubeGameObject1",
-                "testShooter1",
-                "board1",
-                "lightGroup",
-                "directionalLight1",
-                "ambientLight1",
-            ],
+            testShooter1: {
+                debug:true,
+                transform:{
+                    position:{ x: 0, y: 0, z: 4 }
+                },
+                prefab:"TestShooter",
+            },
+            board1: {
+                debug:true,
+                components: {
+                    boardPlaneGeometry:{
+                        rotationX:0.01,
+                        dimensions:{ x: 50, y: 50, z: 2 },
+                        mass: 0,
+                    },},
+                prefab:"Board",
+            },
+            lightGroup: {
+              transform:{},
+              components: {},
+              children: ["directionalLight1", "ambientLight1","pointLight1"]
+            },
+            directionalLight1: {
+              transform:{},
+              components: {},
+                    prefab:"DirectionalLight",
+            },
+            ambientLight1: {
+              transform:{},
+              components: {},
+                prefab:"AmbientLight",
+            },
+            pointLight1: {
+              transform:{},
+              components: {},
+                prefab:"PointLight",
+            },
         },
+        allIds: [
+            // "Camera",
+            "testCubeGameObject1",
+            "testShooter1",
+            "board1",
+            "lightGroup",
+            "directionalLight1",
+            "ambientLight1",
+        ],
     },
     prefabs: {
         byId: {
