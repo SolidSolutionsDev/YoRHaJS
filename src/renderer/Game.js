@@ -17,7 +17,6 @@ export class Game extends React.Component {
 
   state = {
     renderer: null,
-    camera: null,
     scene: null,
     ready: false,
     started: false,
@@ -51,10 +50,9 @@ export class Game extends React.Component {
   };
 
   start = () => {
-    const { renderer, scene, camera } = this.state;
+    const { renderer, scene } = this.state;
     renderer.init();
     scene.init();
-    camera.init();
     this.animate();
     this.setState({started:true})
   };
@@ -86,12 +84,12 @@ export class Game extends React.Component {
   };
 
   componentDidUpdate = () => {
-    const { scene, camera, renderer, started, ready } = this.state;
+    const { scene, renderer, started, ready } = this.state;
     if (!started && ready) {
       this.start();
       return;
     }
-    if (!ready && camera && renderer && scene) {
+    if (!ready && renderer && scene) {
       this.setState({ ready: true });
     }
   };
@@ -111,7 +109,6 @@ export class Game extends React.Component {
     return (
       <GameContext.Provider value={{..._propsList}}>
         <Renderer {..._propsList} ref={this.addGameComponent} key="renderer" id="renderer" />
-        <Camera {..._propsList} ref={this.addGameComponent} key="camera" id="camera" />
         <Scene {..._propsList} ref={this.addGameComponent} key="scene" id="scene" />
         <PhysicsService {..._propsList} ref={this.addGameService} key="physics" id="physics" />
         <AudioService {..._propsList} ref={this.addGameService} key="audio" id="audio" />

@@ -66,6 +66,28 @@ export class Scene extends React.Component {
     return gameObjects;
   }
 
+  camera = {
+    _main: null,
+    setMain: (component) => {
+      this.camera._main = component.camera;
+    },
+    getMain: () => {
+      return this.props.camera.main;
+    },
+    getAllCameras: () => {
+      return this.props.camera.allCameras;
+    },
+    registerCamera: (component) => {
+      this.props.registerCamera(component.props.gameObject.id);
+    },
+    removeCamera: (gameObjectId) => {
+      this.props.removeCamera(gameObjectId);
+    },
+    setMainCamera: (gameObjectId) => {
+      this.props.setMainCamera(gameObjectId);
+    }
+  };
+
   render = () => {
 
     const _gameObjects = this.buildChildGameObjects();

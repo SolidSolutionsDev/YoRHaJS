@@ -48,7 +48,7 @@ export class CSSLabelTo3D extends React.Component {
 
     const coords2d = this.get2DCoords(
       this.position,
-      availableComponent.camera.camera,
+      availableComponent.scene.camera._main,
     );
     this.text.style.left = `${coords2d.x}px`;
     this.text.style.top = `${coords2d.y}px`;

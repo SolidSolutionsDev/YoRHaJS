@@ -23,3 +23,18 @@ export const emitLoadingAsset = (filename, total) => ({
   filename,
   total,
 });
+
+export const registerCamera = (cameraId) => ({
+  type: "REGISTER_CAMERA",
+  cameraId,
+});
+
+export const removeCamera = (cameraId) => ({
+  type: "REMOVE_CAMERA",
+  cameraId,
+});
+
+export const setMainCamera = (cameraId) => ({
+  type: "SET_MAIN_CAMERA",
+  cameraId,
+});

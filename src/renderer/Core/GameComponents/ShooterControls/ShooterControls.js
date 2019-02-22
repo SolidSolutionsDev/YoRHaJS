@@ -127,15 +127,18 @@ export class ShooterControls extends React.Component {
   };
 
   updateMouseLook = () => {
-      const { transform, availableComponent,availableService } = this.props;
+    const { transform, availableComponent,availableService } = this.props;
+    if(!availableComponent.scene.camera._main) {
+      return
+    }
     if (this.coords) {
-        const positionClone = transform.position.clone();
+      const positionClone = transform.position.clone();
 
-        let vector = positionClone.project(availableComponent.camera.camera);
-        const _coordsVec3 = availableService.physics.Vec3(this.coords.x, this.coords.y, 0);
-        const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
-        // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
-        transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
+      let vector = positionClone.project(availableComponent.scene.camera._main);
+      const _coordsVec3 = availableService.physics.Vec3(this.coords.x, this.coords.y, 0);
+      const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
+      // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
+      transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
     }
   }
 
