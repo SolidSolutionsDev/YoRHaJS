@@ -20,31 +20,48 @@ export const initialState = {
         },
     },
     scene:{
+        camera: {
+            main: null,
+            allCameras: [
+                "camera1",
+                //"camera2",
+                //"camera3",
+            ]
+         },
         children:[
             "lightGroup",
             "board1",
             "testCubeGameObject1",
             "testShooter1",
+            "camera1",
+            //"camera2",
+            //"camera3",
         ],
     },
     gameObjects: {
         byId: {
-            // Camera: {
-            //     transform:{
-            //     },
-            //     fromPrefab: "dynamicCamera",
-            //     components: {
-            //         perspectiveCamera:{
-            //             fov: 45,
-            //             near: 0.1,
-            //             far: 10000,
-            //             position:{x:0,y: -55,z: 35},
-            //             lookAt:{x:0,y: 0,z: 0},
-            //         },
-            //          travellerCamera:{},
-            //     },
-            //     children: [],
-            // },
+            camera3: {
+                // transform:{
+                // },
+                // fromPrefab: "dynamicCamera",
+                // components: {
+                //     perspectiveCamera:{
+                //         fov: 45,
+                //         near: 0.1,
+                //         far: 10000,
+                //         position:{x:0,y: -55,z: 35},
+                //         lookAt:{x:0,y: 0,z: 0},
+                //     },
+                //      travellerCamera:{},
+                // },
+                // children: [],
+            },
+            camera1:{
+
+            },
+            camera2: {
+
+            },
             testCubeGameObject1: {
                 debug:true,
                 prefab:"TestCube",

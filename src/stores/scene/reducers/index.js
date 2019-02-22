@@ -25,7 +25,6 @@ export const mainReducer = (state = initialState, action) => {
       // TODO: refactor this and prefab as they share same logic with var name changes (attention to newId)
     case "INSTANTIATE_FROM_GAMEOBJ":
       temp.state = state;
-      //temp.state.gameObjects = temp.state.gameObjects.byId;
       if (gameObjectId) {
         temp.gameObjectToClone = _.cloneDeep( temp.state.gameObjects.byId[gameObjectId]);
         if (transform) {
@@ -53,19 +52,6 @@ export const mainReducer = (state = initialState, action) => {
         }
       }
       return temp.state;
-      /*
-      {
-        type: 'INSTANTIATE_FROM_GAMEOBJ',
-        gameObjectId:"testShooter1",
-        transform: {position: {x:0,y:0,z:10}}
-      }
-      {
-        type: 'INSTANTIATE_FROM_GAMEOBJ',
-        gameObjectId:"testCubeGameObject1",
-        transform: {position: {x:0,y:0,z:10}},
-        parentId: "testShooter1"
-      }
-       */
     case "INSTANTIATE_FROM_PREFAB":
       temp.state = state;
       if (prefabId && newId) {
@@ -95,15 +81,38 @@ export const mainReducer = (state = initialState, action) => {
           }
         }
       return temp.state;
-      /*
-         {
-        type: 'INSTANTIATE_FROM_PREFAB',
-        prefabId:"TestCube",
-        transform: {position: {x:0,y:0,z:10}},
-        parentId: "testShooter1",
-        newId: "teste"
+    case "REGISTER_CAMERA":
+      temp.camera =  _.cloneDeep(state.scene.camera);
+      if(!state.gameObjects.byId[action.cameraId]) {
+        alert("CAMERA ID NOT FOUND");
+        return state;
       }
-       */
+      temp.camera.allCameras = [...temp.camera.allCameras, action.cameraId];
+      temp.camera.main = temp.camera.main ? temp.camera.main : action.cameraId;
+      temp.scene = {...state.scene, camera: temp.camera};
+      temp.state = {...state, scene: temp.scene};
+      return temp.state;
+    case "REMOVE_CAMERA":
+      if(!state.scene.camera.allCameras.includes(action.cameraId)) {
+        return state;
+      }
+      temp.camera = _.cloneDeep(state.scene.camera);
+      temp.camera.allCameras = temp.camera.allCameras.filter((cameraId)=>{return cameraId !== action.cameraId});
+      if(temp.camera.main == action.cameraId) {
+        temp.camera.main = temp.camera.allCameras[0] ? temp.camera.allCameras[0] : null;
+      }
+      temp.scene = {...state.scene, camera: temp.camera};
+      temp.state = {...state, scene: temp.scene};
+     return temp.state;
+    case "SET_MAIN_CAMERA":
+      if(!state.scene.camera.allCameras.includes(action.cameraId)) {
+        return state;
+      }
+      temp.camera = _.cloneDeep(state.scene.camera);
+      temp.camera.main = action.cameraId;
+      temp.scene = {...state.scene, camera: temp.camera};
+      temp.state = {...state, scene: temp.scene};
+      return temp.state;
     default:
       return state;
   }
