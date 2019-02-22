@@ -128,10 +128,10 @@ export class Renderer extends React.Component {
     this.resizeFunctions.push(onResizeFunction);
   };
 
-  registerCameraComponent = (camera) => {
-    this.camera = camera;
-    this.initPostProcessing();
-  };
+  // registerCameraComponent = (camera) => {
+  //   this.camera = camera;
+  //   this.initPostProcessing();
+  // };
 
   canvasWidth = () => this.canvas.width;
 
