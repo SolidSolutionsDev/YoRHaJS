@@ -23,9 +23,6 @@ export const initialState = {
         camera: {
             main: null,
             allCameras: [
-                "camera1",
-                //"camera2",
-                //"camera3",
             ]
          },
         children:[
@@ -34,33 +31,12 @@ export const initialState = {
             "testCubeGameObject1",
             "testShooter1",
             "camera1",
-            //"camera2",
-            //"camera3",
         ],
     },
     gameObjects: {
         byId: {
-            camera3: {
-                // transform:{
-                // },
-                // fromPrefab: "dynamicCamera",
-                // components: {
-                //     perspectiveCamera:{
-                //         fov: 45,
-                //         near: 0.1,
-                //         far: 10000,
-                //         position:{x:0,y: -55,z: 35},
-                //         lookAt:{x:0,y: 0,z: 0},
-                //     },
-                //      travellerCamera:{},
-                // },
-                // children: [],
-            },
-            camera1:{
-
-            },
-            camera2: {
-
+            camera1: {
+                prefab: "DynamicCamera",
             },
             testCubeGameObject1: {
                 debug:true,
@@ -121,13 +97,13 @@ export const initialState = {
         byId: {
             DynamicCamera: {
                 components: {
-                    perspectiveCamera:{
-                        fov: 45,
-                        near: 0.1,
-                        far: 10000,
-                        position:{x:0,y: -55,z: 35},
-                        lookAt:{x:0,y: 0,z: 0},
-                    },
+                    // perspectiveCamera:{
+                    //     fov: 45,
+                    //     near: 0.1,
+                    //     far: 10000,
+                    //     position:{x:0,y: -55,z: 35},
+                    //     lookAt:{x:0,y: 0,z: 0},
+                    // },
                     dynamicCameraManager:{
                         cameraSoundPath: "./assets/sound/camera_change.mp3",
                         cameraAngle: "nier",

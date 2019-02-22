@@ -12,6 +12,7 @@ import {
 const mapStateToProps = (state) => ({
   // objects: getObjects(state),
   ...state.mainReducer,
+  camera: state.mainReducer.scene.camera,
   gameObjects: state.mainReducer.gameObjects,
   prefabs: state.mainReducer.prefabs.byId,
 });

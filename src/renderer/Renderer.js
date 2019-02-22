@@ -43,10 +43,13 @@ export class Renderer extends React.Component {
 
   update = () => {
     const { backgroundColor, availableComponent } = this.props;
-    if (this.state.ready) {
+    const mainCameraReady = availableComponent.scene.camera._main;
+    if (this.state.ready && mainCameraReady) {
       this.renderer.render(
+        //TODO rename scene.scene to scene.transform
         availableComponent.scene.scene,
-        availableComponent.camera.getObject(),
+        //availableComponent.camera.getObject(),
+        availableComponent.scene.camera._main,
       );
       // this.composer.render();
 
@@ -138,8 +141,6 @@ export class Renderer extends React.Component {
   canvasHeight = () => this.canvas.height;
 
   getAspect = () => this.aspect;
-
-  camera;
 
   render = () => (
     <div
