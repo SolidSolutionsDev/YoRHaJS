@@ -135,17 +135,29 @@ export class ShooterControls extends React.Component {
 
   updateMouseLook = () => {
     const { transform, availableComponent,availableService } = this.props;
-    if(!availableComponent.scene.camera._main) {
-      return
-    }
-    if (this.coords) {
-      const positionClone = transform.position.clone();
 
-      let vector = positionClone.project(availableComponent.scene.camera._main);
-      const _coordsVec3 = availableService.physics.Vec3(this.coords.x, this.coords.y, 0);
-      const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
-      // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
-      transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
+    if(!availableComponent.scene.camera._main) {
+      return;
+    }
+
+    if (this.coords) {
+
+        // TODO: move this to physics service as lookAt function
+        // Compute direction to target
+        let lookAtVector = this.getPositionFromMouse(transform.physicsBody.position.z);
+        // convert THREE Vector3 to CANNON Vec3
+        lookAtVector = new CANNON.Vec3(lookAtVector.x,lookAtVector.y,lookAtVector.z)
+
+        // normalized shooter direction from the lookAt object position
+        let currentShooterDirection = new CANNON.Vec3();
+        currentShooterDirection = lookAtVector.vsub(transform.physicsBody.position);
+        currentShooterDirection.z = 0;
+        currentShooterDirection.normalize();
+
+        let forwardVector = new CANNON.Vec3(0,1,0);
+
+        // Get the rotation between the forward vector and the direction vector
+        transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
     }
   }
 
