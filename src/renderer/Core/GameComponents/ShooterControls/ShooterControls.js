@@ -1,8 +1,13 @@
 import React from "react";
 import * as CANNON from "cannon";
 import * as _ from 'lodash';
+// mousedebug
+import * as THREE from 'three';
 
 export class ShooterControls extends React.Component {
+
+    mouseDebugMesh;
+
   moveRatio = this.props.moveRatio || 0.3;
 
   moveVelocity = {
@@ -103,6 +108,8 @@ export class ShooterControls extends React.Component {
     // console.log('mouseLook',e);
     const _coords = e.detail.coordinates;
     this.coords = _coords;
+
+    this.updateMouseLookDebugMesh();
     // transform.lookAt(new THREE.Vector3(_coords.x,_coords.y,_coords.z ));
     //console.log(transform);
     // transform.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0), _coords.z * 2);
@@ -182,9 +189,42 @@ export class ShooterControls extends React.Component {
     });
   };
 
+  addMouseDebugMesh = () => {
+      const {availableComponent} = this.props;
+      const geometry = new THREE.SphereGeometry( 1, 32, 32 );
+      const material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+      this.mouseDebugMesh = new THREE.Mesh( geometry, material );
+      console.log(this.props)
+      availableComponent.scene.scene.add( this.mouseDebugMesh );
+  }
+
+    updateMouseLookDebugMesh = () => {
+      const coords = this.getPositionFromMouse(3);
+      this.mouseDebugMesh.position.set(coords.x,coords.y,coords.z);
+  }
+
+  getPositionFromMouse = (targetZ=0) => {
+
+      const {availableComponent } = this.props;
+      const camera = availableComponent.scene.camera._main;
+
+      let vec = new THREE.Vector3(this.coords.x,this.coords.y,this.coords.z); // create once and reuse
+      let pos = new THREE.Vector3(); // create once and reuse
+
+      vec.unproject( camera );
+
+      vec.sub( camera.position ).normalize();
+
+      let distance = ( targetZ - camera.position.z )/ vec.z;
+
+      pos.copy( camera.position ).add( vec.multiplyScalar( distance ) );
+      return pos;
+  }
+
   start = () => {
     this.registerEvents();
     // transform.add( this.mesh );
+      this.addMouseDebugMesh();
   };
 
   update = () => {
