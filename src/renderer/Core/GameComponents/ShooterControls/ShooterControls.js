@@ -141,6 +141,10 @@ export class ShooterControls extends React.Component {
 
             // Get the rotation between the forward vector and the direction vector
             transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
+
+            // this can be used to make bullets or enemies follow player but disables gravity
+             const fixedSpeed = 10;
+             currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
         }
     }
 
