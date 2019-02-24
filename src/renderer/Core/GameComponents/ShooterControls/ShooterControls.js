@@ -7,6 +7,8 @@ import * as THREE from 'three';
 export class ShooterControls extends React.Component {
 
     mouseDebugMesh;
+    currentShooterDirection;
+    fixedSpeed = 5;
 
     moveRatio = this.props.moveRatio || 0.3;
 
@@ -60,6 +62,8 @@ export class ShooterControls extends React.Component {
         // console.log('moveLeft');
         // this.activeMovements.left=true;
         transform.physicsBody.position.x -= this.moveRatio;
+        // let forwardVector = new CANNON.Vec3(-1, 0, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
     };
 
     moveRight = () => {
@@ -67,6 +71,8 @@ export class ShooterControls extends React.Component {
         const {transform} = this.props;
         // console.log('moveRight');
         transform.physicsBody.position.x += this.moveRatio;
+        // let forwardVector = new CANNON.Vec3(1,0, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
     };
 
     moveUp = () => {
@@ -74,19 +80,18 @@ export class ShooterControls extends React.Component {
         const {transform} = this.props;
         // console.log('moveUp');
         transform.physicsBody.position.y += this.moveRatio;
+
+        // let forwardVector = new CANNON.Vec3(0, 1, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
     };
 
     moveDown = () => {
 
         const {transform} = this.props;
         // console.log('moveDown',transform.physicsBody);
-        // transform.position.y-=this.moveRatio;
         transform.physicsBody.position.y -= this.moveRatio;
-        // //   transform.physicsBody.angularDamping = 0;
-        //   transform.physicsBody.linearFactor.x =0;
-        //   transform.physicsBody.linearFactor.z =0;
-        //   transform.physicsBody.linearFactor.y =0;
-        //   transform.physicsBody.velocity.y += 1;
+        // let forwardVector = new CANNON.Vec3(0, -1, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
     };
 
     shoot = () => {
@@ -129,22 +134,26 @@ export class ShooterControls extends React.Component {
             // Compute direction to target
             let lookAtVector = this.getPositionFromMouse(transform.physicsBody.position.z);
             // convert THREE Vector3 to CANNON Vec3
-            lookAtVector = new CANNON.Vec3(lookAtVector.x, lookAtVector.y, lookAtVector.z)
+            lookAtVector = new CANNON.Vec3(lookAtVector.x, lookAtVector.y, lookAtVector.z);
+
 
             // normalized shooter direction from the lookAt object position
             let currentShooterDirection = new CANNON.Vec3();
             currentShooterDirection = lookAtVector.vsub(transform.physicsBody.position);
             currentShooterDirection.z = 0;
             currentShooterDirection.normalize();
-
             let forwardVector = new CANNON.Vec3(0, 1, 0);
 
+            console.log(currentShooterDirection);
+
             // Get the rotation between the forward vector and the direction vector
-            transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
+             transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
 
             // this can be used to make bullets or enemies follow player but disables gravity
-             const fixedSpeed = 10;
-             currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
+             const fixedSpeed = 1;
+             this.currentShooterDirection = currentShooterDirection;
+             // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
+
         }
     }
 
