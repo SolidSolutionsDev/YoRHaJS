@@ -144,8 +144,6 @@ export class ShooterControls extends React.Component {
             currentShooterDirection.normalize();
             let forwardVector = new CANNON.Vec3(0, 1, 0);
 
-            console.log(currentShooterDirection);
-
             // Get the rotation between the forward vector and the direction vector
              transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
 
@@ -202,7 +200,6 @@ export class ShooterControls extends React.Component {
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshBasicMaterial({color: 0xffff00});
         this.mouseDebugMesh = new THREE.Mesh(geometry, material);
-        console.log(this.props)
         availableComponent.scene.scene.add(this.mouseDebugMesh);
     }
 
