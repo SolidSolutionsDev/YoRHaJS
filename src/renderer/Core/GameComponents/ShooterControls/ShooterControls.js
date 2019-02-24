@@ -1,196 +1,241 @@
 import React from "react";
 import * as CANNON from "cannon";
 import * as _ from 'lodash';
+// mousedebug
+import * as THREE from 'three';
 
 export class ShooterControls extends React.Component {
-  moveRatio = this.props.moveRatio || 0.3;
 
-  moveVelocity = {
-    value: 0,
-    max: 1,
-    min: 1,
-    variation: 0.01
-  };
+    mouseDebugMesh;
+    currentShooterDirection;
+    fixedSpeed = 5;
 
-  state = {
-    activeLeft: false,
-    activeRight: false,
-    activeUp: false,
-    activeDown: false,
-    movementCallback: null
-  };
+    moveRatio = this.props.moveRatio || 0.3;
 
-  lookDown = () => {
-    const { transform } = this.props;
-      transform.physicsBody.quaternion.setFromAxisAngle(
-          new CANNON.Vec3(0, 0, 1),
-          Math.PI/2
-      );
-  };
-  lookUp = () => {
-    const { transform } = this.props;
-      transform.physicsBody.quaternion.setFromAxisAngle(
-          new CANNON.Vec3(0, 0, 1),
-          -Math.PI/2
-      );
-  };
+    moveVelocity = {
+        value: 0,
+        max: 1,
+        min: 1,
+        variation: 0.01
+    };
 
-  lookLeft = () => {
-    const { transform } = this.props;
-      transform.physicsBody.quaternion.setFromAxisAngle(
-          new CANNON.Vec3(0, 0, 1),
-          Math.PI
-      );
-  };
-  lookRight = () => {
-    const { transform } = this.props;
-      transform.physicsBody.quaternion.setFromAxisAngle(
-          new CANNON.Vec3(0, 0, 1),
-          0
-      );
-  };
-  moveLeft = () => {
+    state = {
+        activeLeft: false,
+        activeRight: false,
+        activeUp: false,
+        activeDown: false,
+        movementCallback: null
+    };
 
-    const { transform } = this.props;
-    // console.log('moveLeft');
-    // this.activeMovements.left=true;
-    transform.physicsBody.position.x -= this.moveRatio;
-  };
-
-  moveRight = () => {
-
-    const { transform } = this.props;
-    // console.log('moveRight');
-    transform.physicsBody.position.x += this.moveRatio;
-  };
-
-  moveUp = () => {
-
-    const { transform } = this.props;
-    // console.log('moveUp');
-    transform.physicsBody.position.y += this.moveRatio;
-  };
-
-  moveDown = () => {
-
-    const { transform } = this.props;
-    // console.log('moveDown',transform.physicsBody);
-    // transform.position.y-=this.moveRatio;
-    transform.physicsBody.position.y -= this.moveRatio;
-    // //   transform.physicsBody.angularDamping = 0;
-    //   transform.physicsBody.linearFactor.x =0;
-    //   transform.physicsBody.linearFactor.z =0;
-    //   transform.physicsBody.linearFactor.y =0;
-    //   transform.physicsBody.velocity.y += 1;
-  };
-
-  shoot = () => {
-    const {instantiateFromPrefab, transform} = this.props;
-    const {position, rotation, scale} = transform;
-    console.log("shoot");
-    instantiateFromPrefab(
-        "TestCube",
-        _.uniqueId( "bullet" ),
-        {
-          position,
-          rotation,
-          scale,
-        },
+    lookDown = () => {
+        const {transform} = this.props;
+        transform.physicsBody.quaternion.setFromAxisAngle(
+            new CANNON.Vec3(0, 0, 1),
+            Math.PI / 2
         );
-  };
+    };
+    lookUp = () => {
+        const {transform} = this.props;
+        transform.physicsBody.quaternion.setFromAxisAngle(
+            new CANNON.Vec3(0, 0, 1),
+            -Math.PI / 2
+        );
+    };
 
-  mouseLook = e => {
-    // console.log('mouseLook',e);
-    const _coords = e.detail.coordinates;
-    this.coords = _coords;
-    // transform.lookAt(new THREE.Vector3(_coords.x,_coords.y,_coords.z ));
-    //console.log(transform);
-    // transform.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,1,0), _coords.z * 2);
+    lookLeft = () => {
+        const {transform} = this.props;
+        transform.physicsBody.quaternion.setFromAxisAngle(
+            new CANNON.Vec3(0, 0, 1),
+            Math.PI
+        );
+    };
+    lookRight = () => {
+        const {transform} = this.props;
+        transform.physicsBody.quaternion.setFromAxisAngle(
+            new CANNON.Vec3(0, 0, 1),
+            0
+        );
+    };
+    moveLeft = () => {
 
- /*
-    transform.physicsBody.quaternion.setFromAxisAngle(
-      new CANNON.Vec3(0, 0, 1),
-      _coords.x * 2
-    );
-*/
+        const {transform} = this.props;
+        // console.log('moveLeft');
+        // this.activeMovements.left=true;
+        transform.physicsBody.position.x -= this.moveRatio;
+        // let forwardVector = new CANNON.Vec3(-1, 0, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+    };
 
-    // transform.physicsBody.rotation.y += _coords.x * 0.002;
-    // transform.physicsBody.rotation.x += _coords.y * 0.002;
+    moveRight = () => {
 
-      this.updateMouseLook();
+        const {transform} = this.props;
+        // console.log('moveRight');
+        transform.physicsBody.position.x += this.moveRatio;
+        // let forwardVector = new CANNON.Vec3(1,0, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+    };
 
-      // var canvas = availableComponent.renderer.canvas;
-      // vector.x = (vector.x + 1) / 2 * canvas.width;
-      // vector.y = -(vector.y - 1) / 2 * canvas.height;
+    moveUp = () => {
 
-      this.updateMovement();
-  };
+        const {transform} = this.props;
+        // console.log('moveUp');
+        transform.physicsBody.position.y += this.moveRatio;
 
-  updateMouseLook = () => {
-    const { transform, availableComponent,availableService } = this.props;
-    if(!availableComponent.scene.camera._main) {
-      return
+        // let forwardVector = new CANNON.Vec3(0, 1, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+    };
+
+    moveDown = () => {
+
+        const {transform} = this.props;
+        // console.log('moveDown',transform.physicsBody);
+        transform.physicsBody.position.y -= this.moveRatio;
+        // let forwardVector = new CANNON.Vec3(0, -1, 0);
+        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+    };
+
+    shoot = () => {
+        const {instantiateFromPrefab, transform} = this.props;
+        const {position, rotation, scale} = transform;
+        console.log("shoot");
+        instantiateFromPrefab(
+            "TestCube",
+            _.uniqueId("bullet"),
+            {
+                position,
+                rotation,
+                scale,
+            },
+        );
+    };
+
+    mouseLook = e => {
+        // console.log('mouseLook',e);
+        const _coords = e.detail.coordinates;
+        this.coords = _coords;
+
+        this.updateMouseLookDebugMesh();
+
+        this.updateMouseLook();
+
+        this.updateMovement();
+    };
+
+    updateMouseLook = () => {
+        const {transform, availableComponent, availableService} = this.props;
+
+        if (!availableComponent.scene.camera._main) {
+            return;
+        }
+
+        if (this.coords) {
+
+            // TODO: move this to physics service as lookAt function
+            // Compute direction to target
+            let lookAtVector = this.getPositionFromMouse(transform.physicsBody.position.z);
+            // convert THREE Vector3 to CANNON Vec3
+            lookAtVector = new CANNON.Vec3(lookAtVector.x, lookAtVector.y, lookAtVector.z);
+
+
+            // normalized shooter direction from the lookAt object position
+            let currentShooterDirection = new CANNON.Vec3();
+            currentShooterDirection = lookAtVector.vsub(transform.physicsBody.position);
+            currentShooterDirection.z = 0;
+            currentShooterDirection.normalize();
+            let forwardVector = new CANNON.Vec3(0, 1, 0);
+
+            // Get the rotation between the forward vector and the direction vector
+             transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
+
+            // this can be used to make bullets or enemies follow player but disables gravity
+             const fixedSpeed = 1;
+             this.currentShooterDirection = currentShooterDirection;
+             // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
+
+        }
     }
-    if (this.coords) {
-      const positionClone = transform.position.clone();
 
-      let vector = positionClone.project(availableComponent.scene.camera._main);
-      const _coordsVec3 = availableService.physics.Vec3(this.coords.x, this.coords.y, 0);
-      const vectorVec3 = availableService.physics.Vec3(vector.x, vector.y, 0);
-      // console.log("\nvector:",vector,"\n_coords:",_coords,"\nvectorVec3:",vectorVec3,"\n_coordsVec3:",_coordsVec3);
-      transform.physicsBody.quaternion.setFromVectors( vectorVec3,_coordsVec3);
+    updateMovement = () => {
+        // transform.rotation.y += 0.01;s
+        if (this.state.activeLeft) this.moveLeft();
+        if (this.state.activeRight) this.moveRight();
+        if (this.state.activeUp) this.moveUp();
+        if (this.state.activeDown) this.moveDown();
+        if (this.state.activeLookUp) this.lookUp();
+        if (this.state.activeLookDown) this.lookDown();
+        if (this.state.activeLookLeft) this.lookLeft();
+        if (this.state.activeLookRight) this.lookRight();
     }
-  }
 
-  updateMovement = () => {
-      // transform.rotation.y += 0.01;s
-      if (this.state.activeLeft) this.moveLeft();
-      if (this.state.activeRight) this.moveRight();
-      if (this.state.activeUp) this.moveUp();
-      if (this.state.activeDown) this.moveDown();
-      if (this.state.activeLookUp) this.lookUp();
-      if (this.state.activeLookDown) this.lookDown();
-      if (this.state.activeLookLeft) this.lookLeft();
-      if (this.state.activeLookRight) this.lookRight();
-  }
+    eventsMap = {
+        moveleft: () => this.setState({activeLeft: true}),
+        moveright: () => this.setState({activeRight: true}),
+        moveup: () => this.setState({activeUp: true}),
+        movedown: () => this.setState({activeDown: true}),
+        moveleft_keyup: () => this.setState({activeLeft: false}),
+        moveright_keyup: () => this.setState({activeRight: false}),
+        moveup_keyup: () => this.setState({activeUp: false}),
+        movedown_keyup: () => this.setState({activeDown: false}),
+        lookup: () => this.setState({activeLookUp: true}),
+        lookup_keyup: () => this.setState({activeLookUp: false}),
+        lookdown: () => this.setState({activeLookDown: true}),
+        lookdown_keyup: () => this.setState({activeLookDown: false}),
+        lookleft: () => this.setState({activeLookLeft: true}),
+        lookleft_keyup: () => this.setState({activeLookLeft: false}),
+        lookright: () => this.setState({activeLookRight: true}),
+        lookright_keyup: () => this.setState({activeLookRight: false}),
+        shoot: this.shoot,
+        mousem: this.mouseLook
+    };
 
-  eventsMap = {
-    moveleft: () => this.setState({ activeLeft: true }),
-    moveright: () => this.setState({ activeRight: true }),
-    moveup: () => this.setState({ activeUp: true }),
-    movedown: () => this.setState({ activeDown: true }),
-    moveleft_keyup: () => this.setState({ activeLeft: false }),
-    moveright_keyup: () => this.setState({ activeRight: false }),
-    moveup_keyup: () => this.setState({ activeUp: false }),
-    movedown_keyup: () => this.setState({ activeDown: false }),
-    lookup: () => this.setState({ activeLookUp: true }),
-    lookup_keyup: () => this.setState({ activeLookUp: false }),
-    lookdown: () => this.setState({ activeLookDown: true }),
-    lookdown_keyup: () => this.setState({ activeLookDown: false }),
-    lookleft: () => this.setState({ activeLookLeft: true }),
-    lookleft_keyup: () => this.setState({ activeLookLeft: false }),
-    lookright: () => this.setState({ activeLookRight: true }),
-    lookright_keyup: () => this.setState({ activeLookRight: false }),
-    shoot: this.shoot,
-    mousem: this.mouseLook
-  };
+    registerEvents = () => {
+        Object.keys(this.eventsMap).forEach(event => {
+            // console.log(`here ${event.toString()}`, this.eventsMap[event]);
+            document.addEventListener(event, this.eventsMap[event]);
+        });
+    };
 
-  registerEvents = () => {
-    Object.keys(this.eventsMap).forEach(event => {
-      // console.log(`here ${event.toString()}`, this.eventsMap[event]);
-      document.addEventListener(event, this.eventsMap[event]);
-    });
-  };
+    addMouseDebugMesh = () => {
+        const {availableComponent} = this.props;
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshBasicMaterial({color: 0xffff00});
+        this.mouseDebugMesh = new THREE.Mesh(geometry, material);
+        availableComponent.scene.scene.add(this.mouseDebugMesh);
+    }
 
-  start = () => {
-    this.registerEvents();
-    // transform.add( this.mesh );
-  };
+    updateMouseLookDebugMesh = () => {
+        const coords = this.getPositionFromMouse(3);
+        this.mouseDebugMesh.position.set(coords.x, coords.y, coords.z);
+    }
 
-  update = () => {
-    this.updateMovement();
-    this.updateMouseLook();
-  };
+    getPositionFromMouse = (targetZ = 0) => {
+
+        const {availableComponent} = this.props;
+        const camera = availableComponent.scene.camera._main;
+
+        let vec = new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z); // create once and reuse
+        let pos = new THREE.Vector3(); // create once and reuse
+
+        vec.unproject(camera);
+
+        vec.sub(camera.position).normalize();
+
+        let distance = (targetZ - camera.position.z) / vec.z;
+
+        pos.copy(camera.position).add(vec.multiplyScalar(distance));
+        return pos;
+    }
+
+    start = () => {
+        this.registerEvents();
+        // transform.add( this.mesh );
+        this.addMouseDebugMesh();
+    };
+
+    update = () => {
+        this.updateMovement();
+        this.updateMouseLook();
+    };
 
     render = () => null;
 }
