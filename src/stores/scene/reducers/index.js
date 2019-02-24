@@ -113,6 +113,20 @@ export const mainReducer = (state = initialState, action) => {
       temp.scene = {...state.scene, camera: temp.camera};
       temp.state = {...state, scene: temp.scene};
       return temp.state;
+     case "DESTROY_GAMEOBJECT_BYID":
+      temp.children = _.cloneDeep(state.scene.children);
+      if(temp.children.includes(action.gameObjectId)) {
+        temp.children = temp.children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
+      }
+      temp.gameObjects = _.cloneDeep(state.gameObjects);
+      if(temp.gameObjects.allIds.includes(action.gameObjectId)) {
+        delete temp.gameObjects.byId[action.gameObjectId];
+        temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id)=>{return id !== action.gameObjectId});
+        temp.gameObjects = {...state.gameObjects, byId: temp.gameObjects.byId, allIds: temp.gameObjects.allIds };
+      }
+      temp.scene = {...state.scene, children: temp.children};
+      temp.state = {...state, scene: temp.scene, gameObjects: temp.gameObjects};
+      return temp.state;
     default:
       return state;
   }
