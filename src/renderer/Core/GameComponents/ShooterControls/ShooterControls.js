@@ -10,6 +10,9 @@ export class ShooterControls extends React.Component {
     currentShooterDirection;
     fixedSpeed = 5;
 
+    aux = 0;
+    auxN = "";
+
     moveRatio = this.props.moveRatio || 0.3;
 
     moveVelocity = {
@@ -95,18 +98,27 @@ export class ShooterControls extends React.Component {
     };
 
     shoot = () => {
-        const {instantiateFromPrefab, transform} = this.props;
+        this.aux++;
+        const {instantiateFromPrefab, transform, destroyGameObjectInstanceById} = this.props;
         const {position, rotation, scale} = transform;
         console.log("shoot");
-        instantiateFromPrefab(
-            "TestCube",
-            _.uniqueId("bullet"),
-            {
-                position,
-                rotation,
-                scale,
-            },
-        );
+        if(this.aux % 2 == 1) {
+            this.auxN = _.uniqueId("bullet");
+            instantiateFromPrefab(
+                "TestCube",
+                this.auxN,
+                {
+                    position,
+                    rotation,
+                    scale,
+                },
+                "lightGroup",
+            );
+        }
+        else {
+            destroyGameObjectInstanceById(this.auxN);
+        }
+        //destroyGameObjectInstanceById("TestCube12");
     };
 
     mouseLook = e => {
