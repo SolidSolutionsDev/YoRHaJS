@@ -68,19 +68,23 @@ export const initialState = {
               children: ["directionalLight1", "ambientLight1","pointLight1"]
             },
             directionalLight1: {
-              transform:{},
-              components: {},
-                    prefab:"DirectionalLight",
+                transform:{},
+                components: {},
+                prefab:"DirectionalLight",
+                parentId: "lightGroup",
+
             },
             ambientLight1: {
-              transform:{},
-              components: {},
+                transform:{},
+                components: {},
                 prefab:"AmbientLight",
+                parentId: "lightGroup",
             },
             pointLight1: {
-              transform:{},
-              components: {},
+                transform:{},
+                components: {},
                 prefab:"PointLight",
+                parentId: "lightGroup",
             },
         },
         allIds: [

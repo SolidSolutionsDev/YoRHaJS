@@ -58,8 +58,9 @@ export const mainReducer = (state = initialState, action) => {
         temp.newGameObject = {
             debug:true,
             prefab:prefabId,
-            transform
-          },
+            transform,
+            parentId: parentId,
+          }, 
           temp.state = {
             ...temp.state,
             gameObjects: {
@@ -70,7 +71,6 @@ export const mainReducer = (state = initialState, action) => {
               allIds: [...temp.state.gameObjects.allIds, newId]
             },
           };
-          //this is not being used
           if (parentId) {
              temp.parent = temp.state.gameObjects.byId[parentId];
              const _currentChildren = temp.parent.children || [];
@@ -120,6 +120,10 @@ export const mainReducer = (state = initialState, action) => {
       }
       temp.gameObjects = _.cloneDeep(state.gameObjects);
       if(temp.gameObjects.allIds.includes(action.gameObjectId)) {
+        if(temp.gameObjects.byId[action.gameObjectId].parentId) {
+          const _parentId = temp.gameObjects.byId[action.gameObjectId].parentId;
+          temp.gameObjects.byId[_parentId].children = temp.gameObjects.byId[_parentId].children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
+        }
         delete temp.gameObjects.byId[action.gameObjectId];
         temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id)=>{return id !== action.gameObjectId});
         temp.gameObjects = {...state.gameObjects, byId: temp.gameObjects.byId, allIds: temp.gameObjects.allIds };
