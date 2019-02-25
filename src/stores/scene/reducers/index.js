@@ -72,7 +72,7 @@ export const mainReducer = (state = initialState, action) => {
           };
           //this is not being used
           if (parentId) {
-             temp.parent = temp.state.scene.gameObjects.byId[parentId];
+             temp.parent = temp.state.gameObjects.byId[parentId];
              const _currentChildren = temp.parent.children || [];
              temp.parent.children= [..._currentChildren, newId  ];
           }
