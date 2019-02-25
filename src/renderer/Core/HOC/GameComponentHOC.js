@@ -28,7 +28,7 @@ export function makeGameComponent(WrappedComponent, name) {
     };
 
     componentWillUnmount() {
-      console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
+      console.log(this.getDisplayName() + " component will UNmount ", this.getDisplayName());
       this._onDestroy();
     }
 

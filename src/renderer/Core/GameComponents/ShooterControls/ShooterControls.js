@@ -10,7 +10,7 @@ export class ShooterControls extends React.Component {
     currentShooterDirection;
     fixedSpeed = 5;
 
-    aux = 0;
+    aux = false;
     auxN = "";
 
     moveRatio = this.props.moveRatio || 0.3;
@@ -98,11 +98,11 @@ export class ShooterControls extends React.Component {
     };
 
     shoot = () => {
-        this.aux++;
+        this.aux = !this.aux;
         const {instantiateFromPrefab, transform, destroyGameObjectInstanceById} = this.props;
         const {position, rotation, scale} = transform;
         console.log("shoot");
-        if(this.aux % 2 == 1) {
+        if(this.aux) {
             this.auxN = _.uniqueId("bullet");
             instantiateFromPrefab(
                 "TestCube",

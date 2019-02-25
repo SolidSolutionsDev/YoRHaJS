@@ -69,7 +69,13 @@ import ConnectedGameObject from "./index";
       if (!scene) {
         return;
       }
+      
       scene.remove(this.transform);
+
+      if(this.transform.parent) {
+        const parent = this.transform.parent;
+        parent.remove(this.transform);
+      }
     };
 
     registerParent = (parent) => {
