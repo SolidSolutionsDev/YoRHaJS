@@ -3,6 +3,7 @@ import { makeGameComponent } from "../../HOC/GameComponentHOC";
 import {
   instantiateFromGameObject,
   instantiateFromPrefab,
+  destroyGameObjectInstanceById,
 } from "../../../../stores/scene/actions";
 
 // import { OBJMeshGeometry } from "../../GameComponents/OBJMeshGeometry/OBJMeshGeometry";
@@ -66,6 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   instantiateFromPrefab: (prefabId, newId, transform, parentId) => {
     dispatch(instantiateFromPrefab(prefabId, newId, transform, parentId));
+  },
+  destroyGameObjectInstanceById: (gameObjectId) => {
+    dispatch(destroyGameObjectInstanceById(gameObjectId));
   },
 });
 

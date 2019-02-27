@@ -61,6 +61,7 @@ import ConnectedGameObject from "./index";
     _onDestroy() {
       console.log("_onDestroy", this._name);
       this.removeFromScene();
+      this.unRegisterFromParent(this._name);
     }
 
     removeFromScene =()=> {
@@ -68,7 +69,13 @@ import ConnectedGameObject from "./index";
       if (!scene) {
         return;
       }
+      
       scene.remove(this.transform);
+
+      if(this.transform.parent) {
+        const parent = this.transform.parent;
+        parent.remove(this.transform);
+      }
     };
 
     registerParent = (parent) => {
@@ -108,6 +115,19 @@ import ConnectedGameObject from "./index";
       gameObject._type === "GameObject"
         ? gameObject
         : this.getWrappedGameObject(gameObject.getWrappedInstance());
+
+
+    unRegisterChildGameObject = (gameObjectId) => {
+      this.childGameObjects = this.childGameObjects.filter((element) => { 
+        return element.props.id != gameObjectId;
+      });
+    }
+
+    unRegisterFromParent = (gameObjectId) => {
+      if(this.props.parent) {
+        this.props.parent.unRegisterChildGameObject(gameObjectId);
+      }
+    };
 
     registerChildGameObject = (gameObject) => {
       if (!gameObject) {

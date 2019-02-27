@@ -58,8 +58,9 @@ export const mainReducer = (state = initialState, action) => {
         temp.newGameObject = {
             debug:true,
             prefab:prefabId,
-            transform
-          },
+            transform,
+            parentId: parentId,
+          }, 
           temp.state = {
             ...temp.state,
             gameObjects: {
@@ -70,9 +71,8 @@ export const mainReducer = (state = initialState, action) => {
               allIds: [...temp.state.gameObjects.allIds, newId]
             },
           };
-          //this is not being used
           if (parentId) {
-             temp.parent = temp.state.scene.gameObjects.byId[parentId];
+             temp.parent = temp.state.gameObjects.byId[parentId];
              const _currentChildren = temp.parent.children || [];
              temp.parent.children= [..._currentChildren, newId  ];
           }
@@ -112,6 +112,24 @@ export const mainReducer = (state = initialState, action) => {
       temp.camera.main = action.cameraId;
       temp.scene = {...state.scene, camera: temp.camera};
       temp.state = {...state, scene: temp.scene};
+      return temp.state;
+     case "DESTROY_GAMEOBJECT_BYID":
+      temp.children = _.cloneDeep(state.scene.children);
+      if(temp.children.includes(action.gameObjectId)) {
+        temp.children = temp.children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
+      }
+      temp.gameObjects = _.cloneDeep(state.gameObjects);
+      if(temp.gameObjects.allIds.includes(action.gameObjectId)) {
+        if(temp.gameObjects.byId[action.gameObjectId].parentId) {
+          const _parentId = temp.gameObjects.byId[action.gameObjectId].parentId;
+          temp.gameObjects.byId[_parentId].children = temp.gameObjects.byId[_parentId].children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
+        }
+        delete temp.gameObjects.byId[action.gameObjectId];
+        temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id)=>{return id !== action.gameObjectId});
+        temp.gameObjects = {...state.gameObjects, byId: temp.gameObjects.byId, allIds: temp.gameObjects.allIds };
+      }
+      temp.scene = {...state.scene, children: temp.children};
+      temp.state = {...state, scene: temp.scene, gameObjects: temp.gameObjects};
       return temp.state;
     default:
       return state;
