@@ -116,7 +116,7 @@ export class Camera extends React.Component {
 
   setCameraPosition = () => {
  
-    const { cameraAngle, availableComponent, cameraAllowedPositions } = this.props;
+    const { updateSelf, cameraAngle, availableComponent, cameraAllowedPositions } = this.props;
     const { scene } = availableComponent;
     const cameraPositionData = cameraAllowedPositions[cameraAngle];
 
@@ -136,9 +136,9 @@ export class Camera extends React.Component {
 
     this.camera.lookAt(scene.scene.position);
 
-    // updateSceneObject({
-    //   cameraAngle: "",
-    // });
+      updateSelf({
+       cameraAngle: "",
+      });
   };
 
   controls;

@@ -26,7 +26,7 @@ const getPrefabs = (state) => {
   return state.mainReducer.prefabs;
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   instantiateFromGameObject: (gameObjectId, transform, parentId) => {
     dispatch(instantiateFromGameObject(gameObjectId, transform, parentId));
   },
@@ -39,8 +39,10 @@ const mapDispatchToProps = (dispatch) => ({
   updateGameObjectComponent: (gameObjectId, gameComponentId, componentParameters) => {
     dispatch(updateGameObjectComponent(gameObjectId, gameComponentId, componentParameters));
   },
+  updateSelf: (componentParameters) => {
+    dispatch(updateGameObjectComponent(ownProps._parentId, ownProps.id, componentParameters));
+  },
 });
-
 
 const mapStateToProps = (state,props) => ({
   ...props,
