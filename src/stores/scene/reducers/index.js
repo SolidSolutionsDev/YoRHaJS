@@ -12,6 +12,33 @@ export const mainReducer = (state = initialState, action) => {
         ...state,
         ...action.parametersObject,
       };
+      case "UPDATE_COMPONENT_PARAMETERS":
+      temp.state = state;
+      if(!state.gameObjects.byId[action.gameObjectId]) {
+        console.log("gameobject not found");
+        return temp.state;
+      }
+      temp.gameObject = _.cloneDeep(state.gameObjects.byId[action.gameObjectId]);
+      temp.components = temp.gameObject.components || {};
+      temp.gameObject = {
+        ...temp.gameObject,
+        components: {
+          ...temp.components,
+          [action.gameComponentId] : {
+          ...temp.components[action.gameComponentId], 
+          ...action.componentParameters
+          },
+        },
+      };
+      temp.state = {...state, 
+        gameObjects: {
+          ...temp.state.gameObjects,
+          byId: { 
+            ...temp.state.gameObjects.byId, 
+            [action.gameObjectId]:temp.gameObject}  
+          }
+        }
+      return temp.state;
     case "EMIT_LOADING_ASSET":
       _oldAssetLoadState = state.assetsLoadState ? state.assetsLoadState : {};
       assetsLoadState = {
