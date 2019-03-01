@@ -60,7 +60,7 @@ export const mainReducer = (state = initialState, action) => {
             prefab:prefabId,
             transform,
             parentId: parentId,
-          }, 
+          };
           temp.state = {
             ...temp.state,
             gameObjects: {
@@ -98,7 +98,7 @@ export const mainReducer = (state = initialState, action) => {
       }
       temp.camera = _.cloneDeep(state.scene.camera);
       temp.camera.allCameras = temp.camera.allCameras.filter((cameraId)=>{return cameraId !== action.cameraId});
-      if(temp.camera.main == action.cameraId) {
+      if(temp.camera.main === action.cameraId) {
         temp.camera.main = temp.camera.allCameras[0] ? temp.camera.allCameras[0] : null;
       }
       temp.scene = {...state.scene, camera: temp.camera};

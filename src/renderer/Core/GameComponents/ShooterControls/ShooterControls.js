@@ -134,7 +134,7 @@ export class ShooterControls extends React.Component {
     };
 
     updateMouseLook = () => {
-        const {transform, availableComponent, availableService} = this.props;
+        const {transform, availableComponent} = this.props;
 
         if (!availableComponent.scene.camera._main) {
             return;
@@ -160,7 +160,6 @@ export class ShooterControls extends React.Component {
              transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
 
             // this can be used to make bullets or enemies follow player but disables gravity
-             const fixedSpeed = 1;
              this.currentShooterDirection = currentShooterDirection;
              // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
 
