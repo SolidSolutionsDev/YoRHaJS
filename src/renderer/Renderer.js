@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
-const THREE = require("three");
+import * as THREE from 'three';
+import { BloomEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
 
 export class Renderer extends React.Component {
   renderer = new THREE.WebGLRenderer({
@@ -21,12 +22,44 @@ export class Renderer extends React.Component {
   state = {};
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const {assetsLoadState, loadedCallback } = this.props;
+    const {assetsLoadState, loadedCallback, availableComponent } = this.props;
+
+    const prevScene= prevProps.availableComponent.scene;
 
     if (prevProps.assetsLoadState !== assetsLoadState && loadedCallback) {
       loadedCallback(assetsLoadState);
     }
+
+    if (this.hasSceneOrCameraChanged(prevScene)) {
+        this.setPostProcessing();
+    }
   }
+
+  hasSceneOrCameraChanged = (prevScene) => {
+      const { availableComponent } = this.props;
+      const {scene} = availableComponent;
+      const _sceneChanged = scene.scene && (scene!== prevScene);
+      const _cameraChanged = scene.camera && (!prevScene.camera && prevScene.camera !== scene.camera || prevScene.camera._main !== scene.camera._main ) ;
+
+      const mainCameraReady = scene.camera._main;
+
+      console.log("componentDidUpdate renderer","_sceneChanged:",_sceneChanged,
+          "_cameraChanged:",_cameraChanged,
+          "mainCameraReady:",mainCameraReady,);
+
+     return _sceneChanged || _cameraChanged || (this.state.ready && mainCameraReady && !this.effectPass);
+  }
+
+  // TODO: improve this, add parameters on render redux state
+    setPostProcessing =() => {
+        const { availableComponent } = this.props;
+        const {scene} = availableComponent;
+        this.effectPass = new EffectPass(scene.camera._main, new BloomEffect());
+        this.effectPass.renderToScreen = true;
+        this.composer.reset();
+        this.composer.addPass(new RenderPass(scene.scene, scene.camera._main));
+        this.composer.addPass(this.effectPass);
+    }
 
   componentDidMount = () => {};
 
@@ -41,22 +74,26 @@ export class Renderer extends React.Component {
     this.onWindowResize();
   };
 
-  update = () => {
+  update = (time) => {
     const { backgroundColor, availableComponent } = this.props;
     const mainCameraReady = availableComponent.scene.camera._main;
     if (this.state.ready && mainCameraReady) {
-      this.renderer.render(
-        //TODO rename scene.scene to scene.transform
-        availableComponent.scene.scene,
-        //availableComponent.camera.getObject(),
-        availableComponent.scene.camera._main,
-      );
-      // this.composer.render();
+      // this.renderer.render(
+      //   //TODO rename scene.scene to scene.transform
+      //   availableComponent.scene.scene,
+      //   availableComponent.scene.camera._main,
+      // );
+      // console.log(time);
+
+        // TODO: add post processing manager that reacts to redux state and make it optional between regular render
+      this.effectPass || this.setPostProcessing();
+
+      this.composer.render(time-this.timePreviousFrame);
+      this.timePreviousFrame= time;
 
       this.renderer.setClearColor(backgroundColor,0);
     }
   };
-
 
   setupCanvasDefaults() {
     this.canvas.parentNode.style.position = "absolute";
