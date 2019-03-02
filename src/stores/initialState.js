@@ -222,7 +222,7 @@ export const initialState = {
                 components:{
                     directionalLight: {
                         color: 0xffffff,
-                        intensity:0.7,
+                        intensity:1.2,
                         position: {
                             x:0,
                             y:0,

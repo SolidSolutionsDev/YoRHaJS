@@ -23,8 +23,8 @@ export class ShooterGeometry extends React.Component {
 
 
         // pointer
-        let material = new THREE.MeshBasicMaterial({
-            color: 0xdddddd,
+        let material = new THREE.MeshLambertMaterial({
+            color: 0xefefef,
             // side: THREE.DoubleSide
         });
 
@@ -50,7 +50,7 @@ export class ShooterGeometry extends React.Component {
 
 
         this.pointer = new THREE.Mesh(geometry, material);
-        this.pointer.position.set(0, 0, -1);
+        // this.pointer.position.set(0, 0, -1);
 
         transform.add(this.pointer);
 
@@ -76,7 +76,7 @@ export class ShooterGeometry extends React.Component {
         geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
         this.leftEnergy = new THREE.Mesh(geometry, material);
-        this.leftEnergy.position.set(0, 0, -1);
+        // this.leftEnergy.position.set(0, 0, -1);
 
         transform.add(this.leftEnergy);
 
@@ -102,7 +102,7 @@ export class ShooterGeometry extends React.Component {
         geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
         this.rightEnergy = new THREE.Mesh(geometry, material);
-        this.rightEnergy.position.set(0, 0, -1);
+        // this.rightEnergy.position.set(0, 0, -1);
 
         transform.add(this.rightEnergy);
 
@@ -110,7 +110,7 @@ export class ShooterGeometry extends React.Component {
         material = new THREE.MeshLambertMaterial({color: 0xd1cdb7});
         this.centerSphere = new THREE.Mesh(geometry, material);
 
-        this.centerSphere.position.set(0, 0, -.5);
+        this.centerSphere.position.set(0, 0, .5);
         transform.add(this.centerSphere);
 
 
