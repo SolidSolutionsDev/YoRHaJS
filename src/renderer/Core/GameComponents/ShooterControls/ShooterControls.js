@@ -198,7 +198,7 @@ export class ShooterControls extends React.Component {
     addMouseDebugMesh = () => {
         const {availableComponent} = this.props;
         const geometry = new THREE.SphereGeometry(1, 32, 32);
-        const material = new THREE.MeshBasicMaterial({color: 0xffff00});
+        const material = new THREE.MeshBasicMaterial({color: 0xfa7911});
         this.mouseDebugMesh = new THREE.Mesh(geometry, material);
         availableComponent.scene.scene.add(this.mouseDebugMesh);
     }
