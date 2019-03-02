@@ -66,7 +66,9 @@ export const initialState = {
             lightGroup: {
               transform:{},
               components: {},
-              children: ["directionalLight1", "ambientLight1","pointLight1"]
+              children: ["directionalLight1", "ambientLight1",
+                  // "pointLight1"
+              ]
             },
             directionalLight1: {
                 transform:{},
@@ -221,12 +223,13 @@ export const initialState = {
                 },
                 components:{
                     directionalLight: {
+                        castShadow:true,
                         color: 0xffffff,
-                        intensity:1.2,
+                        intensity:0.9,
                         position: {
                             x:0,
-                            y:0,
-                            z:1,
+                            y:-70,
+                            z:100,
                         }
                     }
                 },

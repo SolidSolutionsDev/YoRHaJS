@@ -52,6 +52,7 @@ export class ShooterGeometry extends React.Component {
         this.pointer = new THREE.Mesh(geometry, material);
         // this.pointer.position.set(0, 0, -1);
 
+        this.pointer.castShadow=true;
         transform.add(this.pointer);
 
         // left part
@@ -78,6 +79,7 @@ export class ShooterGeometry extends React.Component {
         this.leftEnergy = new THREE.Mesh(geometry, material);
         // this.leftEnergy.position.set(0, 0, -1);
 
+        this.leftEnergy.castShadow=true;
         transform.add(this.leftEnergy);
 
         // right part
@@ -104,10 +106,11 @@ export class ShooterGeometry extends React.Component {
         this.rightEnergy = new THREE.Mesh(geometry, material);
         // this.rightEnergy.position.set(0, 0, -1);
 
+        this.rightEnergy.castShadow=true;
         transform.add(this.rightEnergy);
 
         geometry = new THREE.SphereGeometry(.5, 32, 32);
-        material = new THREE.MeshLambertMaterial({color: 0xd1cdb7});
+        material = new THREE.MeshLambertMaterial({color: 0x666666});
         this.centerSphere = new THREE.Mesh(geometry, material);
 
         this.centerSphere.position.set(0, 0, .5);
