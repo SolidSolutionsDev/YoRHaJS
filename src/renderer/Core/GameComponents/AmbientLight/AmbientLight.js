@@ -8,7 +8,7 @@ export class AmbientLight extends React.Component {
 
   initLight = () => {
     const { transform } = this.props;
-    this.light = new THREE.AmbientLight(0xffffff, 1);
+    this.light = new THREE.AmbientLight(0xffffff, 3);
     transform.add(this.light);
   };
 
