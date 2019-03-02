@@ -26,7 +26,7 @@ export class Camera extends React.Component {
       this.camera,
       renderer.renderer.domElement,
     );
-    
+
     availableComponent.scene.camera.registerCamera(this);
 
     this.setDomElementReadyToEvents();
@@ -41,6 +41,8 @@ export class Camera extends React.Component {
     // });
 
     this.cameraOnResize();
+
+    document.addEventListener("camera_change", this.randomTravel);
   };
 
   setDomElementReadyToEvents = ()=> {
@@ -109,15 +111,9 @@ export class Camera extends React.Component {
     this.setCameraPosition();
   };
 
-  componentWillUnmount = () => {
-    if (this.controls) {
-      this.controls.dispose();
-    }
-  };
-
   setCameraPosition = () => {
- 
-    const { updateSelf, cameraAngle, availableComponent, cameraAllowedPositions } = this.props;
+
+    const { updateSelf, cameraAngle, availableComponent, cameraAllowedPositions,availableService,animatedTransformations } = this.props;
     const { scene } = availableComponent;
     const cameraPositionData = cameraAllowedPositions[cameraAngle];
 
@@ -129,17 +125,60 @@ export class Camera extends React.Component {
       return;
     }
 
+    if (!animatedTransformations) {
+
     this.camera.position.set(
-      cameraPositionData.position.x,
-      cameraPositionData.position.y,
-      cameraPositionData.position.z,
+        cameraPositionData.position.x,
+        cameraPositionData.position.y,
+        cameraPositionData.position.z,
     );
 
     this.camera.lookAt(scene.scene.position);
 
-      updateSelf({
-       cameraAngle: "",
-      });
+    }
+    else {
+
+    availableService.animation.travelTo(
+        this.camera,
+        cameraPositionData.position,
+        1000,
+        {
+          target:scene.scene.position,
+          easing:   availableService.animation.Easing.Exponential.Out
+        }
+        );
+    }
+
+
+    updateSelf({
+      cameraAngle: "",
+    });
+  };
+
+
+    randomTravel = () => {
+        const { updateSelf, cameraAngle, availableComponent, cameraAllowedPositions,availableService,animatedTransformations } = this.props;
+        const { scene } = availableComponent;
+        availableService.animation.travelTo(
+            this.camera,
+            new THREE.Vector3(
+                60 - 120 * Math.random(),
+                60 - 120 * Math.random(),
+                60 - 120 * Math.random()
+            ),
+            1000,
+            {
+                target:scene.scene.position,
+                easing:   availableService.animation.Easing.Exponential.Out
+            }
+        );
+    };
+
+
+    componentWillUnmount = () => {
+    if (this.controls) {
+      this.controls.dispose();
+    }
   };
 
   controls;

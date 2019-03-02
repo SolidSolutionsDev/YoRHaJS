@@ -115,6 +115,7 @@ export const initialState = {
                         cameraMinDistance: 10,
                         cameraPanLock: true,
                         lookAt: {x:0,y:0,z:0},
+                        animatedTransformations:true,
                         near: 0.1,
                         far: 10000,
                         fov: 45,
