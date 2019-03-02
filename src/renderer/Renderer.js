@@ -13,6 +13,8 @@ export class Renderer extends React.Component {
     preserveDrawingBuffer: true,
   });
 
+  composer = new EffectComposer(this.renderer);
+
   canvas = this.renderer.domElement;
 
   aspect = window.innerWidth / window.innerHeight;
