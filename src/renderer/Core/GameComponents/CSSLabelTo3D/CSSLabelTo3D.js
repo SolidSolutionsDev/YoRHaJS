@@ -15,7 +15,7 @@ export class CSSLabelTo3D extends React.Component {
   };
 
   start = () => {
-    const { transform } = this.props;
+    //const { transform } = this.props;
     this.text = this.createTextLabel();
 
     this.setHTML(`Label`);

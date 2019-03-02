@@ -100,6 +100,7 @@ export class Camera extends React.Component {
     this.controls.update();
   };
 
+  //TODO: check why this is being called on every state update
   componentDidUpdate = () => {
     if(!this.camera) {
       return;
@@ -116,7 +117,7 @@ export class Camera extends React.Component {
 
   setCameraPosition = () => {
  
-    const { cameraAngle, availableComponent, cameraAllowedPositions } = this.props;
+    const { updateSelf, cameraAngle, availableComponent, cameraAllowedPositions } = this.props;
     const { scene } = availableComponent;
     const cameraPositionData = cameraAllowedPositions[cameraAngle];
 
@@ -136,9 +137,9 @@ export class Camera extends React.Component {
 
     this.camera.lookAt(scene.scene.position);
 
-    // updateSceneObject({
-    //   cameraAngle: "",
-    // });
+      updateSelf({
+       cameraAngle: "",
+      });
   };
 
   controls;

@@ -119,7 +119,7 @@ import ConnectedGameObject from "./index";
 
     unRegisterChildGameObject = (gameObjectId) => {
       this.childGameObjects = this.childGameObjects.filter((element) => { 
-        return element.props.id != gameObjectId;
+        return element.props.id !== gameObjectId;
       });
     }
 

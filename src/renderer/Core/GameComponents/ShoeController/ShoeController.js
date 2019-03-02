@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import * as THREE from "three";
-
 export class ShoeController extends React.Component {
   shoeModelSiblingComponent;
 

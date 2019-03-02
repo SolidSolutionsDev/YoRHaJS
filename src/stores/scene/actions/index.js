@@ -18,6 +18,13 @@ export const updateSceneObject = (parametersObject) => ({
   parametersObject,
 });
 
+export const updateGameObjectComponent = (gameObjectId, gameComponentId, componentParameters) => ({
+  type: "UPDATE_COMPONENT_PARAMETERS",
+  gameObjectId,
+  gameComponentId,
+  componentParameters,
+});
+
 export const emitLoadingAsset = (filename, total) => ({
   type: "EMIT_LOADING_ASSET",
   filename,
