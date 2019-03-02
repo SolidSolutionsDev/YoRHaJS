@@ -77,8 +77,6 @@ export class Renderer extends React.Component {
   }
 
   registerEventListeners = () => {
-    // document.addEventListener("mousedown", this.onDocumentMouseDown, false);
-    // document.addEventListener("touchend", this.onDocumentMouseDown, false);
     window.addEventListener("resize", this.onWindowResize, false);
   };
 
@@ -130,11 +128,6 @@ export class Renderer extends React.Component {
   subscribeResize = (onResizeFunction) => {
     this.resizeFunctions.push(onResizeFunction);
   };
-
-  // registerCameraComponent = (camera) => {
-  //   this.camera = camera;
-  //   this.initPostProcessing();
-  // };
 
   canvasWidth = () => this.canvas.width;
 
