@@ -141,27 +141,16 @@ export class ShooterControls extends React.Component {
         }
 
         if (this.coords) {
-
+            const {availableService} = this.props;
+            const {physicsService}  = availableService;
             // TODO: move this to physics service as lookAt function
             // Compute direction to target
             let lookAtVector = this.getPositionFromMouse(transform.physicsBody.position.z);
-            // convert THREE Vector3 to CANNON Vec3
-            lookAtVector = new CANNON.Vec3(lookAtVector.x, lookAtVector.y, lookAtVector.z);
 
-
-            // normalized shooter direction from the lookAt object position
-            let currentShooterDirection = new CANNON.Vec3();
-            currentShooterDirection = lookAtVector.vsub(transform.physicsBody.position);
-            currentShooterDirection.z = 0;
-            currentShooterDirection.normalize();
-            let forwardVector = new CANNON.Vec3(0, 1, 0);
-
-            // Get the rotation between the forward vector and the direction vector
-             transform.physicsBody.quaternion.setFromVectors(forwardVector, currentShooterDirection);
+            this.currentShooterDirection = transform.physicsBody.lookAt(lookAtVector);
 
             // this can be used to make bullets or enemies follow player but disables gravity
-             this.currentShooterDirection = currentShooterDirection;
-             // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
+            // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
 
         }
     }
@@ -219,6 +208,7 @@ export class ShooterControls extends React.Component {
         this.mouseDebugMesh.position.set(coords.x, coords.y, coords.z);
     }
 
+    // TODO: maybe this should be an inputService function?
     getPositionFromMouse = (targetZ = 0) => {
 
         const {availableComponent} = this.props;
