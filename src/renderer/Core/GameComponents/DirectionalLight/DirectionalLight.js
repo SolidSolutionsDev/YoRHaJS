@@ -29,7 +29,7 @@ export class DirectionalLight extends React.Component {
         this.light.shadow.camera.left = -30;
         this.light.shadow.camera.right = 30;
         this.light.shadow.camera.top = 30;
-        this.light.shadow.camera.bottom = -100;
+        this.light.shadow.camera.bottom = -50;
     }
 
     if (color) {
