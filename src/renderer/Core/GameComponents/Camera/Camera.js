@@ -100,6 +100,7 @@ export class Camera extends React.Component {
     this.controls.update();
   };
 
+  //TODO: check why this is being called on every state update
   componentDidUpdate = () => {
     if(!this.camera) {
       return;

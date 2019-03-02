@@ -12,6 +12,7 @@ export const mainReducer = (state = initialState, action) => {
         ...state,
         ...action.parametersObject,
       };
+      //TODO: flatter the state (gameComponents at the same level as gameObjects)
       case "UPDATE_COMPONENT_PARAMETERS":
       temp.state = state;
       if(!state.gameObjects.byId[action.gameObjectId]) {
