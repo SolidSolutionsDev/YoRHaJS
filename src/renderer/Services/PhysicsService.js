@@ -106,6 +106,25 @@ export class PhysicsService extends Component {
       //WIP HERE!!!
     };
   };
+  generateLookAtFunction = (mesh, body) => {
+    return function lookAt(lookAtPosition) {
+      // convert THREE Vector3 to CANNON Vec3
+      const lookAtVector = new CANNON.Vec3(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z);
+
+      // normalized shooter direction from the lookAt object position
+      let currentShooterDirection = new CANNON.Vec3();
+      currentShooterDirection = lookAtVector.vsub(body.position);
+      currentShooterDirection.z = 0;
+      currentShooterDirection.normalize();
+      let forwardVector = new CANNON.Vec3(0, 1, 0);
+
+      // Get the rotation between the forward vector and the direction vector
+      body.quaternion.setFromVectors(forwardVector, currentShooterDirection);
+
+      // for example to add speed and make auto walk on the looking diretion
+      return currentShooterDirection;
+    };
+  };
 
   Vec3 = (x, y, z) => {
     return new CANNON.Vec3(x, y, z);
@@ -207,6 +226,8 @@ export class PhysicsService extends Component {
     _boxBody.endContactFunction = parameters.endContactFunction;
 
     mesh.physicsBody = _boxBody;
+
+    _boxBody.lookAt = this.generateLookAtFunction(mesh,_boxBody);
 
     return { body: _boxBody, update: _updateFunction, parameters: _parameters };
   }

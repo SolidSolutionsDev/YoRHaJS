@@ -69,7 +69,7 @@ import ConnectedGameObject from "./index";
       if (!scene) {
         return;
       }
-      
+
       scene.remove(this.transform);
 
       if(this.transform.parent) {
@@ -118,7 +118,7 @@ import ConnectedGameObject from "./index";
 
 
     unRegisterChildGameObject = (gameObjectId) => {
-      this.childGameObjects = this.childGameObjects.filter((element) => { 
+      this.childGameObjects = this.childGameObjects.filter((element) => {
         return element.props.id !== gameObjectId;
       });
     }
@@ -205,7 +205,7 @@ import ConnectedGameObject from "./index";
       const prefabGameObjectComponents = prefabSettings && prefabSettings.components ? prefabSettings.components : {};
       const compoundGameObjectComponents = {...prefabGameObjectComponents,...selfGameObjectComponents };
 
-      // we need to save internally all generated components otherwise
+      // TODO: we need to save internally all generated components otherwise
       // as redux connect mounts and unmounts components, they will be reseted and re created
       // that means repeated threejs objects appearing
       const components = Object.keys(compoundGameObjectComponents)
@@ -248,27 +248,3 @@ import ConnectedGameObject from "./index";
       );
     }
   };
-
-
-/*
-import React from "react";
-import * as ComponentFactory from "../../Factories/GameComponentFactory";
-
-const ObjectLoaderMeshComponent = ComponentFactory.create("objectLoader");
-const ShoeManagerComponent = ComponentFactory.create(
-  "shoeController",
-);
-// const TransformUpdateComponent = ComponentFactory.create("transformUpdate");
-
-export class ShoeModel extends React.Component {
-  render = () => (
-    <div>
-      {[
-        <ObjectLoaderMeshComponent key="objectloadershoe" {...this.props} />,
-        <ShoeManagerComponent key="shoemanager" {...this.props}/>,
-      ]}
-    </div>
-  );
-}
-
-*/
