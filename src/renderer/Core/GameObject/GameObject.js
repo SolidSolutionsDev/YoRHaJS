@@ -38,6 +38,13 @@ import ConnectedGameObject from "./index";
         this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
       }
 
+      if (transform && transform.rotation) {
+        // this.transform.position.set(...transform.position);
+        this.transform.rotation.x = transform.rotation && transform.rotation._x ? transform.rotation._x : this.transform.rotation.x;
+        this.transform.rotation.y = transform.rotation && transform.rotation._y ? transform.rotation._y : this.transform.rotation.y;
+        this.transform.rotation.z = transform.rotation && transform.rotation._z ? transform.rotation._z : this.transform.rotation.z;
+      }
+
       this.transform.name = `${id}_transform`;
 
       this.transform.gameObject = this;
