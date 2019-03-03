@@ -16,7 +16,8 @@ export const initialState = {
         },
         renderer: {
             alpha: true,
-            antialias: true
+            antialias: true,
+            postprocessing:false,
         },
     },
     scene:{
