@@ -59,14 +59,14 @@ import ConnectedGameObject from "./index";
     };
 
     componentWillUnmount() {
-      console.log("gameobject will unmount", this.id);
+      // console.log("gameobject will unmount", this.id);
       this.unmounting = true;
       this._onDestroy();
       Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
     }
 
     _onDestroy() {
-      console.log("_onDestroy", this._name);
+      // console.log("_onDestroy", this._name);
       this.removeFromScene();
       this.unRegisterFromParent(this._name);
     }
