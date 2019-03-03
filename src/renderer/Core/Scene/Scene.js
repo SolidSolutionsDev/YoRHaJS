@@ -18,9 +18,9 @@ export class Scene extends React.Component {
 
   init = () => {};
 
-  update = () => {
+  update = (time) => {
     this.children.forEach((child) => {
-      child._update ? child._update() : null;
+      child._update ? child._update(time) : null;
     });
   };
 
@@ -43,7 +43,7 @@ export class Scene extends React.Component {
     childGameObject.registerParent(this.scene);
     this.children.push(childGameObject);
   };
-  
+
   buildChildGameObjects = () => {
     const {
       scene

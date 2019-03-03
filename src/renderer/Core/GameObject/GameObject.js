@@ -168,15 +168,15 @@ import ConnectedGameObject from "./index";
       return false;
     };
 
-    _update = () => {
+    _update = (time) => {
       if (!this._isEnabled() && !this.unmounting) {
         this.transform.visible = false;
         return;
       }
       this.transform.visible= true;
-      Object.values(this.componentsScriptsDictionary).forEach((component) => component.update());
+      Object.values(this.componentsScriptsDictionary).forEach((component) => component.update(time));
       this.childGameObjects.forEach((gameObject) =>
-        this.getWrappedGameObject(gameObject)._update(),
+        this.getWrappedGameObject(gameObject)._update(time),
       );
     };
 

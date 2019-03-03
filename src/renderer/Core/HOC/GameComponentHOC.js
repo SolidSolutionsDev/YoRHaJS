@@ -48,13 +48,13 @@ export function makeGameComponent(WrappedComponent, name) {
       this.setState({ started: true });
     };
 
-    update = () => {
+    update = (time) => {
       const { started } = this.state;
       if (this.unmounting) {
         return;
       }
       if (started) {
-        this.component.update();
+        this.component.update(time);
         return;
       }
       this.start();
