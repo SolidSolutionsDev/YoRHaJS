@@ -9,7 +9,7 @@ export class ShooterControls extends React.Component {
     shootIntervalCallback;
     shootTimeInterval= 70;
     mouseDebugMesh;
-    currentShooterDirection;
+    currentShooterDirection = new THREE.Vector3(0,1,0);
     fixedSpeed = 5;
 
     currentTestInstanceId = null;
@@ -205,6 +205,7 @@ export class ShooterControls extends React.Component {
         });
     };
 
+    // todo: convert this to gameObject?
     addMouseDebugMesh = () => {
         const {availableComponent} = this.props;
         const geometry = new THREE.SphereGeometry(1, 32, 32);
