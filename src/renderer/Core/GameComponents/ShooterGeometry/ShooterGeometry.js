@@ -118,7 +118,7 @@ export class ShooterGeometry extends React.Component {
 
 
         this.props.availableService.physics
-            .addNewBoxBody(gameObject.transform, {...this.props, position: transform.position}, this);
+            .addNewBoxBody(gameObject.transform, {...this.props, position: transform.position,collisionFilterGroup: 1}, this);
     };
 
     update = () => {
