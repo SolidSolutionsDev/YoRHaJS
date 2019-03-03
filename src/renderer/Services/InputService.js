@@ -18,34 +18,34 @@ export class InputService extends Component {
             // console.log( 'Pressed: ', event,event.key );
 
             if (event.key === "ArrowLeft") {
-                document.dispatchEvent(new Event("moveleft"));
-            }
-
-            if (event.key === "ArrowRight") {
-                document.dispatchEvent(new Event("moveright"));
-            }
-            if (event.key === "ArrowUp") {
-                document.dispatchEvent(new Event("moveup"));
-            }
-
-            if (event.key === "ArrowDown") {
-                document.dispatchEvent(new Event("movedown"));
-            }
-            console.log(event.key)
-            if (event.key === "s") {
-                document.dispatchEvent(new Event("lookdown"));
-            }
-
-            if (event.key === "a") {
                 document.dispatchEvent(new Event("lookleft"));
             }
 
-            if (event.key === "d") {
+            if (event.key === "ArrowRight") {
                 document.dispatchEvent(new Event("lookright"));
+            }
+            if (event.key === "ArrowUp") {
+                document.dispatchEvent(new Event("lookup"));
+            }
+
+            if (event.key === "ArrowDown") {
+                document.dispatchEvent(new Event("lookdown"));
+            }
+            console.log(event.key);
+            if (event.key === "s") {
+                document.dispatchEvent(new Event("movedown"));
+            }
+
+            if (event.key === "a") {
+                document.dispatchEvent(new Event("moveleft"));
+            }
+
+            if (event.key === "d") {
+                document.dispatchEvent(new Event("moveright"));
             }
 
             if (event.key === "w") {
-                document.dispatchEvent(new Event("lookup"));
+                document.dispatchEvent(new Event("moveup"));
             }
 
             if (event.key === "r") {
@@ -64,34 +64,34 @@ export class InputService extends Component {
             // console.log( 'Pressed: ', event.key );
 
             if (event.key === "ArrowLeft") {
-                document.dispatchEvent(new Event("moveleft_keyup"));
-            }
-
-            if (event.key === "ArrowRight") {
-                document.dispatchEvent(new Event("moveright_keyup"));
-            }
-            if (event.key === "ArrowUp") {
-                document.dispatchEvent(new Event("moveup_keyup"));
-            }
-
-            if (event.key === "ArrowDown") {
-                document.dispatchEvent(new Event("movedown_keyup"));
-            }
-
-            if (event.key === "s") {
-                document.dispatchEvent(new Event("lookdown_keyup"));
-            }
-
-            if (event.key === "a") {
                 document.dispatchEvent(new Event("lookleft_keyup"));
             }
 
-            if (event.key === "d") {
+            if (event.key === "ArrowRight") {
                 document.dispatchEvent(new Event("lookright_keyup"));
+            }
+            if (event.key === "ArrowUp") {
+                document.dispatchEvent(new Event("lookup_keyup"));
+            }
+
+            if (event.key === "ArrowDown") {
+                document.dispatchEvent(new Event("lookdown_keyup"));
+            }
+
+            if (event.key === "s") {
+                document.dispatchEvent(new Event("movedown_keyup"));
+            }
+
+            if (event.key === "a") {
+                document.dispatchEvent(new Event("moveleft_keyup"));
+            }
+
+            if (event.key === "d") {
+                document.dispatchEvent(new Event("moveright_keyup"));
             }
 
             if (event.key === "w") {
-                document.dispatchEvent(new Event("lookup_keyup"));
+                document.dispatchEvent(new Event("moveup_keyup"));
             }
 
             if (event.key === "r") {
