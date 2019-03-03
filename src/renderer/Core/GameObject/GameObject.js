@@ -73,11 +73,12 @@ import ConnectedGameObject from "./index";
 
     removeFromScene =()=> {
       const { scene } = this;
+      const { availableService } = this.props;
       if (!scene) {
         return;
       }
 
-      scene.remove(this.transform);
+        availableService.physics.purgeTransformOfEventualBodies(this.transform);
 
       if(this.transform.parent) {
         const parent = this.transform.parent;
