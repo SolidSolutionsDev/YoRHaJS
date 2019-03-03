@@ -24,11 +24,11 @@ export function makeGameComponent(WrappedComponent, name) {
       const _displayName = this.getDisplayName();
       this.props.registerComponent(this, _displayName);
 
-      console.log(this.uniqueId + " component will mount " + this.getDisplayName());
+      // console.log(this.uniqueId + " component will mount " + this.getDisplayName());
     };
 
     componentWillUnmount() {
-      console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
+      // console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
       this._onDestroy();
     }
 
@@ -48,13 +48,13 @@ export function makeGameComponent(WrappedComponent, name) {
       this.setState({ started: true });
     };
 
-    update = () => {
+    update = (time) => {
       const { started } = this.state;
       if (this.unmounting) {
         return;
       }
       if (started) {
-        this.component.update();
+        this.component.update(time);
         return;
       }
       this.start();

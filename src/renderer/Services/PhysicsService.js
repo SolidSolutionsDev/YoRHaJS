@@ -14,6 +14,7 @@ export class PhysicsService extends Component {
   maxSubSteps = 3;
   TimeOfLastUpdateCallInMilliseconds;
   physicsUpdateFunctions = [];
+  toRemoveBodies = [];
 
   componentDidMount = () => {
     this.slipperyMaterial.restitution = 1.0;
@@ -37,10 +38,17 @@ export class PhysicsService extends Component {
         : null;
     });
     this.world.addEventListener("endContact", function(e) {
-      // console.log( `Collided with ${e.body.mesh.name}'s body:`, e );
-      // console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies end:`,          e.bodyA, e.bodyB, e );
-      e.bodyA.endContactFunction ? e.bodyA.endContactFunction(e.bodyB) : null;
-      e.bodyB.endContactFunction ? e.bodyB.endContactFunction(e.bodyA) : null;
+      //   console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies end:`,          e.bodyA, e.bodyB, e );
+        try {
+            if (!e.bodyA|| !e.bodyB){
+               return;
+            }
+            e.bodyA && e.bodyA.endContactFunction && e.bodyA.endContactFunction(e.bodyB);
+            e.bodyB && e.bodyB.endContactFunction && e.bodyB.endContactFunction(e.bodyA);
+        }
+        catch (error){
+          console.log(error,e.bodyA,e.bodyB);
+        }
     });
   };
 
@@ -132,7 +140,11 @@ export class PhysicsService extends Component {
 
   typeEnum = Object.freeze({ kinematic: CANNON.Body.KINEMATIC });
 
-  addNewSphereBody(mesh, parameters, instance) {
+  addNewSphereBody(gameObjectTransform, parameters, instance) {
+      if (!gameObjectTransform.userData.belongsToGameObject){
+          console.error("provided object is not a gameObject transform!",gameObjectTransform);
+          return;
+      }
     let thisSphereParameters = {
       mass: 5,
       position: { x: 0, y: 0, z: 0 },
@@ -173,10 +185,11 @@ export class PhysicsService extends Component {
     //     console.log( "[Body] - collide: ", event );
     // } )
 
-    _sphereBody.mesh = mesh;
+    _sphereBody.mesh = gameObjectTransform;
     _sphereBody.instance = instance;
-    const _updateFunction = this.generateUpdateFunction(mesh, _sphereBody);
-    this.physicsUpdateFunctions.push(_updateFunction);
+    const _updateFunction = this.generateUpdateFunction(gameObjectTransform, _sphereBody);
+
+    this.physicsUpdateFunctions.push({body:_sphereBody,updateFunction:_updateFunction});
     return {
       body: _sphereBody,
       update: _updateFunction,
@@ -184,7 +197,11 @@ export class PhysicsService extends Component {
     };
   }
 
-  addNewBoxBody(mesh, parameters, instance) {
+  addNewBoxBody(gameObjectTransform, parameters, instance) {
+    if (!gameObjectTransform.userData.belongsToGameObject){
+      console.error("provided object is not a gameObject transform!",gameObjectTransform);
+      return;
+    }
     let thisBoxParameters = {
       mass: 1,
       position: { x: 0, y: 0, z: 0 },
@@ -217,19 +234,33 @@ export class PhysicsService extends Component {
 
     this.world.addBody(_boxBody);
 
-    _boxBody.mesh = mesh;
+    _boxBody.mesh = gameObjectTransform;
     _boxBody.instance = instance;
-    const _updateFunction = this.generateUpdateFunction(mesh, _boxBody);
-    this.physicsUpdateFunctions.push(_updateFunction);
+    const _updateFunction = this.generateUpdateFunction(gameObjectTransform, _boxBody);
+    this.physicsUpdateFunctions.push({body:_boxBody,updateFunction:_updateFunction});
 
     _boxBody.beginContactFunction = parameters.beginContactFunction;
     _boxBody.endContactFunction = parameters.endContactFunction;
 
-    mesh.physicsBody = _boxBody;
+    gameObjectTransform.physicsBody = _boxBody;
 
-    _boxBody.lookAt = this.generateLookAtFunction(mesh,_boxBody);
+    _boxBody.lookAt = this.generateLookAtFunction(gameObjectTransform,_boxBody);
 
     return { body: _boxBody, update: _updateFunction, parameters: _parameters };
+  }
+
+  purgeTransformOfEventualBodies = (transform) => {
+    const _body = transform.physicsBody;
+      if (_body) {
+        this.physicsUpdateFunctions = this.physicsUpdateFunctions
+            .filter((physicsUpdateObject)=> physicsUpdateObject.body !== _body);
+        this.toRemoveBodies.push(_body);
+      }
+  }
+
+  bulkRemoveBodies = () => {
+    this.toRemoveBodies.forEach((body)=>{this.world.removeBody(body)});
+      this.toRemoveBodies=[];
   }
 
   render() {
@@ -248,7 +279,8 @@ export class PhysicsService extends Component {
         deltaTimeSinceLastUpdateInMilliseconds,
         this.maxSubSteps
       );
-      this.physicsUpdateFunctions.forEach(updateFunction => updateFunction());
+      this.bulkRemoveBodies();
+      this.physicsUpdateFunctions.forEach(updateFunctionObject => updateFunctionObject.updateFunction());
     }
     this.TimeOfLastUpdateCallInMilliseconds = timeOfCurrentUpdateCallInMilliseconds;
   };

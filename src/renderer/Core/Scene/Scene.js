@@ -18,9 +18,9 @@ export class Scene extends React.Component {
 
   init = () => {};
 
-  update = () => {
+  update = (time) => {
     this.children.forEach((child) => {
-      child._update ? child._update() : null;
+      child._update ? child._update(time) : null;
     });
   };
 
@@ -43,7 +43,14 @@ export class Scene extends React.Component {
     childGameObject.registerParent(this.scene);
     this.children.push(childGameObject);
   };
-  
+
+    unRegisterChildGameObject = (gameObjectId) => {
+        this.children = this.children.filter((element) => {
+            return element.props.id !== gameObjectId;
+        });
+    }
+
+
   buildChildGameObjects = () => {
     const {
       scene
@@ -53,6 +60,7 @@ export class Scene extends React.Component {
       ref: this.registerChild,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
+      parent:this,
     };
 
     const gameObjects = scene && scene.children ? scene.children
@@ -89,7 +97,6 @@ export class Scene extends React.Component {
   };
 
   render = () => {
-
     const _gameObjects = this.buildChildGameObjects();
 
     return _gameObjects;

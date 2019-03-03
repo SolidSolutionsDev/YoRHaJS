@@ -27,6 +27,8 @@ import ConnectedGameObject from "./index";
     componentWillMount = () => {
       const { transform, id } = this.props;
 
+      this.transform.userData.belongsToGameObject = true;
+
      this._name = id;
      this.displayName = id;
      this.id = id;
@@ -36,6 +38,13 @@ import ConnectedGameObject from "./index";
         this.transform.position.x = transform.position && transform.position.x ? transform.position.x : this.transform.position.x;
         this.transform.position.y = transform.position && transform.position.y ? transform.position.y : this.transform.position.y;
         this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
+      }
+
+      if (transform && transform.rotation) {
+        // this.transform.position.set(...transform.position);
+        this.transform.rotation.x = transform.rotation && transform.rotation._x ? transform.rotation._x : this.transform.rotation.x;
+        this.transform.rotation.y = transform.rotation && transform.rotation._y ? transform.rotation._y : this.transform.rotation.y;
+        this.transform.rotation.z = transform.rotation && transform.rotation._z ? transform.rotation._z : this.transform.rotation.z;
       }
 
       this.transform.name = `${id}_transform`;
@@ -52,25 +61,26 @@ import ConnectedGameObject from "./index";
     };
 
     componentWillUnmount() {
-      console.log("gameobject will unmount", this.id);
+      // console.log("gameobject will unmount", this.id);
       this.unmounting = true;
       this._onDestroy();
       Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
     }
 
     _onDestroy() {
-      console.log("_onDestroy", this._name);
+      // console.log("_onDestroy", this._name);
       this.removeFromScene();
       this.unRegisterFromParent(this._name);
     }
 
     removeFromScene =()=> {
       const { scene } = this;
+      const { availableService } = this.props;
       if (!scene) {
         return;
       }
 
-      scene.remove(this.transform);
+        availableService.physics.purgeTransformOfEventualBodies(this.transform);
 
       if(this.transform.parent) {
         const parent = this.transform.parent;
@@ -161,15 +171,15 @@ import ConnectedGameObject from "./index";
       return false;
     };
 
-    _update = () => {
+    _update = (time) => {
       if (!this._isEnabled() && !this.unmounting) {
         this.transform.visible = false;
         return;
       }
       this.transform.visible= true;
-      Object.values(this.componentsScriptsDictionary).forEach((component) => component.update());
+      Object.values(this.componentsScriptsDictionary).forEach((component) => component.update(time));
       this.childGameObjects.forEach((gameObject) =>
-        this.getWrappedGameObject(gameObject)._update(),
+        this.getWrappedGameObject(gameObject)._update(time),
       );
     };
 
