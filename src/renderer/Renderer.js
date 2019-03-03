@@ -13,7 +13,7 @@ export class Renderer extends React.Component {
     preserveDrawingBuffer: true,
   });
 
-  composer = new EffectComposer(this.renderer);
+  composer;
 
   canvas = this.renderer.domElement;
 
@@ -54,7 +54,13 @@ export class Renderer extends React.Component {
 
   // TODO: improve this, add parameters on render redux state
     setPostProcessing =() => {
-        const { availableComponent } = this.props;
+        const { availableComponent, postprocessing } = this.props;
+        if (!postprocessing) {
+          return;
+        }
+        if (!this.composer) {
+          this.composer = new EffectComposer(this.renderer);
+        }
         const {scene} = availableComponent;
         this.effectPass = new EffectPass(scene.camera._main, new BloomEffect());
         this.effectPass.renderToScreen = true;
@@ -77,20 +83,22 @@ export class Renderer extends React.Component {
   };
 
   update = (time) => {
-    const { backgroundColor, availableComponent } = this.props;
+    const { backgroundColor, availableComponent,postprocessing } = this.props;
     const mainCameraReady = availableComponent.scene.camera._main;
     if (this.state.ready && mainCameraReady) {
-      // this.renderer.render(
-      //   //TODO rename scene.scene to scene.transform
-      //   availableComponent.scene.scene,
-      //   availableComponent.scene.camera._main,
-      // );
-      // console.log(time);
 
-        // TODO: add post processing manager that reacts to redux state and make it optional between regular render
-      this.effectPass || this.setPostProcessing();
-
-      this.composer.render(time-this.timePreviousFrame);
+      if (!postprocessing) {
+        this.renderer.render(
+          //TODO rename scene.scene to scene.transform
+          availableComponent.scene.scene,
+          availableComponent.scene.camera._main,
+        );
+      }
+      else {
+          // TODO: add post processing manager that reacts to redux state and make it optional between regular render
+          this.effectPass || this.setPostProcessing();
+          this.composer.render(time-this.timePreviousFrame);
+      }
       this.timePreviousFrame= time;
 
       this.renderer.setClearColor(backgroundColor,0);
