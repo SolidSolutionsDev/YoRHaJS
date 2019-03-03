@@ -195,6 +195,17 @@ export const initialState = {
                 },
                 children: [],
             },
+            PlayerBullet: {
+                debug:true,
+                transform:{
+                },
+                components: {
+                    playerBulletGeometry:{
+                        soundLocation: './assets/sounds/348162__djfroyd__laser-one-shot-3.wav'
+                    },
+                },
+                children: [],
+            },
             TestShooter: {
                 debug:true,
                 components: {

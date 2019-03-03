@@ -14,6 +14,7 @@ import {PointLight} from "./PointLight/PointLight";
 import {Camera} from "./Camera/Camera";
 import {ShooterControls} from "./ShooterControls/ShooterControls";
 import {ShooterGeometry} from "./ShooterGeometry/ShooterGeometry";
+import {PlayerBulletGeometry} from "./PlayerBullet/PlayerBulletGeometry";
 
 export const components = {
   // objMesh: OBJMeshGeometry,
@@ -31,4 +32,5 @@ export const components = {
   dynamicCameraManager: Camera,
   shooterControls: ShooterControls,
   shooterGeometry: ShooterGeometry,
+  playerBulletGeometry: PlayerBulletGeometry,
 };
