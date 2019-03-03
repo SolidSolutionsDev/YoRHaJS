@@ -27,6 +27,8 @@ import ConnectedGameObject from "./index";
     componentWillMount = () => {
       const { transform, id } = this.props;
 
+      this.transform.userData.belongsToGameObject = true;
+
      this._name = id;
      this.displayName = id;
      this.id = id;

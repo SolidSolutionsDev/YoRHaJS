@@ -133,6 +133,10 @@ export class PhysicsService extends Component {
   typeEnum = Object.freeze({ kinematic: CANNON.Body.KINEMATIC });
 
   addNewSphereBody(gameObjectTransform, parameters, instance) {
+      if (!gameObjectTransform.userData.belongsToGameObject){
+          console.error("provided object is not a gameObject transform!",gameObjectTransform);
+          return;
+      }
     let thisSphereParameters = {
       mass: 5,
       position: { x: 0, y: 0, z: 0 },
@@ -186,6 +190,10 @@ export class PhysicsService extends Component {
   }
 
   addNewBoxBody(gameObjectTransform, parameters, instance) {
+    if (!gameObjectTransform.userData.belongsToGameObject){
+      console.error("provided object is not a gameObject transform!",gameObjectTransform);
+      return;
+    }
     let thisBoxParameters = {
       mass: 1,
       position: { x: 0, y: 0, z: 0 },
