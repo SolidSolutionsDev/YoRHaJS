@@ -14,6 +14,7 @@ export class PhysicsService extends Component {
   maxSubSteps = 3;
   TimeOfLastUpdateCallInMilliseconds;
   physicsUpdateFunctions = [];
+  toRemoveBodies = [];
 
   componentDidMount = () => {
     this.slipperyMaterial.restitution = 1.0;
@@ -38,9 +39,13 @@ export class PhysicsService extends Component {
     });
     this.world.addEventListener("endContact", function(e) {
       // console.log( `Collided with ${e.body.mesh.name}'s body:`, e );
-      // console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies end:`,          e.bodyA, e.bodyB, e );
-      e.bodyA.endContactFunction ? e.bodyA.endContactFunction(e.bodyB) : null;
-      e.bodyB.endContactFunction ? e.bodyB.endContactFunction(e.bodyA) : null;
+      //   console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies end:`,          e.bodyA, e.bodyB, e );
+ /*       if (e.bodyA.collisionFilterGroup ===e.bodyB.collisionFilterGroup){
+          console.log("ignoring");
+          return;
+        }*/
+      e.bodyA.endContactFunction && e.bodyA.endContactFunction(e.bodyB);
+      e.bodyB.endContactFunction && e.bodyB.endContactFunction(e.bodyA);
     });
   };
 
@@ -246,8 +251,13 @@ export class PhysicsService extends Component {
       if (_body) {
         this.physicsUpdateFunctions = this.physicsUpdateFunctions
             .filter((physicsUpdateObject)=> physicsUpdateObject.body !== _body);
-        this.world.removeBody(_body);
+        this.toRemoveBodies.push(_body);
       }
+  }
+
+  bulkRemoveBodies = () => {
+    this.toRemoveBodies.forEach((body)=>{this.world.removeBody(body)});
+      this.toRemoveBodies=[];
   }
 
   render() {
@@ -266,6 +276,7 @@ export class PhysicsService extends Component {
         deltaTimeSinceLastUpdateInMilliseconds,
         this.maxSubSteps
       );
+      this.bulkRemoveBodies();
       this.physicsUpdateFunctions.forEach(updateFunctionObject => updateFunctionObject.updateFunction());
     }
     this.TimeOfLastUpdateCallInMilliseconds = timeOfCurrentUpdateCallInMilliseconds;
