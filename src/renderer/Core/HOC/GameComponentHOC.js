@@ -24,11 +24,11 @@ export function makeGameComponent(WrappedComponent, name) {
       const _displayName = this.getDisplayName();
       this.props.registerComponent(this, _displayName);
 
-      console.log(this.uniqueId + " component will mount " + this.getDisplayName());
+      // console.log(this.uniqueId + " component will mount " + this.getDisplayName());
     };
 
     componentWillUnmount() {
-      console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
+      // console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
       this._onDestroy();
     }
 
