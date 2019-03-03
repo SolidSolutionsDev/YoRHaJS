@@ -19,21 +19,6 @@ export class PlayerBulletGeometry extends React.Component {
     transform.add(this.cube);
   };
 
-  initSound = () => {
-      const { transform, availableService } = this.props;
-      const _sound = availableService.audio.buildPositionalSound(this.props.selfSettings.soundLocation);
-      _sound.setLoop(false);
-      _sound.loop=false;
-      transform.add(_sound);
-      if (_sound.isPlaying) {
-          _sound.stop();
-      }
-      this.sound = _sound;
-      console.log(_sound);
-      // needs delay to play
-      setTimeout(()=>{this.sound.play()},50)
-  }
-
   initPhysics = ()=> {
 
       const {transform, gameObject, availableService} = this.props;
@@ -59,7 +44,6 @@ export class PlayerBulletGeometry extends React.Component {
   start = () => {
     this.initBulletGeometry();
     this.initPhysics();
-    this.initSound();
   };
 
   // TODO: move this to physics?
@@ -89,6 +73,10 @@ export class PlayerBulletGeometry extends React.Component {
     }
 
   };
+
+  onDestroy =() =>{
+
+  }
 
   render() {
     return null;

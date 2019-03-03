@@ -31,7 +31,7 @@ export class InputService extends Component {
             if (event.key === "ArrowDown") {
                 document.dispatchEvent(new Event("lookdown"));
             }
-            console.log(event.key);
+            // console.log(event.key);
             if (event.key === "s") {
                 document.dispatchEvent(new Event("movedown"));
             }

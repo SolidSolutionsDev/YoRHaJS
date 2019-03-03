@@ -112,6 +112,22 @@ export class ShooterControls extends React.Component {
         }
     };
 
+
+    initSound = () => {
+        const { transform, availableService } = this.props;
+        const _sound = availableService.audio.buildPositionalSound(this.props.selfSettings.soundLocation);
+        _sound.setLoop(false);
+        _sound.loop=false;
+        transform.add(_sound);
+        if (_sound.isPlaying) {
+            _sound.stop();
+        }
+        this.sound = _sound;
+        // console.log(_sound);
+        // needs delay to play
+    }
+
+
     shootBullet = () => {
         const {instantiateFromPrefab, transform, destroyGameObjectInstanceById} = this.props;
         const {position, rotation, scale} = transform;
@@ -128,6 +144,9 @@ export class ShooterControls extends React.Component {
                 scale,
             },
         );
+
+        setTimeout(()=>{
+            this.sound.isPlaying ? this.sound.stop():null;this.sound.play();},50)
     }
 
     mouseLook = e => {
@@ -243,6 +262,7 @@ export class ShooterControls extends React.Component {
         this.registerEvents();
         // transform.add( this.mesh );
         this.addMouseDebugMesh();
+        this.initSound();
     };
 
     update = () => {
