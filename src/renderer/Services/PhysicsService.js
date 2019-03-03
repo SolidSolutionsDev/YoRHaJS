@@ -38,14 +38,17 @@ export class PhysicsService extends Component {
         : null;
     });
     this.world.addEventListener("endContact", function(e) {
-      // console.log( `Collided with ${e.body.mesh.name}'s body:`, e );
       //   console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies end:`,          e.bodyA, e.bodyB, e );
- /*       if (e.bodyA.collisionFilterGroup ===e.bodyB.collisionFilterGroup){
-          console.log("ignoring");
-          return;
-        }*/
-      e.bodyA.endContactFunction && e.bodyA.endContactFunction(e.bodyB);
-      e.bodyB.endContactFunction && e.bodyB.endContactFunction(e.bodyA);
+        try {
+            if (!e.bodyA|| !e.bodyB){
+               return;
+            }
+            e.bodyA && e.bodyA.endContactFunction && e.bodyA.endContactFunction(e.bodyB);
+            e.bodyB && e.bodyB.endContactFunction && e.bodyB.endContactFunction(e.bodyA);
+        }
+        catch (error){
+          console.log(error,e.bodyA,e.bodyB);
+        }
     });
   };
 
