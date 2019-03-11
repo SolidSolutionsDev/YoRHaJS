@@ -19,7 +19,8 @@ export class BoardPlaneGeometry extends React.Component {
       side: THREE.DoubleSide
     });
     this.mesh = new THREE.Mesh(geometry, material);
-    transform.add(this.mesh);
+      this.mesh.receiveShadow = true;
+      transform.add(this.mesh);
 
     this.props.availableService.physics
         .addNewBoxBody(gameObject.transform, this.props, this);
