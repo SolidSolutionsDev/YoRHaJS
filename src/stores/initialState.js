@@ -195,10 +195,21 @@ export const initialState = {
                 },
                 children: [],
             },
+            PlayerBullet: {
+                debug:true,
+                transform:{
+                },
+                components: {
+                    playerBulletGeometry:{
+                    },
+                },
+                children: [],
+            },
             TestShooter: {
                 debug:true,
                 components: {
                     shooterControls:{
+                        soundLocation: './assets/sounds/348162__djfroyd__laser-one-shot-3.wav'
                     },
                     shooterGeometry:{
                         dimensions:{ x: 2, y: 2, z: 2 },

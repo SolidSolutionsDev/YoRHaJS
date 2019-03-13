@@ -6,8 +6,10 @@ import * as THREE from 'three';
 
 export class ShooterControls extends React.Component {
 
+    shootIntervalCallback;
+    shootTimeInterval= 70;
     mouseDebugMesh;
-    currentShooterDirection;
+    currentShooterDirection = new THREE.Vector3(0,1,0);
     fixedSpeed = 5;
 
     currentTestInstanceId = null;
@@ -96,30 +98,56 @@ export class ShooterControls extends React.Component {
         // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
     };
 
-    shoot = () => {
-        this.aux = !this.aux;
+    startShooting = () => {
+        // console.log("shoot",this);
+        if (!this.shootIntervalCallback) {
+            this.shootIntervalCallback= setInterval(this.shootBullet, this.shootTimeInterval);
+        }
+    };
+
+    stopShooting = () => {
+        if (this.shootIntervalCallback) {
+            clearInterval(this.shootIntervalCallback);
+            this.shootIntervalCallback=null;
+        }
+    };
+
+
+    initSound = () => {
+        const { transform, availableService } = this.props;
+        const _sound = availableService.audio.buildPositionalSound(this.props.selfSettings.soundLocation);
+        _sound.setLoop(false);
+        _sound.loop=false;
+        transform.add(_sound);
+        if (_sound.isPlaying) {
+            _sound.stop();
+        }
+        this.sound = _sound;
+        // console.log(_sound);
+        // needs delay to play
+    }
+
+
+    shootBullet = () => {
         const {instantiateFromPrefab, transform, destroyGameObjectInstanceById} = this.props;
         const {position, rotation, scale} = transform;
-        console.log("shoot");
-        if(!this.currentTestInstanceId) {
-            this.currentTestInstanceId = _.uniqueId("bullet");
-            instantiateFromPrefab(
-                "TestCube",
-                this.currentTestInstanceId,
-                {
-                    position,
-                    rotation,
-                    scale,
-                },
-                "lightGroup",
-            );
-        }
-        else {
-            destroyGameObjectInstanceById(this.currentTestInstanceId);
-            this.currentTestInstanceId = null;
-        }
-        //destroyGameObjectInstanceById("TestCube12");
-    };
+        // console.log("startShooting",this.currentShooterDirection);
+        const _position = position.clone();
+        _position.addScaledVector(this.currentShooterDirection,7);
+        this.currentTestInstanceId = _.uniqueId("bullet");
+        instantiateFromPrefab(
+            "PlayerBullet",
+            this.currentTestInstanceId,
+            {
+                position:_position,
+                rotation,
+                scale,
+            },
+        );
+
+        setTimeout(()=>{
+            this.sound.isPlaying ? this.sound.stop():null;this.sound.play();},50)
+    }
 
     mouseLook = e => {
         // console.log('mouseLook',e);
@@ -184,7 +212,8 @@ export class ShooterControls extends React.Component {
         lookleft_keyup: () => this.setState({activeLookLeft: false}),
         lookright: () => this.setState({activeLookRight: true}),
         lookright_keyup: () => this.setState({activeLookRight: false}),
-        shoot: this.shoot,
+        shoot: this.startShooting,
+        shoot_keyup: this.stopShooting,
         mousem: this.mouseLook
     };
 
@@ -195,11 +224,13 @@ export class ShooterControls extends React.Component {
         });
     };
 
+    // todo: convert this to gameObject?
     addMouseDebugMesh = () => {
         const {availableComponent} = this.props;
         const geometry = new THREE.SphereGeometry(1, 32, 32);
         const material = new THREE.MeshBasicMaterial({color: 0xfa7911});
         this.mouseDebugMesh = new THREE.Mesh(geometry, material);
+        this.mouseDebugMesh.castShadow = true;
         availableComponent.scene.scene.add(this.mouseDebugMesh);
     }
 
@@ -231,6 +262,7 @@ export class ShooterControls extends React.Component {
         this.registerEvents();
         // transform.add( this.mesh );
         this.addMouseDebugMesh();
+        this.initSound();
     };
 
     update = () => {

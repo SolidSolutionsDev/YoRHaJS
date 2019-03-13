@@ -141,7 +141,7 @@ export class Camera extends React.Component {
     availableService.animation.travelTo(
         this.camera,
         cameraPositionData.position,
-        1000,
+        6000,
         {
           target:scene.scene.position,
           easing:   availableService.animation.Easing.Exponential.Out
