@@ -4,10 +4,12 @@ import * as _ from 'lodash';
 // mousedebug
 import * as THREE from 'three';
 
+import * as workerTimers from 'worker-timers';
+
 export class ShooterControls extends React.Component {
 
     shootIntervalCallback;
-    shootTimeInterval= 70;
+    shootTimeInterval= 50;
     mouseDebugMesh;
     currentShooterDirection = new THREE.Vector3(0,1,0);
     fixedSpeed = 5;
@@ -101,13 +103,13 @@ export class ShooterControls extends React.Component {
     startShooting = () => {
         // console.log("shoot",this);
         if (!this.shootIntervalCallback) {
-            this.shootIntervalCallback= setInterval(this.shootBullet, this.shootTimeInterval);
+            this.shootIntervalCallback= workerTimers.setTimeout(this.shootBullet, this.shootTimeInterval);
         }
     };
 
     stopShooting = () => {
         if (this.shootIntervalCallback) {
-            clearInterval(this.shootIntervalCallback);
+            workerTimers.clearTimeout(this.shootIntervalCallback);
             this.shootIntervalCallback=null;
         }
     };
@@ -128,7 +130,12 @@ export class ShooterControls extends React.Component {
     }
 
 
+    timeOutTime= Date.now();
+
     shootBullet = () => {
+        const _timeNow = Date.now();
+        console.log(_timeNow-this.timeOutTime);
+        this.timeOutTime = _timeNow;
         const {instantiateFromPrefab, transform, destroyGameObjectInstanceById} = this.props;
         const {position, rotation, scale} = transform;
         // console.log("startShooting",this.currentShooterDirection);
@@ -144,9 +151,11 @@ export class ShooterControls extends React.Component {
                 scale,
             },
         );
+        workerTimers.setTimeout(()=>{
+            this.sound.isPlaying ? this.sound.stop():null;this.sound.play();},50);
 
-        setTimeout(()=>{
-            this.sound.isPlaying ? this.sound.stop():null;this.sound.play();},50)
+
+        this.shootIntervalCallback= workerTimers.setTimeout(this.shootBullet, this.shootTimeInterval);
     }
 
     mouseLook = e => {
