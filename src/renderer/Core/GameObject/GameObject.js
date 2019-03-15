@@ -92,7 +92,9 @@ import ConnectedGameObject from "./index";
         return;
       }
 
+      if (availableService.physics) {
         availableService.physics.purgeTransformOfEventualBodies(this.transform);
+      }
 
       if(this.transform.parent) {
         const parent = this.transform.parent;
