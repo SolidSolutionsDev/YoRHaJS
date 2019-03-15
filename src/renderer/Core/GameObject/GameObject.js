@@ -25,7 +25,7 @@ import ConnectedGameObject from "./index";
     }
 
     componentWillMount = () => {
-      const { transform, id } = this.props;
+      const { id } = this.props;
 
       this.transform.userData.belongsToGameObject = true;
 
@@ -33,19 +33,7 @@ import ConnectedGameObject from "./index";
      this.displayName = id;
      this.id = id;
 
-      if (transform && transform.position) {
-        // this.transform.position.set(...transform.position);
-        this.transform.position.x = transform.position && transform.position.x ? transform.position.x : this.transform.position.x;
-        this.transform.position.y = transform.position && transform.position.y ? transform.position.y : this.transform.position.y;
-        this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
-      }
-
-      if (transform && transform.rotation) {
-        // this.transform.position.set(...transform.position);
-        this.transform.rotation.x = transform.rotation && transform.rotation._x ? transform.rotation._x : this.transform.rotation.x;
-        this.transform.rotation.y = transform.rotation && transform.rotation._y ? transform.rotation._y : this.transform.rotation.y;
-        this.transform.rotation.z = transform.rotation && transform.rotation._z ? transform.rotation._z : this.transform.rotation.z;
-      }
+     this.updateTransform();
 
       this.transform.name = `${id}_transform`;
 
@@ -67,6 +55,30 @@ import ConnectedGameObject from "./index";
       Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
     }
 
+    updateTransform = () => {
+      const { transform } = this.props;
+      if (transform && transform.position) {
+        // this.transform.position.set(...transform.position);
+        this.transform.position.x = transform.position && transform.position.x ? transform.position.x : this.transform.position.x;
+        this.transform.position.y = transform.position && transform.position.y ? transform.position.y : this.transform.position.y;
+        this.transform.position.z = transform.position && transform.position.z ? transform.position.z : this.transform.position.z;
+      }
+
+      if (transform && transform.rotation) {
+        // this.transform.position.set(...transform.position);
+        this.transform.rotation.x = transform.rotation && transform.rotation._x ? transform.rotation._x : this.transform.rotation.x;
+        this.transform.rotation.y = transform.rotation && transform.rotation._y ? transform.rotation._y : this.transform.rotation.y;
+        this.transform.rotation.z = transform.rotation && transform.rotation._z ? transform.rotation._z : this.transform.rotation.z;
+      }
+
+      if (transform && transform.scale) {
+        // this.transform.position.set(...transform.position);
+        this.transform.scale.x = transform.scale && transform.scale.x ? transform.scale.x : this.transform.scale.x;
+        this.transform.scale.y = transform.scale && transform.scale.y ? transform.scale.y : this.transform.scale.y;
+        this.transform.scale.z = transform.scale && transform.scale.z ? transform.scale.z : this.transform.scale.z;
+      }
+    }
+
     _onDestroy() {
       // console.log("_onDestroy", this._name);
       this.removeFromScene();
@@ -80,7 +92,9 @@ import ConnectedGameObject from "./index";
         return;
       }
 
+      if (availableService.physics) {
         availableService.physics.purgeTransformOfEventualBodies(this.transform);
+      }
 
       if(this.transform.parent) {
         const parent = this.transform.parent;
