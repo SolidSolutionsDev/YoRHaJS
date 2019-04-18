@@ -72,6 +72,11 @@ import ConnectedGameObject from "./index";
       }
     }
 
+    componentDidUpdate() {
+      if (this.props.selfSettings.keepTransformSynced) {
+        this.updateTransform();
+      }
+    }
 
     componentWillReceiveProps(nextProps) {}
 
