@@ -2,7 +2,8 @@ import {Component} from "react";
 
 export class InputService extends Component {
 
-    componentWillMount() {
+    constructor(props) {
+        super(props);
         window.addEventListener("mousemove", function (event) {
             const _mouse3D = {
                 x: (event.clientX / window.innerWidth) * 2 - 1,

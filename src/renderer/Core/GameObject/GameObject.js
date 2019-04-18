@@ -24,8 +24,9 @@ export class GameObject extends React.Component {
     parent: null
   };
 
-  componentWillMount = () => {
-    const { id, selfSettings, prefabSettings } = this.props;
+  constructor(props){
+    super(props);
+    const { id, selfSettings, prefabSettings } = props;
 
     this._name = id;
 
@@ -110,13 +111,10 @@ export class GameObject extends React.Component {
   };
 
   componentWillUnmount() {
-    // console.log("gameobject will unmount", this.id);
     this.unmounting = true;
     this._onDestroy();
-    //Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
   }
   _onDestroy() {
-    // console.log("_onDestroy", this._name);
     this.removeFromScene();
     this.unRegisterFromParent(this._name);
   }

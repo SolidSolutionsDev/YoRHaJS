@@ -20,11 +20,10 @@ export function makeGameComponent(WrappedComponent, name) {
     getDisplayName = () =>
       name ||  WrappedComponent.displayName || WrappedComponent.name || "Component";
 
-    componentWillMount = () => {
+    constructor(props){
+      super(props);
       const _displayName = this.getDisplayName();
-      this.props.registerComponent(this, _displayName);
-
-      // console.log(this.uniqueId + " component will mount " + this.getDisplayName());
+      props.registerComponent(this, _displayName);
     };
 
     componentWillUnmount() {
