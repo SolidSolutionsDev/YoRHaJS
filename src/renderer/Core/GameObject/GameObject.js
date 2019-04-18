@@ -165,15 +165,20 @@ import ConnectedGameObject from "./index";
 
     getChildGameObjectByType = (name) => {
       const _gameObject = this.childGameObjects.find(
-        (childGameObject) => this.getWrappedGameObject(childGameObject)._name === name,
+        (childGameObject) => this.getWrappedGameObject(childGameObject)._name.split("_")[0] === name,
       );
-      return _gameObject || null;
+      return _gameObject.wrappedInstance || null;
     };
 
+    //RUI TODO Changed this so Type is the first part of the name withouth the uniqueId
     getChildGameObjectsByType = (name) => {
-      const _gameObjects = this.childGameObjects.filter(
-        (childGameObject) => this.getWrappedGameObject(childGameObject)._name === name,
-      );
+      const _gameObjects = this.childGameObjects
+      .filter(
+        (childGameObject) => this.getWrappedGameObject(childGameObject)._name.split("_")[0] === name,
+      )
+      .map(
+        (gameObject) => gameObject.wrappedInstance
+        );
       return _gameObjects || [];
     };
 
