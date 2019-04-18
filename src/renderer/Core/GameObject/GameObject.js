@@ -25,15 +25,21 @@ import ConnectedGameObject from "./index";
     }
 
     componentWillMount = () => {
-      const { id } = this.props;
+      const {
+        id,
+        selfSettings,
+        prefabSettings,
+      } = this.props;
+
+      this._name = id;
 
       this.transform.userData.belongsToGameObject = true;
+      this._tags = selfSettings.tags ? selfSettings.tags : (prefabSettings && prefabSettings.tags ? prefabSettings.tags : null);
 
-     this._name = id;
-     this.displayName = id;
-     this.id = id;
+      this.displayName = id;
+      this.id = id;
 
-     this.updateTransform();
+      this.updateTransform();
 
       this.transform.name = `${id}_transform`;
 
@@ -53,9 +59,9 @@ import ConnectedGameObject from "./index";
 
       if (transform && transform.rotation) {
         // this.transform.position.set(...transform.position);
-        this.transform.rotation.x = transform.rotation && transform.rotation._x ? transform.rotation._x : this.transform.rotation.x;
-        this.transform.rotation.y = transform.rotation && transform.rotation._y ? transform.rotation._y : this.transform.rotation.y;
-        this.transform.rotation.z = transform.rotation && transform.rotation._z ? transform.rotation._z : this.transform.rotation.z;
+        this.transform.rotation.x = transform.rotation && transform.rotation.x ? transform.rotation.x : this.transform.rotation.x;
+        this.transform.rotation.y = transform.rotation && transform.rotation.y ? transform.rotation.y : this.transform.rotation.y;
+        this.transform.rotation.z = transform.rotation && transform.rotation.z ? transform.rotation.z : this.transform.rotation.z;
       }
 
       if (transform && transform.scale) {
