@@ -170,37 +170,32 @@ export const mainReducer = (state = initialScene, action) => {
       temp.scene = {...state.scene, camera: temp.camera};
       temp.state = {...state, scene: temp.scene};
       return temp.state;
-    // case "DESTROY_GAMEOBJECT_BYID":
-    //   temp.state = state;
-    //   if(!temp.state.gameObjects.allIds.includes(gameObjectId)) {
-    //     console.log("GameObject does not exist ", gameObjectId);
-    //     return temp.state;
-    //   } else {
-    //     temp.allIds = temp.state.gameObjects.allIds.filter((gameObject)=>{return gameObject !== gameObjectId});
-    //     temp.byId = {...temp.state.gameObjects.byId, [gameObjectId]: undefined };
-    //     temp.gameObjects = {byId: temp.byId, allIds: temp.allIds};
-    //     temp.state = {...state, gameObjects: temp.gameObjects};
-    //     console.log(gameObjectId, "Deleted!");
-    //   }
-    //   return temp.state;
-     case "DESTROY_GAMEOBJECT_BYID":
+    case "DESTROY_GAMEOBJECT_BYID":
       temp.gameObjects = _.cloneDeep(state.gameObjects);
+      temp.scene = _.cloneDeep(state.scene);
       if(!temp.gameObjects.allIds.includes(gameObjectId)) {
         console.log("GameObject does not exist ", gameObjectId);
         return state;
       }
+      let _parent;
       if(temp.gameObjects.allIds.includes(action.gameObjectId)) {
         if(temp.gameObjects.byId[action.gameObjectId].parentId) {
           const _parentId = temp.gameObjects.byId[action.gameObjectId].parentId;
-          temp.gameObjects.byId[_parentId].children = temp.gameObjects.byId[_parentId].children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
+            _parent = temp.gameObjects.byId[_parentId];
+
         }
+        else {
+          _parent = temp.scene;
+        }
+        _parent.children = _parent.children.filter((childrenId) => {
+          return childrenId !== action.gameObjectId
+        });
         delete temp.gameObjects.byId[action.gameObjectId];
-        console.log(gameObjectId, "Deleted!");
         temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id)=>{return id !== action.gameObjectId});
         temp.gameObjects = {...state.gameObjects, byId: temp.gameObjects.byId, allIds: temp.gameObjects.allIds };
       }
-//      temp.scene = {...state.scene, children: temp.children};
-      temp.state = {...state, gameObjects: temp.gameObjects};
+
+      temp.state = {...state, gameObjects: temp.gameObjects, scene:temp.scene};
       return temp.state;
     default:
       return state;
