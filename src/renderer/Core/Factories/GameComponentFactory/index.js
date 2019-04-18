@@ -3,8 +3,9 @@ import { makeGameComponent } from "../../HOC/GameComponentHOC";
 import {
   instantiateFromGameObject,
   instantiateFromPrefab,
-  destroyGameObjectInstanceById,
+  destroyGameObjectById,
   updateGameObjectComponent,
+  updateGameObject,
 } from "../../../../stores/scene/actions";
 
 import {components} from "../../GameComponents";
@@ -33,11 +34,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   instantiateFromPrefab: (prefabId, newId, transform, parentId) => {
     dispatch(instantiateFromPrefab(prefabId, newId, transform, parentId));
   },
-  destroyGameObjectInstanceById: (gameObjectId) => {
-    dispatch(destroyGameObjectInstanceById(gameObjectId));
+  destroyGameObjectById: (gameObjectId) => {
+    dispatch(destroyGameObjectById(gameObjectId));
   },
   updateGameObjectComponent: (gameObjectId, gameComponentId, componentParameters) => {
     dispatch(updateGameObjectComponent(gameObjectId, gameComponentId, componentParameters));
+  },
+  updateGameObject:(gameObjectId, gameObjectParameters) => {
+    dispatch(updateGameObject(gameObjectId, gameObjectParameters));
   },
   updateSelf: (componentParameters) => {
     dispatch(updateGameObjectComponent(ownProps._parentId, ownProps.id, componentParameters));

@@ -129,7 +129,7 @@ export class ShooterControls extends React.Component {
 
 
     shootBullet = () => {
-        const {instantiateFromPrefab, transform, destroyGameObjectInstanceById} = this.props;
+        const {instantiateFromPrefab, transform, destroyGameObjectById} = this.props;
         const {position, rotation, scale} = transform;
         // console.log("startShooting",this.currentShooterDirection);
         const _position = position.clone();

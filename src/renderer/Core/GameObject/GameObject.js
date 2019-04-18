@@ -42,19 +42,6 @@ import ConnectedGameObject from "./index";
       this.transform.add(this.axesHelper);
     };
 
-    componentWillReceiveProps(nextProps) {}
-
-    registerComponent = (component, _displayName) => {
-      this.componentsScriptsDictionary[_displayName] = component;
-    };
-
-    componentWillUnmount() {
-      // console.log("gameobject will unmount", this.id);
-      this.unmounting = true;
-      this._onDestroy();
-      Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
-    }
-
     updateTransform = () => {
       const { transform } = this.props;
       if (transform && transform.position) {
@@ -79,6 +66,19 @@ import ConnectedGameObject from "./index";
       }
     }
 
+
+    componentWillReceiveProps(nextProps) {}
+
+    registerComponent = (component, _displayName) => {
+      this.componentsScriptsDictionary[_displayName] = component;
+    };
+
+    componentWillUnmount() {
+      console.log("gameobject will unmount", this.id);
+      this.unmounting = true;
+      this._onDestroy();
+      //Object.values(this.componentsScriptsDictionary).forEach((component) => component._onDestroy());
+    }
     _onDestroy() {
       // console.log("_onDestroy", this._name);
       this.removeFromScene();
@@ -92,6 +92,7 @@ import ConnectedGameObject from "./index";
         return;
       }
 
+      scene.remove(this.transform);
       if (availableService.physics) {
         availableService.physics.purgeTransformOfEventualBodies(this.transform);
       }
@@ -163,18 +164,21 @@ import ConnectedGameObject from "./index";
       this.childGameObjects.push(gameObject);
     };
 
-    getChildGameObjectByType = (name) => {
+    getChildGameObjectByTag = (wantedTag) => {
       const _gameObject = this.childGameObjects.find(
-        (childGameObject) => this.getWrappedGameObject(childGameObject)._name.split("_")[0] === name,
+        (childGameObject) => this.getWrappedGameObject(childGameObject)._tags.find(
+          (tag) => tag === wantedTag
+        )
       );
-      return _gameObject.wrappedInstance || null;
+      return _gameObject ? _gameObject.wrappedInstance : null;
     };
 
-    //RUI TODO Changed this so Type is the first part of the name withouth the uniqueId
-    getChildGameObjectsByType = (name) => {
+    getChildGameObjectsByTag = (wantedTag) => {
       const _gameObjects = this.childGameObjects
       .filter(
-        (childGameObject) => this.getWrappedGameObject(childGameObject)._name.split("_")[0] === name,
+        (childGameObject) => this.getWrappedGameObject(childGameObject)._tags.find(
+          (tag) => tag === wantedTag
+        )
       )
       .map(
         (gameObject) => gameObject.wrappedInstance
@@ -221,8 +225,8 @@ import ConnectedGameObject from "./index";
           registerComponent={this.registerComponent}
           registerChildGameObject={this.registerChildGameObject}
           getChildComponent={this.getChildComponent}
-          getChildGameObjectByType={this.getChildGameObjectByType}
-          getChildGameObjectsByType={this.getChildGameObjectsByType}
+          getChildGameObjectByTag={this.getChildGameObjectByTag}
+          getChildGameObjectsByTag={this.getChildGameObjectsByTag}
           getAllGameObject3DChildren={this.getAllGameObject3DChildren}
 
       />
@@ -248,12 +252,12 @@ import ConnectedGameObject from "./index";
 
 
     buildChildGameObjects = () => {
-      const { selfSettings, prefabSettings}  = this.props;
+      const { selfSettings, prefabSettings, availableService}  = this.props;
       const selfChildGameObjects = selfSettings && selfSettings.children ? selfSettings.children : [];
       const prefabChildGameObjects = prefabSettings && prefabSettings.children ? prefabSettings.children : [];
       const gameObjects = [...prefabChildGameObjects,...selfChildGameObjects]
               .map(gameObjectId=> {
-                return <ConnectedGameObject ref={this.registerChildGameObject} parent={this} key={gameObjectId} id={gameObjectId} scene={this.scene}
+                return <ConnectedGameObject ref={this.registerChildGameObject} parent={this} key={gameObjectId} id={gameObjectId} scene={this.scene} availableService={availableService}
                 />} );
       return gameObjects;
     }

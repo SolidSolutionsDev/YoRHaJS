@@ -35,8 +35,8 @@ export class PlayerBulletGeometry extends React.Component {
   }
 
     selfDestruct =()=> {
-        const {destroyGameObjectInstanceById, _parentId} = this.props;
-        destroyGameObjectInstanceById(_parentId);
+        const { destroyGameObjectById, _parentId} = this.props;
+        destroyGameObjectById(_parentId);
         this.currentTestInstanceId = null;
         // console.log("selfDestruct",_parentId);
     }

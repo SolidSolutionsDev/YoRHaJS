@@ -34,8 +34,8 @@ export function makeGameComponent(WrappedComponent, name) {
 
     _onDestroy () {
       this.unmounting = true;
-      if (this.onDestroy) {
-        this.onDestroy();
+      if (this.component.onDestroy) {
+        this.component.onDestroy();
       }
     }
 

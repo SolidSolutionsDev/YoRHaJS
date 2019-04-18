@@ -21,6 +21,10 @@ export class CSSLabelTo3D extends React.Component {
     this.setHTML(`Label`);
   };
 
+  onDestroy = () => {
+    this.text.parentNode.removeChild(this.text);
+  }
+
   get2DCoords = (position, camera) => {
     const vector = position.project(camera);
     vector.x = ((vector.x + 1) / 2) * window.innerWidth;

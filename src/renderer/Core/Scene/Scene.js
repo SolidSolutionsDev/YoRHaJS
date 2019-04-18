@@ -78,6 +78,7 @@ export class Scene extends React.Component {
     _main: null,
     setMain: (component) => {
       this.camera._main = component.camera;
+      this.camera._mainComponent = component;
     },
     getMain: () => {
       return this.props.camera.main;

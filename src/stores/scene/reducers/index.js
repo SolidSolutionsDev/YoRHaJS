@@ -1,7 +1,7 @@
-import { initialState } from "../../initialState";
+import { initialScene } from "../../initialScene";
 import * as _ from 'lodash';
 
-export const mainReducer = (state = initialState, action) => {
+export const mainReducer = (state = initialScene, action) => {
   let _oldAssetLoadState;
   let temp = {};
   let assetsLoadState;
@@ -10,8 +10,31 @@ export const mainReducer = (state = initialState, action) => {
     case "UPDATE_SCENE_PARAMETERS":
       return {
         ...state,
+        scene: {
+        ...state.scene,
         ...action.parametersObject,
+        }
       };
+      case "UPDATE_GAMEOBJECT_PARAMETERS":
+      temp.state = state;
+      if(!state.gameObjects.byId[action.gameObjectId]) {
+        console.log("gameobject not found");
+        return temp.state;
+      }
+      temp.gameObject = _.cloneDeep(state.gameObjects.byId[action.gameObjectId]);
+      temp.gameObject = {
+        ...temp.gameObject,
+        ...action.gameObjectParameters,
+      };
+      temp.state = {...state,
+        gameObjects: {
+          ...temp.state.gameObjects,
+          byId: {
+            ...temp.state.gameObjects.byId,
+            [action.gameObjectId]:temp.gameObject}
+          }
+        }
+      return temp.state;
       //TODO: flatter the state (gameComponents at the same level as gameObjects)
       case "UPDATE_COMPONENT_PARAMETERS":
       temp.state = state;
@@ -26,17 +49,17 @@ export const mainReducer = (state = initialState, action) => {
         components: {
           ...temp.components,
           [action.gameComponentId] : {
-          ...temp.components[action.gameComponentId], 
+          ...temp.components[action.gameComponentId],
           ...action.componentParameters
           },
         },
       };
-      temp.state = {...state, 
+      temp.state = {...state,
         gameObjects: {
           ...temp.state.gameObjects,
-          byId: { 
-            ...temp.state.gameObjects.byId, 
-            [action.gameObjectId]:temp.gameObject}  
+          byId: {
+            ...temp.state.gameObjects.byId,
+            [action.gameObjectId]:temp.gameObject}
           }
         }
       return temp.state;
@@ -83,8 +106,12 @@ export const mainReducer = (state = initialState, action) => {
     case "INSTANTIATE_FROM_PREFAB":
       temp.state = state;
       if (prefabId && newId) {
-        temp.newGameObject = {
-            debug:true,
+          if(temp.state.gameObjects.allIds.includes(newId)) {
+            console.log("NewId already exists!");
+            return temp.state;
+          }
+          temp.newGameObject = {
+            debug:false,
             prefab:prefabId,
             transform,
             parentId: parentId,
@@ -94,7 +121,9 @@ export const mainReducer = (state = initialState, action) => {
             gameObjects: {
               byId: {
                 ...temp.state.gameObjects.byId,
-                [newId] : temp.newGameObject
+                [newId] : {
+                  ...temp.newGameObject,
+                },
               },
               allIds: [...temp.state.gameObjects.allIds, newId]
             },
@@ -141,23 +170,37 @@ export const mainReducer = (state = initialState, action) => {
       temp.scene = {...state.scene, camera: temp.camera};
       temp.state = {...state, scene: temp.scene};
       return temp.state;
+    // case "DESTROY_GAMEOBJECT_BYID":
+    //   temp.state = state;
+    //   if(!temp.state.gameObjects.allIds.includes(gameObjectId)) {
+    //     console.log("GameObject does not exist ", gameObjectId);
+    //     return temp.state;
+    //   } else {
+    //     temp.allIds = temp.state.gameObjects.allIds.filter((gameObject)=>{return gameObject !== gameObjectId});
+    //     temp.byId = {...temp.state.gameObjects.byId, [gameObjectId]: undefined };
+    //     temp.gameObjects = {byId: temp.byId, allIds: temp.allIds};
+    //     temp.state = {...state, gameObjects: temp.gameObjects};
+    //     console.log(gameObjectId, "Deleted!");
+    //   }
+    //   return temp.state;
      case "DESTROY_GAMEOBJECT_BYID":
-      temp.children = _.cloneDeep(state.scene.children);
-      if(temp.children.includes(action.gameObjectId)) {
-        temp.children = temp.children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
-      }
       temp.gameObjects = _.cloneDeep(state.gameObjects);
+      if(!temp.gameObjects.allIds.includes(gameObjectId)) {
+        console.log("GameObject does not exist ", gameObjectId);
+        return state;
+      }
       if(temp.gameObjects.allIds.includes(action.gameObjectId)) {
         if(temp.gameObjects.byId[action.gameObjectId].parentId) {
           const _parentId = temp.gameObjects.byId[action.gameObjectId].parentId;
           temp.gameObjects.byId[_parentId].children = temp.gameObjects.byId[_parentId].children.filter((childrenId)=>{return childrenId !== action.gameObjectId});
         }
         delete temp.gameObjects.byId[action.gameObjectId];
+        console.log(gameObjectId, "Deleted!");
         temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id)=>{return id !== action.gameObjectId});
         temp.gameObjects = {...state.gameObjects, byId: temp.gameObjects.byId, allIds: temp.gameObjects.allIds };
       }
-      temp.scene = {...state.scene, children: temp.children};
-      temp.state = {...state, scene: temp.scene, gameObjects: temp.gameObjects};
+//      temp.scene = {...state.scene, children: temp.children};
+      temp.state = {...state, gameObjects: temp.gameObjects};
       return temp.state;
     default:
       return state;
