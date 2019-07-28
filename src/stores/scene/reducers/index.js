@@ -5,7 +5,7 @@ export const mainReducer = (state = initialScene, action) => {
   let _oldAssetLoadState;
   let temp = {};
   let assetsLoadState;
-  const {gameObjectId, prefabId, newId, transform, parentId} = action;
+  const {gameObjectId, prefabId, newId, transform, parentId,instantiationTime} = action;
   switch (action.type) {
     case "UPDATE_SCENE_PARAMETERS":
       return {
@@ -80,6 +80,9 @@ export const mainReducer = (state = initialScene, action) => {
         temp.gameObjectToClone = _.cloneDeep( temp.state.gameObjects.byId[gameObjectId]);
         if (transform) {
           temp.gameObjectToClone.transform = {...temp.state.gameObjects.byId[gameObjectId].transform, ...transform};
+        }
+        if (instantiationTime) {
+          temp.gameObjectToClone.instantiationTime = instantiationTime;
         }
         temp.newId = _.uniqueId(gameObjectId);
         temp.state = {

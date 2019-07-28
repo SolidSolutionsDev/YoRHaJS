@@ -5,12 +5,13 @@ export const instantiateFromGameObject = (gameObjectId, transform, parentId) => 
   parentId,
 });
 
-export const instantiateFromPrefab = (prefabId, newId, transform, parentId) => ({
+export const instantiateFromPrefab = (prefabId, newId, transform, parentId,instantiationTime) => ({
   type: "INSTANTIATE_FROM_PREFAB",
   newId,
   prefabId,
   transform,
   parentId,
+  instantiationTime,
 });
 
 export const updateSceneObject = (parametersObject) => ({

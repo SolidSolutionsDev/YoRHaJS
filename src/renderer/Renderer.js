@@ -2,15 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
-import * as THREE from 'three';
-import { BloomEffect, EffectComposer, EffectPass, RenderPass } from "postprocessing";
+import * as THREE from "three";
+import {
+  BloomEffect,
+  EffectComposer,
+  EffectPass,
+  RenderPass
+} from "postprocessing";
 
 export class Renderer extends React.Component {
   renderer = new THREE.WebGLRenderer({
     antialias: this.props.antialias,
     shadowMap: true,
     alpha: this.props.alpha,
-    preserveDrawingBuffer: true,
+    preserveDrawingBuffer: true
   });
 
   composer;
@@ -24,50 +29,63 @@ export class Renderer extends React.Component {
   state = {};
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const {assetsLoadState, loadedCallback, availableComponent } = this.props;
+    const { assetsLoadState, loadedCallback, availableComponent } = this.props;
 
-    const prevScene= prevProps.availableComponent.scene;
+    const prevScene = prevProps.availableComponent.scene;
 
     if (prevProps.assetsLoadState !== assetsLoadState && loadedCallback) {
       loadedCallback(assetsLoadState);
     }
 
     if (this.hasSceneOrCameraChanged(prevScene)) {
-        this.setPostProcessing();
+      this.setPostProcessing();
     }
   }
 
-  hasSceneOrCameraChanged = (prevScene) => {
-      const { availableComponent } = this.props;
-      const {scene} = availableComponent;
-      const _sceneChanged = scene.scene && (scene!== prevScene);
-      const _cameraChanged = scene.camera && (!prevScene.camera && prevScene.camera !== scene.camera || prevScene.camera._main !== scene.camera._main ) ;
+  hasSceneOrCameraChanged = prevScene => {
+    const { availableComponent } = this.props;
+    const { scene } = availableComponent;
+    const _sceneChanged = scene.scene && scene !== prevScene;
+    const _cameraChanged =
+      scene.camera &&
+      ((!prevScene.camera && prevScene.camera !== scene.camera) ||
+        prevScene.camera._main !== scene.camera._main);
 
-      const mainCameraReady = scene.camera._main;
+    const mainCameraReady = scene.camera._main;
 
-      console.log("componentDidUpdate renderer","_sceneChanged:",_sceneChanged,
-          "_cameraChanged:",_cameraChanged,
-          "mainCameraReady:",mainCameraReady,);
+    console.log(
+      "componentDidUpdate renderer",
+      "_sceneChanged:",
+      _sceneChanged,
+      "_cameraChanged:",
+      _cameraChanged,
+      "mainCameraReady:",
+      mainCameraReady
+    );
 
-     return _sceneChanged || _cameraChanged || (this.state.ready && mainCameraReady && !this.effectPass);
-  }
+    return (
+      _sceneChanged ||
+      _cameraChanged ||
+      (this.state.ready && mainCameraReady && !this.effectPass)
+    );
+  };
 
   // TODO: improve this, add parameters on render redux state
-    setPostProcessing =() => {
-        const { availableComponent, postprocessing } = this.props;
-        if (!postprocessing) {
-          return;
-        }
-        if (!this.composer) {
-          this.composer = new EffectComposer(this.renderer);
-        }
-        const {scene} = availableComponent;
-        this.effectPass = new EffectPass(scene.camera._main, new BloomEffect());
-        this.effectPass.renderToScreen = true;
-        this.composer.reset();
-        this.composer.addPass(new RenderPass(scene.scene, scene.camera._main));
-        this.composer.addPass(this.effectPass);
+  setPostProcessing = () => {
+    const { availableComponent, postprocessing } = this.props;
+    if (!postprocessing) {
+      return;
     }
+    if (!this.composer) {
+      this.composer = new EffectComposer(this.renderer);
+    }
+    const { scene } = availableComponent;
+    this.effectPass = new EffectPass(scene.camera._main, new BloomEffect());
+    this.effectPass.renderToScreen = true;
+    this.composer.reset();
+    this.composer.addPass(new RenderPass(scene.scene, scene.camera._main));
+    this.composer.addPass(this.effectPass);
+  };
 
   componentDidMount = () => {};
 
@@ -82,26 +100,24 @@ export class Renderer extends React.Component {
     this.onWindowResize();
   };
 
-  update = (time) => {
-    const { backgroundColor, availableComponent,postprocessing } = this.props;
+  update = time => {
+    const { backgroundColor, availableComponent, postprocessing } = this.props;
     const mainCameraReady = availableComponent.scene.camera._main;
     if (this.state.ready && mainCameraReady) {
-
       if (!postprocessing) {
         this.renderer.render(
           //TODO rename scene.scene to scene.transform
           availableComponent.scene.scene,
-          availableComponent.scene.camera._main,
+          availableComponent.scene.camera._main
         );
+      } else {
+        // TODO: add post processing manager that reacts to redux state and make it optional between regular render
+        this.effectPass || this.setPostProcessing();
+        this.composer.render(time - this.timePreviousFrame);
       }
-      else {
-          // TODO: add post processing manager that reacts to redux state and make it optional between regular render
-          this.effectPass || this.setPostProcessing();
-          this.composer.render(time-this.timePreviousFrame);
-      }
-      this.timePreviousFrame= time;
+      this.timePreviousFrame = time;
 
-      this.renderer.setClearColor(backgroundColor,0);
+      this.renderer.setClearColor(backgroundColor, 0);
     }
   };
 
@@ -113,7 +129,6 @@ export class Renderer extends React.Component {
     this.canvas.parentElement.style.zIndex = -1;
   }
 
-
   setupRendererDefaults() {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.renderReverseSided = true;
@@ -121,6 +136,7 @@ export class Renderer extends React.Component {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     this.renderer.setClearColor(0x544c41, 0.9);
     this.renderer.sortObjects = false;
+    this.renderer.setPixelRatio( window.devicePixelRatio );
   }
 
   registerEventListeners = () => {
@@ -128,10 +144,10 @@ export class Renderer extends React.Component {
   };
 
   componentWillUnmount() {
-    window.removeEventListener("resize",this.onWindowResize);
+    window.removeEventListener("resize", this.onWindowResize);
   }
 
-  onWindowResize = (event) => {
+  onWindowResize = event => {
     // const SCREEN_WIDTH = window.innerWidth;
     // const SCREEN_HEIGHT = window.innerHeight;
     if (!this.renderer.domElement.parentElement) {
@@ -143,7 +159,7 @@ export class Renderer extends React.Component {
     this.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 
     this.renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    this.resizeFunctions.forEach((resizeFunction) => {
+    this.resizeFunctions.forEach(resizeFunction => {
       resizeFunction();
     });
   };
@@ -166,13 +182,13 @@ export class Renderer extends React.Component {
   //     }
   // }
 
-  updateChildren = (time) => {
-    this.updateCallbacksArray.forEach((update) => {
+  updateChildren = time => {
+    this.updateCallbacksArray.forEach(update => {
       update(time);
     });
   };
 
-  subscribeResize = (onResizeFunction) => {
+  subscribeResize = onResizeFunction => {
     this.resizeFunctions.push(onResizeFunction);
   };
 
@@ -195,7 +211,7 @@ export class Renderer extends React.Component {
 Renderer.propTypes = {
   availableWidth: PropTypes.number,
   availableHeight: PropTypes.number,
-  assetsLoadState: PropTypes.object,
+  assetsLoadState: PropTypes.object
   // backgroundColor: PropTypes.string.isRequired,
   // availableComponent: PropTypes.object.isRequired,
 };

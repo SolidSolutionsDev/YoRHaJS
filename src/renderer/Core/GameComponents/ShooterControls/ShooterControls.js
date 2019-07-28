@@ -7,10 +7,12 @@ import * as THREE from 'three';
 export class ShooterControls extends React.Component {
 
     shootIntervalCallback;
-    shootTimeInterval= 70;
+    shootTimeInterval = 70;
     mouseDebugMesh;
-    currentShooterDirection = new THREE.Vector3(0,1,0);
+    currentShooterDirection = new THREE.Vector3(0, 1, 0);
     fixedSpeed = 5;
+
+    shootLastTime = 0;
 
     currentTestInstanceId = null;
 
@@ -101,23 +103,23 @@ export class ShooterControls extends React.Component {
     startShooting = () => {
         // console.log("shoot",this);
         if (!this.shootIntervalCallback) {
-            this.shootIntervalCallback= setInterval(this.shootBullet, this.shootTimeInterval);
+            this.shootIntervalCallback = setInterval(this.shootBullet, this.shootTimeInterval);
         }
     };
 
     stopShooting = () => {
         if (this.shootIntervalCallback) {
             clearInterval(this.shootIntervalCallback);
-            this.shootIntervalCallback=null;
+            this.shootIntervalCallback = null;
         }
     };
 
 
     initSound = () => {
-        const { transform, availableService } = this.props;
+        const {transform, availableService} = this.props;
         const _sound = availableService.audio.buildPositionalSound(this.props.selfSettings.soundLocation);
         _sound.setLoop(false);
-        _sound.loop=false;
+        _sound.loop = false;
         transform.add(_sound);
         if (_sound.isPlaying) {
             _sound.stop();
@@ -129,24 +131,32 @@ export class ShooterControls extends React.Component {
 
 
     shootBullet = () => {
+        var shootStartTime = Date.now();
         const {instantiateFromPrefab, transform, destroyGameObjectById} = this.props;
         const {position, rotation, scale} = transform;
         // console.log("startShooting",this.currentShooterDirection);
         const _position = position.clone();
-        _position.addScaledVector(this.currentShooterDirection,7);
+        _position.addScaledVector(this.currentShooterDirection, 7);
         this.currentTestInstanceId = _.uniqueId("bullet");
         instantiateFromPrefab(
             "PlayerBullet",
             this.currentTestInstanceId,
             {
-                position:_position,
+                position: _position,
                 rotation,
                 scale,
-            },
+            },null,
+            shootStartTime
         );
 
-        setTimeout(()=>{
-            this.sound.isPlaying ? this.sound.stop():null;this.sound.play();},50)
+        setTimeout(() => {
+            this.sound.isPlaying ? this.sound.stop() : null;
+            this.sound.play();
+        }, 50);
+        var currentTime = Date.now();
+
+        console.log(this.shootTimeInterval - (currentTime - this.shootLastTime), currentTime - shootStartTime);
+        this.shootLastTime = currentTime;
     }
 
     mouseLook = e => {
@@ -170,7 +180,7 @@ export class ShooterControls extends React.Component {
 
         if (this.coords) {
             const {availableService} = this.props;
-            const {physicsService}  = availableService;
+            const {physicsService} = availableService;
             // TODO: move this to physics service as lookAt function
             // Compute direction to target
             let lookAtVector = this.getPositionFromMouse(transform.physicsBody.position.z);
