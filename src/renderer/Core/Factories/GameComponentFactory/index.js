@@ -31,8 +31,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   instantiateFromGameObject: (gameObjectId, transform, parentId,instantiationTime) => {
     dispatch(instantiateFromGameObject(gameObjectId, transform, parentId,instantiationTime));
   },
-  instantiateFromPrefab: (prefabId, newId, transform, parentId,instantiationTime) => {
-    dispatch(instantiateFromPrefab(prefabId, newId, transform, parentId,instantiationTime));
+  instantiateFromPrefab: (prefabId, newId, transform, parentId,instantiationTime, components) => {
+    dispatch(instantiateFromPrefab(prefabId, newId, transform, parentId,instantiationTime, components));
   },
   destroyGameObjectById: (gameObjectId) => {
     dispatch(destroyGameObjectById(gameObjectId));

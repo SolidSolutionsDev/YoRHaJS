@@ -5,7 +5,7 @@ export const mainReducer = (state = initialScene, action) => {
   let _oldAssetLoadState;
   let temp = {};
   let assetsLoadState;
-  const {gameObjectId, prefabId, newId, transform, parentId,instantiationTime} = action;
+  const {gameObjectId, prefabId, newId, transform, parentId,instantiationTime, components} = action;
   switch (action.type) {
     case "UPDATE_SCENE_PARAMETERS":
       return {
@@ -118,6 +118,7 @@ export const mainReducer = (state = initialScene, action) => {
             prefab:prefabId,
             transform,
             parentId: parentId,
+            components
           };
           temp.state = {
             ...temp.state,
