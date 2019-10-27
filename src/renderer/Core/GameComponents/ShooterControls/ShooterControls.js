@@ -7,7 +7,7 @@ import * as THREE from 'three';
 export class ShooterControls extends React.Component {
 
     shootIntervalCallback;
-    shootTimeInterval = 70;
+    shootTimeInterval = 55;
     mouseDebugMesh;
     currentShooterDirection = new THREE.Vector3(0, 1, 0);
     fixedSpeed = 5;
@@ -189,7 +189,6 @@ export class ShooterControls extends React.Component {
 
             // this can be used to make bullets or enemies follow player but disables gravity
             // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
-
         }
     }
 

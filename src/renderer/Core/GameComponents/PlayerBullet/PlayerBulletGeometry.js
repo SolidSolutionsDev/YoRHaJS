@@ -54,7 +54,8 @@ export class PlayerBulletGeometry extends React.Component {
       const localForward = new CANNON.Vec3(0,1,0); // correct?
       const worldForward = new CANNON.Vec3();
       transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
-      const speed = 50;
+      const speed = 80;
+    
       const velocity = new CANNON.Vec3();
       worldForward.z = 0; // don't need up velocity, so clamp it
       worldForward.normalize();
