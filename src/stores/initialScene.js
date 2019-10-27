@@ -30,6 +30,7 @@ export const initialScene = {
       "board1",
       "testCubeGameObject1",
       "testShooter1",
+      "testEnemy1",
       "camera1"
     ]
   },
@@ -51,6 +52,13 @@ export const initialScene = {
           position: { x: 0, y: 0, z: 4 }
         },
         prefab: "TestShooter"
+      },
+      testEnemy1: {
+        debug: true,
+        transform: {
+          position: { x: 0, y: 6, z: 4 }
+        },
+        prefab: "TestEnemy"
       },
       board1: {
         debug: true,
@@ -95,6 +103,7 @@ export const initialScene = {
       // "Camera",
       "testCubeGameObject1",
       "testShooter1",
+      "testEnemy1",
       "board1",
       "lightGroup",
       "directionalLight1",
@@ -217,6 +226,31 @@ export const initialScene = {
         },
         children: []
       },
+      TestEnemy: {
+        debug: true,
+        components: {
+          enemyMovementControls: {
+            type: "follow",
+            speed: 50,
+            rotationSpeed: 10,
+          },
+          autoShooterControls: {
+            auto:true,
+            bulletSpeed:120,
+            bulletIteration:40,
+            soundLocation:
+              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+             bulletType: "regular",
+             direction: "front" 
+          },
+          basicGeometry: {
+            dimensions: { x: 2, y: 2, z: 2 },
+            // position:{ x: 0, y: 0, z: 4 },
+            mass: 1
+          }
+        },
+        children: []
+      },
       Board: {
         debug: true,
         transform: {},
@@ -275,6 +309,9 @@ export const initialScene = {
       "LightGroup",
       "Board",
       "TestCube",
+      "TestEnemy",
+      "TestShooter",
+      "PlayerBullet",
       "DynamicCamera"
     ]
   }
