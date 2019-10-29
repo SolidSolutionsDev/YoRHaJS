@@ -56,7 +56,7 @@ export const initialScene = {
       testEnemy1: {
         debug: true,
         transform: {
-          position: { x: 0, y: 6, z: 4 }
+          position: { x: -10, y: 10, z: 3 }
         },
         prefab: "TestEnemy"
       },
@@ -236,17 +236,19 @@ export const initialScene = {
           },
           autoShooterControls: {
             auto:true,
-            bulletSpeed:120,
-            bulletIteration:40,
+            bulletSpeed:10,
+            shootTimeInterval:1000,
             soundLocation:
               "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
              bulletType: "regular",
              direction: "front" 
           },
-          basicGeometry: {
+          cubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
-            mass: 1
+            color: 0xaaaaaa,
+            mass: 1,
+            tip:true,
           }
         },
         children: []

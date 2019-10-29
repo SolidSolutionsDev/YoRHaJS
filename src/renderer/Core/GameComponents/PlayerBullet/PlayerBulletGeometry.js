@@ -24,12 +24,17 @@ export class PlayerBulletGeometry extends React.Component {
       const {transform, gameObject, availableService} = this.props;
 
       availableService.physics
-          .addNewBoxBody(gameObject.transform, {...this.props, position: transform.position,
-              collisionFilterGroup: 1,
-              linearFactor: new CANNON.Vec3(1, 1, 0),
-              angularFactor: new CANNON.Vec3(0, 0, 0),
-          }, this);
-      transform.physicsBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0,0,1), gameObject.transform.rotation.z);
+          .addNewBoxBody(gameObject.transform, {
+            ...this.props, 
+            position: transform.position,
+            collisionFilterGroup: 1,
+            linearFactor: new CANNON.Vec3(1, 1, 0),
+            angularFactor: new CANNON.Vec3(0, 0, 0),
+          }, 
+          this
+          );
+      transform.physicsBody.quaternion.setFromAxisAngle(
+        new CANNON.Vec3(0,0,1), gameObject.transform.rotation.z);
 
       // transform.physicsBody.velocity.set(gameObject.transform.rotation.x*10,gameObject.transform.rotation.y*10,0);
   }
@@ -49,17 +54,17 @@ export class PlayerBulletGeometry extends React.Component {
   // TODO: move this to physics?
     //TODO2: make move in any direction?
   moveForward =() => {
-      const {transform, gameObject} = this.props;
+      const {transform, gameObject, speed} = this.props;
       // transform.physicsBody.velocity.set(gameObject.transform.rotation.x*10,gameObject.transform.rotation.y*10,0);
       const localForward = new CANNON.Vec3(0,1,0); // correct?
       const worldForward = new CANNON.Vec3();
       transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
-      const speed = 80;
+      const _speed = speed || 80;
     
       const velocity = new CANNON.Vec3();
       worldForward.z = 0; // don't need up velocity, so clamp it
       worldForward.normalize();
-      worldForward.scale(speed, transform.physicsBody.velocity);
+      worldForward.scale(_speed, transform.physicsBody.velocity);
   }
 
 

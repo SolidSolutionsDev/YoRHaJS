@@ -15,6 +15,9 @@ import {Camera} from "./Camera/Camera";
 import {ShooterControls} from "./ShooterControls/ShooterControls";
 import {ShooterGeometry} from "./ShooterGeometry/ShooterGeometry";
 import {PlayerBulletGeometry} from "./PlayerBullet/PlayerBulletGeometry";
+import {EnemyMovementControls} from "./EnemyMovementControls/EnemyMovementControls";
+import {AutoShooterControls} from "./AutoShooterControls/AutoShooterControls";
+import {CubeGeometry} from "./CubeGeometry/CubeGeometry";
 
 export const components = {
   // objMesh: OBJMeshGeometry,
@@ -33,4 +36,7 @@ export const components = {
   shooterControls: ShooterControls,
   shooterGeometry: ShooterGeometry,
   playerBulletGeometry: PlayerBulletGeometry,
+  enemyMovementControls: EnemyMovementControls,
+  autoShooterControls: AutoShooterControls,
+  cubeGeometry: CubeGeometry,
 };
