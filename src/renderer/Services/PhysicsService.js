@@ -138,7 +138,7 @@ export class PhysicsService extends Component {
     return new CANNON.Vec3(x, y, z);
   };
 
-  typeEnum = Object.freeze({ kinematic: CANNON.Body.KINEMATIC });
+  typeEnum = Object.freeze({ kinematic: CANNON.Body.KINEMATIC,static: CANNON.Body.STATIC });
 
   addNewSphereBody(gameObjectTransform, parameters, instance) {
       if (!gameObjectTransform.userData.belongsToGameObject){
@@ -213,6 +213,10 @@ export class PhysicsService extends Component {
 
     const _parameters = Object.assign(thisBoxParameters, parameters);
 
+
+    if (parameters.type) {
+      _parameters.type = this.typeEnum[parameters.type];
+    }
     const _boxBody = new CANNON.Body({
       mass: _parameters.mass,
       position: new CANNON.Vec3(
@@ -229,7 +233,8 @@ export class PhysicsService extends Component {
       ),
       linearFactor: _parameters.linearFactor,
       angularFactor: _parameters.angularFactor,
-      material: _parameters.material
+      material: _parameters.material,
+      type: _parameters.type,
     });
 
     this.world.addBody(_boxBody);

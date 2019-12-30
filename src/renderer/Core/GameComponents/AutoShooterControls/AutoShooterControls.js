@@ -15,6 +15,8 @@ export class AutoShooterControls extends React.Component {
     currentTestInstanceId = null;
     currentShooterDirection = new THREE.Vector3(0, 1, 0);
 
+    updateTime = null;
+
     startShooting = () => {
         // console.log("shoot",this);
         if (!this.shootIntervalCallback) {
@@ -46,7 +48,6 @@ export class AutoShooterControls extends React.Component {
 
 
     shootBullet = () => {
-        console.log(this);
         var shootStartTime = Date.now();
         const {instantiateFromPrefab, transform, destroyGameObjectById,bulletType, bulletSpeed} = this.props;
         const {position, rotation, scale} = transform;
@@ -65,10 +66,11 @@ export class AutoShooterControls extends React.Component {
                 scale
             },
             null,
-            shootStartTime,
+          this.updateTime,
             {
                 playerBulletGeometry:{
-                    speed:bulletSpeed
+                    initialTimeBullet: this.updateTime,
+                    moveRatio: 1,
                 }
             }
         );
@@ -85,8 +87,10 @@ export class AutoShooterControls extends React.Component {
 
 
 
-    update = (time) => {}
-    
+    update = (time) => {
+        this.updateTime=time;
+    }
+
 
     start = () => {
 

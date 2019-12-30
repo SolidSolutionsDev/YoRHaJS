@@ -8,6 +8,7 @@ import * as CANNON from "cannon";
 export class PlayerBulletGeometry extends React.Component {
   cube;
   selfDestructTime=2000;
+  moveRatio = this.props.moveRatio || 0.03;
 
   initBulletGeometry = () => {
     const { transform, opacity } = this.props;
@@ -25,12 +26,13 @@ export class PlayerBulletGeometry extends React.Component {
 
       availableService.physics
           .addNewBoxBody(gameObject.transform, {
-            ...this.props, 
+            ...this.props,
             position: transform.position,
             collisionFilterGroup: 1,
-            linearFactor: new CANNON.Vec3(1, 1, 0),
-            angularFactor: new CANNON.Vec3(0, 0, 0),
-          }, 
+            // linearFactor: new CANNON.Vec3(1, 1, 0),
+            // angularFactor: new CANNON.Vec3(0, 0, 0),
+              type:"static"
+          },
           this
           );
       transform.physicsBody.quaternion.setFromAxisAngle(
@@ -51,27 +53,48 @@ export class PlayerBulletGeometry extends React.Component {
     this.initPhysics();
   };
 
-  // TODO: move this to physics?
-    //TODO2: make move in any direction?
-  moveForward =() => {
-      const {transform, gameObject, speed} = this.props;
-      // transform.physicsBody.velocity.set(gameObject.transform.rotation.x*10,gameObject.transform.rotation.y*10,0);
-      const localForward = new CANNON.Vec3(0,1,0); // correct?
-      const worldForward = new CANNON.Vec3();
-      transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
-      const _speed = speed || 80;
-    
-      const velocity = new CANNON.Vec3();
-      worldForward.z = 0; // don't need up velocity, so clamp it
-      worldForward.normalize();
-      worldForward.scale(_speed, transform.physicsBody.velocity);
+  // // TODO: move this to physics?
+  //   //TODO2: make move in any direction?
+  // moveForwardPhysics =() => {
+  //     const {transform, gameObject, speed} = this.props;
+  //     // transform.physicsBody.velocity.set(gameObject.transform.rotation.x*10,gameObject.transform.rotation.y*10,0);
+  //     const localForward = new CANNON.Vec3(0,1,0); // correct?
+  //     const worldForward = new CANNON.Vec3();
+  //     transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
+  //     const _speed = speed || 80;
+  //
+  //     const velocity = new CANNON.Vec3();
+  //     worldForward.z = 0; // don't need up velocity, so clamp it
+  //     worldForward.normalize();
+  //     worldForward.scale(_speed, transform.physicsBody.velocity);
+  // }
+
+// TODO: move this to physics?
+  moveForwardManual =(time) => {
+      const {transform,direction} = this.props;
+      const timePassed = time - this.props.initialTimeBullet ;
+    const {  position , rotation } = transform;
+    // if (!direction){
+    //   return;
+    // }
+
+    const localForward = new CANNON.Vec3(0,1,0); // correct?
+    const worldForward = new CANNON.Vec3();
+    transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
+    worldForward.z = 0; // don't need up velocity, so clamp it
+    worldForward.normalize();
+
+      // console.log("bushooting 3", time,this.props);
+    transform.physicsBody.position.y = position.y +  (timePassed/1000)* this.moveRatio * worldForward.y;
+    transform.physicsBody.position.x = position.x +  (timePassed/1000)* this.moveRatio * worldForward.x;
   }
 
 
   update = (time) => {
       const {transform, gameObject} = this.props;
     if (transform.physicsBody){
-      this.moveForward();
+      // this.moveForwardPhysics();
+      this.moveForwardManual(time);
     }
     this.timeToEnd = !this.timeToEnd ?  time+this.selfDestructTime : this.timeToEnd;
     if (this.timeToEnd < time) {

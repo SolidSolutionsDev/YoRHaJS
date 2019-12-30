@@ -7,10 +7,10 @@ import * as THREE from 'three';
 export class EnemyMovementControls extends React.Component {
 
     shootIntervalCallback;
-    shootTimeInterval = 55;
+    shootTimeInterval = 70;
     mouseDebugMesh;
     currentShooterDirection = new THREE.Vector3(0, 1, 0);
-    fixedSpeed = 5;
+    updateTime= 0;
 
     shootLastTime = 0;
 
@@ -146,7 +146,12 @@ export class EnemyMovementControls extends React.Component {
                 rotation,
                 scale,
             },null,
-            shootStartTime
+            this.updateTime,
+          {
+              playerBulletGeometry: {
+                  initialTimeBullet: this.updateTime,
+                  moveRatio: 5,
+        }}
         );
 
         setTimeout(() => {
@@ -274,7 +279,7 @@ export class EnemyMovementControls extends React.Component {
         // this.initSound();
     };
 
-    update = () => {
+    update = (time) => {
         // this.updateMovement();
         // this.updateMouseLook();
         this.props.transform.rotation.z+=0.02;
