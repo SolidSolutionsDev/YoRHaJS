@@ -136,7 +136,7 @@ export class Renderer extends React.Component {
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
     this.renderer.setClearColor(0x544c41, 0.9);
     this.renderer.sortObjects = false;
-    this.renderer.setPixelRatio( window.devicePixelRatio );
+    this.renderer.setPixelRatio(window.devicePixelRatio);
   }
 
   registerEventListeners = () => {

@@ -7,17 +7,17 @@ import { SpriteComponent } from "./Sprite/SpriteComponent";
 import { ShoeGroup } from "./ShoeGroup/ShoeGroup";
 import { ShoeController } from "./ShoeController/ShoeController";
 import { Cube } from "./Cube/Cube";
-import {BoardPlaneGeometry} from "./BoardPlaneGeometry/BoardPlaneGeometry";
-import {DirectionalLight} from "./DirectionalLight/DirectionalLight";
-import {AmbientLight} from "./AmbientLight/AmbientLight";
-import {PointLight} from "./PointLight/PointLight";
-import {Camera} from "./Camera/Camera";
-import {ShooterControls} from "./ShooterControls/ShooterControls";
-import {ShooterGeometry} from "./ShooterGeometry/ShooterGeometry";
-import {PlayerBulletGeometry} from "./PlayerBullet/PlayerBulletGeometry";
-import {EnemyMovementControls} from "./EnemyMovementControls/EnemyMovementControls";
-import {AutoShooterControls} from "./AutoShooterControls/AutoShooterControls";
-import {CubeGeometry} from "./CubeGeometry/CubeGeometry";
+import { BoardPlaneGeometry } from "./BoardPlaneGeometry/BoardPlaneGeometry";
+import { DirectionalLight } from "./DirectionalLight/DirectionalLight";
+import { AmbientLight } from "./AmbientLight/AmbientLight";
+import { PointLight } from "./PointLight/PointLight";
+import { Camera } from "./Camera/Camera";
+import { ShooterControls } from "./ShooterControls/ShooterControls";
+import { ShooterGeometry } from "./ShooterGeometry/ShooterGeometry";
+import { PlayerBulletGeometry } from "./PlayerBullet/PlayerBulletGeometry";
+import { EnemyMovementControls } from "./EnemyMovementControls/EnemyMovementControls";
+import { AutoShooterControls } from "./AutoShooterControls/AutoShooterControls";
+import { CubeGeometry } from "./CubeGeometry/CubeGeometry";
 
 export const components = {
   // objMesh: OBJMeshGeometry,
@@ -38,5 +38,5 @@ export const components = {
   playerBulletGeometry: PlayerBulletGeometry,
   enemyMovementControls: EnemyMovementControls,
   autoShooterControls: AutoShooterControls,
-  cubeGeometry: CubeGeometry,
+  cubeGeometry: CubeGeometry
 };

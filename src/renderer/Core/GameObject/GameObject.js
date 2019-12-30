@@ -24,7 +24,7 @@ export class GameObject extends React.Component {
     parent: null
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     const { id, selfSettings, prefabSettings } = props;
 
@@ -34,8 +34,8 @@ export class GameObject extends React.Component {
     this._tags = selfSettings.tags
       ? selfSettings.tags
       : prefabSettings && prefabSettings.tags
-        ? prefabSettings.tags
-        : null;
+      ? prefabSettings.tags
+      : null;
 
     this.displayName = id;
     this.id = id;
@@ -47,7 +47,7 @@ export class GameObject extends React.Component {
     this.transform.gameObject = this;
 
     this.transform.add(this.axesHelper);
-  };
+  }
 
   updateTransform = () => {
     const { transform } = this.props;

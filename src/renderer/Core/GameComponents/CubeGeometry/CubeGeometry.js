@@ -14,13 +14,13 @@ export class CubeGeometry extends React.Component {
     opacity && (material.opacity = opacity);
     material.transparent = true;
     this.cube = new THREE.Mesh(geometry, material);
-    this.cube.castShadow=true;
+    this.cube.castShadow = true;
     transform.add(this.cube);
 
     if (tip) {
       const height = _dimensions[1] * 0.7;
       const coneGeometry = new THREE.ConeBufferGeometry(
-        _dimensions[0] *0.7,
+        _dimensions[0] * 0.7,
         height,
         4,
         1,
@@ -31,7 +31,7 @@ export class CubeGeometry extends React.Component {
       cone.position.y = height;
       cone.position.y = 2 * 0.9;
       console.log(cone, "cone");
-      cone.castShadow=true;
+      cone.castShadow = true;
       transform.add(cone);
     }
   };
@@ -40,8 +40,7 @@ export class CubeGeometry extends React.Component {
     this.loadCube();
   };
 
-  update = () => {
-  };
+  update = () => {};
 
   render() {
     return null;
@@ -53,5 +52,5 @@ CubeGeometry.propTypes = {
   mass: PropTypes.number,
   color: PropTypes.object,
   specialMaterial: PropTypes.string,
-  tip: PropTypes.bool,
+  tip: PropTypes.bool
 };

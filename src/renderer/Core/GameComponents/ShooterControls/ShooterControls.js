@@ -112,7 +112,7 @@ export class ShooterControls extends React.Component {
     //   );
     // }
 
-    if (this.shooting){
+    if (this.shooting) {
       return;
     }
     this.shooting = true;
@@ -120,22 +120,24 @@ export class ShooterControls extends React.Component {
     this.shootingStartTime = this.updateTime;
   };
 
-  newShootBullet = (time) => {
+  newShootBullet = time => {
     const totalShotBulletsTime = this.bulletId * this.shootTimeInterval;
-    const timePassedFromLastShot = time - (this.shootingStartTime + totalShotBulletsTime);
-    const bulletsToShootNow = Math.floor(timePassedFromLastShot/this.shootTimeInterval);
+    const timePassedFromLastShot =
+      time - (this.shootingStartTime + totalShotBulletsTime);
+    const bulletsToShootNow = Math.floor(
+      timePassedFromLastShot / this.shootTimeInterval
+    );
     // console.log("bushooting", time, this.shootingStartTime,bulletsToShootNow);
     this.bulletId += bulletsToShootNow;
     this.currentTestInstanceId = _.uniqueId("bullet");
 
     for (let bulletIndex = 1; bulletIndex <= bulletsToShootNow; bulletIndex++) {
+      const timeForThisBullet =
+        this.shootingStartTime +
+        totalShotBulletsTime +
+        bulletIndex * this.shootTimeInterval;
 
-      const timeForThisBullet = this.shootingStartTime + totalShotBulletsTime + bulletIndex*this.shootTimeInterval;
-
-      const {
-        instantiateFromPrefab,
-        transform,
-      } = this.props;
+      const { instantiateFromPrefab, transform } = this.props;
       const { position, rotation, scale } = transform;
       // console.log("startShooting",this.currentShooterDirection);
       const _position = position.clone();
@@ -156,14 +158,14 @@ export class ShooterControls extends React.Component {
           playerBulletGeometry: {
             initialTimeBullet: timeForThisBullet,
             moveRatio: 4,
-            bulletIndex,
-          }}
+            bulletIndex
+          }
+        }
       );
 
       // console.log("bushooting 2", timeForThisBullet);
     }
-
-  }
+  };
 
   stopShooting = () => {
     // if (this.shootIntervalCallback) {
@@ -193,7 +195,10 @@ export class ShooterControls extends React.Component {
   shootBullet = () => {
     var shootStartTime = Date.now();
     // var shootStartTime2 = new Date().toLocaleTimeString("en-us");
-    var shootStartTime2 =new Date().toLocaleTimeString("pt-pt")+":"+ new Date().getMilliseconds();;
+    var shootStartTime2 =
+      new Date().toLocaleTimeString("pt-pt") +
+      ":" +
+      new Date().getMilliseconds();
     const {
       instantiateFromPrefab,
       transform,
@@ -227,8 +232,17 @@ export class ShooterControls extends React.Component {
       currentTime - shootStartTime
     );
 
-    console.log("bullet direction",_position,this.currentShooterDirection,"time:",shootStartTime2,"\n",this.shootTimeInterval - (currentTime - this.shootLastTime),"\n",
-      currentTime - shootStartTime);
+    console.log(
+      "bullet direction",
+      _position,
+      this.currentShooterDirection,
+      "time:",
+      shootStartTime2,
+      "\n",
+      this.shootTimeInterval - (currentTime - this.shootLastTime),
+      "\n",
+      currentTime - shootStartTime
+    );
     this.shootLastTime = currentTime;
   };
 
@@ -348,7 +362,7 @@ export class ShooterControls extends React.Component {
     this.initSound();
   };
 
-  update = (time) => {
+  update = time => {
     this.updateTime = time;
     this.updateMovement();
     this.updateMouseLook();

@@ -5,7 +5,7 @@ export class ShoeController extends React.Component {
   shoeModelSiblingComponent;
 
   state = {
-    initialized: false,
+    initialized: false
   };
 
   previousSelectedObject;
@@ -20,7 +20,7 @@ export class ShoeController extends React.Component {
   getShoeModelComponent = () => {
     const { transform } = this.props;
     const _objectLoaderMesh = transform.gameObject.getChildComponent(
-      "ObjectLoaderMesh",
+      "ObjectLoaderMesh"
     );
     this.shoeModelSiblingComponent = _objectLoaderMesh
       ? _objectLoaderMesh.component
@@ -46,25 +46,24 @@ export class ShoeController extends React.Component {
       return;
     }
     const _shoe3dModel = this.shoeModelSiblingComponent.transform.getObjectByName(
-      shoeTypeData.meshName,
+      shoeTypeData.meshName
     );
-
 
     const _currentMeshMaterialDictionary = _shoe3dModel.material.reduce(
       (acc, material) => ({ ...acc, [material.name]: material }),
-      {},
+      {}
     );
     const _currentMeshCustomMaterialDictionary = shoeData.custom_materials;
 
     const _materialSetToApply = {
       ...shoeMaterialSet,
-      ..._currentMeshCustomMaterialDictionary,
+      ..._currentMeshCustomMaterialDictionary
     };
 
     // update colors
-    Object.keys(_materialSetToApply).forEach((materialId) => {
+    Object.keys(_materialSetToApply).forEach(materialId => {
       _currentMeshMaterialDictionary[materialId].color.setHex(
-        _materialSetToApply[materialId].color,
+        _materialSetToApply[materialId].color
       );
     });
   };
@@ -80,7 +79,7 @@ export class ShoeController extends React.Component {
   disableAutoScale = () => {
     const { transform } = this.props;
     transform.gameObject.getChildComponent(
-      "TransformUpdate",
+      "TransformUpdate"
     ).component.ignoreTransformScaleUpdate = true;
     transform.scale.set(1, 1, 1);
   };
@@ -96,5 +95,5 @@ ShoeController.propTypes = {
   shoeData: PropTypes.object.isRequired,
   shoeTypeData: PropTypes.object.isRequired,
   // shoeMaterialSet: PropTypes.object.isRequired,
-  shoeColorOptions: PropTypes.object.isRequired,
+  shoeColorOptions: PropTypes.object.isRequired
 };

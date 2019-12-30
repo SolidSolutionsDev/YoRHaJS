@@ -26,10 +26,10 @@ export class DirectionalLight extends React.Component {
       this.light.shadow.darkness = 0.5;
       console.log(this.light);
 
-        this.light.shadow.camera.left = -30;
-        this.light.shadow.camera.right = 30;
-        this.light.shadow.camera.top = 30;
-        this.light.shadow.camera.bottom = -50;
+      this.light.shadow.camera.left = -30;
+      this.light.shadow.camera.right = 30;
+      this.light.shadow.camera.top = 30;
+      this.light.shadow.camera.bottom = -50;
     }
 
     if (color) {
@@ -41,14 +41,13 @@ export class DirectionalLight extends React.Component {
     }
 
     if (position) {
-      this.light.position.x = position.x || this.light.position.x ;
-      this.light.position.y = position.y || this.light.position.y ;
-      this.light.position.z = position.z || this.light.position.z ;
+      this.light.position.x = position.x || this.light.position.x;
+      this.light.position.y = position.y || this.light.position.y;
+      this.light.position.z = position.z || this.light.position.z;
     }
   };
 
-  update = () => {
-  };
+  update = () => {};
 
   render() {
     return null;
@@ -56,5 +55,5 @@ export class DirectionalLight extends React.Component {
 }
 
 DirectionalLight.propTypes = {
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };

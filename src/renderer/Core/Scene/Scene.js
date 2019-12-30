@@ -18,18 +18,18 @@ export class Scene extends React.Component {
 
   init = () => {};
 
-  update = (time) => {
-    this.children.forEach((child) => {
+  update = time => {
+    this.children.forEach(child => {
       child._update ? child._update(time) : null;
     });
   };
 
-  registerUpdate = (update) => {
+  registerUpdate = update => {
     // TODO REMOVE
     this.updateCallbacksArray.push(update);
   };
 
-  registerChild = (child) => {
+  registerChild = child => {
     // console.log("register child in parent", child);
     if (!child) {
       return;
@@ -44,39 +44,48 @@ export class Scene extends React.Component {
     this.children.push(childGameObject);
   };
 
-    unRegisterChildGameObject = (gameObjectId) => {
-        this.children = this.children.filter((element) => {
-            return element.props.id !== gameObjectId;
-        });
-    }
-
+  unRegisterChildGameObject = gameObjectId => {
+    this.children = this.children.filter(element => {
+      return element.props.id !== gameObjectId;
+    });
+  };
 
   buildChildGameObjects = () => {
-    const {
-      scene
-    } = this.props;
+    const { scene } = this.props;
 
     const _gameObjectProps = {
       ref: this.registerChild,
       addToScene: this.registerChild,
       registerUpdate: this.registerUpdate,
-      parent:this,
+      parent: this
     };
 
-    const gameObjects = scene && scene.children ? scene.children
-        .map(gameObjectId=> {
-          return  <GameContext.Consumer key={gameObjectId+"_consumer"}>
-            {(context) => { return ( <GameObject {...context} {..._gameObjectProps} key={gameObjectId} id={gameObjectId}/>) }  }
-          </GameContext.Consumer>
-            })
-        : []
+    const gameObjects =
+      scene && scene.children
+        ? scene.children.map(gameObjectId => {
+            return (
+              <GameContext.Consumer key={gameObjectId + "_consumer"}>
+                {context => {
+                  return (
+                    <GameObject
+                      {...context}
+                      {..._gameObjectProps}
+                      key={gameObjectId}
+                      id={gameObjectId}
+                    />
+                  );
+                }}
+              </GameContext.Consumer>
+            );
+          })
+        : [];
 
     return gameObjects;
-  }
+  };
 
   camera = {
     _main: null,
-    setMain: (component) => {
+    setMain: component => {
       this.camera._main = component.camera;
       this.camera._mainComponent = component;
     },
@@ -86,13 +95,13 @@ export class Scene extends React.Component {
     getAllCameras: () => {
       return this.props.camera.allCameras;
     },
-    registerCamera: (component) => {
+    registerCamera: component => {
       this.props.registerCamera(component.props.gameObject.id);
     },
-    removeCamera: (gameObjectId) => {
+    removeCamera: gameObjectId => {
       this.props.removeCamera(gameObjectId);
     },
-    setMainCamera: (gameObjectId) => {
+    setMainCamera: gameObjectId => {
       this.props.setMainCamera(gameObjectId);
     }
   };
@@ -101,7 +110,7 @@ export class Scene extends React.Component {
     const _gameObjects = this.buildChildGameObjects();
 
     return _gameObjects;
-  }
+  };
 }
 
 Scene.propTypes = {};

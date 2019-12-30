@@ -39,16 +39,19 @@ export class PhysicsService extends Component {
     });
     this.world.addEventListener("endContact", function(e) {
       //   console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies end:`,          e.bodyA, e.bodyB, e );
-        try {
-            if (!e.bodyA|| !e.bodyB){
-               return;
-            }
-            e.bodyA && e.bodyA.endContactFunction && e.bodyA.endContactFunction(e.bodyB);
-            e.bodyB && e.bodyB.endContactFunction && e.bodyB.endContactFunction(e.bodyA);
+      try {
+        if (!e.bodyA || !e.bodyB) {
+          return;
         }
-        catch (error){
-          console.log(error,e.bodyA,e.bodyB);
-        }
+        e.bodyA &&
+          e.bodyA.endContactFunction &&
+          e.bodyA.endContactFunction(e.bodyB);
+        e.bodyB &&
+          e.bodyB.endContactFunction &&
+          e.bodyB.endContactFunction(e.bodyA);
+      } catch (error) {
+        console.log(error, e.bodyA, e.bodyB);
+      }
     });
   };
 
@@ -117,7 +120,11 @@ export class PhysicsService extends Component {
   generateLookAtFunction = (mesh, body) => {
     return function lookAt(lookAtPosition) {
       // convert THREE Vector3 to CANNON Vec3
-      const lookAtVector = new CANNON.Vec3(lookAtPosition.x, lookAtPosition.y, lookAtPosition.z);
+      const lookAtVector = new CANNON.Vec3(
+        lookAtPosition.x,
+        lookAtPosition.y,
+        lookAtPosition.z
+      );
 
       // normalized shooter direction from the lookAt object position
       let currentShooterDirection = new CANNON.Vec3();
@@ -138,13 +145,19 @@ export class PhysicsService extends Component {
     return new CANNON.Vec3(x, y, z);
   };
 
-  typeEnum = Object.freeze({ kinematic: CANNON.Body.KINEMATIC,static: CANNON.Body.STATIC });
+  typeEnum = Object.freeze({
+    kinematic: CANNON.Body.KINEMATIC,
+    static: CANNON.Body.STATIC
+  });
 
   addNewSphereBody(gameObjectTransform, parameters, instance) {
-      if (!gameObjectTransform.userData.belongsToGameObject){
-          console.error("provided object is not a gameObject transform!",gameObjectTransform);
-          return;
-      }
+    if (!gameObjectTransform.userData.belongsToGameObject) {
+      console.error(
+        "provided object is not a gameObject transform!",
+        gameObjectTransform
+      );
+      return;
+    }
     let thisSphereParameters = {
       mass: 5,
       position: { x: 0, y: 0, z: 0 },
@@ -187,9 +200,15 @@ export class PhysicsService extends Component {
 
     _sphereBody.mesh = gameObjectTransform;
     _sphereBody.instance = instance;
-    const _updateFunction = this.generateUpdateFunction(gameObjectTransform, _sphereBody);
+    const _updateFunction = this.generateUpdateFunction(
+      gameObjectTransform,
+      _sphereBody
+    );
 
-    this.physicsUpdateFunctions.push({body:_sphereBody,updateFunction:_updateFunction});
+    this.physicsUpdateFunctions.push({
+      body: _sphereBody,
+      updateFunction: _updateFunction
+    });
     return {
       body: _sphereBody,
       update: _updateFunction,
@@ -198,8 +217,11 @@ export class PhysicsService extends Component {
   }
 
   addNewBoxBody(gameObjectTransform, parameters, instance) {
-    if (!gameObjectTransform.userData.belongsToGameObject){
-      console.error("provided object is not a gameObject transform!",gameObjectTransform);
+    if (!gameObjectTransform.userData.belongsToGameObject) {
+      console.error(
+        "provided object is not a gameObject transform!",
+        gameObjectTransform
+      );
       return;
     }
     let thisBoxParameters = {
@@ -212,7 +234,6 @@ export class PhysicsService extends Component {
     };
 
     const _parameters = Object.assign(thisBoxParameters, parameters);
-
 
     if (parameters.type) {
       _parameters.type = this.typeEnum[parameters.type];
@@ -234,39 +255,51 @@ export class PhysicsService extends Component {
       linearFactor: _parameters.linearFactor,
       angularFactor: _parameters.angularFactor,
       material: _parameters.material,
-      type: _parameters.type,
+      type: _parameters.type
     });
 
     this.world.addBody(_boxBody);
 
     _boxBody.mesh = gameObjectTransform;
     _boxBody.instance = instance;
-    const _updateFunction = this.generateUpdateFunction(gameObjectTransform, _boxBody);
-    this.physicsUpdateFunctions.push({body:_boxBody,updateFunction:_updateFunction});
+    const _updateFunction = this.generateUpdateFunction(
+      gameObjectTransform,
+      _boxBody
+    );
+    this.physicsUpdateFunctions.push({
+      body: _boxBody,
+      updateFunction: _updateFunction
+    });
 
     _boxBody.beginContactFunction = parameters.beginContactFunction;
     _boxBody.endContactFunction = parameters.endContactFunction;
 
     gameObjectTransform.physicsBody = _boxBody;
 
-    _boxBody.lookAt = this.generateLookAtFunction(gameObjectTransform,_boxBody);
+    _boxBody.lookAt = this.generateLookAtFunction(
+      gameObjectTransform,
+      _boxBody
+    );
 
     return { body: _boxBody, update: _updateFunction, parameters: _parameters };
   }
 
-  purgeTransformOfEventualBodies = (transform) => {
+  purgeTransformOfEventualBodies = transform => {
     const _body = transform.physicsBody;
-      if (_body) {
-        this.physicsUpdateFunctions = this.physicsUpdateFunctions
-            .filter((physicsUpdateObject)=> physicsUpdateObject.body !== _body);
-        this.toRemoveBodies.push(_body);
-      }
-  }
+    if (_body) {
+      this.physicsUpdateFunctions = this.physicsUpdateFunctions.filter(
+        physicsUpdateObject => physicsUpdateObject.body !== _body
+      );
+      this.toRemoveBodies.push(_body);
+    }
+  };
 
   bulkRemoveBodies = () => {
-    this.toRemoveBodies.forEach((body)=>{this.world.removeBody(body)});
-      this.toRemoveBodies=[];
-  }
+    this.toRemoveBodies.forEach(body => {
+      this.world.removeBody(body);
+    });
+    this.toRemoveBodies = [];
+  };
 
   render() {
     return null;
@@ -285,7 +318,9 @@ export class PhysicsService extends Component {
         this.maxSubSteps
       );
       this.bulkRemoveBodies();
-      this.physicsUpdateFunctions.forEach(updateFunctionObject => updateFunctionObject.updateFunction());
+      this.physicsUpdateFunctions.forEach(updateFunctionObject =>
+        updateFunctionObject.updateFunction()
+      );
     }
     this.TimeOfLastUpdateCallInMilliseconds = timeOfCurrentUpdateCallInMilliseconds;
   };

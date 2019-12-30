@@ -3,17 +3,17 @@ import { GUI } from "./GUI";
 import {
   updateSceneObject,
   updateShoe,
-  updateShoeMaterial,
+  updateShoeMaterial
 } from "../../stores/scene/actions/index";
 
-const getApplicationState = (state) => {
+const getApplicationState = state => {
   const _currentSelectedType =
     state.scene.user_shoes.byId[state.scene.current_selected_shoe].type;
   return {
     scene: {
       backgroundColor: state.scene.backgroundColor,
       debug: state.scene.debug,
-      cameraAutoRotate: state.scene.cameraAutoRotate,
+      cameraAutoRotate: state.scene.cameraAutoRotate
     },
     availableShoeColorSets:
       state.scene.shoes_types.byId[_currentSelectedType].options,
@@ -22,32 +22,33 @@ const getApplicationState = (state) => {
     currentShoeId: state.scene.current_selected_shoe,
     custom_shoe: {
       option:
-        state.scene.user_shoes.byId[state.scene.current_selected_shoe].option,
+        state.scene.user_shoes.byId[state.scene.current_selected_shoe].option
     },
     custom_materials: {
-      ...state.scene.user_shoes.byId[state.scene.current_selected_shoe].custom_materials,
+      ...state.scene.user_shoes.byId[state.scene.current_selected_shoe]
+        .custom_materials
     }
   };
 };
 
-const getTypeState = (state) => {
+const getTypeState = state => {
   const _currentSelectedType =
     state.scene.user_shoes.byId[state.scene.current_selected_shoe].type;
   return {
     availableShoeColorSets:
       state.scene.shoes_types.byId[_currentSelectedType].options,
     option:
-      state.scene.user_shoes.byId[state.scene.current_selected_shoe].option,
+      state.scene.user_shoes.byId[state.scene.current_selected_shoe].option
   };
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   applicationState: getApplicationState(state),
-  typeState: getTypeState(state),
+  typeState: getTypeState(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  updateSceneObject: (parameters) => {
+const mapDispatchToProps = dispatch => ({
+  updateSceneObject: parameters => {
     dispatch(updateSceneObject(parameters));
   },
   updateShoe: (id, parameters) => {
@@ -55,10 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   updateShoeMaterial: (id, materialId, parameters) => {
     dispatch(updateShoeMaterial(id, materialId, parameters));
-  },
+  }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GUI);
+export default connect(mapStateToProps, mapDispatchToProps)(GUI);

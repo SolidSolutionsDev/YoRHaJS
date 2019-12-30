@@ -7,46 +7,48 @@ import * as CANNON from "cannon";
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class PlayerBulletGeometry extends React.Component {
   cube;
-  selfDestructTime=2000;
+  selfDestructTime = 2000;
   moveRatio = this.props.moveRatio || 0.03;
 
   initBulletGeometry = () => {
     const { transform, opacity } = this.props;
-    const geometry = new THREE.BoxGeometry( 1, 3, 1 );
-    const material = new THREE.MeshBasicMaterial( {color: 0xf8f9e7} );
+    const geometry = new THREE.BoxGeometry(1, 3, 1);
+    const material = new THREE.MeshBasicMaterial({ color: 0xf8f9e7 });
     opacity && (material.opacity = opacity);
     // material.transparent = true;
-    this.cube = new THREE.Mesh( geometry, material );
+    this.cube = new THREE.Mesh(geometry, material);
     transform.add(this.cube);
   };
 
-  initPhysics = ()=> {
+  initPhysics = () => {
+    const { transform, gameObject, availableService } = this.props;
 
-      const {transform, gameObject, availableService} = this.props;
+    availableService.physics.addNewBoxBody(
+      gameObject.transform,
+      {
+        ...this.props,
+        position: transform.position,
+        collisionFilterGroup: 1,
+        // linearFactor: new CANNON.Vec3(1, 1, 0),
+        // angularFactor: new CANNON.Vec3(0, 0, 0),
+        type: "static"
+      },
+      this
+    );
+    transform.physicsBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(0, 0, 1),
+      gameObject.transform.rotation.z
+    );
 
-      availableService.physics
-          .addNewBoxBody(gameObject.transform, {
-            ...this.props,
-            position: transform.position,
-            collisionFilterGroup: 1,
-            // linearFactor: new CANNON.Vec3(1, 1, 0),
-            // angularFactor: new CANNON.Vec3(0, 0, 0),
-              type:"static"
-          },
-          this
-          );
-      transform.physicsBody.quaternion.setFromAxisAngle(
-        new CANNON.Vec3(0,0,1), gameObject.transform.rotation.z);
+    // transform.physicsBody.velocity.set(gameObject.transform.rotation.x*10,gameObject.transform.rotation.y*10,0);
+  };
 
-      // transform.physicsBody.velocity.set(gameObject.transform.rotation.x*10,gameObject.transform.rotation.y*10,0);
-  }
-
-    selfDestruct =()=> {
-        const { destroyGameObjectById, _parentId} = this.props;
-        destroyGameObjectById(_parentId);
-        this.currentTestInstanceId = null;
-        // console.log("selfDestruct",_parentId);
-    }
+  selfDestruct = () => {
+    const { destroyGameObjectById, _parentId } = this.props;
+    destroyGameObjectById(_parentId);
+    this.currentTestInstanceId = null;
+    // console.log("selfDestruct",_parentId);
+  };
 
   start = () => {
     this.initBulletGeometry();
@@ -69,43 +71,43 @@ export class PlayerBulletGeometry extends React.Component {
   //     worldForward.scale(_speed, transform.physicsBody.velocity);
   // }
 
-// TODO: move this to physics?
-  moveForwardManual =(time) => {
-      const {transform,direction} = this.props;
-      const timePassed = time - this.props.initialTimeBullet ;
-    const {  position , rotation } = transform;
+  // TODO: move this to physics?
+  moveForwardManual = time => {
+    const { transform, direction } = this.props;
+    const timePassed = time - this.props.initialTimeBullet;
+    const { position, rotation } = transform;
     // if (!direction){
     //   return;
     // }
 
-    const localForward = new CANNON.Vec3(0,1,0); // correct?
+    const localForward = new CANNON.Vec3(0, 1, 0); // correct?
     const worldForward = new CANNON.Vec3();
     transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
     worldForward.z = 0; // don't need up velocity, so clamp it
     worldForward.normalize();
 
-      // console.log("bushooting 3", time,this.props);
-    transform.physicsBody.position.y = position.y +  (timePassed/1000)* this.moveRatio * worldForward.y;
-    transform.physicsBody.position.x = position.x +  (timePassed/1000)* this.moveRatio * worldForward.x;
-  }
+    // console.log("bushooting 3", time,this.props);
+    transform.physicsBody.position.y =
+      position.y + (timePassed / 1000) * this.moveRatio * worldForward.y;
+    transform.physicsBody.position.x =
+      position.x + (timePassed / 1000) * this.moveRatio * worldForward.x;
+  };
 
-
-  update = (time) => {
-      const {transform, gameObject} = this.props;
-    if (transform.physicsBody){
+  update = time => {
+    const { transform, gameObject } = this.props;
+    if (transform.physicsBody) {
       // this.moveForwardPhysics();
       this.moveForwardManual(time);
     }
-    this.timeToEnd = !this.timeToEnd ?  time+this.selfDestructTime : this.timeToEnd;
+    this.timeToEnd = !this.timeToEnd
+      ? time + this.selfDestructTime
+      : this.timeToEnd;
     if (this.timeToEnd < time) {
-        this.selfDestruct();
+      this.selfDestruct();
     }
-
   };
 
-  onDestroy =() =>{
-
-  }
+  onDestroy = () => {};
 
   render() {
     return null;
@@ -113,5 +115,5 @@ export class PlayerBulletGeometry extends React.Component {
 }
 
 PlayerBulletGeometry.propTypes = {
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };

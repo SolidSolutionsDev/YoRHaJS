@@ -8,11 +8,11 @@ export class Cube extends React.Component {
 
   loadCube = () => {
     const { transform, opacity } = this.props;
-    const geometry = new THREE.BoxGeometry( 10, 10, 10 );
-    const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    const geometry = new THREE.BoxGeometry(10, 10, 10);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     opacity && (material.opacity = opacity);
     material.transparent = true;
-    this.cube = new THREE.Mesh( geometry, material );
+    this.cube = new THREE.Mesh(geometry, material);
     transform.add(this.cube);
   };
 
@@ -21,7 +21,7 @@ export class Cube extends React.Component {
   };
 
   update = () => {
-    this.props.gameObject.transform.rotation.x+=this.props.rotationX;
+    this.props.gameObject.transform.rotation.x += this.props.rotationX;
   };
 
   render() {
@@ -30,5 +30,5 @@ export class Cube extends React.Component {
 }
 
 Cube.propTypes = {
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };
