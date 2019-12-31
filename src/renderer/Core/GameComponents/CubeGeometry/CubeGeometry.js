@@ -50,7 +50,7 @@ export class CubeGeometry extends React.Component {
 CubeGeometry.propTypes = {
   dimensions: PropTypes.object,
   mass: PropTypes.number,
-  color: PropTypes.object,
+  color: PropTypes.number,
   specialMaterial: PropTypes.string,
   tip: PropTypes.bool
 };
