@@ -249,6 +249,8 @@ export const initialScene = {
             moveRatio: 1,
             bulletPrefab: "PlayerBullet",
             shootTimeInterval: 1000,
+            type: "around",
+            aroundBullets:6,
           },
           cubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },

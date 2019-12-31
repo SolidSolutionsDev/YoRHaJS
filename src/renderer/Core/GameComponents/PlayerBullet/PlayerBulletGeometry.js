@@ -29,6 +29,7 @@ export class PlayerBulletGeometry extends React.Component {
       {
         ...this.props,
         position: transform.position,
+        rotation: transform.rotation,
         collisionFilterGroup: 1,
         // linearFactor: new CANNON.Vec3(1, 1, 0),
         // angularFactor: new CANNON.Vec3(0, 0, 0),
