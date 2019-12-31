@@ -1,12 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import  { SceneLayout } from '../SceneLayout';
-// import ReactDOM from 'react-dom';
 
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 const THREE = require("three");
-const OrbitControls = require("three-orbitcontrols");
-
-// const TransformControls = require('three-transformcontrols');
 
 export class Camera extends React.Component {
   frustumSize = 12;
