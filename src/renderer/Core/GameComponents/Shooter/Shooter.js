@@ -143,6 +143,9 @@ export class Shooter extends React.Component {
   };
 
   playBulletSound = () => {
+    if (!this.sound){
+      return;
+    }
     setTimeout(() => {
       this.sound.isPlaying ? this.sound.stop() : null;
       this.sound.play();
@@ -151,6 +154,9 @@ export class Shooter extends React.Component {
 
   initSound = () => {
     const { transform, availableService, selfSettings } = this.props;
+    if (!selfSettings.soundLocation){
+      return;
+    }
     const _sound = availableService.audio.buildPositionalSound(
       selfSettings.soundLocation
     );

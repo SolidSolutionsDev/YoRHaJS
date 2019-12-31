@@ -10,6 +10,7 @@ export class EnemyBulletGeometry extends React.Component {
   selfDestructTime = 2000;
   moveRatio = this.props.moveRatio || 0.03;
   displacementRatio = this.props.displacementRatio || 3;
+  worldForward ;
 
   initBulletGeometry = () => {
     const { transform, opacity } = this.props;
@@ -45,13 +46,15 @@ export class EnemyBulletGeometry extends React.Component {
 
 
     const localForward = new CANNON.Vec3(0, 1, 0); // correct?
-    const worldForward = new CANNON.Vec3();
-    transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
+    this.worldForward = new CANNON.Vec3();
+    transform.physicsBody.vectorToWorldFrame(localForward, this.worldForward);
     this.initialPosition = transform.position.clone();
-    this.initialPosition.x += worldForward.x *this.displacementRatio;
-    this.initialPosition.y += worldForward.y *this.displacementRatio;
+    this.initialPosition.x += this.worldForward.x * this.displacementRatio;
+    this.initialPosition.y += this.worldForward.y * this.displacementRatio;
     transform.physicsBody.position.x = this.initialPosition.x;
     transform.physicsBody.position.y = this.initialPosition.y;
+
+
   };
 
   selfDestruct = () => {
@@ -72,19 +75,16 @@ export class EnemyBulletGeometry extends React.Component {
     const timePassed = time - this.props.initTime;
 
 
-    const localForward = new CANNON.Vec3(0, 1, 0); // correct?
-    const worldForward = new CANNON.Vec3();
-    transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
 
     // console.log("bushooting 3", time,this.props);
     transform.physicsBody.position.y =
-      this.initialPosition.y + (timePassed / 100) * this.moveRatio * worldForward.y;
+      this.initialPosition.y + (timePassed / 100) * this.moveRatio * this.worldForward.y;
     transform.physicsBody.position.x =
-      this.initialPosition.x + (timePassed / 100) * this.moveRatio * worldForward.x;
+      this.initialPosition.x + (timePassed / 100) * this.moveRatio * this.worldForward.x;
   };
 
   update = time => {
-    const { transform, gameObject } = this.props;
+    const { transform } = this.props;
     if (transform.physicsBody) {
       this.moveForwardManual(time);
     }

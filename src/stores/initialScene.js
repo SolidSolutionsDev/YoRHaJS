@@ -28,7 +28,7 @@ export const initialScene = {
     children: [
       "lightGroup",
       "board1",
-      "testCubeGameObject1",
+      // "testCubeGameObject1",
       "testShooter1",
       "testEnemy1",
       "camera1"
@@ -208,8 +208,6 @@ export const initialScene = {
         transform: {},
         components: {
           playerBulletGeometry: {
-            soundLocation:
-              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav"
           },
         },
         children: []
@@ -219,8 +217,6 @@ export const initialScene = {
         transform: {},
         components: {
           enemyBulletGeometry: {
-            // soundLocation:
-            //   "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav"
           },
         },
         children: []
@@ -255,11 +251,9 @@ export const initialScene = {
           },
           shooter: {
             shooting: true,
-            soundLocation:
-              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
-            moveRatio: 1,
+            moveRatio: 3,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 1000,
+            shootTimeInterval: 500,
             type: "around",
             aroundBullets:6,
           },
