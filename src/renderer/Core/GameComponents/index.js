@@ -12,11 +12,11 @@ import { DirectionalLight } from "./DirectionalLight/DirectionalLight";
 import { AmbientLight } from "./AmbientLight/AmbientLight";
 import { PointLight } from "./PointLight/PointLight";
 import { Camera } from "./Camera/Camera";
-import { ShooterControls } from "./ShooterControls/ShooterControls";
-import { ShooterGeometry } from "./ShooterGeometry/ShooterGeometry";
+import { PlayerControls } from "./PlayerControls/PlayerControls";
+import { Shooter } from "./Shooter/Shooter";
+import { PlayerShooterGeometry } from "./PlayerShooterGeometry/PlayerShooterGeometry";
 import { PlayerBulletGeometry } from "./PlayerBullet/PlayerBulletGeometry";
 import { EnemyMovementControls } from "./EnemyMovementControls/EnemyMovementControls";
-import { AutoShooterControls } from "./AutoShooterControls/AutoShooterControls";
 import { CubeGeometry } from "./CubeGeometry/CubeGeometry";
 
 export const components = {
@@ -33,10 +33,10 @@ export const components = {
   pointLight: PointLight,
   ambientLight: AmbientLight,
   dynamicCameraManager: Camera,
-  shooterControls: ShooterControls,
-  shooterGeometry: ShooterGeometry,
+  playerControls: PlayerControls,
+  shooter: Shooter,
+  shooterGeometry: PlayerShooterGeometry,
   playerBulletGeometry: PlayerBulletGeometry,
   enemyMovementControls: EnemyMovementControls,
-  autoShooterControls: AutoShooterControls,
   cubeGeometry: CubeGeometry
 };

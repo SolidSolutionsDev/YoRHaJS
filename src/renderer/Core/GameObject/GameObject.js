@@ -34,8 +34,8 @@ export class GameObject extends React.Component {
     this._tags = selfSettings.tags
       ? selfSettings.tags
       : prefabSettings && prefabSettings.tags
-      ? prefabSettings.tags
-      : null;
+        ? prefabSettings.tags
+        : null;
 
     this.displayName = id;
     this.id = id;
@@ -168,8 +168,8 @@ export class GameObject extends React.Component {
     return children;
   };
 
-  getChildComponent = componentID =>
-    this.componentsScriptsDictionary[componentID];
+  getComponent = componentID =>
+    this.componentsScriptsDictionary[componentID].component;
 
   getWrappedGameObject = gameObject =>
     gameObject._type === "GameObject"
@@ -260,7 +260,7 @@ export class GameObject extends React.Component {
         scene={this.scene}
         registerComponent={this.registerComponent}
         registerChildGameObject={this.registerChildGameObject}
-        getChildComponent={this.getChildComponent}
+        getChildComponent={this.getComponent}
         getChildGameObjectByTag={this.getChildGameObjectByTag}
         getChildGameObjectsByTag={this.getChildGameObjectsByTag}
         getAllGameObject3DChildren={this.getAllGameObject3DChildren}

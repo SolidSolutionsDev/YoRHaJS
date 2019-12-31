@@ -19,11 +19,11 @@ export class ShoeController extends React.Component {
 
   getShoeModelComponent = () => {
     const { transform } = this.props;
-    const _objectLoaderMesh = transform.gameObject.getChildComponent(
+    const _objectLoaderMesh = transform.gameObject.getComponent(
       "ObjectLoaderMesh"
     );
     this.shoeModelSiblingComponent = _objectLoaderMesh
-      ? _objectLoaderMesh.component
+      ? _objectLoaderMesh
       : null;
   };
 
@@ -78,9 +78,9 @@ export class ShoeController extends React.Component {
 
   disableAutoScale = () => {
     const { transform } = this.props;
-    transform.gameObject.getChildComponent(
+    transform.gameObject.getComponent(
       "TransformUpdate"
-    ).component.ignoreTransformScaleUpdate = true;
+    ).ignoreTransformScaleUpdate = true;
     transform.scale.set(1, 1, 1);
   };
 

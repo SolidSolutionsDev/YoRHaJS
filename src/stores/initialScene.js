@@ -207,16 +207,24 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          playerBulletGeometry: {}
+          playerBulletGeometry: {
+            soundLocation:
+              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav"
+          },
         },
         children: []
       },
       TestShooter: {
         debug: true,
         components: {
-          shooterControls: {
+          playerControls: {
+          },
+          shooter: {
             soundLocation:
-              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav"
+              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+            moveRatio: 7,
+            displacementRatio: 5,
+            bulletPrefab: "PlayerBullet"
           },
           shooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
@@ -234,14 +242,13 @@ export const initialScene = {
             speed: 50,
             rotationSpeed: 10,
           },
-          autoShooterControls: {
-            auto:true,
-            bulletSpeed:10,
-            shootTimeInterval:1000,
+          shooter: {
+            shooting: true,
             soundLocation:
               "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
-             bulletType: "regular",
-             direction: "front" 
+            moveRatio: 1,
+            bulletPrefab: "PlayerBullet",
+            shootTimeInterval: 1000,
           },
           cubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },

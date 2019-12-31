@@ -4,12 +4,10 @@ import * as _ from "lodash";
 // mousedebug
 import * as THREE from "three";
 
-export class ShooterControls extends React.Component {
-  shootIntervalCallback;
-  shootTimeInterval = 100;
+export class PlayerControls extends React.Component {
+  shootTimeInterval = 1000;
   mouseDebugMesh;
   currentShooterDirection = new THREE.Vector3(0, 1, 0);
-  fixedSpeed = 5;
 
   shootLastTime = 0;
 
@@ -18,8 +16,6 @@ export class ShooterControls extends React.Component {
   shooting = false;
   shootingStartTime = null;
   updateTime = null;
-
-  currentTestInstanceId = null;
 
   moveRatio = this.props.moveRatio || 0.3;
 
@@ -102,149 +98,14 @@ export class ShooterControls extends React.Component {
   };
 
   startShooting = () => {
-    // console.log("shoot",this);
-
-    // // old
-    // if (!this.shootIntervalCallback) {
-    //   this.shootIntervalCallback = setInterval(
-    //     this.shootBullet,
-    //     this.shootTimeInterval
-    //   );
-    // }
-
-    if (this.shooting) {
-      return;
-    }
-    this.shooting = true;
-    this.bulletId = 0;
-    this.shootingStartTime = this.updateTime;
+    this.props.gameObject.getComponent("shooter").startShooting();
   };
 
-  newShootBullet = time => {
-    const totalShotBulletsTime = this.bulletId * this.shootTimeInterval;
-    const timePassedFromLastShot =
-      time - (this.shootingStartTime + totalShotBulletsTime);
-    const bulletsToShootNow = Math.floor(
-      timePassedFromLastShot / this.shootTimeInterval
-    );
-    // console.log("bushooting", time, this.shootingStartTime,bulletsToShootNow);
-    this.bulletId += bulletsToShootNow;
-    this.currentTestInstanceId = _.uniqueId("bullet");
-
-    for (let bulletIndex = 1; bulletIndex <= bulletsToShootNow; bulletIndex++) {
-      const timeForThisBullet =
-        this.shootingStartTime +
-        totalShotBulletsTime +
-        bulletIndex * this.shootTimeInterval;
-
-      const { instantiateFromPrefab, transform } = this.props;
-      const { position, rotation, scale } = transform;
-      // console.log("startShooting",this.currentShooterDirection);
-      const _position = position.clone();
-      _position.addScaledVector(this.currentShooterDirection, 7);
-      this.currentTestInstanceId = _.uniqueId("bullet");
-
-      instantiateFromPrefab(
-        "PlayerBullet",
-        this.currentTestInstanceId,
-        {
-          position: _position,
-          rotation,
-          scale
-        },
-        null,
-        timeForThisBullet,
-        {
-          playerBulletGeometry: {
-            initialTimeBullet: timeForThisBullet,
-            moveRatio: 4,
-            bulletIndex
-          }
-        }
-      );
-
-      // console.log("bushooting 2", timeForThisBullet);
-    }
-  };
 
   stopShooting = () => {
-    // if (this.shootIntervalCallback) {
-    //   clearInterval(this.shootIntervalCallback);
-    //   this.shootIntervalCallback = null;
-    // }
-
-    this.shooting = false;
+    this.props.gameObject.getComponent("shooter").stopShooting();
   };
 
-  initSound = () => {
-    const { transform, availableService } = this.props;
-    const _sound = availableService.audio.buildPositionalSound(
-      this.props.selfSettings.soundLocation
-    );
-    _sound.setLoop(false);
-    _sound.loop = false;
-    transform.add(_sound);
-    if (_sound.isPlaying) {
-      _sound.stop();
-    }
-    this.sound = _sound;
-    // console.log(_sound);
-    // needs delay to play
-  };
-
-  shootBullet = () => {
-    var shootStartTime = Date.now();
-    // var shootStartTime2 = new Date().toLocaleTimeString("en-us");
-    var shootStartTime2 =
-      new Date().toLocaleTimeString("pt-pt") +
-      ":" +
-      new Date().getMilliseconds();
-    const {
-      instantiateFromPrefab,
-      transform,
-      destroyGameObjectById
-    } = this.props;
-    const { position, rotation, scale } = transform;
-    // console.log("startShooting",this.currentShooterDirection);
-    const _position = position.clone();
-    _position.addScaledVector(this.currentShooterDirection, 7);
-    this.currentTestInstanceId = _.uniqueId("bullet");
-    instantiateFromPrefab(
-      "PlayerBullet",
-      this.currentTestInstanceId,
-      {
-        position: _position,
-        rotation,
-        scale
-      },
-      null,
-      shootStartTime
-    );
-
-    setTimeout(() => {
-      this.sound.isPlaying ? this.sound.stop() : null;
-      this.sound.play();
-    }, 50);
-    var currentTime = Date.now();
-
-    console.log(
-      this.shootTimeInterval - (currentTime - this.shootLastTime),
-      currentTime - shootStartTime
-    );
-
-    console.log(
-      "bullet direction",
-      _position,
-      this.currentShooterDirection,
-      "time:",
-      shootStartTime2,
-      "\n",
-      this.shootTimeInterval - (currentTime - this.shootLastTime),
-      "\n",
-      currentTime - shootStartTime
-    );
-    this.shootLastTime = currentTime;
-  };
 
   mouseLook = e => {
     // console.log('mouseLook',e);
@@ -359,16 +220,12 @@ export class ShooterControls extends React.Component {
     this.registerEvents();
     // transform.add( this.mesh );
     this.addMouseDebugMesh();
-    this.initSound();
   };
 
   update = time => {
     this.updateTime = time;
     this.updateMovement();
     this.updateMouseLook();
-    if (this.shooting) {
-      this.newShootBullet(time);
-    }
   };
 
   render = () => null;

@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as THREE from "three";
 
-export class ShooterGeometry extends React.Component {
+export class PlayerShooterGeometry extends React.Component {
   mesh;
 
   pointer;
@@ -130,6 +130,6 @@ export class ShooterGeometry extends React.Component {
   }
 }
 
-ShooterGeometry.propTypes = {
+PlayerShooterGeometry.propTypes = {
   dimensions: PropTypes.object.isRequired
 };
