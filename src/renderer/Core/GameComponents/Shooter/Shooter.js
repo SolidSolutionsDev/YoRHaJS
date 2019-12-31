@@ -11,8 +11,18 @@ export class Shooter extends React.Component {
   shootingStartTime = null;
   updateTime = null;
   type = this.props.type || "forward";
+  bulletPrefab = this.props.bulletPrefab || "PlayerBullet";
+  bulletComponentNameFromPrefabName = {
+    EnemyBullet:"enemyBulletGeometry",
+    PlayerBullet: "playerBulletGeometry"
+  }
+  bulletComponentName = this.bulletComponentNameFromPrefabName[
+    this.bulletPrefab
+  ];
 
   state = {};
+
+
 
   shootAroundBullet = time => {
     // compute how many bullets to shoot now to catch up time step
@@ -30,19 +40,19 @@ export class Shooter extends React.Component {
         bulletIndex * this.shootTimeInterval;
 
       const { instantiateFromPrefab, transform, selfSettings } = this.props;
-      const { moveRatio, displacementRatio, bulletPrefab,aroundBullets } = selfSettings;
+      const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
       const { position, rotation, scale } = transform;
 
       const angleChange = (2 * Math.PI) / aroundBullets;
 
       for (let i = 0; i < aroundBullets; i++) {
-        const currentBulletId = _.uniqueId("bullet");
+        const currentBulletId = _.uniqueId(this.bulletPrefab);
 
         const _rotation = rotation.clone();
         // _rotation.z += angleChange * i;
         _rotation._z = rotation._z + angleChange * i;
         instantiateFromPrefab(
-          bulletPrefab || "PlayerBullet",
+          this.bulletPrefab,
           currentBulletId,
           {
             position,
@@ -52,7 +62,7 @@ export class Shooter extends React.Component {
           null,
           null,
           {
-            playerBulletGeometry: {
+            [this.bulletComponentName]: {
               initTime: startTimeForThisBullet,
               bulletIndex,
               moveRatio,
@@ -84,12 +94,12 @@ export class Shooter extends React.Component {
         bulletIndex * this.shootTimeInterval;
 
       const { instantiateFromPrefab, transform, selfSettings } = this.props;
-      const { moveRatio, displacementRatio, bulletPrefab } = selfSettings;
+      const { moveRatio, displacementRatio } = selfSettings;
       const { position, rotation, scale } = transform;
-      const currentBulletId = _.uniqueId("bullet");
+      const currentBulletId = _.uniqueId(this.bulletPrefab);
 
       instantiateFromPrefab(
-        bulletPrefab || "PlayerBullet",
+        this.bulletPrefab,
         currentBulletId,
         {
           position,
@@ -99,7 +109,7 @@ export class Shooter extends React.Component {
         null,
         null,
         {
-          playerBulletGeometry: {
+          [this.bulletComponentName]: {
             initTime: startTimeForThisBullet,
             bulletIndex,
             moveRatio,

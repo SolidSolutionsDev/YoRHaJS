@@ -198,6 +198,14 @@ export class PhysicsService extends Component {
     //     console.log( "[Body] - collide: ", event );
     // } )
 
+
+    gameObjectTransform.physicsBody = _sphereBody;
+
+    _sphereBody.lookAt = this.generateLookAtFunction(
+      gameObjectTransform,
+      _sphereBody
+    );
+
     _sphereBody.mesh = gameObjectTransform;
     _sphereBody.instance = instance;
     const _updateFunction = this.generateUpdateFunction(

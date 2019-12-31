@@ -214,6 +214,17 @@ export const initialScene = {
         },
         children: []
       },
+      EnemyBullet: {
+        debug: true,
+        transform: {},
+        components: {
+          enemyBulletGeometry: {
+            // soundLocation:
+            //   "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav"
+          },
+        },
+        children: []
+      },
       TestShooter: {
         debug: true,
         components: {
@@ -247,7 +258,7 @@ export const initialScene = {
             soundLocation:
               "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
             moveRatio: 1,
-            bulletPrefab: "PlayerBullet",
+            bulletPrefab: "EnemyBullet",
             shootTimeInterval: 1000,
             type: "around",
             aroundBullets:6,
@@ -323,6 +334,7 @@ export const initialScene = {
       "TestEnemy",
       "TestShooter",
       "PlayerBullet",
+      "EnemyBullet",
       "DynamicCamera"
     ]
   }
