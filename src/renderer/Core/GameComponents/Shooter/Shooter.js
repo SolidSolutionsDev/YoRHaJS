@@ -39,11 +39,17 @@ export class Shooter extends React.Component {
         totalShotBulletsTime +
         bulletIndex * this.shootTimeInterval;
 
-      const { instantiateFromPrefab, transform, selfSettings } = this.props;
+      const {
+        batchInstantiateFromPrefab,
+        transform,
+        selfSettings
+      } = this.props;
       const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
       const { position, rotation, scale } = transform;
 
       const angleChange = (2 * Math.PI) / aroundBullets;
+
+      const bulletInstantiationPayload = [];
 
       for (let i = 0; i < aroundBullets; i++) {
         const currentBulletId = _.uniqueId(this.bulletPrefab);
@@ -51,26 +57,28 @@ export class Shooter extends React.Component {
         const _rotation = rotation.clone();
         // _rotation.z += angleChange * i;
         _rotation._z = rotation._z + angleChange * i;
-        instantiateFromPrefab(
-          this.bulletPrefab,
-          currentBulletId,
-          {
+        const payload = {
+          prefabId:this.bulletPrefab,
+          newId: currentBulletId,
+          transform:{
             position,
             rotation: _rotation,
             scale
           },
-          null,
-          null,
-          {
+          parentId:null,
+          instantiationTime:null,
+          components:{
             [this.bulletComponentName]: {
               initTime: startTimeForThisBullet,
               bulletIndex,
               moveRatio,
               displacementRatio
             }
-          }
-        );
+          }};
+        bulletInstantiationPayload.push(payload);
+
       }
+      batchInstantiateFromPrefab(bulletInstantiationPayload);
       this.playBulletSound();
     }
 

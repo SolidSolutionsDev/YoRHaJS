@@ -5,7 +5,7 @@ import {
   instantiateFromPrefab,
   destroyGameObjectById,
   updateGameObjectComponent,
-  updateGameObject
+  updateGameObject, batchInstantiateFromPrefab
 } from "../../../../stores/scene/actions";
 
 import { components } from "../../GameComponents";
@@ -65,6 +65,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         components
       )
     );
+  },
+  batchInstantiateFromPrefab: (payloadArray) => {
+    dispatch(batchInstantiateFromPrefab(payloadArray));
   },
   destroyGameObjectById: gameObjectId => {
     dispatch(destroyGameObjectById(gameObjectId));
