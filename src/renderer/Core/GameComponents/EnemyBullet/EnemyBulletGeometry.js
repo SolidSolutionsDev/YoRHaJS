@@ -19,6 +19,7 @@ export class EnemyBulletGeometry extends React.Component {
     opacity && (material.opacity = opacity);
     this.sphereMesh = new THREE.Mesh(geometry, material);
     this.sphereMesh.castShadow = true;
+    this.sphereMesh.scale.set(0,0,0);
     transform.add(this.sphereMesh);
   };
 
@@ -93,6 +94,11 @@ export class EnemyBulletGeometry extends React.Component {
       : this.timeToEnd;
     if (this.timeToEnd < time) {
       this.selfDestruct();
+    }
+    if (this.sphereMesh.scale.x < 1){
+      this.sphereMesh.scale.x += 0.1;
+      this.sphereMesh.scale.y += 0.1;
+      this.sphereMesh.scale.z += 0.1;
     }
   };
 
