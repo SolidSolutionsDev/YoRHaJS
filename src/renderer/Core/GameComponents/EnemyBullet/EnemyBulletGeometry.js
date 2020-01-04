@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 import * as CANNON from "cannon";
+import { destroyGameObjectById } from "../../../../stores/scene/actions";
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class EnemyBulletGeometry extends React.Component {
@@ -59,8 +60,13 @@ export class EnemyBulletGeometry extends React.Component {
   };
 
   selfDestruct = () => {
-    const { destroyGameObjectById, _parentId } = this.props;
-    destroyGameObjectById(_parentId);
+    // const { destroyGameObjectById, _parentId } = this.props;
+    // destroyGameObjectById(_parentId);
+
+    const { _parentId, availableComponent } = this.props;
+    const { scene } = availableComponent;
+    this.selfDestructing = true;
+    scene.enqueueAction(destroyGameObjectById(_parentId),{nonImmediate:true});
     this.currentTestInstanceId = null;
   };
 
@@ -92,7 +98,7 @@ export class EnemyBulletGeometry extends React.Component {
     this.timeToEnd = !this.timeToEnd
       ? time + this.selfDestructTime
       : this.timeToEnd;
-    if (this.timeToEnd < time) {
+    if (this.timeToEnd < time && !this.selfDestructing) {
       this.selfDestruct();
     }
     if (this.sphereMesh.scale.x < 1){

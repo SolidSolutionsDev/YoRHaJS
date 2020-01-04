@@ -18,10 +18,30 @@ export class Scene extends React.Component {
 
   init = () => {};
 
+
+
+//TODO: replace enqueue and dequeue actions with thunks, sagas or observable
+  enqueuedActionsArray = [];
+  nonImmediateenqueuedActionsArray = [];
+  nonImmediateenqueuedActionsInterval = 2000;
+  lastDequeuedTime;
+  enqueueAction = (action, options) => {
+    if (options && options.nonImmediate) {
+      this.nonImmediateenqueuedActionsArray.push(action);
+      return;
+    }
+    this.enqueuedActionsArray.push(action);
+  };
+
   update = time => {
     this.children.forEach(child => {
       child._update ? child._update(time) : null;
     });
+    this.props.dequeueActions(this.enqueuedActionsArray);
+    if (!this.lastDequeuedTime || (time-this.lastDequeuedTime > this.nonImmediateenqueuedActionsInterval)){
+      this.lastDequeuedTime = time;
+      this.props.dequeueActions(this.nonImmediateenqueuedActionsArray);
+    }
   };
 
   registerUpdate = update => {

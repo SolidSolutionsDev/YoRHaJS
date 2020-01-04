@@ -253,9 +253,9 @@ export const initialScene = {
             shooting: true,
             moveRatio: 3,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 10500,
+            shootTimeInterval: 100,
             type: "around",
-            aroundBullets:50,
+            aroundBullets:5,
           },
           cubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },

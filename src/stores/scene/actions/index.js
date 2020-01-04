@@ -15,6 +15,11 @@ export const instantiateFromPrefab = (prefabId, newId, transform, parentId,insta
   components
 });
 
+export const batchActions = actionsArray => ({
+  type: "BATCH_ACTIONS",
+  actionsArray
+});
+
 export const batchInstantiateFromPrefab = payloadArray => ({
   type: "BATCH_INSTANTIATE_FROM_PREFAB",
   payloadArray
