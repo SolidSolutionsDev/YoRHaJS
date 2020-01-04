@@ -100,6 +100,7 @@ export class EnemyBulletGeometry extends React.Component {
       : this.timeToEnd;
     if (this.timeToEnd < time && !this.selfDestructing) {
       this.selfDestruct();
+      this.sphereMesh.visible = false;
     }
     if (this.sphereMesh.scale.x < 1){
       this.sphereMesh.scale.x += 0.1;

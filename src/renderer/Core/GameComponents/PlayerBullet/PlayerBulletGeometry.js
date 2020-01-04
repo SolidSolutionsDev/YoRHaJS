@@ -62,6 +62,7 @@ export class PlayerBulletGeometry extends React.Component {
     scene.enqueueAction(destroyGameObjectById(_parentId),{nonImmediate:true});
     // destroyGameObjectById(_parentId);
     this.currentTestInstanceId = null;
+    this.cube.visible = false;
   };
 
   start = () => {
