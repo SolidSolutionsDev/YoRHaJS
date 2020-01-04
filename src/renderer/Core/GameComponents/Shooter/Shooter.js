@@ -49,7 +49,7 @@ export class Shooter extends React.Component {
       const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
       const { position, rotation, scale } = transform;
 
-      const {  availableComponent } = this.props;
+      const { availableComponent } = this.props;
       const { scene } = availableComponent;
 
       const angleChange = (2 * Math.PI) / aroundBullets;
@@ -108,29 +108,32 @@ export class Shooter extends React.Component {
         totalShotBulletsTime +
         bulletIndex * this.shootTimeInterval;
 
-      const { instantiateFromPrefab, transform, selfSettings } = this.props;
+      const { transform, selfSettings, availableComponent } = this.props;
+      const { scene } = availableComponent;
       const { moveRatio, displacementRatio } = selfSettings;
       const { position, rotation, scale } = transform;
       const currentBulletId = _.uniqueId(this.bulletPrefab);
 
-      instantiateFromPrefab(
-        this.bulletPrefab,
-        currentBulletId,
-        {
-          position,
-          rotation,
-          scale
-        },
-        null,
-        null,
-        {
-          [this.bulletComponentName]: {
-            initTime: startTimeForThisBullet,
-            bulletIndex,
-            moveRatio,
-            displacementRatio
+      scene.enqueueAction(
+        instantiateFromPrefab(
+          this.bulletPrefab,
+          currentBulletId,
+          {
+            position,
+            rotation,
+            scale
+          },
+          null,
+          null,
+          {
+            [this.bulletComponentName]: {
+              initTime: startTimeForThisBullet,
+              bulletIndex,
+              moveRatio,
+              displacementRatio
+            }
           }
-        }
+        )
       );
       this.playBulletSound();
     }
