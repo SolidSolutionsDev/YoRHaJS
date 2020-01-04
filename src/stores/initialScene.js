@@ -17,7 +17,7 @@ export const initialScene = {
     renderer: {
       alpha: true,
       antialias: true,
-      postprocessing: true
+      postprocessing: false
     }
   },
   scene: {
@@ -253,7 +253,7 @@ export const initialScene = {
             shooting: true,
             moveRatio: 3,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 100,
+            shootTimeInterval: 300,
             type: "around",
             aroundBullets:5,
           },
