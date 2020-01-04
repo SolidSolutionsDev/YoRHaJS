@@ -174,7 +174,7 @@ export class GameObject extends React.Component {
   getWrappedGameObject = gameObject =>
     gameObject._type === "GameObject"
       ? gameObject
-      : this.getWrappedGameObject(gameObject.getWrappedInstance());
+      : this.getWrappedGameObject(gameObject);
 
   unRegisterChildGameObject = gameObjectId => {
     this.childGameObjects = this.childGameObjects.filter(element => {

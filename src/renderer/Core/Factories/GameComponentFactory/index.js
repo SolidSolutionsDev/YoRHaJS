@@ -115,9 +115,14 @@ export const create = type => {
     alert(`Requested component '${type}' is non-existant!`);
   } else {
     component = makeGameComponent(component, type);
-    component = connect(mapStateToProps, mapDispatchToProps, null, {
-      withRef: true
-    })(component);
+    component = connect(
+      mapStateToProps,
+      mapDispatchToProps,
+      null,
+      {
+        forwardRef: true
+      }
+    )(component);
   }
   return component;
 };

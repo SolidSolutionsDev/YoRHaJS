@@ -34,7 +34,7 @@ export class Scene extends React.Component {
     if (!child) {
       return;
     }
-    const childGameObject = child.getWrappedInstance();
+    const childGameObject = child;
     if (childGameObject.transform) {
       this.scene.add(childGameObject.transform);
     } else {

@@ -29,6 +29,11 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps, null, {
-  withRef: true
-})(Scene);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  null,
+  {
+    forwardRef: true
+  }
+)(Scene);

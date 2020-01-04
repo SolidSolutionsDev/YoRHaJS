@@ -45,5 +45,5 @@ export default connect(
   // mapDispatchToProps,
   null,
   null,
-  { withRef: true }
+  { forwardRef: true }
 )(GameObject);

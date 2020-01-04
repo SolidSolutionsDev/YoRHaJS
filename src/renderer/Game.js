@@ -43,11 +43,11 @@ export class Game extends React.Component {
     const componentPropretyName = alias ? alias : gameComponent.props.id;
     // console.log(gameComponent);
     this.setState({
-      [componentPropretyName]: gameComponent.getWrappedInstance()
+      [componentPropretyName]: gameComponent
     });
     this.availableComponent[
       componentPropretyName
-    ] = gameComponent.getWrappedInstance();
+    ] = gameComponent;
     this.registerUpdate(this.availableComponent[componentPropretyName].update);
   };
 

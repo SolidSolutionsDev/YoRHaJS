@@ -12,6 +12,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, null, null, { withRef: true })(
+export default connect(mapStateToProps, null, null, { forwardRef: true })(
   Renderer
 );
