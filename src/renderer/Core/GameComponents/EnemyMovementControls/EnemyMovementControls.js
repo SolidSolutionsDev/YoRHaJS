@@ -129,12 +129,7 @@ export class EnemyMovementControls extends React.Component {
   };
 
   shootBullet = () => {
-    var shootStartTime = Date.now();
-    const {
-      instantiateFromPrefab,
-      transform,
-      destroyGameObjectById
-    } = this.props;
+    const { instantiateFromPrefab, transform } = this.props;
     const { position, rotation, scale } = transform;
     // console.log("startShooting",this.currentShooterDirection);
     const _position = position.clone();
@@ -160,15 +155,12 @@ export class EnemyMovementControls extends React.Component {
     );
 
     setTimeout(() => {
+      // eslint-disable-next-line no-unused-expressions
       this.sound.isPlaying ? this.sound.stop() : null;
       this.sound.play();
     }, 50);
     var currentTime = Date.now();
 
-    console.log(
-      this.shootTimeInterval - (currentTime - this.shootLastTime),
-      currentTime - shootStartTime
-    );
     this.shootLastTime = currentTime;
   };
 
@@ -192,8 +184,6 @@ export class EnemyMovementControls extends React.Component {
     }
 
     if (this.coords) {
-      const { availableService } = this.props;
-      const { physicsService } = availableService;
       // TODO: move this to physics service as lookAt function
       // Compute direction to target
       let lookAtVector = this.getPositionFromMouse(
@@ -288,7 +278,7 @@ export class EnemyMovementControls extends React.Component {
     // this.initSound();
   };
 
-  update = time => {
+  update = () => {
     // this.updateMovement();
     // this.updateMouseLook();
     this.props.transform.rotation.z += 0.02;

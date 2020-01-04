@@ -8,6 +8,8 @@
   "rules": {
     "react/prop-types": 0,
     "class-methods-use-this": 0,
+    "no-unused-expressions":"off",
+    "@typescript-eslint/no-unused-expressions": "off",
     "import/no-named-as-default": 0,
     "react/jsx-filename-extension": [
       "error",

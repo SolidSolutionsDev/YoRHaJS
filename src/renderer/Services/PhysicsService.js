@@ -30,9 +30,11 @@ export class PhysicsService extends Component {
 
       // console.log( `Contact between ${e.bodyA.mesh.name} and ${e.bodyB.mesh.name} bodies began:`,          e.bodyA, e.bodyB, e );
 
+      // eslint-disable-next-line no-unused-expressions
       e.bodyA.beginContactFunction
         ? e.bodyA.beginContactFunction(e.bodyB)
         : null;
+      // eslint-disable-next-line no-unused-expressions
       e.bodyB.beginContactFunction
         ? e.bodyB.beginContactFunction(e.bodyA)
         : null;

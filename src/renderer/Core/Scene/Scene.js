@@ -35,6 +35,7 @@ export class Scene extends React.Component {
 
   update = time => {
     this.children.forEach(child => {
+      // eslint-disable-next-line no-unused-expressions
       child._update ? child._update(time) : null;
     });
     this.props.dequeueActions(this.enqueuedActionsArray);

@@ -59,6 +59,7 @@ export class ObjectLoaderMesh extends React.Component {
     this.transform.add(...models);
 
     this.loaded = true;
+    // eslint-disable-next-line no-unused-expressions
     emitLoadingAsset ? emitLoadingAsset(this.filename, 1.0) : null;
   };
 

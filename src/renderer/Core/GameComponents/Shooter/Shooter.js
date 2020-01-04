@@ -162,6 +162,7 @@ export class Shooter extends React.Component {
       return;
     }
     setTimeout(() => {
+      // eslint-disable-next-line no-unused-expressions
       this.sound.isPlaying ? this.sound.stop() : null;
       this.sound.play();
     }, 50);
