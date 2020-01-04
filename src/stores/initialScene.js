@@ -190,7 +190,7 @@ export const initialScene = {
             }
           }
         },
-        children: {}
+        children: []
       },
       TestCube: {
         debug: true,
