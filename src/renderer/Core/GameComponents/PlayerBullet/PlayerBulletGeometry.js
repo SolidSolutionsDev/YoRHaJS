@@ -66,11 +66,14 @@ export class PlayerBulletGeometry extends React.Component {
   };
 
   start = () => {
-    const {shooterId, shooterTag, availableComponent} = this.props;
+    const { shooterId, shooterTag, gameObject, availableComponent } = this.props;
+    const { scene } = availableComponent;
     this.initBulletGeometry();
     this.initPhysics();
-    const shooter = availableComponent.scene.getChildGameObjectsByTag(shooterTag);
-    console.log(shooterId, shooterTag,shooter);
+    const shooter = gameObject.getChildGameObjectsByTag(shooterTag, scene);
+    const shooterById = gameObject.getChildGameObjectById(shooterId);
+    const sceneChildIds = scene.childGameObjects.map(gameObject=>gameObject.id);
+    console.log(shooterId, shooterTag, shooter, shooterById,scene,sceneChildIds);
   };
 
 

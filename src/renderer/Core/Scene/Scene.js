@@ -8,7 +8,7 @@ import * as GameContext from "../../GameContext";
 export class Scene extends React.Component {
   scene = new THREE.Scene();
 
-  children = [];
+  childGameObjects = [];
 
   updateCallbacksArray = [];
 
@@ -34,7 +34,7 @@ export class Scene extends React.Component {
   };
 
   update = time => {
-    this.children.forEach(child => {
+    this.childGameObjects.forEach(child => {
       // eslint-disable-next-line no-unused-expressions
       child._update ? child._update(time) : null;
     });
@@ -62,11 +62,11 @@ export class Scene extends React.Component {
       this.scene.add(childGameObject);
     }
     childGameObject.registerParent(this.scene);
-    this.children.push(childGameObject);
+    this.childGameObjects.push(childGameObject);
   };
 
   unRegisterChildGameObject = gameObjectId => {
-    this.children = this.children.filter(element => {
+    this.childGameObjects = this.childGameObjects.filter(element => {
       return element.props.id !== gameObjectId;
     });
   };

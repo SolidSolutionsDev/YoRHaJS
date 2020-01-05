@@ -35,7 +35,7 @@ export class GameObject extends React.Component {
       ? selfSettings.tags
       : prefabSettings && prefabSettings.tags
       ? prefabSettings.tags
-      : null;
+      : [];
 
     this.displayName = id;
     this.id = id;
@@ -200,23 +200,32 @@ export class GameObject extends React.Component {
     this.childGameObjects.push(gameObject);
   };
 
-  getChildGameObjectByTag = wantedTag => {
-    const _gameObject = this.childGameObjects.find(childGameObject =>
-      this.getWrappedGameObject(childGameObject)._tags.find(
-        tag => tag === wantedTag
-      )
-    );
-    return _gameObject ? _gameObject.wrappedInstance : null;
-  };
 
-  getChildGameObjectsByTag = wantedTag => {
-    const _gameObjects = this.childGameObjects
+  getChildGameObjectById = (wantedId, optionalParentGameObject = this) =>
+  {
+    const _gameObject = optionalParentGameObject.childGameObjects.find(
+      childGameObject =>
+        this.getWrappedGameObject(childGameObject).id === wantedId
+    );
+    return _gameObject ? _gameObject : null;
+  };
+  getChildGameObjectByTag = (wantedTag, optionalParentGameObject = this) => {
+    const _gameObject = optionalParentGameObject.childGameObjects.find(
+      childGameObject =>
+        this.getWrappedGameObject(childGameObject)._tags.find(
+          tag => tag === wantedTag
+        )
+    );
+    return _gameObject ? _gameObject : null;
+  };
+  getChildGameObjectsByTag = (wantedTag, optionalParentGameObject = this) => {
+    const _gameObjects = optionalParentGameObject.childGameObjects
       .filter(childGameObject =>
         this.getWrappedGameObject(childGameObject)._tags.find(
           tag => tag === wantedTag
         )
       )
-      .map(gameObject => gameObject.wrappedInstance);
+      .map(gameObject => gameObject);
     return _gameObjects || [];
   };
 
@@ -261,6 +270,7 @@ export class GameObject extends React.Component {
         registerComponent={this.registerComponent}
         registerChildGameObject={this.registerChildGameObject}
         getChildComponent={this.getComponent}
+        getChildGameObjectById={this.getChildGameObjectById}
         getChildGameObjectByTag={this.getChildGameObjectByTag}
         getChildGameObjectsByTag={this.getChildGameObjectsByTag}
         getAllGameObject3DChildren={this.getAllGameObject3DChildren}
