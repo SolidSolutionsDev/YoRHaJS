@@ -108,7 +108,7 @@ export class Shooter extends React.Component {
         totalShotBulletsTime +
         bulletIndex * this.shootTimeInterval;
 
-      const { transform, selfSettings, availableComponent } = this.props;
+      const { transform, selfSettings, availableComponent, gameObject } = this.props;
       const { scene } = availableComponent;
       const { moveRatio, displacementRatio } = selfSettings;
       const { position, rotation, scale } = transform;
@@ -130,7 +130,9 @@ export class Shooter extends React.Component {
               initTime: startTimeForThisBullet,
               bulletIndex,
               moveRatio,
-              displacementRatio
+              displacementRatio,
+              shooterId: gameObject.id,
+              shooterTag: gameObject._tags[0],
             }
           }
         )

@@ -51,6 +51,7 @@ export const initialScene = {
         transform: {
           position: { x: 0, y: 0, z: 4 }
         },
+        tags: ["playerShooter"],
         prefab: "TestShooter"
       },
       testEnemy1: {

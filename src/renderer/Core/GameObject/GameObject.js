@@ -34,8 +34,8 @@ export class GameObject extends React.Component {
     this._tags = selfSettings.tags
       ? selfSettings.tags
       : prefabSettings && prefabSettings.tags
-        ? prefabSettings.tags
-        : null;
+      ? prefabSettings.tags
+      : null;
 
     this.displayName = id;
     this.id = id;
