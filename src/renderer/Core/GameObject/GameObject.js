@@ -100,10 +100,20 @@ export class GameObject extends React.Component {
     }
   };
 
-  componentDidUpdate() {
-    if (this.props.selfSettings.keepTransformSynced) {
+  componentDidUpdate(prevProps) {
+    const transformChanged = this._checkTransformChanged(prevProps);
+    if (transformChanged) {
       this.updateTransform();
     }
+  }
+
+  _checkTransformChanged = (prevProps) => {
+    const { transform } = this.props;
+    if (prevProps.transform !== transform){
+      console.log("changed transform")
+      return true;
+    }
+    return false;
   }
 
   registerComponent = (component, _displayName) => {
