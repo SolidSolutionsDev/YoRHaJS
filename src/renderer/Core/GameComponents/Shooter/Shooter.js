@@ -27,15 +27,25 @@ export class Shooter extends React.Component {
   ];
 
   availableBullets = [];
+  availableBulletsForUpdateCycle = [];
   movingBullets = [];
 
   state = {};
 
   announceAvailableBullet = bulletGameObject => {
-    this.availableBullets.unshift(bulletGameObject);
-    this.movingBullets = this.movingBullets.filter(
-      bullet => bullet !== bulletGameObject
+    this.availableBulletsForUpdateCycle.push(bulletGameObject);
+  }
+
+  garbageCollectBullets = () => {
+    const filteredMovingBullets = this.movingBullets.filter(
+      bullet => !this.availableBulletsForUpdateCycle.includes(bullet)
     );
+    // console.log("announce",bulletGameObject,filteredMovingBullets.map((bullet)=>bullet.props.gameObject.props.id),this.movingBullets.map((bullet)=>bullet.props.gameObject.props.id));
+    this.movingBullets = filteredMovingBullets;
+    // console.log("garbageCollect",this.availableBulletsForUpdateCycle,this.availableBullets,this.movingBullets);
+    while (this.availableBulletsForUpdateCycle.length) {
+      this.availableBullets.unshift(this.availableBulletsForUpdateCycle.pop());
+    }
   };
 
 
@@ -385,6 +395,7 @@ export class Shooter extends React.Component {
   update = time => {
     this.updateTime = time;
     if (this.shooting) {
+      this.garbageCollectBullets();
       this.shootFunction[this.type](time);
     }
   };
