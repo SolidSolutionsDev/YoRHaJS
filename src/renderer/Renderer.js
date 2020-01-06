@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
+import Stats from "stats.js";
 
 import * as THREE from "three";
 import {
@@ -17,6 +18,8 @@ export class Renderer extends React.Component {
     alpha: this.props.alpha,
     preserveDrawingBuffer: true
   });
+
+  stats = new Stats();
 
   composer;
 
@@ -91,6 +94,7 @@ export class Renderer extends React.Component {
 
   init = () => {
     ReactDOM.findDOMNode(this).appendChild(this.canvas);
+    document.body.appendChild( this.stats.dom );
     this.setupRendererDefaults();
     this.setupCanvasDefaults();
     this.registerEventListeners();
@@ -101,6 +105,7 @@ export class Renderer extends React.Component {
   };
 
   update = time => {
+    this.stats.begin();
     const { backgroundColor, availableComponent, postprocessing } = this.props;
     const mainCameraReady = availableComponent.scene.camera._main;
     if (this.state.ready && mainCameraReady) {
@@ -119,6 +124,7 @@ export class Renderer extends React.Component {
 
       this.renderer.setClearColor(backgroundColor, 0);
     }
+    this.stats.end();
   };
 
   setupCanvasDefaults() {
