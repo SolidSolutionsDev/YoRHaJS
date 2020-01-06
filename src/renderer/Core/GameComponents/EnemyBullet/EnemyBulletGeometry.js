@@ -80,22 +80,26 @@ export class EnemyBulletGeometry extends React.Component {
   };
 
   inactivePosition = () => {
-    const { transform } = this.props;
-    const shooterTransform = this.shooter.props.transform;
+
+    const { gameObject, transform } = this.props;
+    const transformValue = gameObject.props.transform;
 
     transform.physicsBody.quaternion.setFromAxisAngle(
       new CANNON.Vec3(0, 0, 1),
-      shooterTransform.rotation.z
+      transformValue.rotation.z
     );
 
     const localForward = new CANNON.Vec3(0, 1, 0); // correct?
     const worldForward = new CANNON.Vec3();
     transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
-
-    transform.physicsBody.position.y = shooterTransform.position.y;
-    transform.physicsBody.position.x = shooterTransform.position.x;
+    this.initialPosition = transformValue.position.clone();
+    this.initialPosition.x += worldForward.x * this.displacementRatio;
+    this.initialPosition.y += worldForward.y * this.displacementRatio;
+    transform.physicsBody.position.x = this.initialPosition.x;
+    transform.physicsBody.position.y = this.initialPosition.y;
     transform.physicsBody.position.z = this.zCoord;
   };
+
 
   start = time => {
     this.initBulletGeometry();
