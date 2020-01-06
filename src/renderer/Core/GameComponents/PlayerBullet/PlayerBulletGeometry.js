@@ -8,10 +8,13 @@ import { destroyGameObjectById } from "../../../../stores/scene/actions";
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class PlayerBulletGeometry extends React.Component {
   cube;
-  selfDestructTime = 2000;
+  selfDestructTime = this.props.selfDestructTime || 2000;
   moveRatio = this.props.moveRatio || 0.03;
   displacementRatio = this.props.displacementRatio || 3;
-  selfDestructing=false;
+  selfDestructing = false;
+  shooter = null;
+  active = true;
+  zCoord = 6+this.props.bulletIndex;
 
   initBulletGeometry = () => {
     const { transform, opacity } = this.props;
@@ -39,23 +42,43 @@ export class PlayerBulletGeometry extends React.Component {
       },
       this
     );
+
+    this.updateTransform();
+
+  };
+
+  updateTransform = () => {
+    const { gameObject, transform } = this.props;
+    const transformValue = gameObject.props.transform;
+
     transform.physicsBody.quaternion.setFromAxisAngle(
       new CANNON.Vec3(0, 0, 1),
-      gameObject.transform.rotation.z
+      transformValue.rotation.z
     );
-
 
     const localForward = new CANNON.Vec3(0, 1, 0); // correct?
     const worldForward = new CANNON.Vec3();
     transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
-    this.initialPosition = transform.position.clone();
-    this.initialPosition.x += worldForward.x *this.displacementRatio;
-    this.initialPosition.y += worldForward.y *this.displacementRatio;
+    this.initialPosition = transformValue.position.clone();
+    this.initialPosition.x += worldForward.x * this.displacementRatio;
+    this.initialPosition.y += worldForward.y * this.displacementRatio;
     transform.physicsBody.position.x = this.initialPosition.x;
     transform.physicsBody.position.y = this.initialPosition.y;
-  };
+    transform.physicsBody.position.z = this.initialPosition.z;
+  }
 
   selfDestruct = () => {
+    const { _parentId, availableComponent } = this.props;
+    const { scene } = availableComponent;
+    this.selfDestructing = true;
+    // scene.enqueueAction(destroyGameObjectById(_parentId),{nonImmediate:true});
+    // destroyGameObjectById(_parentId);
+    this.currentTestInstanceId = null;
+    // this.cube.visible = false;
+    this.shooter.announceAvailableBullet(this);
+  };
+
+  selfDestructOld = () => {
     const { _parentId, availableComponent } = this.props;
     const { scene } = availableComponent;
     this.selfDestructing=true;
@@ -65,17 +88,20 @@ export class PlayerBulletGeometry extends React.Component {
     this.cube.visible = false;
   };
 
-  start = () => {
-    const { shooterId, shooterTag, gameObject, availableComponent } = this.props;
+  start = (time) => {
+    const { shooterId, gameObject, availableComponent, selfSettings } = this.props;
     const { scene } = availableComponent;
     this.initBulletGeometry();
     this.initPhysics();
-    const shooter = gameObject.getChildGameObjectsByTag(shooterTag, scene);
-    const shooterById = gameObject.getChildGameObjectById(shooterId);
-    const sceneChildIds = scene.childGameObjects.map(gameObject=>gameObject.id);
-    console.log(shooterId, shooterTag, shooter, shooterById,scene,sceneChildIds);
+    // const shooter = gameObject.getChildGameObjectsByTag(shooterTag, scene);
+    const shooterById = gameObject.getChildGameObjectById(shooterId, scene);
+    this.shooter = shooterById;
+    this.shooter = this.shooter.getComponent(selfSettings.shooterComponentId);
+    if (this.timeToEnd < time && !this.selfDestructing) {
+      this.selfDestruct();
+      this.active = false;
+    }
   };
-
 
   // TODO: move this to physics?
   moveForwardManual = time => {
@@ -87,24 +113,60 @@ export class PlayerBulletGeometry extends React.Component {
     const worldForward = new CANNON.Vec3();
     transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
 
-    // console.log("bushooting 3", time,this.props);
     transform.physicsBody.position.y =
       this.initialPosition.y + (timePassed / 100) * this.moveRatio * worldForward.y;
     transform.physicsBody.position.x =
       this.initialPosition.x + (timePassed / 100) * this.moveRatio * worldForward.x;
   };
 
+  inactivePosition = () => {
+    const { transform } = this.props;
+    const shooterTransform = this.shooter.props.transform;
+
+    transform.physicsBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(0, 0, 1),
+      shooterTransform.rotation.z
+    );
+
+    const localForward = new CANNON.Vec3(0, 1, 0); // correct?
+    const worldForward = new CANNON.Vec3();
+    transform.physicsBody.vectorToWorldFrame(localForward, worldForward);
+
+    transform.physicsBody.position.y = shooterTransform.position.y;
+    transform.physicsBody.position.x = shooterTransform.position.x;;
+    transform.physicsBody.position.z = this.zCoord;
+  };
+
   update = time => {
-    const { transform, gameObject } = this.props;
+    const { transform, initTime } = this.props;
+
+    const isBulletStillWithTimeOfLife = time - this.props.initTime < this.selfDestructTime ;
+
+     this.timeToEnd = !this.timeToEnd || isBulletStillWithTimeOfLife
+      ? this.props.initTime + this.selfDestructTime
+      : this.timeToEnd;
+
+    if (initTime !== -1 && this.timeToEnd > time) {
+      this.active = true;
+      this.selfDestructing = false;
+      this.updateTransform();
+    }
+
+    if ((initTime === -1 || this.timeToEnd < time) && !this.selfDestructing) {
+      this.selfDestruct();
+      this.active = false;
+    }
+
+    if (!this.active) {
+      this.inactivePosition();
+      return;
+    }
+
     if (transform.physicsBody) {
       this.moveForwardManual(time);
     }
-    this.timeToEnd = !this.timeToEnd
-      ? time + this.selfDestructTime
-      : this.timeToEnd;
-    if (this.timeToEnd < time && !this.selfDestructing) {
-      this.selfDestruct();
-    }
+
+
   };
 
   onDestroy = () => {};

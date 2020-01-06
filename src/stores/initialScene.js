@@ -30,7 +30,7 @@ export const initialScene = {
       "board1",
       // "testCubeGameObject1",
       "testShooter1",
-      "testEnemy1",
+      // "testEnemy1",
       "camera1"
     ]
   },
@@ -232,7 +232,8 @@ export const initialScene = {
               "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
             moveRatio: 7,
             displacementRatio: 5,
-            bulletPrefab: "PlayerBullet"
+            bulletPrefab: "PlayerBullet",
+            selfDestructTime: 2000,
           },
           shooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
@@ -326,7 +327,7 @@ export const initialScene = {
       "LightGroup",
       "Board",
       "TestCube",
-      "TestEnemy",
+      // "TestEnemy",
       "TestShooter",
       "PlayerBullet",
       "EnemyBullet",
