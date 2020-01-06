@@ -110,7 +110,6 @@ export class GameObject extends React.Component {
   _checkTransformChanged = (prevProps) => {
     const { transform } = this.props;
     if (prevProps.transform !== transform){
-      console.log("changed transform")
       return true;
     }
     return false;

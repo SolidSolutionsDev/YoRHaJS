@@ -14,7 +14,7 @@ export class PlayerBulletGeometry extends React.Component {
   selfDestructing = false;
   shooter = null;
   active = true;
-  zCoord = 6 + this.props.bulletIndex*1.3;
+  zCoord = 6 + this.props.bulletIndex * 1.3;
 
   initBulletGeometry = () => {
     const { transform, opacity } = this.props;
@@ -72,18 +72,21 @@ export class PlayerBulletGeometry extends React.Component {
     this.shooter.announceAvailableBullet(this);
   };
 
-  selfDestructOld = () => {
-    const { _parentId, availableComponent } = this.props;
-    const { scene } = availableComponent;
-    this.selfDestructing = true;
-    scene.enqueueAction(destroyGameObjectById(_parentId), {
-      nonImmediate: true
-    });
-    // destroyGameObjectById(_parentId);
-    this.cube.visible = false;
+  start = (time) => {
+    this.initBulletGeometry();
+    this.initPhysics();
+    this.initShooter();
+    this.checkIfIsInactive(time);
   };
 
-  start = time => {
+  checkIfIsInactive = (time) => {
+    if (this.timeToEnd < time && !this.selfDestructing) {
+      this.selfDestruct();
+      this.active = false;
+    }
+  };
+
+  initShooter = () => {
     const {
       shooterId,
       gameObject,
@@ -91,16 +94,9 @@ export class PlayerBulletGeometry extends React.Component {
       selfSettings
     } = this.props;
     const { scene } = availableComponent;
-    this.initBulletGeometry();
-    this.initPhysics();
-    // const shooter = gameObject.getChildGameObjectsByTag(shooterTag, scene);
     const shooterById = gameObject.getChildGameObjectById(shooterId, scene);
     this.shooter = shooterById;
     this.shooter = this.shooter.getComponent(selfSettings.shooterComponentId);
-    if (this.timeToEnd < time && !this.selfDestructing) {
-      this.selfDestruct();
-      this.active = false;
-    }
   };
 
   // TODO: move this to physics?

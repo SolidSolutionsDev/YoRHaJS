@@ -38,7 +38,6 @@ export class Shooter extends React.Component {
     );
   };
 
-  shootForwardBulletFromAvailableBullets = time => {};
 
   shootForwardBullet = time => {
     // compute how many bullets to shoot now to catch up time step
@@ -96,8 +95,6 @@ export class Shooter extends React.Component {
     );
 
     for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 1; bulletIndex++) {
-      const startTimeForThisBullet = -1;
-
       const {
         transform,
         selfSettings,
@@ -107,6 +104,7 @@ export class Shooter extends React.Component {
       const { scene } = availableComponent;
       const { moveRatio, displacementRatio } = selfSettings;
       const { position, rotation, scale } = transform;
+      const startTimeForThisBullet = -1; // to be inactive
       const currentBulletId = _.uniqueId(this.bulletPrefab);
       scene.enqueueAction(
         instantiateFromPrefab(
@@ -139,7 +137,128 @@ export class Shooter extends React.Component {
     this.bulletId += bulletsToInit;
   };
 
+  initAroundBullets = () => {
+    const bulletsToInit = Math.floor(
+      this.selfDestructTime / this.shootTimeInterval
+    );
+
+    for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 1; bulletIndex++) {
+      const {
+        transform,
+        selfSettings,
+        availableComponent,
+        gameObject
+      } = this.props;
+      const { scene } = availableComponent;
+      const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
+      const { position, rotation, scale } = transform;
+      const startTimeForThisBullet = -1; // to be inactive
+
+      const angleChange = (2 * Math.PI) / aroundBullets;
+
+      for (let i = 0; i < aroundBullets; i++) {
+        const currentBulletId = _.uniqueId(this.bulletPrefab);
+        const _rotation = rotation.clone();
+        // _rotation.z += angleChange * i;
+        _rotation._z = rotation._z + angleChange * i;
+
+        scene.enqueueAction(
+          instantiateFromPrefab(
+            this.bulletPrefab,
+            currentBulletId,
+            {
+              position,
+              rotation: _rotation,
+              scale
+            },
+            null,
+            null,
+            {
+              [this.bulletComponentName]: {
+                initTime: startTimeForThisBullet,
+                bulletIndex,
+                moveRatio,
+                displacementRatio,
+                shooterId: gameObject.id,
+                shooterTag: gameObject._tags[0],
+                shooterComponentId: this.props.id
+              }
+            }
+          )
+        );
+      }
+      // this.playBulletSound();
+    }
+
+    // total new bullets
+    this.bulletId += bulletsToInit;
+  };
+
   shootAroundBullet = time => {
+    // compute how many bullets to shoot now to catch up time step
+    const totalShotBulletsTime = this.bulletId * this.shootTimeInterval;
+    const timePassedFromLastShot =
+      time - (this.shootingStartTime + totalShotBulletsTime);
+    const bulletsToShootNow = Math.floor(
+      timePassedFromLastShot / this.shootTimeInterval
+    );
+
+    const { transform, selfSettings, availableComponent } = this.props;
+    const { scene } = availableComponent;
+    const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
+    const { position, rotation, scale } = transform;
+
+    const angleChange = (2 * Math.PI) / aroundBullets;
+
+    for (let bulletIndex = 1; bulletIndex <= bulletsToShootNow; bulletIndex++) {
+      const startTimeForThisBullet =
+        this.shootingStartTime +
+        totalShotBulletsTime +
+        bulletIndex * this.shootTimeInterval;
+
+      for (let i = 0; i < aroundBullets; i++) {
+        const _rotation = rotation.clone();
+        // _rotation.z += angleChange * i;
+        _rotation._z = rotation._z + angleChange * i;
+
+        const bullet = this.availableBullets.pop();
+        if (!bullet) { return; }
+        this.movingBullets.push(bullet);
+        const currentBulletId = bullet.props.id;
+        const currentBulletGameObjectId = bullet.props.gameObject.id;
+
+        this.playBulletSound();
+        scene.enqueueAction(
+          updateGameObjectComponent(
+            currentBulletGameObjectId,
+            currentBulletId,
+            {
+              initTime: startTimeForThisBullet,
+              bulletIndex,
+              moveRatio,
+              displacementRatio
+              // shooterId: gameObject.id,
+              // shooterTag: gameObject._tags[0],
+            }
+          )
+        );
+        scene.enqueueAction(
+          updateGameObject(currentBulletGameObjectId, {
+            transform: {
+              position: position.clone(),
+              rotation: _rotation.clone(),
+              scale: scale.clone()
+            }
+          })
+        );
+      }
+    }
+
+    // total new bullets
+    this.bulletId += bulletsToShootNow;
+  };
+
+  shootAroundBulletOld = time => {
     // compute how many bullets to shoot now to catch up time step
     const totalShotBulletsTime = this.bulletId * this.shootTimeInterval;
     const timePassedFromLastShot =
@@ -213,7 +332,7 @@ export class Shooter extends React.Component {
 
   initBulletsFunction = {
     // around: this.shootAroundBullet,
-    around: () => {},
+    around: this.initAroundBullets,
     forward: this.initForwardBullets
   };
 
