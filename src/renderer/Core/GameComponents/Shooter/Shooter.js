@@ -104,7 +104,7 @@ export class Shooter extends React.Component {
       this.selfDestructTime / this.shootTimeInterval
     );
 
-    for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 1; bulletIndex++) {
+    for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 5; bulletIndex++) {
       const {
         transform,
         selfSettings,
@@ -152,7 +152,7 @@ export class Shooter extends React.Component {
       this.selfDestructTime / this.shootTimeInterval
     );
 
-    for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 1; bulletIndex++) {
+    for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 3; bulletIndex++) {
       const {
         transform,
         selfSettings,
