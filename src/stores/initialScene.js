@@ -16,8 +16,8 @@ export const initialScene = {
     },
     renderer: {
       alpha: true,
-      antialias: true,
-      postprocessing: true
+      antialias: false,
+      postprocessing: false
     }
   },
   scene: {

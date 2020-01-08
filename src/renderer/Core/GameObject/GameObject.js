@@ -103,7 +103,8 @@ export class GameObject extends React.Component {
   componentDidUpdate(prevProps) {
     const transformChanged = this._checkTransformChanged(prevProps);
     if (transformChanged) {
-      this.updateTransform();
+      return;
+      // this.updateTransform();
     }
   }
 
