@@ -20,8 +20,8 @@ export class Cube extends React.Component {
     this.loadCube();
   };
 
-  update = () => {
-    this.props.gameObject.transform.rotation.x += this.props.rotationX;
+  update = (time, deltaTime) => {
+    this.props.gameObject.transform.rotation.x += (this.props.rotationX * (deltaTime/10));
   };
 
   render() {

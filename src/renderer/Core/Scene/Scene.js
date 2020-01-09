@@ -33,10 +33,10 @@ export class Scene extends React.Component {
     this.enqueuedActionsArray.push(action);
   };
 
-  update = time => {
+  update = ( time, deltaTime )=> {
     this.childGameObjects.forEach(child => {
       // eslint-disable-next-line no-unused-expressions
-      child._update ? child._update(time) : null;
+      child._update ? child._update(time, deltaTime) : null;
     });
     this.props.dequeueActions(this.enqueuedActionsArray);
     if (!this.lastDequeuedTime || (time-this.lastDequeuedTime > this.nonImmediateenqueuedActionsInterval)){

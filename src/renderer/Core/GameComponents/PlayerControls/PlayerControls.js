@@ -15,7 +15,6 @@ export class PlayerControls extends React.Component {
   bulletId = 0;
   shooting = false;
   shootingStartTime = null;
-  updateTime = null;
 
   moveRatio = this.props.moveRatio || 0.3;
 
@@ -67,7 +66,7 @@ export class PlayerControls extends React.Component {
     const { transform } = this.props;
     // console.log('moveLeft');
     // this.activeMovements.left=true;
-    transform.physicsBody.position.x -= this.moveRatio;
+    transform.physicsBody.position.x -= this.moveRatio * this.deltaUpdate;
     // let forwardVector = new CANNON.Vec3(-1, 0, 0);
     // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
   };
@@ -75,7 +74,7 @@ export class PlayerControls extends React.Component {
   moveRight = () => {
     const { transform } = this.props;
     // console.log('moveRight');
-    transform.physicsBody.position.x += this.moveRatio;
+    transform.physicsBody.position.x += this.moveRatio * this.deltaUpdate;
     // let forwardVector = new CANNON.Vec3(1,0, 0);
     // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
   };
@@ -83,7 +82,7 @@ export class PlayerControls extends React.Component {
   moveUp = () => {
     const { transform } = this.props;
     // console.log('moveUp');
-    transform.physicsBody.position.y += this.moveRatio;
+    transform.physicsBody.position.y += this.moveRatio * this.deltaUpdate;
 
     // let forwardVector = new CANNON.Vec3(0, 1, 0);
     // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
@@ -92,7 +91,7 @@ export class PlayerControls extends React.Component {
   moveDown = () => {
     const { transform } = this.props;
     // console.log('moveDown',transform.physicsBody);
-    transform.physicsBody.position.y -= this.moveRatio;
+    transform.physicsBody.position.y -= this.moveRatio * this.deltaUpdate;
     // let forwardVector = new CANNON.Vec3(0, -1, 0);
     // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
   };
@@ -222,8 +221,8 @@ export class PlayerControls extends React.Component {
     this.addMouseDebugMesh();
   };
 
-  update = time => {
-    this.updateTime = time;
+  update = ( time, deltaTime ) => {
+    this.deltaUpdate = deltaTime/10;
     this.updateMovement();
     this.updateMouseLook();
   };

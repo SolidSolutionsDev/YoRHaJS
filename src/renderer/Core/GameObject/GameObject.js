@@ -244,17 +244,17 @@ export class GameObject extends React.Component {
     return false;
   };
 
-  _update = time => {
+  _update = (time, deltaTime) => {
     if (!this._isEnabled() && !this.unmounting) {
       this.transform.visible = false;
       return;
     }
     this.transform.visible = true;
     Object.values(this.componentsScriptsDictionary).forEach(component =>
-      component.update(time)
+      component.update(time, deltaTime)
     );
     this.childGameObjects.forEach(gameObject =>
-      this.getWrappedGameObject(gameObject)._update(time)
+      this.getWrappedGameObject(gameObject)._update(time, deltaTime)
     );
   };
 

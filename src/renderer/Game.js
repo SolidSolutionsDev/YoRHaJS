@@ -26,6 +26,7 @@ export class Game extends React.Component {
   availableService = {};
   totalTimePaused = 0;
   isTabActive = true;
+  lastActiveTime = 0;
 
   addGameService = gameService => {
     if (!gameService) {
@@ -93,7 +94,9 @@ export class Game extends React.Component {
 
     if (this.isTabActive) {
       const activeTime = time - this.totalTimePaused;
-      this.updateChildren(activeTime);
+      const deltaTime = activeTime - this.lastActiveTime;
+      this.updateChildren(activeTime, deltaTime);
+      this.lastActiveTime = activeTime;
     }
 
     this.frame = requestAnimationFrame(this.animate);
@@ -103,9 +106,9 @@ export class Game extends React.Component {
     this.updateCallbacksArray.push(update);
   };
 
-  updateChildren = time => {
+  updateChildren = (time, deltaTime )=> {
     this.updateCallbacksArray.forEach(update => {
-      update && update(time);
+      update && update(time, deltaTime);
     });
   };
 
