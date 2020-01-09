@@ -24,6 +24,8 @@ export class Game extends React.Component {
 
   availableComponent = {};
   availableService = {};
+  totalTimePaused = 0;
+  isTabActive = true;
 
   addGameService = gameService => {
     if (!gameService) {
@@ -45,9 +47,7 @@ export class Game extends React.Component {
     this.setState({
       [componentPropretyName]: gameComponent
     });
-    this.availableComponent[
-      componentPropretyName
-    ] = gameComponent;
+    this.availableComponent[componentPropretyName] = gameComponent;
     this.registerUpdate(this.availableComponent[componentPropretyName].update);
   };
 
@@ -55,8 +55,35 @@ export class Game extends React.Component {
     const { renderer, scene } = this.state;
     renderer.init();
     scene.init();
-    this.animate();
+    this.setActiveWatcher();
+    this.animate(performance.now());
     this.setState({ started: true });
+  };
+
+  setActiveWatcher = () => {
+    document.addEventListener(
+      "visibilitychange",
+      this.handleVisibilityChange,
+      false
+    );
+  };
+  handleVisibilityChange = () => {
+    if (document.hidden) {
+      this.pauseSimulation();
+    } else {
+      this.startSimulation();
+    }
+  };
+
+  startSimulation = () => {
+    this.isTabActive = true;
+    const timeFromLastPause = performance.now() - this.timeStartedPause;
+    this.totalTimePaused += timeFromLastPause;
+  };
+
+  pauseSimulation = () => {
+    this.isTabActive = false;
+    this.timeStartedPause = performance.now();
   };
 
   animate = time => {
@@ -64,8 +91,11 @@ export class Game extends React.Component {
       return;
     }
 
-    this.updateChildren(time);
-    // this.transformControls.update();
+    if (this.isTabActive) {
+      const activeTime = time - this.totalTimePaused;
+      this.updateChildren(activeTime);
+    }
+
     this.frame = requestAnimationFrame(this.animate);
   };
 
