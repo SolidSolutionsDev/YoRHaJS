@@ -104,16 +104,13 @@ export class GameObject extends React.Component {
     const transformChanged = this._checkTransformChanged(prevProps);
     if (transformChanged) {
       return;
-      // this.updateTransform();
+      this.updateTransform();
     }
   }
 
-  _checkTransformChanged = (prevProps) => {
+  _checkTransformChanged = prevProps => {
     const { transform } = this.props;
-    if (prevProps.transform !== transform){
-      return true;
-    }
-    return false;
+    return (prevProps.transform !== transform);
   }
 
   registerComponent = (component, _displayName) => {

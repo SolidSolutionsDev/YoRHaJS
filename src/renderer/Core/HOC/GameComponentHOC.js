@@ -56,7 +56,7 @@ export function makeGameComponent(WrappedComponent, name) {
         return;
       }
       if (started) {
-        this.component.update(time);
+        this.component.update && this.component.update(time);
         return;
       }
       this.start();
