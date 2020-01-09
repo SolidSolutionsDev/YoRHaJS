@@ -19,6 +19,7 @@ import { PlayerBulletGeometry } from "./PlayerBullet/PlayerBulletGeometry";
 import { EnemyBulletGeometry } from "./EnemyBullet/EnemyBulletGeometry";
 import { EnemyMovementControls } from "./EnemyMovementControls/EnemyMovementControls";
 import { CubeGeometry } from "./CubeGeometry/CubeGeometry";
+import { BulletMovement } from "./Bullet/BulletMovement";
 
 export const components = {
   // objMesh: OBJMeshGeometry,
@@ -39,6 +40,7 @@ export const components = {
   shooterGeometry: PlayerShooterGeometry,
   playerBulletGeometry: PlayerBulletGeometry,
   enemyBulletGeometry: EnemyBulletGeometry,
+  bulletMovement: BulletMovement,
   enemyMovementControls: EnemyMovementControls,
   cubeGeometry: CubeGeometry
 };

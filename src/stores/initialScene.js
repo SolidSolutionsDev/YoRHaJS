@@ -208,8 +208,8 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          playerBulletGeometry: {
-          },
+          playerBulletGeometry: {},
+          bulletMovement: {}
         },
         children: []
       },
@@ -255,16 +255,15 @@ export const initialScene = {
             shooting: true,
             moveRatio: 3,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 300,
-            type: "around",
-            aroundBullets:10 ,
+            shootTimeInterval: 500,
+            aroundBullets: 2
           },
           cubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
             mass: 1,
-            tip:true,
+            tip: true,
           }
         },
         children: []

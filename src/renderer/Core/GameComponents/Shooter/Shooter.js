@@ -14,6 +14,7 @@ export class Shooter extends React.Component {
   // new shoot logic
   bulletId = 0;
   shooting = this.props.shooting || false;
+  aroundBullets = this.props.aroundBullets || 1;
   shootingStartTime = null;
   updateTime = null;
   type = this.props.type || "forward";
@@ -98,8 +99,56 @@ export class Shooter extends React.Component {
     // total new bullets
     this.bulletId += bulletsToShootNow;
   };
+  //
+  // initForwardBullets = () => {
+  //   const bulletsToInit = Math.floor(
+  //     this.selfDestructTime / this.shootTimeInterval
+  //   );
+  //
+  //   for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 5; bulletIndex++) {
+  //     const {
+  //       transform,
+  //       selfSettings,
+  //       availableComponent,
+  //       gameObject
+  //     } = this.props;
+  //     const { scene } = availableComponent;
+  //     const { moveRatio, displacementRatio } = selfSettings;
+  //     const { position, rotation, scale } = transform;
+  //     const startTimeForThisBullet = -1; // to be inactive
+  //     const currentBulletId = _.uniqueId(this.bulletPrefab);
+  //     scene.enqueueAction(
+  //       instantiateFromPrefab(
+  //         this.bulletPrefab,
+  //         currentBulletId,
+  //         {
+  //           position,
+  //           rotation,
+  //           scale
+  //         },
+  //         null,
+  //         null,
+  //         {
+  //           bulletMovement: {
+  //             initTime: startTimeForThisBullet,
+  //             bulletIndex,
+  //             moveRatio,
+  //             displacementRatio,
+  //             shooterId: gameObject.id,
+  //             shooterTag: gameObject._tags[0],
+  //             shooterComponentId: this.props.id
+  //           }
+  //         }
+  //       )
+  //     );
+  //     // this.playBulletSound();
+  //   }
+  //
+  //   // total new bullets
+  //   this.bulletId += bulletsToInit;
+  // };
 
-  initForwardBullets = () => {
+  initBullets = () => {
     const bulletsToInit = Math.floor(
       this.selfDestructTime / this.shootTimeInterval
     );
@@ -115,58 +164,10 @@ export class Shooter extends React.Component {
       const { moveRatio, displacementRatio } = selfSettings;
       const { position, rotation, scale } = transform;
       const startTimeForThisBullet = -1; // to be inactive
-      const currentBulletId = _.uniqueId(this.bulletPrefab);
-      scene.enqueueAction(
-        instantiateFromPrefab(
-          this.bulletPrefab,
-          currentBulletId,
-          {
-            position,
-            rotation,
-            scale
-          },
-          null,
-          null,
-          {
-            [this.bulletComponentName]: {
-              initTime: startTimeForThisBullet,
-              bulletIndex,
-              moveRatio,
-              displacementRatio,
-              shooterId: gameObject.id,
-              shooterTag: gameObject._tags[0],
-              shooterComponentId: this.props.id
-            }
-          }
-        )
-      );
-      // this.playBulletSound();
-    }
 
-    // total new bullets
-    this.bulletId += bulletsToInit;
-  };
+      const angleChange = (2 * Math.PI) / this.aroundBullets;
 
-  initAroundBullets = () => {
-    const bulletsToInit = Math.floor(
-      this.selfDestructTime / this.shootTimeInterval
-    );
-
-    for (let bulletIndex = 1; bulletIndex <= bulletsToInit + 3; bulletIndex++) {
-      const {
-        transform,
-        selfSettings,
-        availableComponent,
-        gameObject
-      } = this.props;
-      const { scene } = availableComponent;
-      const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
-      const { position, rotation, scale } = transform;
-      const startTimeForThisBullet = -1; // to be inactive
-
-      const angleChange = (2 * Math.PI) / aroundBullets;
-
-      for (let i = 0; i < aroundBullets; i++) {
+      for (let i = 0; i < this.aroundBullets; i++) {
         const currentBulletId = _.uniqueId(this.bulletPrefab);
         const _rotation = rotation.clone();
         // _rotation.z += angleChange * i;
@@ -184,7 +185,8 @@ export class Shooter extends React.Component {
             null,
             null,
             {
-              [this.bulletComponentName]: {
+              bulletMovement: {
+                around: this.aroundBullets > 1,
                 initTime: startTimeForThisBullet,
                 bulletIndex,
                 moveRatio,
@@ -215,10 +217,11 @@ export class Shooter extends React.Component {
 
     const { transform, selfSettings, availableComponent } = this.props;
     const { scene } = availableComponent;
-    const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
+    const { moveRatio, displacementRatio } = selfSettings;
     const { position, rotation, scale } = transform;
 
-    const angleChange = (2 * Math.PI) / aroundBullets;
+
+    const angleChange = (2 * Math.PI) / this.aroundBullets;
 
     for (let bulletIndex = 1; bulletIndex <= bulletsToShootNow; bulletIndex++) {
       const startTimeForThisBullet =
@@ -226,7 +229,7 @@ export class Shooter extends React.Component {
         totalShotBulletsTime +
         bulletIndex * this.shootTimeInterval;
 
-      for (let i = 0; i < aroundBullets; i++) {
+      for (let i = 0; i < this.aroundBullets; i++) {
         const _rotation = rotation.clone();
         // _rotation.z += angleChange * i;
         _rotation._z = rotation._z + angleChange * i;
@@ -246,7 +249,8 @@ export class Shooter extends React.Component {
               initTime: startTimeForThisBullet,
               bulletIndex,
               moveRatio,
-              displacementRatio
+              displacementRatio,
+              shooterComponentId: this.props.id
               // shooterId: gameObject.id,
               // shooterTag: gameObject._tags[0],
             }
@@ -266,84 +270,6 @@ export class Shooter extends React.Component {
 
     // total new bullets
     this.bulletId += bulletsToShootNow;
-  };
-
-  shootAroundBulletOld = time => {
-    // compute how many bullets to shoot now to catch up time step
-    const totalShotBulletsTime = this.bulletId * this.shootTimeInterval;
-    const timePassedFromLastShot =
-      time - (this.shootingStartTime + totalShotBulletsTime);
-    const bulletsToShootNow = Math.floor(
-      timePassedFromLastShot / this.shootTimeInterval
-    );
-
-    for (let bulletIndex = 1; bulletIndex <= bulletsToShootNow; bulletIndex++) {
-      const startTimeForThisBullet =
-        this.shootingStartTime +
-        totalShotBulletsTime +
-        bulletIndex * this.shootTimeInterval;
-
-      const {
-        // batchInstantiateFromPrefab,
-        transform,
-        selfSettings
-      } = this.props;
-      const { moveRatio, displacementRatio, aroundBullets } = selfSettings;
-      const { position, rotation, scale } = transform;
-
-      const { availableComponent } = this.props;
-      const { scene } = availableComponent;
-
-      const angleChange = (2 * Math.PI) / aroundBullets;
-
-      const bulletInstantiationPayload = [];
-
-      for (let i = 0; i < aroundBullets; i++) {
-        const currentBulletId = _.uniqueId(this.bulletPrefab);
-
-        const _rotation = rotation.clone();
-        // _rotation.z += angleChange * i;
-        _rotation._z = rotation._z + angleChange * i;
-        const payload = [
-          this.bulletPrefab,
-          currentBulletId,
-          {
-            position,
-            rotation: _rotation,
-            scale
-          },
-          null,
-          null,
-          {
-            [this.bulletComponentName]: {
-              initTime: startTimeForThisBullet,
-              bulletIndex,
-              moveRatio,
-              displacementRatio
-            }
-          }
-        ];
-        // bulletInstantiationPayload.push(payload);
-
-        scene.enqueueAction(instantiateFromPrefab(...payload));
-      }
-      //batchInstantiateFromPrefab(bulletInstantiationPayload);
-      this.playBulletSound();
-    }
-
-    // total new bullets
-    this.bulletId += bulletsToShootNow;
-  };
-
-  shootFunction = {
-    around: this.shootAroundBullet,
-    forward: this.shootForwardBullet
-  };
-
-  initBulletsFunction = {
-    // around: this.shootAroundBullet,
-    around: this.initAroundBullets,
-    forward: this.initForwardBullets
   };
 
   startShooting = () => {
@@ -389,14 +315,15 @@ export class Shooter extends React.Component {
 
   start = () => {
     this.initSound();
-    this.initBulletsFunction[this.type]();
+    // this.initBulletsFunction[this.type]();
+    this.initBullets();
   };
 
   update = time => {
     this.updateTime = time;
     if (this.shooting) {
       this.garbageCollectBullets();
-      this.shootFunction[this.type](time);
+      this.shootAroundBullet(time);
     }
   };
 
