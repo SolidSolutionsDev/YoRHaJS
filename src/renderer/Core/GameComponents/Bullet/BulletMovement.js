@@ -104,7 +104,7 @@ export class BulletMovement extends React.Component {
 
   inactivePosition = () => {
     const { transform, gameObject, selfSettings } = this.props;
-    const { around } = selfSettings;
+    const { around, debug } = selfSettings;
     const shooterTransform = this.shooter.props.transform;
 
     const transformValue = gameObject.props.transform;
@@ -132,11 +132,15 @@ export class BulletMovement extends React.Component {
     );
 
     transform.physicsBody.position.z = this.zCoord;
+    if (!debug) {
+      transform.visible = false;
+    }
   };
 
   setActive = () => {
     this.active = true;
     this.selfDestructing = false;
+    this.props.transform.visible = true;
   };
 
   update = time => {
