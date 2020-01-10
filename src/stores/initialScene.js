@@ -31,6 +31,7 @@ export const initialScene = {
       // "testCubeGameObject1",
       "testShooter1",
       "testEnemy1",
+      "testEnemy2",
       "camera1"
     ]
   },
@@ -60,6 +61,13 @@ export const initialScene = {
           position: { x: -10, y: 10, z: 3 }
         },
         prefab: "TestEnemy"
+      },
+      testEnemy2: {
+        debug: true,
+        transform: {
+          position: { x: 10, y: -10, z: 3 }
+        },
+        prefab: "TestEnemy2"
       },
       board1: {
         debug: true,
@@ -197,7 +205,7 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          cube: {
+          testCube: {
             rotationX: 0.01,
             opacity: 0.9
           }
@@ -217,7 +225,8 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          enemyBulletGeometry: {
+          sphereGeometry: {
+            basicMaterial: true
           },
         },
         children: []
@@ -256,14 +265,37 @@ export const initialScene = {
             moveRatio: 3,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 500,
-            aroundBullets: 2
+            aroundBullets: 1
           },
-          cubeGeometry: {
+          enemyCubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
             mass: 1,
             tip: true,
+          }
+        },
+        children: []
+      },
+      TestEnemy2: {
+        debug: true,
+        components: {
+          enemyMovementControls: {
+            type: "follow",
+            speed: 50,
+            rotationSpeed: 10,
+          },
+          shooter: {
+            shooting: true,
+            moveRatio: 3,
+            bulletPrefab: "EnemyBullet",
+            shootTimeInterval: 500,
+            aroundBullets: 2
+          },
+          sphereGeometry: {
+            dimensions: { x: 2, y: 2, z: 2 },
+            // position:{ x: 0, y: 0, z: 4 },
+            color: 0xaaaaaa,
           }
         },
         children: []
@@ -327,6 +359,7 @@ export const initialScene = {
       "Board",
       "TestCube",
       "TestEnemy",
+      "TestEnemy2",
       "TestShooter",
       "PlayerBullet",
       "EnemyBullet",

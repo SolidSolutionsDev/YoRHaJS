@@ -3,15 +3,21 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
-export class EnemyBulletGeometry extends React.Component {
+export class SphereGeometry extends React.Component {
   sphereMesh;
 
-  initBulletGeometry = () => {
-    const { transform, opacity } = this.props;
+  initSphereGeometry = () => {
+    const { transform, opacity, selfSettings } = this.props;
+    const color =
+      selfSettings.color || (Math.random() > 0.5 ? 0xfa7911 : 0x290642);
     const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshBasicMaterial({
-      color: Math.random() > 0.5 ? 0xfa7911 : 0x290642
-    });
+    const material = selfSettings.basicMaterial
+      ? new THREE.MeshBasicMaterial({
+          color: color
+        })
+      : new THREE.MeshLambertMaterial({
+          color: color
+        });
     opacity && (material.opacity = opacity);
     this.sphereMesh = new THREE.Mesh(geometry, material);
     this.sphereMesh.castShadow = true;
@@ -19,7 +25,7 @@ export class EnemyBulletGeometry extends React.Component {
   };
 
   start = () => {
-    this.initBulletGeometry();
+    this.initSphereGeometry();
   };
 
   render() {
@@ -27,6 +33,6 @@ export class EnemyBulletGeometry extends React.Component {
   }
 }
 
-EnemyBulletGeometry.propTypes = {
+SphereGeometry.propTypes = {
   transform: PropTypes.object.isRequired
 };

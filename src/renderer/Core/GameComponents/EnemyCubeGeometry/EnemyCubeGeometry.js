@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 
-export class CubeGeometry extends React.Component {
+export class EnemyCubeGeometry extends React.Component {
   cube;
 
   loadCube = () => {
@@ -47,7 +47,7 @@ export class CubeGeometry extends React.Component {
   }
 }
 
-CubeGeometry.propTypes = {
+EnemyCubeGeometry.propTypes = {
   dimensions: PropTypes.object,
   mass: PropTypes.number,
   color: PropTypes.number,

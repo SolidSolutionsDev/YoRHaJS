@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 
-export class Cube extends React.Component {
+export class TestCube extends React.Component {
   cube;
 
   loadCube = () => {
@@ -29,6 +29,6 @@ export class Cube extends React.Component {
   }
 }
 
-Cube.propTypes = {
+TestCube.propTypes = {
   transform: PropTypes.object.isRequired
 };
