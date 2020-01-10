@@ -17,7 +17,7 @@ export const initialScene = {
     renderer: {
       alpha: true,
       antialias: false,
-      postprocessing: false
+      postprocessing: true
     }
   },
   scene: {
@@ -30,9 +30,9 @@ export const initialScene = {
       "board1",
       // "testCubeGameObject1",
       "testShooter1",
-      "testEnemy1",
+      "testBoss1",
       "testEnemy2",
-      "testEnemy0",
+      // "testBoss0",
       "testEnemy2",
       "testEnemy3",
       "testEnemy4",
@@ -59,40 +59,40 @@ export const initialScene = {
         tags: ["playerShooter"],
         prefab: "TestShooter"
       },
-      testEnemy0: {
+      testBoss0: {
         debug: true,
         transform: {
           position: { x: 30, y: -30, z: 3 }
         },
-        prefab: "TestEnemy2"
+        prefab: "EnemySphereBoss"
       },
-      testEnemy1: {
+      testBoss1: {
         debug: true,
         transform: {
           position: { x: -30, y: 30, z: 3 }
         },
-        prefab: "TestEnemy2"
+        prefab: "EnemySphereBoss"
       },
       testEnemy2: {
         debug: true,
         transform: {
           position: { x: 12, y: -12, z: 3 }
         },
-        prefab: "TestEnemy"
+        prefab: "EnemyFollower"
       },
       testEnemy3: {
         debug: true,
         transform: {
           position: { x: -12, y: -12, z: 3 }
         },
-        prefab: "TestEnemy"
+        prefab: "EnemyFollower"
       },
       testEnemy4: {
         debug: true,
         transform: {
           position: { x: 12, y: 12, z: 3 }
         },
-        prefab: "TestEnemy"
+        prefab: "EnemyFollower"
       },
       board1: {
         debug: true,
@@ -278,7 +278,7 @@ export const initialScene = {
         },
         children: []
       },
-      TestEnemy: {
+      EnemyFollower: {
         debug: true,
         components: {
           enemyMovementControls: {
@@ -288,9 +288,9 @@ export const initialScene = {
           },
           shooter: {
             shooting: true,
-            moveRatio: 3,
+            moveRatio: 2,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 500,
+            shootTimeInterval: 2000,
             aroundBullets: 1
           },
           enemyCubeGeometry: {
@@ -303,7 +303,7 @@ export const initialScene = {
         },
         children: []
       },
-      TestEnemy2: {
+      EnemySphereBoss: {
         debug: true,
         components: {
           enemyMovementControls: {
@@ -316,8 +316,8 @@ export const initialScene = {
             moveRatio: 2,
             displacementRatio:1,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 300,
-            aroundBullets: 4
+            shootTimeInterval: 100,
+            aroundBullets: 1
           },
           sphereGeometry: {
             radius:1.4,
@@ -386,8 +386,8 @@ export const initialScene = {
       "LightGroup",
       "Board",
       "TestCube",
-      "TestEnemy",
-      "TestEnemy2",
+      "EnemyFollower",
+      "EnemySphereBoss",
       "TestShooter",
       "PlayerBullet",
       "EnemyBullet",
