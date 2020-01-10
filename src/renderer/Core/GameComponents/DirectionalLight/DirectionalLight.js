@@ -22,14 +22,14 @@ export class DirectionalLight extends React.Component {
 
     if (castShadow) {
       this.light.castShadow = true;
-      this.light.shadow.mapSize = new THREE.Vector2(1024, 1024);
+      this.light.shadow.mapSize = new THREE.Vector2(2048, 2048);
       this.light.shadow.darkness = 0.5;
       console.log(this.light);
 
-      this.light.shadow.camera.left = -30;
-      this.light.shadow.camera.right = 30;
-      this.light.shadow.camera.top = 30;
-      this.light.shadow.camera.bottom = -50;
+      this.light.shadow.camera.left = -130;
+      this.light.shadow.camera.right = 130;
+      this.light.shadow.camera.top = 130;
+      this.light.shadow.camera.bottom = -150;
     }
 
     if (color) {

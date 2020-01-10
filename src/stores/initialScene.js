@@ -32,6 +32,10 @@ export const initialScene = {
       "testShooter1",
       "testEnemy1",
       "testEnemy2",
+      "testEnemy0",
+      "testEnemy2",
+      "testEnemy3",
+      "testEnemy4",
       "camera1"
     ]
   },
@@ -55,26 +59,47 @@ export const initialScene = {
         tags: ["playerShooter"],
         prefab: "TestShooter"
       },
+      testEnemy0: {
+        debug: true,
+        transform: {
+          position: { x: 30, y: -30, z: 3 }
+        },
+        prefab: "TestEnemy2"
+      },
       testEnemy1: {
         debug: true,
         transform: {
-          position: { x: -10, y: 10, z: 3 }
+          position: { x: -30, y: 30, z: 3 }
         },
-        prefab: "TestEnemy"
+        prefab: "TestEnemy2"
       },
       testEnemy2: {
         debug: true,
         transform: {
-          position: { x: 10, y: -10, z: 3 }
+          position: { x: 12, y: -12, z: 3 }
         },
-        prefab: "TestEnemy2"
+        prefab: "TestEnemy"
+      },
+      testEnemy3: {
+        debug: true,
+        transform: {
+          position: { x: -12, y: -12, z: 3 }
+        },
+        prefab: "TestEnemy"
+      },
+      testEnemy4: {
+        debug: true,
+        transform: {
+          position: { x: 12, y: 12, z: 3 }
+        },
+        prefab: "TestEnemy"
       },
       board1: {
         debug: true,
         components: {
           boardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 50, y: 50, z: 2 },
+            dimensions: { x: 100, y: 100, z: 2 },
             mass: 0
           }
         },
@@ -226,7 +251,8 @@ export const initialScene = {
         transform: {},
         components: {
           sphereGeometry: {
-            basicMaterial: true
+            basicMaterial: true,
+            castShadow:false,
           },
         },
         children: []
@@ -283,19 +309,21 @@ export const initialScene = {
           enemyMovementControls: {
             type: "rotate",
             speed: 50,
-            rotationSpeed: 10,
+            rotationSpeed: 2,
           },
           shooter: {
             shooting: true,
-            moveRatio: 3,
+            moveRatio: 2,
+            displacementRatio:1,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 500,
-            aroundBullets: 2
+            shootTimeInterval: 300,
+            aroundBullets: 4
           },
           sphereGeometry: {
-            dimensions: { x: 2, y: 2, z: 2 },
+            radius:1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
+            castShadow:true,
           }
         },
         children: []

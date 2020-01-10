@@ -6,11 +6,13 @@ import * as THREE from "three";
 export class SphereGeometry extends React.Component {
   sphereMesh;
 
+  radius = this.props.radius || 1;
+
   initSphereGeometry = () => {
     const { transform, opacity, selfSettings } = this.props;
     const color =
       selfSettings.color || (Math.random() > 0.5 ? 0xfa7911 : 0x290642);
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const geometry = new THREE.SphereGeometry(this.radius, 32, 32);
     const material = selfSettings.basicMaterial
       ? new THREE.MeshBasicMaterial({
           color: color
@@ -20,7 +22,7 @@ export class SphereGeometry extends React.Component {
         });
     opacity && (material.opacity = opacity);
     this.sphereMesh = new THREE.Mesh(geometry, material);
-    this.sphereMesh.castShadow = true;
+    this.sphereMesh.castShadow = this.props.castShadow;
     transform.add(this.sphereMesh);
   };
 

@@ -17,6 +17,7 @@ export class EnemyMovementControls extends React.Component {
   currentTestInstanceId = null;
 
   moveRatio = this.props.moveRatio || 0.3;
+  rotationSpeed = this.props.rotationSpeed || 0;
   type = this.props.type || "rotate";
 
   moveVelocity = {
@@ -190,12 +191,12 @@ export class EnemyMovementControls extends React.Component {
     // transform.rotateZ(valueToUse*signal);
     // console.log(vectorAngle2, transform.rotation.z,signal, rotationToMatchLookAtAngle);
     if ( shooterToEnemyVector.length() >5)
-    transform.translateY(.1);
+    transform.translateY(.05);
 
   }
 
   updateAutoRotateEnemy = (time, deltaTime) => {
-    this.props.transform.rotation.z += (0.02 * deltaTime) / 10;
+    this.props.transform.rotation.z += this.rotationSpeed * (0.02 * deltaTime) / 10;
   }
 
   updateType = {
