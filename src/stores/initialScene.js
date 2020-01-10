@@ -281,7 +281,7 @@ export const initialScene = {
         debug: true,
         components: {
           enemyMovementControls: {
-            type: "follow",
+            type: "rotate",
             speed: 50,
             rotationSpeed: 10,
           },

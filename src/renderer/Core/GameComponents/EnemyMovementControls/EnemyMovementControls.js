@@ -3,6 +3,7 @@ import * as CANNON from "cannon";
 import * as _ from "lodash";
 // mousedebug
 import * as THREE from "three";
+import { Vector2 } from "three";
 
 export class EnemyMovementControls extends React.Component {
   shootIntervalCallback;
@@ -16,6 +17,7 @@ export class EnemyMovementControls extends React.Component {
   currentTestInstanceId = null;
 
   moveRatio = this.props.moveRatio || 0.3;
+  type = this.props.type || "rotate";
 
   moveVelocity = {
     value: 0,
@@ -128,42 +130,6 @@ export class EnemyMovementControls extends React.Component {
     // needs delay to play
   };
 
-  shootBullet = () => {
-    const { instantiateFromPrefab, transform } = this.props;
-    const { position, rotation, scale } = transform;
-    // console.log("startShooting",this.currentShooterDirection);
-    const _position = position.clone();
-    _position.addScaledVector(this.currentShooterDirection, 7);
-    this.currentTestInstanceId = _.uniqueId("bullet");
-
-    instantiateFromPrefab(
-      "PlayerBullet",
-      this.currentTestInstanceId,
-      {
-        position: _position,
-        rotation,
-        scale
-      },
-      null,
-      this.updateTime,
-      {
-        playerBulletGeometry: {
-          initialTimeBullet: this.updateTime,
-          moveRatio: 5
-        }
-      }
-    );
-
-    setTimeout(() => {
-      // eslint-disable-next-line no-unused-expressions
-      this.sound.isPlaying ? this.sound.stop() : null;
-      this.sound.play();
-    }, 50);
-    var currentTime = Date.now();
-
-    this.shootLastTime = currentTime;
-  };
-
   mouseLook = e => {
     // console.log('mouseLook',e);
     const _coords = e.detail.coordinates;
@@ -197,91 +163,54 @@ export class EnemyMovementControls extends React.Component {
     }
   };
 
-  updateMovement = () => {
-    // transform.rotation.y += 0.01;s
-    if (this.state.activeLeft) this.moveLeft();
-    if (this.state.activeRight) this.moveRight();
-    if (this.state.activeUp) this.moveUp();
-    if (this.state.activeDown) this.moveDown();
-    if (this.state.activeLookUp) this.lookUp();
-    if (this.state.activeLookDown) this.lookDown();
-    if (this.state.activeLookLeft) this.lookLeft();
-    if (this.state.activeLookRight) this.lookRight();
-  };
+  getShooter = () => {
+    const {
+      gameObject,
+      availableComponent
+    } = this.props;
+    const { scene } = availableComponent;
+    const shooterById = gameObject.getChildGameObjectByTag( "playerShooter", scene);
+    return shooterById;
+  }
 
-  eventsMap = {
-    moveleft: () => this.setState({ activeLeft: true }),
-    moveright: () => this.setState({ activeRight: true }),
-    moveup: () => this.setState({ activeUp: true }),
-    movedown: () => this.setState({ activeDown: true }),
-    moveleft_keyup: () => this.setState({ activeLeft: false }),
-    moveright_keyup: () => this.setState({ activeRight: false }),
-    moveup_keyup: () => this.setState({ activeUp: false }),
-    movedown_keyup: () => this.setState({ activeDown: false }),
-    lookup: () => this.setState({ activeLookUp: true }),
-    lookup_keyup: () => this.setState({ activeLookUp: false }),
-    lookdown: () => this.setState({ activeLookDown: true }),
-    lookdown_keyup: () => this.setState({ activeLookDown: false }),
-    lookleft: () => this.setState({ activeLookLeft: true }),
-    lookleft_keyup: () => this.setState({ activeLookLeft: false }),
-    lookright: () => this.setState({ activeLookRight: true }),
-    lookright_keyup: () => this.setState({ activeLookRight: false }),
-    shoot: this.startShooting,
-    shoot_keyup: this.stopShooting,
-    mousem: this.mouseLook
-  };
+  updateFollowPlayerEnemy = (time, deltaTime) => {
+    const { transform } = this.props;
+    let thisAngleRotation = transform.rotation.z;
+    thisAngleRotation = ( thisAngleRotation*180 /Math.PI) % 360;
+    const shooterAngle = new THREE.Vector3();
+    shooterAngle.sub( this.shooter.transform.getWorldPosition(), transform.getWorldPosition() );
+    // const shooterAngle2 = this.shooter.transform.getWorldPosition().angleTo(transform.getWorldPosition() );
+    const shooterToEnemyVector = new THREE.Vector2(shooterAngle.x, shooterAngle.y) ;
+    const vectorAngle2 = shooterToEnemyVector.angle() ;
+    let vectorAngle2Degrees = (vectorAngle2 * 180) / Math.PI;
+    const signal = vectorAngle2 > transform.rotation.z ? -1 : 1;
+    const rotationToMatchLookAtAngle = vectorAngle2 - transform.rotation.z;
+     transform.rotation.z = vectorAngle2 - Math.PI/2;
+    // const valueToUse = Math.min(Math.abs(rotationToMatchLookAtAngle),0.1);
+    // transform.rotateZ(valueToUse*signal);
+    // console.log(vectorAngle2, transform.rotation.z,signal, rotationToMatchLookAtAngle);
+    if ( shooterToEnemyVector.length() >5)
+    transform.translateY(.1);
 
-  registerEvents = () => {
-    Object.keys(this.eventsMap).forEach(event => {
-      // console.log(`here ${event.toString()}`, this.eventsMap[event]);
-      document.addEventListener(event, this.eventsMap[event]);
-    });
-  };
+  }
 
-  // todo: convert this to gameObject?
-  addMouseDebugMesh = () => {
-    const { availableComponent } = this.props;
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0xfa7911 });
-    this.mouseDebugMesh = new THREE.Mesh(geometry, material);
-    this.mouseDebugMesh.castShadow = true;
-    availableComponent.scene.scene.add(this.mouseDebugMesh);
-  };
+  updateAutoRotateEnemy = (time, deltaTime) => {
+    this.props.transform.rotation.z += (0.02 * deltaTime) / 10;
+  }
 
-  updateMouseLookDebugMesh = () => {
-    const coords = this.getPositionFromMouse(3);
-    this.mouseDebugMesh.position.set(coords.x, coords.y, coords.z);
-  };
-
-  // TODO: maybe this should be an inputService function?
-  getPositionFromMouse = (targetZ = 0) => {
-    const { availableComponent } = this.props;
-    const camera = availableComponent.scene.camera._main;
-
-    let vec = new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z); // create once and reuse
-    let pos = new THREE.Vector3(); // create once and reuse
-
-    vec.unproject(camera);
-
-    vec.sub(camera.position).normalize();
-
-    let distance = (targetZ - camera.position.z) / vec.z;
-
-    pos.copy(camera.position).add(vec.multiplyScalar(distance));
-    return pos;
-  };
+  updateType = {
+    follow: this.updateFollowPlayerEnemy,
+    rotate: this.updateAutoRotateEnemy,
+  }
 
   start = () => {
-    // this.registerEvents();
-    // // transform.add( this.mesh );
-    // this.addMouseDebugMesh();
-    // this.initSound();
+    this.shooter = this.getShooter();
   };
 
-  update = () => {
+  update = (time, deltaTime) => {
     // this.updateMovement();
     // this.updateMouseLook();
-    this.props.transform.rotation.z += 0.02;
+    this.updateType[this.type](time, deltaTime);
   };
 
   render = () => null;
