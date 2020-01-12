@@ -20,7 +20,7 @@ export const updateSceneObject = (parametersObject) => ({
   parametersObject,
 });
 
-export const updateGameObjectComponent = (gameObjectId, gameComponentId, componentParameters) => ({
+export const updateGameObjectComponent = ( gameObjectId, gameComponentId, componentParameters) => ({
   type: "UPDATE_COMPONENT_PARAMETERS",
   gameObjectId,
   gameComponentId,

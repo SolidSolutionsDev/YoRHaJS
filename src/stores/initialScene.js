@@ -17,7 +17,7 @@ export const initialScene = {
     renderer: {
       alpha: true,
       antialias: false,
-      postprocessing: false
+      postprocessing: true
     }
   },
   scene: {
@@ -242,7 +242,7 @@ export const initialScene = {
         components: {
           playerBulletGeometry: {},
           bulletMovement: {
-            debug:true,
+            // debug:true,
           }
         },
         children: []
@@ -317,8 +317,9 @@ export const initialScene = {
             moveRatio: 2,
             displacementRatio:1,
             bulletPrefab: "EnemyBullet",
-            shootTimeInterval: 100,
-            aroundBullets: 1,
+            shootTimeInterval: 50,
+            aroundBullets: 2,
+
           },
           sphereGeometry: {
             radius:1.4,

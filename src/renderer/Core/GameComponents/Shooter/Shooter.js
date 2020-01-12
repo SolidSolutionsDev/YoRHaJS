@@ -76,21 +76,21 @@ export class Shooter extends React.Component {
 
       this.playBulletSound();
       scene.enqueueAction(
-        updateGameObjectComponent(currentBulletGameObjectId, currentBulletId, {
-          initTime: startTimeForThisBullet,
-          bulletIndex,
-          moveRatio,
-          displacementRatio
-          // shooterId: gameObject.id,
-          // shooterTag: gameObject._tags[0],
-        })
-      );
-      scene.enqueueAction(
         updateGameObject(currentBulletGameObjectId, {
           transform: {
             position: position.clone(),
             rotation: rotation.clone(),
             scale: scale.clone()
+          },
+          components: {
+            [currentBulletId]:{
+              initTime: startTimeForThisBullet,
+              bulletIndex,
+              moveRatio,
+              displacementRatio
+              // shooterId: gameObject.id,
+              // shooterTag: gameObject._tags[0],
+            }
           }
         })
       );
@@ -242,26 +242,22 @@ export class Shooter extends React.Component {
 
         this.playBulletSound();
         scene.enqueueAction(
-          updateGameObjectComponent(
-            currentBulletGameObjectId,
-            currentBulletId,
-            {
-              initTime: startTimeForThisBullet,
-              bulletIndex,
-              moveRatio,
-              displacementRatio,
-              shooterComponentId: this.props.id
-              // shooterId: gameObject.id,
-              // shooterTag: gameObject._tags[0],
-            }
-          )
-        );
-        scene.enqueueAction(
           updateGameObject(currentBulletGameObjectId, {
             transform: {
               position: position.clone(),
               rotation: _rotation.clone(),
               scale: scale.clone()
+            },
+            components:{
+              [currentBulletId]:{
+                initTime: startTimeForThisBullet,
+                bulletIndex,
+                moveRatio,
+                displacementRatio,
+                shooterComponentId: this.props.id
+                // shooterId: gameObject.id,
+                // shooterTag: gameObject._tags[0],
+              }
             }
           })
         );

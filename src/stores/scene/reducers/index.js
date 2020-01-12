@@ -62,9 +62,28 @@ export const mainReducer = (state = initialScene, action) => {
       temp.gameObject = _.cloneDeep(
         state.gameObjects.byId[action.gameObjectId]
       );
+      temp.components = temp.gameObject.components || {};
+      if (action.gameObjectParameters.components) {
+        temp.actionComponents = action.gameObjectParameters.components;
+        temp.components = Object.keys(temp.actionComponents).reduce(
+          (accumulator, componentId) => ({
+            ...accumulator,
+            [componentId]: {
+              ...temp.components[componentId],
+              ...temp.actionComponents[componentId]
+            }
+          }),
+          {
+            ...temp.components
+          }
+        );
+      }
       temp.gameObject = {
         ...temp.gameObject,
-        ...action.gameObjectParameters
+        ...action.gameObjectParameters,
+        components: {
+          ...temp.components
+        }
       };
       temp.state = {
         ...state,
