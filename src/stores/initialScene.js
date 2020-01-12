@@ -17,7 +17,7 @@ export const initialScene = {
     renderer: {
       alpha: true,
       antialias: false,
-      postprocessing: true
+      postprocessing: false
     }
   },
   scene: {
@@ -30,9 +30,8 @@ export const initialScene = {
       "board1",
       // "testCubeGameObject1",
       "testShooter1",
-      "testBoss1",
-      "testEnemy2",
       // "testBoss0",
+      "testBoss1",
       "testEnemy2",
       "testEnemy3",
       "testEnemy4",
@@ -242,7 +241,9 @@ export const initialScene = {
         transform: {},
         components: {
           playerBulletGeometry: {},
-          bulletMovement: {}
+          bulletMovement: {
+            debug:true,
+          }
         },
         children: []
       },
@@ -317,7 +318,7 @@ export const initialScene = {
             displacementRatio:1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 100,
-            aroundBullets: 1
+            aroundBullets: 1,
           },
           sphereGeometry: {
             radius:1.4,

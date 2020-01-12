@@ -1,7 +1,6 @@
-import { connect } from "react-redux";
+import { connect, batch } from "react-redux";
 import { Scene } from "./Scene";
 import {
-  batchActions,
   registerCamera,
   removeCamera,
   setMainCamera
@@ -30,13 +29,12 @@ const mapDispatchToProps = dispatch => ({
   },
   dequeueActions: enqueuedActionsArray => {
     if (enqueuedActionsArray.length) {
-      const actionsArray = enqueuedActionsArray.splice(0,enqueuedActionsArray.length); // this is used to empty the original array and save a copy
-      dispatch(batchActions(actionsArray));
-      // batch(() => {
-      //   while (enqueuedActionsArray.length) {
-      //     dispatch(enqueuedActionsArray.pop());
-      //   }
-      // });
+      const actionsArray = enqueuedActionsArray.splice( 0, enqueuedActionsArray.length); // this is used to empty the original array and save a copy
+      batch(() => {
+        while (actionsArray.length) {
+          dispatch(actionsArray.pop());
+        }
+      });
     }
   }
 });

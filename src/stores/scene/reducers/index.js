@@ -159,28 +159,6 @@ export const mainReducer = (state = initialScene, action) => {
         }
       }
       return temp.state;
-    case "BATCH_ACTIONS":
-      temp.state = action.actionsArray.reduce(
-        (stateAccumulator, individualAction) => {
-          return mainReducer(
-            stateAccumulator,
-            individualAction
-          );
-        },
-        state
-      );
-      return temp.state;
-    case "BATCH_INSTANTIATE_FROM_PREFAB":
-      temp.state = action.payloadArray.reduce(
-        (stateAccumulator, individualInstantiateAction) => {
-          return instantiateFromPrefabReducer(
-            stateAccumulator,
-            individualInstantiateAction
-          );
-        },
-        state
-      );
-      return temp.state;
     case "INSTANTIATE_FROM_PREFAB":
       return instantiateFromPrefabReducer(state, action);
     case "REGISTER_CAMERA":
