@@ -33,8 +33,8 @@ export const initialScene = {
       // "testBoss0",
       "testBoss1",
       "testEnemy2",
-      "testEnemy3",
-      "testEnemy4",
+      // "testEnemy3",
+      // "testEnemy4",
       "camera1"
     ]
   },
@@ -318,7 +318,7 @@ export const initialScene = {
             displacementRatio:1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
-            aroundBullets: 2,
+            aroundBullets: 1,
 
           },
           sphereGeometry: {

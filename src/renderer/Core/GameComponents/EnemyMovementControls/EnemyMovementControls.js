@@ -176,22 +176,34 @@ export class EnemyMovementControls extends React.Component {
 
   updateFollowPlayerEnemy = (time, deltaTime) => {
     const { transform } = this.props;
+
+    var v = new THREE.Vector3();
+    v.copy(this.shooter.transform.position);
+    this.shooter.transform.localToWorld(v);
+    transform.worldToLocal(v);
+
     let thisAngleRotation = transform.rotation.z;
-    thisAngleRotation = ( thisAngleRotation*180 /Math.PI) % 360;
+
+    thisAngleRotation = ( thisAngleRotation * 180 / Math.PI ) % 360;
+    const angleToShooter = (transform.position.angleTo(this.shooter.transform.position) * 180 / Math.PI ) ;
+    // console.log(v, thisAngleRotation + 90, angleToShooter, transform.rotation, v.crossVectors(transform.position));
+
+    var rot = transform.getWorldQuaternion();
+    rot.multiply(this.shooter.transform.getWorldPosition());
+    // console.log(transform.getWorldDirection(), this.shooter.transform.getWorldDirection(), euler);
+    console.log(transform.position, this.shooter.transform.position, angleToShooter);
+
     const shooterAngle = new THREE.Vector3();
-    shooterAngle.sub( this.shooter.transform.getWorldPosition(), transform.getWorldPosition() );
-    // const shooterAngle2 = this.shooter.transform.getWorldPosition().angleTo(transform.getWorldPosition() );
+    shooterAngle.sub(this.shooter.transform.getWorldPosition(), transform.getWorldPosition());
+    // const shooterAngle2 = this.shooter.transform.getWorldPosition().angleTo(transform.getWorldPosition());
     const shooterToEnemyVector = new THREE.Vector2(shooterAngle.x, shooterAngle.y) ;
     const vectorAngle2 = shooterToEnemyVector.angle() ;
     let vectorAngle2Degrees = (vectorAngle2 * 180) / Math.PI;
     const signal = vectorAngle2 > transform.rotation.z ? -1 : 1;
     const rotationToMatchLookAtAngle = vectorAngle2 - transform.rotation.z;
-     transform.rotation.z = vectorAngle2 - Math.PI/2;
-    // const valueToUse = Math.min(Math.abs(rotationToMatchLookAtAngle),0.1);
-    // transform.rotateZ(valueToUse*signal);
-    // console.log(vectorAngle2, transform.rotation.z,signal, rotationToMatchLookAtAngle);
-    if ( shooterToEnemyVector.length() >5)
-    transform.translateY(.05);
+    //  transform.rotation.z = vectorAngle2 - Math.PI/2;
+    // if ( shooterToEnemyVector.length() >5)
+    // transform.translateY(.05);
 
   }
 
