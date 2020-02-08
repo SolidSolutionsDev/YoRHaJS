@@ -132,9 +132,7 @@ export class EnemyMovementControls extends React.Component {
   };
 
   mouseLook = e => {
-    // console.log('mouseLook',e);
-    const _coords = e.detail.coordinates;
-    this.coords = _coords;
+    this.coords = e.detail.coordinates;
 
     this.updateMouseLookDebugMesh();
 
@@ -177,39 +175,22 @@ export class EnemyMovementControls extends React.Component {
   updateFollowPlayerEnemy = (time, deltaTime) => {
     const { transform } = this.props;
 
-    var v = new THREE.Vector3();
-    v.copy(this.shooter.transform.position);
-    this.shooter.transform.localToWorld(v);
-    transform.worldToLocal(v);
+    const vectorShooterLocalPositionRelativeToEnemyPositionAndRotation = new THREE.Vector3();
+    vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.copy(this.shooter.transform.position);
 
-    let thisAngleRotation = transform.rotation.z;
+    transform.worldToLocal(vectorShooterLocalPositionRelativeToEnemyPositionAndRotation);    // shooter position relative to enemytransform- includes rotation of the transform
 
-    thisAngleRotation = ( thisAngleRotation * 180 / Math.PI ) % 360;
-    const angleToShooter = (transform.position.angleTo(this.shooter.transform.position) * 180 / Math.PI ) ;
-    // console.log(v, thisAngleRotation + 90, angleToShooter, transform.rotation, v.crossVectors(transform.position));
-
-    var rot = transform.getWorldQuaternion();
-    rot.multiply(this.shooter.transform.getWorldPosition());
-    // console.log(transform.getWorldDirection(), this.shooter.transform.getWorldDirection(), euler);
-    console.log(transform.position, this.shooter.transform.position, angleToShooter);
-
-    const shooterAngle = new THREE.Vector3();
-    shooterAngle.sub(this.shooter.transform.getWorldPosition(), transform.getWorldPosition());
-    // const shooterAngle2 = this.shooter.transform.getWorldPosition().angleTo(transform.getWorldPosition());
-    const shooterToEnemyVector = new THREE.Vector2(shooterAngle.x, shooterAngle.y) ;
-    const vectorAngle2 = shooterToEnemyVector.angle() ;
-    let vectorAngle2Degrees = (vectorAngle2 * 180) / Math.PI;
-    const signal = vectorAngle2 > transform.rotation.z ? -1 : 1;
-    const rotationToMatchLookAtAngle = vectorAngle2 - transform.rotation.z;
-    //  transform.rotation.z = vectorAngle2 - Math.PI/2;
-    // if ( shooterToEnemyVector.length() >5)
-    // transform.translateY(.05);
-
-  }
+    if ( vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.length() >5){
+      transform.translateY(.1);
+    }
+      vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.normalize();
+     if (vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.x > 0.1) { transform.rotateZ(-.05);}
+     else if (vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.x<-0.1 ){transform.rotateZ(.05);}
+  };
 
   updateAutoRotateEnemy = (time, deltaTime) => {
     this.props.transform.rotation.z += this.rotationSpeed * (0.02 * deltaTime) / 10;
-  }
+  };
 
   updateType = {
     follow: this.updateFollowPlayerEnemy,
