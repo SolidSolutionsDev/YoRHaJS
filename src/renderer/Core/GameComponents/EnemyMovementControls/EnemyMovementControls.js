@@ -175,20 +175,29 @@ export class EnemyMovementControls extends React.Component {
     updateFollowPlayerEnemy = (time, deltaTime) => {
         const {transform} = this.props;
 
-        const vectorShooterLocalPositionRelativeToEnemyPositionAndRotation = new THREE.Vector3();
-        vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.copy(this.shooter.transform.position);
+        // player world position
+        const vPlayerPositionRelativeToWorld = new THREE.Vector3().copy(this.shooter.transform.position);
 
-        transform.worldToLocal(vectorShooterLocalPositionRelativeToEnemyPositionAndRotation);    // shooter position relative to enemytransform- includes rotation of the transform
+        // player position relative to enemy transform - includes rotation of the transform
+        const vPlayerPositionRelativeToLocalEnemyPositionAndRotation = transform.worldToLocal(vPlayerPositionRelativeToWorld);
 
-        if (vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.length() > 5) {
-            transform.translateY(.1);
+        const distancePlayerToEnemy = vPlayerPositionRelativeToLocalEnemyPositionAndRotation.length();
+
+        const translateValue = .1;
+        const maxDistanceBetweenPlayerAndEnemy = 5;
+        if (distancePlayerToEnemy > maxDistanceBetweenPlayerAndEnemy) {
+            transform.translateY(translateValue);
         }
-        vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.normalize();
-        if (vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.x > 0.1) {
-            transform.rotateZ(-.05);
-        } else if (vectorShooterLocalPositionRelativeToEnemyPositionAndRotation.x < -0.1) {
-            transform.rotateZ(.05);
-        }
+
+        vPlayerPositionRelativeToLocalEnemyPositionAndRotation.normalize();
+
+        // get angle to rotate
+        const maxRotateValue = .05;
+        const rotationToLookAtPlayer = Math.asin(vPlayerPositionRelativeToLocalEnemyPositionAndRotation.x);
+        const rotateAbsoluteValue = Math.min(Math.abs(rotationToLookAtPlayer), maxRotateValue);
+        const orientedRotationValue =  -Math.sign(rotationToLookAtPlayer) * rotateAbsoluteValue;
+
+        transform.rotateZ( orientedRotationValue );
     };
 
     updateAutoRotateEnemy = (time, deltaTime) => {
