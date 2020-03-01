@@ -15,18 +15,22 @@ export class AudioService extends Component {
 
   componentDidMount() {}
 
-  componentDidUpdate =() =>{
+  componentDidUpdate = () => {
     this.setupListenerOnCamera();
-}
+  };
 
-  setupListenerOnCamera =() => {
-    const {availableComponent} = this.props;
-    const {scene} = availableComponent;
-      if (scene.camera && scene.camera._main && this.cameraWithListener !== scene.camera._main ) {
-          scene.camera._main.add(this.listener);
-          this.cameraWithListener = scene.camera._main;
-      }
-  }
+  setupListenerOnCamera = () => {
+    const { availableComponent } = this.props;
+    const { scene } = availableComponent;
+    if (
+      scene.camera &&
+      scene.camera._main &&
+      this.cameraWithListener !== scene.camera._main
+    ) {
+      scene.camera._main.add(this.listener);
+      this.cameraWithListener = scene.camera._main;
+    }
+  };
 
   buildPositionalSound = soundPath => {
     const sound = new THREE.PositionalAudio(this.listener);
@@ -52,7 +56,7 @@ export class AudioService extends Component {
     return analyser;
   };
 
-  update = (time) => {};
+  update = time => {};
 
   render() {
     return <div>Audio</div>;

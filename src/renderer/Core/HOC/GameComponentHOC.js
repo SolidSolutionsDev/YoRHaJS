@@ -1,5 +1,5 @@
 import React from "react";
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
 import PropTypes from "prop-types";
 
@@ -11,35 +11,37 @@ export function makeGameComponent(WrappedComponent, name) {
 
     state = { started: false };
 
-    uniqueId = _.uniqueId("component") // for debug purposes
+    uniqueId = _.uniqueId("component"); // for debug purposes
 
     static propTypes = {
-      transform: PropTypes.object.isRequired,
+      transform: PropTypes.object.isRequired
     };
 
     getDisplayName = () =>
-      name ||  WrappedComponent.displayName || WrappedComponent.name || "Component";
+      name ||
+      WrappedComponent.displayName ||
+      WrappedComponent.name ||
+      "Component";
 
-    componentWillMount = () => {
+    constructor(props) {
+      super(props);
       const _displayName = this.getDisplayName();
-      this.props.registerComponent(this, _displayName);
-
-      // console.log(this.uniqueId + " component will mount " + this.getDisplayName());
-    };
+      props.registerComponent(this, _displayName);
+    }
 
     componentWillUnmount() {
       // console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());
       this._onDestroy();
     }
 
-    _onDestroy () {
+    _onDestroy() {
       this.unmounting = true;
-      if (this.onDestroy) {
-        this.onDestroy();
+      if (this.component.onDestroy) {
+        this.component.onDestroy();
       }
     }
 
-    registerComponent = (component) => {
+    registerComponent = component => {
       this.component = component;
     };
 
@@ -48,13 +50,13 @@ export function makeGameComponent(WrappedComponent, name) {
       this.setState({ started: true });
     };
 
-    update = (time) => {
+    update = ( time, deltaTime ) => {
       const { started } = this.state;
       if (this.unmounting) {
         return;
       }
       if (started) {
-        this.component.update(time);
+        this.component.update && this.component.update(time, deltaTime);
         return;
       }
       this.start();
@@ -63,14 +65,22 @@ export function makeGameComponent(WrappedComponent, name) {
     render() {
       // Wraps the input component in a container, without mutating it. Good!
       return (
-      <GameContext.Consumer  key={`${this.props._parentId}_component_${this.props.id}_consumer`} >
-        {(context) => { return (
-          <WrappedComponent key={`${this.props._parentId}_component_${this.props.id}`} {...context} {...this.props} {...this.props.selfSettings} ref={this.registerComponent} />
-        )}}
-      </GameContext.Consumer>
-
-      )
+        <GameContext.Consumer
+          key={`${this.props._parentId}_component_${this.props.id}_consumer`}
+        >
+          {context => {
+            return (
+              <WrappedComponent
+                key={`${this.props._parentId}_component_${this.props.id}`}
+                {...context}
+                {...this.props}
+                {...this.props.selfSettings}
+                ref={this.registerComponent}
+              />
+            );
+          }}
+        </GameContext.Consumer>
+      );
     }
   };
 }
-

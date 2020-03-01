@@ -12,10 +12,10 @@ export class OBJMeshGeometry extends React.Component {
   transform = new THREE.Object3D();
 
   defaultMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
+    color: 0xffffff
   });
 
-  _resetGeometryScale = (modelToResetScale) => {
+  _resetGeometryScale = modelToResetScale => {
     // Compute and Get the Bounding Box
     modelToResetScale.geometry.computeBoundingBox();
     const boundingBox = modelToResetScale.geometry.boundingBox.clone();
@@ -24,7 +24,7 @@ export class OBJMeshGeometry extends React.Component {
     const edgeSizes = [
       boundingBox.max.x - boundingBox.min.x,
       boundingBox.max.y - boundingBox.min.y,
-      boundingBox.max.z - boundingBox.min.z,
+      boundingBox.max.z - boundingBox.min.z
     ];
 
     // Get the bigger edge
@@ -42,7 +42,7 @@ export class OBJMeshGeometry extends React.Component {
     return modelToResetScale;
   };
 
-  modelLoadedCallback = (loadedModel) => {
+  modelLoadedCallback = loadedModel => {
     const modelToUse = loadedModel.children[0];
     modelToUse.material = this.defaultMaterial;
     modelToUse.material.needsUpdate = true;
@@ -52,12 +52,12 @@ export class OBJMeshGeometry extends React.Component {
     this.transform.add(scaledModel);
   };
 
-  _loadFBX = (assetURL) => {
+  _loadFBX = assetURL => {
     const loader = new FBXLoader();
     loader.load(assetURL, this.modelLoadedCallback);
   };
 
-  _loadOBJ = (assetURL) => {
+  _loadOBJ = assetURL => {
     const loader = new THREE.OBJLoader();
     loader.load(assetURL, this.modelLoadedCallback);
   };
@@ -94,5 +94,5 @@ export class OBJMeshGeometry extends React.Component {
 
 OBJMeshGeometry.propTypes = {
   modelInputData: PropTypes.object.isRequired,
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };

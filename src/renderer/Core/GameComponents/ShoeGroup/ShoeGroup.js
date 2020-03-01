@@ -21,19 +21,29 @@ export class ShoeGroup extends React.Component {
   // };
 
   getShoes = () => {
-    const { user_shoes, availableComponent, registerChildGameObject } = this.props;
+    const {
+      user_shoes,
+      availableComponent,
+      registerChildGameObject
+    } = this.props;
     // const _shoeData = user_shoes.byId[current_selected_shoe]
-    return user_shoes.allIds.map((shoeId) => {
+    return user_shoes.allIds.map(shoeId => {
       const shoeData = user_shoes.byId[shoeId];
       const objectProps = {
         id: shoeId,
         key: shoeData.type + shoeId,
-        availableComponent,
+        availableComponent
       };
 
       // const ShoeGameObject = GameObject.create("shoe");
 
-      return <GameObject id={"shoe"} ref={registerChildGameObject} {...objectProps} />;
+      return (
+        <GameObject
+          id={"shoe"}
+          ref={registerChildGameObject}
+          {...objectProps}
+        />
+      );
     });
   };
 
@@ -52,10 +62,10 @@ export class ShoeGroup extends React.Component {
 ShoeGroup.propTypes = {
   shoesActive: PropTypes.bool,
   objects: PropTypes.array,
-  transform: PropTypes.object,
+  transform: PropTypes.object
 };
 
 ShoeGroup.defaultProps = {
   shoesActive: true,
-  objects: [],
+  objects: []
 };

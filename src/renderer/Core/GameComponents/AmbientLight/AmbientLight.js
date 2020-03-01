@@ -29,8 +29,7 @@ export class AmbientLight extends React.Component {
     }
   };
 
-  update = () => {
-  };
+  update = () => {};
 
   render() {
     return null;
@@ -38,5 +37,5 @@ export class AmbientLight extends React.Component {
 }
 
 AmbientLight.propTypes = {
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };

@@ -11,16 +11,16 @@ export class ObjectLoaderMesh extends React.Component {
 
   // TODO: Create geometry uniformize component
   // TODO2: compute groups scale
-  _centerGeometry = (modelToResetScale) => {
+  _centerGeometry = modelToResetScale => {
     // Set the current center
     modelToResetScale.geometry.center();
 
     return modelToResetScale;
-  }
+  };
 
   // TODO: Create geometry uniformize component
   // TODO2: compute groups scale
-  _resetGeometryScale = (modelToResetScale) => {
+  _resetGeometryScale = modelToResetScale => {
     // Compute and Get the Bounding Box
     modelToResetScale.geometry.computeBoundingBox();
     const boundingBox = modelToResetScale.geometry.boundingBox.clone();
@@ -29,7 +29,7 @@ export class ObjectLoaderMesh extends React.Component {
     const edgeSizes = [
       boundingBox.max.x - boundingBox.min.x,
       boundingBox.max.y - boundingBox.min.y,
-      boundingBox.max.z - boundingBox.min.z,
+      boundingBox.max.z - boundingBox.min.z
     ];
 
     // Get the bigger edge
@@ -47,35 +47,33 @@ export class ObjectLoaderMesh extends React.Component {
     return modelToResetScale;
   };
 
-  modelLoadedCallback = (loadedModel) => {
+  modelLoadedCallback = loadedModel => {
     const { normalizeSize, centerGeometry, emitLoadingAsset } = this.props;
     const modelsToUse = loadedModel.children;
     let models = normalizeSize
       ? modelsToUse.map(this._resetGeometryScale)
       : modelsToUse;
 
-    models = centerGeometry
-      ? models.map(this._centerGeometry)
-      : models;
+    models = centerGeometry ? models.map(this._centerGeometry) : models;
 
     this.transform.add(...models);
 
     this.loaded = true;
-    emitLoadingAsset ? emitLoadingAsset(this.filename, 1.0):null;
+    // eslint-disable-next-line no-unused-expressions
+    emitLoadingAsset ? emitLoadingAsset(this.filename, 1.0) : null;
   };
 
-  modelLoadingCallback = (xhr) => {
+  modelLoadingCallback = xhr => {
     // const { emitLoadingAsset } = this.props;
     // emitLoadingAsset ? emitLoadingAsset(this.filename, xhr.loaded / xhr.total):null ;
     // console.log(`${this.filename} ${(xhr.loaded / xhr.total) * 100}% loaded`);
-
   };
 
-  modelErrorCallback = (err) => {
+  modelErrorCallback = err => {
     console.error("An error happened", err);
   };
 
-  _loadObject = (assetURL) => {
+  _loadObject = assetURL => {
     if (!assetURL) {
       return;
     }
@@ -85,7 +83,7 @@ export class ObjectLoaderMesh extends React.Component {
       assetURL,
       this.modelLoadedCallback,
       this.modelLoadingCallback,
-      this.modelErrorCallback,
+      this.modelErrorCallback
     );
   };
 
@@ -104,7 +102,7 @@ export class ObjectLoaderMesh extends React.Component {
 
     if (extension !== "json") {
       alert(
-        `ObjectLoaderMesh component error: ${assetURL} is not JSON file. Ignored.`,
+        `ObjectLoaderMesh component error: ${assetURL} is not JSON file. Ignored.`
       );
     }
     this._loadObject(assetURL);
@@ -116,8 +114,8 @@ export class ObjectLoaderMesh extends React.Component {
   };
 
   update = () => {
-    if(!this.startedLoading) {
-      this.startedLoading=true;
+    if (!this.startedLoading) {
+      this.startedLoading = true;
       this.loadModel();
     }
   };
@@ -132,5 +130,5 @@ ObjectLoaderMesh.propTypes = {
   transform: PropTypes.object.isRequired,
   normalizeSize: PropTypes.bool,
   centerGeometry: PropTypes.bool,
-  emitLoadingAsset: PropTypes.func,
+  emitLoadingAsset: PropTypes.func
 };
