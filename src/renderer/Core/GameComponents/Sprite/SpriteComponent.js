@@ -12,7 +12,7 @@ export class SpriteComponent extends React.Component {
     const spriteMap = new THREE.TextureLoader().load(spriteUrl);
     const spriteMaterial = new THREE.SpriteMaterial({
       map: spriteMap,
-      color: 0xffffff,
+      color: 0xffffff
     });
     this.sprite = new THREE.Sprite(spriteMaterial);
     transform.add(this.sprite);
@@ -31,5 +31,5 @@ export class SpriteComponent extends React.Component {
 
 SpriteComponent.propTypes = {
   spriteUrl: PropTypes.string.isRequired,
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };

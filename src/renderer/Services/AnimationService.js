@@ -4,13 +4,12 @@ import TWEEN from "@tweenjs/tween.js";
 import * as THREE from "three";
 
 export class AnimationService extends Component {
-
-    Easing = TWEEN.Easing;
+  Easing = TWEEN.Easing;
 
   // TODO: add tweening register of what objects are travellng
 
   // TODO: make function parameters an object and use proptypes or alternative to specify mandatory fields and have auto complete.
-  travelTo(gameObjectTravelling, finalPosition, time, parameters){
+  travelTo(gameObjectTravelling, finalPosition, time, parameters) {
     const _from = {
       x: gameObjectTravelling.position.x,
       y: gameObjectTravelling.position.y,
@@ -24,24 +23,24 @@ export class AnimationService extends Component {
     };
 
     const _easing =
-        parameters && parameters.easing
-            ? parameters.easing
-            : TWEEN.Easing.Linear.None;
+      parameters && parameters.easing
+        ? parameters.easing
+        : TWEEN.Easing.Linear.None;
     const _target = parameters && parameters.target ? parameters.target : false;
 
     const tween = new TWEEN.Tween(_from)
-        .to(_to, time)
-        .easing(_easing)
-        .onUpdate(function() {
-          gameObjectTravelling.position.set(_from.x, _from.y, _from.z);
-          if (_target) {
-            gameObjectTravelling.lookAt(_target);
-          }
-        })
-        .onComplete(function() {
-          // TODO: emit event or dispatch to redux
-        })
-        .start();
+      .to(_to, time)
+      .easing(_easing)
+      .onUpdate(function() {
+        gameObjectTravelling.position.set(_from.x, _from.y, _from.z);
+        if (_target) {
+          gameObjectTravelling.lookAt(_target);
+        }
+      })
+      .onComplete(function() {
+        // TODO: emit event or dispatch to redux
+      })
+      .start();
   }
 
   lookAt(gameObjectlooking, targetPosition, time, parameters) {
@@ -50,17 +49,21 @@ export class AnimationService extends Component {
 
     // final rotation (with lookAt)
     const _finalPosition =
-        parameters && parameters.finalPosition
-            ? parameters.finalPosition
-            : gameObjectlooking.position.clone();
+      parameters && parameters.finalPosition
+        ? parameters.finalPosition
+        : gameObjectlooking.position.clone();
     const _initialPosition = gameObjectlooking.position.clone();
-    gameObjectlooking.position.set(_finalPosition.x, _finalPosition.y, _finalPosition.z);
+    gameObjectlooking.position.set(
+      _finalPosition.x,
+      _finalPosition.y,
+      _finalPosition.z
+    );
     gameObjectlooking.lookAt(targetPosition);
     const endRotation = new THREE.Euler().copy(gameObjectlooking.rotation);
     gameObjectlooking.position.set(
-        _initialPosition.x,
-        _initialPosition.y,
-        _initialPosition.z
+      _initialPosition.x,
+      _initialPosition.y,
+      _initialPosition.z
     );
 
     // revert to original rotation
@@ -79,20 +82,20 @@ export class AnimationService extends Component {
     };
 
     const tween = new TWEEN.Tween(_from)
-        .to(_to, time)
-        .onUpdate(function() {
-          gameObjectlooking.rotation._x = _from.x;
-          gameObjectlooking.rotation._y = _from.y;
-          gameObjectlooking.rotation._z = _from.z;
-          gameObjectlooking.rotation.fromArray([_from.x, _from.y, _from.z]);
-        })
-        .onComplete(function() {
-          // TODO: emit event or dispatch to redux
-        })
-        .start();
+      .to(_to, time)
+      .onUpdate(function() {
+        gameObjectlooking.rotation._x = _from.x;
+        gameObjectlooking.rotation._y = _from.y;
+        gameObjectlooking.rotation._z = _from.z;
+        gameObjectlooking.rotation.fromArray([_from.x, _from.y, _from.z]);
+      })
+      .onComplete(function() {
+        // TODO: emit event or dispatch to redux
+      })
+      .start();
   }
 
-  update = (time) => {
+  update = time => {
     TWEEN.update(time);
   };
 

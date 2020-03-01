@@ -10,7 +10,7 @@ export class CSSLabelTo3D extends React.Component {
 
   text;
 
-  setHTML = (html) => {
+  setHTML = html => {
     this.text.dangerouslySetInnerHtml = html;
   };
 
@@ -19,6 +19,10 @@ export class CSSLabelTo3D extends React.Component {
     this.text = this.createTextLabel();
 
     this.setHTML(`Label`);
+  };
+
+  onDestroy = () => {
+    this.text.parentNode.removeChild(this.text);
   };
 
   get2DCoords = (position, camera) => {
@@ -48,7 +52,7 @@ export class CSSLabelTo3D extends React.Component {
 
     const coords2d = this.get2DCoords(
       this.position,
-      availableComponent.scene.camera._main,
+      availableComponent.scene.camera._main
     );
     this.text.style.left = `${coords2d.x}px`;
     this.text.style.top = `${coords2d.y}px`;
@@ -63,5 +67,5 @@ CSSLabelTo3D.propTypes = {
   objectInputData: PropTypes.object,
   availableComponent: PropTypes.object,
   registerUpdate: PropTypes.func,
-  transform: PropTypes.object,
+  transform: PropTypes.object
 };

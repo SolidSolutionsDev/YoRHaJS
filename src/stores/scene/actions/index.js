@@ -5,12 +5,14 @@ export const instantiateFromGameObject = (gameObjectId, transform, parentId) => 
   parentId,
 });
 
-export const instantiateFromPrefab = (prefabId, newId, transform, parentId) => ({
+export const instantiateFromPrefab = (prefabId, newId, transform, parentId,instantiationTime, components) => ({
   type: "INSTANTIATE_FROM_PREFAB",
   newId,
   prefabId,
   transform,
   parentId,
+  instantiationTime,
+  components
 });
 
 export const updateSceneObject = (parametersObject) => ({
@@ -18,11 +20,17 @@ export const updateSceneObject = (parametersObject) => ({
   parametersObject,
 });
 
-export const updateGameObjectComponent = (gameObjectId, gameComponentId, componentParameters) => ({
+export const updateGameObjectComponent = ( gameObjectId, gameComponentId, componentParameters) => ({
   type: "UPDATE_COMPONENT_PARAMETERS",
   gameObjectId,
   gameComponentId,
   componentParameters,
+});
+
+export const updateGameObject = (gameObjectId, gameObjectParameters) => ({
+  type: "UPDATE_GAMEOBJECT_PARAMETERS",
+  gameObjectId,
+  gameObjectParameters,
 });
 
 export const emitLoadingAsset = (filename, total) => ({
@@ -46,7 +54,7 @@ export const setMainCamera = (cameraId) => ({
   cameraId,
 });
 
-export const destroyGameObjectInstanceById = (gameObjectId) => ({
+export const destroyGameObjectById = (gameObjectId) => ({
   type: "DESTROY_GAMEOBJECT_BYID",
   gameObjectId,
 });

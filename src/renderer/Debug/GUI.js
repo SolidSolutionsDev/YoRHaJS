@@ -8,12 +8,17 @@ import DatGui, {
   DatNumber,
   DatString,
   DatColor,
-  DatSelect,
+  DatSelect
 } from "react-dat-gui";
 
 export class GUI extends React.Component {
-  updateShoeSet = (data) => {
-    const { updateSceneObject, updateShoe,updateShoeMaterial, applicationState } = this.props;
+  updateShoeSet = data => {
+    const {
+      updateSceneObject,
+      updateShoe,
+      updateShoeMaterial,
+      applicationState
+    } = this.props;
     if (applicationState.custom_shoe.option !== data.custom_shoe.option) {
       updateShoe(applicationState.currentShoeId, data.custom_shoe);
     } else {
@@ -25,8 +30,7 @@ export class GUI extends React.Component {
 
   buildColorList = () => {
     //const { applicationState } = this.props;
-  }
-
+  };
 
   render() {
     const { applicationState } = this.props;
@@ -40,20 +44,14 @@ export class GUI extends React.Component {
         key="shoeSet"
         onUpdate={this.updateShoeSet}
       >
-        <DatBoolean
-          path="scene.debug"
-          label="Debug"
-        />
-        <DatBoolean
-          path="scene.cameraAutoRotate"
-          label="Camera AutoRotate"
-        />
+        <DatBoolean path="scene.debug" label="Debug" />
+        <DatBoolean path="scene.cameraAutoRotate" label="Camera AutoRotate" />
         <DatSelect
           path="custom_shoe.option"
           options={applicationState.availableShoeColorSets}
         />
         <DatColor path="scene.backgroundColor" label="Background" />
-      </DatGui>,
+      </DatGui>
       // <DatGui data={applicationState} onUpdate={this.updateShoeColor}>
       //   <DatColor
       //      path="backgroundColor"
@@ -71,5 +69,5 @@ GUI.propTypes = {
   applicationState: PropTypes.object,
   typeState: PropTypes.object,
   colorState: PropTypes.object,
-  updateSceneObject: PropTypes.func,
+  updateSceneObject: PropTypes.func
 };

@@ -7,7 +7,7 @@ export class BoardPlaneGeometry extends React.Component {
   mesh;
 
   initBoard = () => {
-    const { transform, gameObject} = this.props;
+    const { transform, gameObject } = this.props;
     // let geometry = new THREE.PlaneGeometry( 50, 50, 32 );
     let geometry = new THREE.BoxGeometry(
       this.props.dimensions.x,
@@ -19,16 +19,19 @@ export class BoardPlaneGeometry extends React.Component {
       side: THREE.DoubleSide
     });
     this.mesh = new THREE.Mesh(geometry, material);
-      this.mesh.receiveShadow = true;
-      transform.add(this.mesh);
+    this.mesh.receiveShadow = true;
+    transform.add(this.mesh);
 
-    this.props.availableService.physics
-        .addNewBoxBody(gameObject.transform, this.props, this);
+    this.props.availableService.physics.addNewBoxBody(
+      gameObject.transform,
+      this.props,
+      this
+    );
   };
 
   start = () => {
     this.initBoard();
-  }
+  };
 
   update = () => {
     // this.props.pivot.rotation.y += 0.01;

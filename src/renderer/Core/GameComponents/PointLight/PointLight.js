@@ -18,7 +18,7 @@ export class PointLight extends React.Component {
   };
 
   updateLight = () => {
-    const { castShadow, color, intensity, distance} = this.props;
+    const { castShadow, color, intensity, distance } = this.props;
 
     if (castShadow) {
       this.light.castShadow = true;
@@ -38,8 +38,7 @@ export class PointLight extends React.Component {
     }
   };
 
-  update = () => {
-  };
+  update = () => {};
 
   render() {
     return null;
@@ -47,5 +46,5 @@ export class PointLight extends React.Component {
 }
 
 PointLight.propTypes = {
-  transform: PropTypes.object.isRequired,
+  transform: PropTypes.object.isRequired
 };

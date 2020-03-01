@@ -43,7 +43,7 @@ export class TransformUpdate extends React.Component {
     transform.position.set(
       objectInputData.position.x,
       objectInputData.position.y,
-      objectInputData.position.z,
+      objectInputData.position.z
     );
   };
 
@@ -52,7 +52,7 @@ export class TransformUpdate extends React.Component {
     transform.scale.set(
       objectInputData.scale.x,
       objectInputData.scale.y,
-      objectInputData.scale.z,
+      objectInputData.scale.z
     );
   };
 
@@ -69,5 +69,5 @@ export class TransformUpdate extends React.Component {
 TransformUpdate.propTypes = {
   transform: PropTypes.object,
   objectInputData: PropTypes.object,
-  ignoreTransformUpdate: PropTypes.bool,
+  ignoreTransformUpdate: PropTypes.bool
 };
