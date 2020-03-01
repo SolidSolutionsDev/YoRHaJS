@@ -12,7 +12,7 @@ export class PlayerShooterGeometry extends React.Component {
   centerSphere;
 
   start = () => {
-    const { transform, gameObject } = this.props;
+    const { transform, gameObject, shooterThickness } = this.props;
     // let geometry = new THREE.PlaneGeometry( 50, 50, 32 );
     // let geometry = new THREE.TetrahedronGeometry( this.props.dimensions.x, 0 );
     /*    let geometry = new THREE.BoxGeometry(
@@ -36,7 +36,7 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0, 3);
 
     let extrudeSettings = {
-      amount: 0.75,
+      amount: shooterThickness || .75,
       bevelEnabled: false,
       bevelSegments: 2,
       steps: 1,
@@ -62,15 +62,6 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0.1, 0);
     path.lineTo(-0.1, -1);
 
-    extrudeSettings = {
-      amount: 0.75,
-      bevelEnabled: false,
-      bevelSegments: 2,
-      steps: 1,
-      bevelSize: 1,
-      bevelThickness: 1
-    };
-
     geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
     this.leftEnergy = new THREE.Mesh(geometry, material);
@@ -89,15 +80,6 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0.1, 0);
     path.lineTo(0.1, -1);
 
-    extrudeSettings = {
-      amount: 0.75,
-      bevelEnabled: false,
-      bevelSegments: 2,
-      steps: 1,
-      bevelSize: 1,
-      bevelThickness: 1
-    };
-
     geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
     this.rightEnergy = new THREE.Mesh(geometry, material);
@@ -106,11 +88,50 @@ export class PlayerShooterGeometry extends React.Component {
     this.rightEnergy.castShadow = true;
     transform.add(this.rightEnergy);
 
+    //leftBackEnergy
+
+    path = new THREE.Shape();
+
+    let baseX = -1;
+    let baseY = -0.55;
+    const distance = 0.4;
+
+    path.moveTo(baseX, baseY);
+    path.lineTo(baseX, baseY);
+    path.lineTo(baseX-distance, baseY);
+    path.lineTo(baseX-distance, baseY-distance);
+    path.lineTo(baseX, baseY-distance);
+    path.lineTo(baseX, baseY);
+
+
+    geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
+    this.leftBackEnergy = new THREE.Mesh(geometry, material);
+    transform.add(this.leftBackEnergy);
+
+    //rigthBackEnergy
+
+    path = new THREE.Shape();
+
+    baseX = -baseX;
+    baseY = baseY * 2 + 0.135;
+
+    path.moveTo(baseX, baseY);
+    path.lineTo(baseX, baseY);
+    path.lineTo(baseX+distance, baseY);
+    path.lineTo(baseX+distance, baseY+distance);
+    path.lineTo(baseX, baseY+distance);
+    path.lineTo(baseX, baseY);
+
+    geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
+    this.rightBackEnergy = new THREE.Mesh(geometry, material);
+    transform.add(this.rightBackEnergy);
+
+
     geometry = new THREE.SphereGeometry(0.5, 32, 32);
     material = new THREE.MeshLambertMaterial({ color: 0x666666 });
     this.centerSphere = new THREE.Mesh(geometry, material);
 
-    this.centerSphere.position.set(0, 0, 0.5);
+    this.centerSphere.position.set(0, 0, 0.3);
     transform.add(this.centerSphere);
 
     this.props.availableService.physics.addNewBoxBody(
