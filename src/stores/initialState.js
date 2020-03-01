@@ -212,7 +212,7 @@ export const initialState = {
                         soundLocation: './assets/sounds/348162__djfroyd__laser-one-shot-3.wav'
                     },
                     shooterGeometry:{
-                        dimensions:{ x: 2, y: 2, z: 2 },
+                        dimensions:{ x: 2, y: 2, z: 1 },
                         // position:{ x: 0, y: 0, z: 4 },
                         mass: 1
                     },

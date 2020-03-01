@@ -8,11 +8,14 @@ export class ShooterGeometry extends React.Component {
 
     pointer;
     leftEnergy;
+    leftBackEnergy;
     rightEnergy;
+    rightBackEnergy;
     centerSphere;
 
     start = () => {
         const {transform, gameObject} = this.props;
+        const shooterThickness = 0.5;
         // let geometry = new THREE.PlaneGeometry( 50, 50, 32 );
         // let geometry = new THREE.TetrahedronGeometry( this.props.dimensions.x, 0 );
         /*    let geometry = new THREE.BoxGeometry(
@@ -37,8 +40,8 @@ export class ShooterGeometry extends React.Component {
         path.lineTo(-1, .5);
         path.lineTo(0, 3);
 
-        let extrudeSettings = {
-            amount: .75,
+        const extrudeSettings = {
+            amount: shooterThickness,
             bevelEnabled: false,
             bevelSegments: 2,
             steps: 1,
@@ -56,7 +59,6 @@ export class ShooterGeometry extends React.Component {
         transform.add(this.pointer);
 
         // left part
-
         path = new THREE.Shape();
 
         path.lineTo(-0.1, -1);
@@ -64,16 +66,7 @@ export class ShooterGeometry extends React.Component {
         path.lineTo(-1, .4);
         path.lineTo(0.1, 0);
         path.lineTo(-0.1, -1);
-
-        extrudeSettings = {
-            amount: .75,
-            bevelEnabled: false,
-            bevelSegments: 2,
-            steps: 1,
-            bevelSize: 1,
-            bevelThickness: 1
-        };
-
+        
         geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
         this.leftEnergy = new THREE.Mesh(geometry, material);
@@ -81,6 +74,44 @@ export class ShooterGeometry extends React.Component {
 
         this.leftEnergy.castShadow=true;
         transform.add(this.leftEnergy);
+
+        //leftBackEnergy
+
+        path = new THREE.Shape();        
+        
+        let baseX = -1;
+        let baseY = -0.55;
+        const distance = 0.4;
+
+        path.moveTo(baseX, baseY);
+        path.lineTo(baseX, baseY);
+        path.lineTo(baseX-distance, baseY); 
+        path.lineTo(baseX-distance, baseY-distance); 
+        path.lineTo(baseX, baseY-distance);
+        path.lineTo(baseX, baseY);
+        
+
+        geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
+        this.leftBackEnergy = new THREE.Mesh(geometry, material);
+        transform.add(this.leftBackEnergy);
+
+        //rigthBackEnergy
+
+        path = new THREE.Shape();        
+        
+        baseX = -baseX;
+        baseY = baseY * 2 + 0.135;
+
+        path.moveTo(baseX, baseY);
+        path.lineTo(baseX, baseY);
+        path.lineTo(baseX+distance, baseY); 
+        path.lineTo(baseX+distance, baseY+distance); 
+        path.lineTo(baseX, baseY+distance);
+        path.lineTo(baseX, baseY);
+        
+        geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
+        this.rightBackEnergy = new THREE.Mesh(geometry, material);
+        transform.add(this.rightBackEnergy);
 
         // right part
 
@@ -91,15 +122,6 @@ export class ShooterGeometry extends React.Component {
         path.lineTo(1, .4);
         path.lineTo(0.1, 0);
         path.lineTo(0.1, -1);
-
-        extrudeSettings = {
-            amount: .75,
-            bevelEnabled: false,
-            bevelSegments: 2,
-            steps: 1,
-            bevelSize: 1,
-            bevelThickness: 1
-        };
 
         geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
@@ -113,7 +135,7 @@ export class ShooterGeometry extends React.Component {
         material = new THREE.MeshLambertMaterial({color: 0x666666});
         this.centerSphere = new THREE.Mesh(geometry, material);
 
-        this.centerSphere.position.set(0, 0, .5);
+        this.centerSphere.position.set(0, 0, 0.3);
         transform.add(this.centerSphere);
 
 
