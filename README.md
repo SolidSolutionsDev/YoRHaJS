@@ -1,8 +1,10 @@
 # YorHa.jS
 
-Small conceptual game engine using React/Redux/Three.js/Cannon.js and inspired by Unity.
 
-Implemenets a simple replica of the NieR: Automata hacking mini-game.
+
+Small conceptual game & game engine using React/Redux/Three.js/Cannon.js and inspired by Unity.
+
+Implements a simple replica of the NieR: Automata hacking mini-game.
 
 ### Running the project
 
@@ -16,3 +18,5 @@ npm run start
 ```
 npm run build
 ```
+
+![Screenshot](screenshot.png)
