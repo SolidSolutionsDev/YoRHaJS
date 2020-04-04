@@ -59,7 +59,8 @@ export const initialScene = {
         },
         components:{
           textGeometry: {
-            randomColors:true,
+            randomColors:false,
+            colors:[0xffaaaa],
             text: "SOLID",
             height: 2,
             size: 7,
