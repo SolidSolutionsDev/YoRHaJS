@@ -20,6 +20,7 @@ import { BulletMovement } from "./Bullet/BulletMovement";
 import { EnemyCubeGeometry } from "./EnemyCubeGeometry/EnemyCubeGeometry";
 import { TestCube } from "./TestCube/TestCube";
 import { SphereGeometry } from "./SphereGeometry/SphereGeometry";
+import {TextGeometry} from "./TextGeometry/TextGeometry";
 
 export const components = {
   // objMesh: OBJMeshGeometry,
@@ -42,5 +43,6 @@ export const components = {
   sphereGeometry: SphereGeometry,
   bulletMovement: BulletMovement,
   enemyMovementControls: EnemyMovementControls,
-  enemyCubeGeometry: EnemyCubeGeometry
+  enemyCubeGeometry: EnemyCubeGeometry,
+  textGeometry: TextGeometry,
 };

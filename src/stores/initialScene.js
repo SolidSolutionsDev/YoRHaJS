@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export const initialScene = {
   // TODO: split data in a better high level state strucuture (game, engine)
   game: {
@@ -55,8 +57,24 @@ export const initialScene = {
         transform: {
           position: { x: 0, y: 0, z: 4 }
         },
+        components:{
+          textGeometry: {
+            randomColors:true,
+            text: "SOLID",
+            height: 2,
+            size: 7,
+            hover: 30,
+            curveSegments:  4,
+            bevelThickness: .2,
+            bevelSize: .15,
+            bevelEnabled: true,
+            fontName: "opensans", // helvetiker, optimer, gentilis, droid sans, droid seri,
+            fontWeight: "bold",// normal bol,
+            mirror:  false,
+          },
+        },
         tags: ["playerShooter"],
-        prefab: "TestShooter"
+        prefab: "TestShooter",
       },
       testBoss0: {
         debug: true,
@@ -68,9 +86,9 @@ export const initialScene = {
       testBoss1: {
         debug: true,
         transform: {
-          position: { x: -30, y: 30, z: 3 }
+          position: { x: -30, y: 30, z: 10 }
         },
-        prefab: "EnemySphereBoss"
+        /// sprefab: "EnemySphereBoss"
       },
       testEnemy2: {
         debug: true,
