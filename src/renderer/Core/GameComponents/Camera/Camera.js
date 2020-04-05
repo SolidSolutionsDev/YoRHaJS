@@ -91,9 +91,10 @@ export class Camera extends React.Component {
   };
 
   update = () => {
-    const { cameraAutoRotate, cameraMinDistance, cameraPanLock } = this.props;
+    const { cameraAutoRotate,cameraAutoRotateSpeed, cameraMinDistance, cameraPanLock } = this.props;
     this.controls.enablePan = !cameraPanLock;
     this.controls.autoRotate = cameraAutoRotate;
+    this.controls.autoRotateSpeed = cameraAutoRotateSpeed || this.controls.autoRotateSpeed ;
     this.controls.minDistance = cameraMinDistance || this.controls.minDistance;
     this.controls.update();
   };
@@ -120,6 +121,7 @@ export class Camera extends React.Component {
       availableComponent,
       cameraAllowedPositions,
       animatedTransformations,
+      animatedIntroTime,
       availableService
     } = this.props;
     const { scene } = availableComponent;
@@ -144,7 +146,7 @@ export class Camera extends React.Component {
       availableService.animation.travelTo(
         this.camera,
         cameraPositionData.position,
-        6000,
+        animatedIntroTime || 6000,
         {
           target: scene.scene.position,
           easing: availableService.animation.Easing.Exponential.Out
@@ -164,7 +166,8 @@ export class Camera extends React.Component {
       availableComponent,
       cameraAllowedPositions,
       availableService,
-      animatedTransformations
+      animatedTransformations,
+      animatedRegularTransitionTime
     } = this.props;
     const { scene } = availableComponent;
     availableService.animation.travelTo(
@@ -174,7 +177,7 @@ export class Camera extends React.Component {
         60 - 120 * Math.random(),
         60 - 120 * Math.random()
       ),
-      1000,
+        animatedRegularTransitionTime || 1000,
       {
         target: scene.scene.position,
         easing: availableService.animation.Easing.Exponential.Out
@@ -199,7 +202,11 @@ Camera.propTypes = {
   cameraAllowedPositions: PropTypes.object,
   cameraAngle: PropTypes.string,
   cameraAutoRotate: PropTypes.bool,
+  autoRotateSpeed : PropTypes.number,
   cameraPanLock: PropTypes.bool,
   cameraMinDistance: PropTypes.number,
-  availableComponent: PropTypes.object
+  availableComponent: PropTypes.object,
+  animatedTransformations: PropTypes.bool,
+  animatedIntroTime: PropTypes.number,
+  animatedRegularTransitionTime: PropTypes.number
 };
