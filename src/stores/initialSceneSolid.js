@@ -24,7 +24,11 @@ export const initialScene = {
     renderer: {
       alpha: true,
       antialias: false,
-      postprocessing: true
+      postprocessing: true,
+      backgroundColor: {
+        clearColor:0x222222,
+        alpha:1.0
+      }
     }
   },
   scene: {

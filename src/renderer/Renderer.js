@@ -124,7 +124,9 @@ export class Renderer extends React.Component {
       }
       this.timePreviousFrame = time;
 
-      this.renderer.setClearColor(backgroundColor, 0);
+      if (backgroundColor) {
+        this.renderer.setClearColor(backgroundColor.clearColor, backgroundColor.alpha);
+      }
     }
     this.stats.end();
   };
