@@ -114,7 +114,6 @@ export class TextGeometry extends React.Component {
 
 
     createText = () => {
-        console.log("createText ");
 
         this.resetParameters();
         this.resetMaterials();
@@ -132,7 +131,6 @@ export class TextGeometry extends React.Component {
             bevelEnabled: this.bevelEnabled
 
         };
-        console.log(this.text, textGeometryParameters);
         this.textGeo = new THREE.TextGeometry(this.text, textGeometryParameters);
 
         this.textGeo.computeBoundingBox();
@@ -202,7 +200,6 @@ export class TextGeometry extends React.Component {
         this.group.add(this.textMesh1);
 
         this.textMesh1.rotation.x = Math.PI / 2;
-        console.log(this.group);
 
         if (this.mirror) {
 
@@ -222,7 +219,6 @@ export class TextGeometry extends React.Component {
     };
 
     refreshText = () => {
-        console.log("refresh");
 
         this.group.remove(this.textMesh1);
         if (this.mirror) this.group.remove(this.textMesh2);
@@ -269,7 +265,6 @@ export class TextGeometry extends React.Component {
 
         this.props.transform.add(this.group);
 
-        console.log("initText");
         this.updateText();
     };
 
@@ -280,7 +275,6 @@ export class TextGeometry extends React.Component {
 
     start = () => {
         this.initText();
-        console.log(this);
 
         setInterval(() => {
             const randomString = this.randomString(Math.abs(Math.random() * 10));
@@ -290,7 +284,6 @@ export class TextGeometry extends React.Component {
               gameComponentId,
               componentParameters
              */
-            console.log(randomString);
             this.props.updateGameObjectComponent(
                 this.props.gameObject.id,
                 "textGeometry", {
@@ -313,7 +306,6 @@ export class TextGeometry extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (!_.isEqual(this.props.selfSettings, prevProps.selfSettings)) {
-            console.log(this.props.selfSettings, prevProps.selfSettings);
             this.updateText();
         }
     }
