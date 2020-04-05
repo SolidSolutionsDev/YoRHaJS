@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as THREE from "three";
 
-export class ZeroComponent extends React.Component {
+export class BaseComponent extends React.Component {
 
   start = () => {
   };
@@ -14,6 +14,6 @@ export class ZeroComponent extends React.Component {
   }
 }
 
-ZeroComponent.propTypes = {
+BaseComponent.propTypes = {
   transform: PropTypes.object.isRequired
 };
