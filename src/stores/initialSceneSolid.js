@@ -52,7 +52,8 @@ export const initialScene = {
       // "testEnemy3",
       // "testEnemy4",
       "camera1",
-      "mountainSolid"
+      "mountainSolid",
+      // "water1"
     ]
   },
   gameObjects: {
@@ -161,6 +162,13 @@ export const initialScene = {
         },
         prefab: "Board"
       },
+      water1: {
+        debug: true,
+        components: {
+          water:{},
+        },
+        prefab: "Board"
+      },
       lightGroup: {
         transform: {},
         components: {},
@@ -171,7 +179,11 @@ export const initialScene = {
         ]
       },
       directionalLight1: {
-        transform: {},
+        transform: {position: {
+            x: 10,
+            y: -70,
+            z:100
+          }},
         components: {},
         prefab: "DirectionalLight",
         parentId: "lightGroup"
@@ -202,7 +214,8 @@ export const initialScene = {
       "lightGroup",
       "directionalLight1",
       "ambientLight1",
-      "mountainSolid"
+      "mountainSolid",
+      "water1",
     ]
   },
   prefabs: {
@@ -416,11 +429,6 @@ export const initialScene = {
             castShadow: true,
             color: 0xffffff,
             intensity: 0.9,
-            position: {
-              x: 0,
-              y: -70,
-              z: 100
-            }
           }
         }
       },

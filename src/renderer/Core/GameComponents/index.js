@@ -22,6 +22,7 @@ import { TestCube } from "./TestCube/TestCube";
 import { SphereGeometry } from "./SphereGeometry/SphereGeometry";
 import {TextGeometry} from "./TextGeometry/TextGeometry";
 import {AutoRotate} from "./AutoRotate/AutoRotate";
+import {WaterComponent} from "./WaterComponent/WaterComponent";
 
 export const components = {
   objMesh: OBJMeshGeometry,
@@ -47,4 +48,5 @@ export const components = {
   enemyCubeGeometry: EnemyCubeGeometry,
   textGeometry: TextGeometry,
   autoRotate: AutoRotate,
+  water: WaterComponent,
 };
