@@ -93,6 +93,8 @@ export class Renderer extends React.Component {
   componentDidMount = () => {};
 
   init = () => {
+    THREE.Cache.enabled = true;
+
     ReactDOM.findDOMNode(this).appendChild(this.canvas);
     document.body.appendChild( this.stats.dom );
     this.setupRendererDefaults();
