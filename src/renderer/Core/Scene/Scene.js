@@ -1,5 +1,6 @@
 import React from "react";
 import * as THREE from "three";
+import * as _ from "lodash";
 
 import GameObject from "../GameObject";
 
@@ -103,6 +104,25 @@ export class Scene extends React.Component {
 
     return gameObjects;
   };
+
+  componentDidMount() {
+   this.updateFog();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const {fog} = this.props.scene;
+    if (!_.isEqual(fog,prevProps.scene.fog)){
+      this.scene.fog = new THREE.Fog( fog.color, fog.near, fog.far );
+
+    }
+  }
+
+  updateFog = () => {
+    const {fog} = this.props.scene;
+    if (fog){
+      this.scene.fog = new THREE.Fog( fog.color, fog.near, fog.far );
+    }
+  }
 
   camera = {
     _main: null,

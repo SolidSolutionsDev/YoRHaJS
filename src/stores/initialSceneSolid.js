@@ -32,6 +32,11 @@ export const initialScene = {
     }
   },
   scene: {
+    fog :{
+      color:0x222222,
+      near:105,
+      far: 200
+    },
     camera: {
       main: null,
       allCameras: []
@@ -177,7 +182,11 @@ export const initialScene = {
         parentId: "lightGroup"
       },
       pointLight1: {
-        transform: {},
+        transform: {position: {
+          x:10,
+            y:7,
+            z:5
+          }},
         components: {},
         prefab: "PointLight",
         parentId: "lightGroup"
@@ -209,7 +218,7 @@ export const initialScene = {
           dynamicCameraManager: {
             cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "top",
-            cameraAutoRotate: true,
+            cameraAutoRotate: false,
             cameraAutoRotateSpeed:1,
             cameraMinDistance: 10,
             cameraPanLock: false,
@@ -417,9 +426,9 @@ export const initialScene = {
       PointLight: {
         transform: {
           position: {
-            x: 10,
-            y: 7,
-            z: 5
+            x: 0,
+            y: 0,
+            z: 0
           }
         },
         components: {
