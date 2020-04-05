@@ -58,9 +58,14 @@ export const initialScene = {
       mountainSolid: {
         debug:true,
         components: {
+          autoRotate:{
+            speed: {
+              z:0.001
+            }
+          },
           objMesh:{
             assetURL: "./assets/models/64-everest/everest.obj",
-            scale: 40,
+            scale: 100,
             materialParameters:{
               color: 0x777777,
               wireframe:true

@@ -21,6 +21,7 @@ import { EnemyCubeGeometry } from "./EnemyCubeGeometry/EnemyCubeGeometry";
 import { TestCube } from "./TestCube/TestCube";
 import { SphereGeometry } from "./SphereGeometry/SphereGeometry";
 import {TextGeometry} from "./TextGeometry/TextGeometry";
+import {AutoRotate} from "./AutoRotate/AutoRotate";
 
 export const components = {
   objMesh: OBJMeshGeometry,
@@ -45,4 +46,5 @@ export const components = {
   enemyMovementControls: EnemyMovementControls,
   enemyCubeGeometry: EnemyCubeGeometry,
   textGeometry: TextGeometry,
+  autoRotate: AutoRotate,
 };
