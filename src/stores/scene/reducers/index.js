@@ -1,4 +1,5 @@
-import { initialScene } from "../../initialScene";
+// import { initialScene } from "../../initialScene";
+import { initialScene } from "../../initialSceneSolid";
 import * as _ from "lodash";
 
 const instantiateFromPrefabReducer = (state, action) => {
