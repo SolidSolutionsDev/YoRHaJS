@@ -283,7 +283,10 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          playerBulletGeometry: {},
+          playerBulletGeometry: {
+            dimensions: [5,5,5],
+            color:0xff2222
+          },
           bulletMovement: {
             // debug:true,
           }
