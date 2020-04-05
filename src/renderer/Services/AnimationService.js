@@ -100,6 +100,6 @@ export class AnimationService extends Component {
   };
 
   render() {
-    return <div>Animation</div>;
+    return null;
   }
 }

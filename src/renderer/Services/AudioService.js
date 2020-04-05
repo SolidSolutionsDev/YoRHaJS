@@ -59,6 +59,6 @@ export class AudioService extends Component {
   update = time => {};
 
   render() {
-    return <div>Audio</div>;
+    return null;
   }
 }
