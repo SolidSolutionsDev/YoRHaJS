@@ -27,6 +27,16 @@ export class BoardPlaneGeometry extends React.Component {
       this.props,
       this
     );
+
+    this.updatePosition()
+  };
+
+  updatePosition = () => {
+    const {position, transform} = this.props;
+    if (!position) {return};
+    Object.keys(position).forEach((key) => {
+      this.mesh.position[key] = position[key];
+    })
   };
 
   start = () => {

@@ -154,7 +154,8 @@ export const initialScene = {
         components: {
           boardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 200, y: 200, z: 2 },
+            dimensions: { x: 200, y: 200, z: .1 },
+            position: {z:-3},
             mass: 0
           }
         },
