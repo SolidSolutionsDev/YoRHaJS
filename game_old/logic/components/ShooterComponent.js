@@ -3,7 +3,6 @@ import { dimensions } from "../../settings";
 
 import * as THREE from "three";
 
-const OBJLoader = require("three-obj-loader")(THREE);
 export const isShooter = (object, parameters) => {
   const _object = object;
 
