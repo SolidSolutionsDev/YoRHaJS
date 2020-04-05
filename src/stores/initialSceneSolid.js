@@ -53,7 +53,7 @@ export const initialScene = {
       // "testEnemy4",
       "camera1",
       "mountainSolid",
-      // "water1"
+      "water1"
     ]
   },
   gameObjects: {
@@ -166,8 +166,7 @@ export const initialScene = {
         debug: true,
         components: {
           water:{},
-        },
-        prefab: "Board"
+        }
       },
       lightGroup: {
         transform: {},
@@ -453,7 +452,7 @@ export const initialScene = {
         transform: {},
         components: {
           ambientLight: {
-            color: 0x222222
+            // color: 0x222222
           }
         },
         children: []

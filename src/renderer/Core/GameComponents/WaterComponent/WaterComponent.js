@@ -24,7 +24,7 @@ export class WaterComponent extends React.Component {
             texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
           } ),
-          alpha: 0.6,
+          alpha: 1.0,
           sunDirection: normalizedLightPosition,
           sunColor: 0xaa0000,
           waterColor: 0x0000aa,
