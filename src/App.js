@@ -15,13 +15,14 @@ const store = createStore(
 
 class App extends Component {
   render() {
+      const title= store.getState().mainReducer.title;
     return (
       <div className="App" key={"app"}>
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Glory to Mankind</h1>
+          {/*<img src={logo} className="App-logo" alt="logo" />*/}
+          <h1 className="App-title" style={{color:title.color}}>{title.text}</h1>
         </header>
-        <p className="App-intro">Hacking mini game </p>
+        <p className="App-intro" style={{color:title.subTextColor}}>{title.subText} </p>
           <Provider store={store} key={"provider"}>
             <Game key={"game"}/>
           </Provider>

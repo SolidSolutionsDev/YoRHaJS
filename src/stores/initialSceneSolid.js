@@ -1,6 +1,11 @@
 import PropTypes from "prop-types";
 
 export const initialScene = {
+  title:{
+    color:"#000000",
+    subText:"We build epic, realtime interactive experiences to blow people's minds",
+    subTextColor:"#ffffff"
+  },
   // TODO: split data in a better high level state strucuture (game, engine)
   game: {
     settings: {
