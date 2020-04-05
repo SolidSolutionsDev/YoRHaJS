@@ -1,4 +1,4 @@
-// import { OBJMeshGeometry } from "../../GameComponents/OBJMeshGeometry/OBJMeshGeometry";
+import { OBJMeshGeometry } from "./OBJMeshGeometry/OBJMeshGeometry";
 // import { EditorTransformObjectUpdate } from "../../Components/EditorTransformObjectUpdate/EditorTransformObjectUpdate";
 import { ObjectLoaderMesh } from "./ObjectLoaderMesh/ObjectLoaderMesh";
 import { TransformUpdate } from "./TransformUpdate/TransformUpdate";
@@ -23,7 +23,7 @@ import { SphereGeometry } from "./SphereGeometry/SphereGeometry";
 import {TextGeometry} from "./TextGeometry/TextGeometry";
 
 export const components = {
-  // objMesh: OBJMeshGeometry,
+  objMesh: OBJMeshGeometry,
   objectLoader: ObjectLoaderMesh,
   cssLabelTo3d: CSSLabelTo3D,
   sprite: SpriteComponent,

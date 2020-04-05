@@ -3,17 +3,24 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 
-import OBJLoader from "three-obj-loader";
+// import OBJLoader from "three-obj-loader";
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 
 const FBXLoader = require("three-fbx-loader");
-OBJLoader(THREE);
 
 export class OBJMeshGeometry extends React.Component {
   transform = new THREE.Object3D();
+  modelToUse;
 
-  defaultMaterial = new THREE.MeshBasicMaterial({
-    color: 0xffffff
-  });
+  //TODO: export this to a generic acessible enum
+  materialTypes = {
+    basic: THREE.MeshBasicMaterial,
+    standard: THREE.MeshStandardMaterial
+  };
+
+  materialType = "basic";
+  materialToUse;
+  materialInstance;
 
   _resetGeometryScale = modelToResetScale => {
     // Compute and Get the Bounding Box
@@ -43,13 +50,29 @@ export class OBJMeshGeometry extends React.Component {
   };
 
   modelLoadedCallback = loadedModel => {
-    const modelToUse = loadedModel.children[0];
-    modelToUse.material = this.defaultMaterial;
-    modelToUse.material.needsUpdate = true;
+    const {transform, scale, materialType, materialParameters } = this.props;
+    this.modelToUse = loadedModel.children[0];
 
-    const scaledModel = this._resetGeometryScale(modelToUse);
+    this.modelToUse.rotateX(Math.PI/2);
+    console.log(this);
 
-    this.transform.add(scaledModel);
+    // this.transform.add(modelToUse);
+    transform.add(this.modelToUse);
+
+    if (scale) {
+      this.modelToUse.scale.set(scale,scale,scale);
+    }
+
+    if (materialType || materialParameters) {
+    this.materialType = materialType || this.materialType;
+    this.materialToUse = this.materialTypes[this.materialType];
+    this.materialInstance = new this.materialToUse(materialParameters) ;
+
+    this.modelToUse.material = this.materialInstance;
+    this.modelToUse.material.needsUpdate = true;
+    }
+
+    return;
   };
 
   _loadFBX = assetURL => {
@@ -58,24 +81,24 @@ export class OBJMeshGeometry extends React.Component {
   };
 
   _loadOBJ = assetURL => {
-    const loader = new THREE.OBJLoader();
+    const loader = new OBJLoader();
     loader.load(assetURL, this.modelLoadedCallback);
   };
 
   loadModel = () => {
-    const { modelInputData } = this.props;
-    const splitedUrl = modelInputData.assetURL.split(".");
-    const extension = splitedUrl[splitedUrl.length - 1];
+    const { modelInputData, assetURL } = this.props;
+    const splittedUrl = assetURL.split(".");
+    const extension = splittedUrl[splittedUrl.length - 1];
 
     switch (extension) {
       case "fbx":
-        this._loadFBX(modelInputData.assetURL);
+        this._loadFBX(assetURL);
         break;
       case "obj":
-        this._loadOBJ(modelInputData.assetURL);
+        this._loadOBJ(assetURL);
         break;
       default:
-        this._loadOBJ(modelInputData.assetURL);
+        this._loadOBJ(assetURL);
     }
   };
 
@@ -93,6 +116,8 @@ export class OBJMeshGeometry extends React.Component {
 }
 
 OBJMeshGeometry.propTypes = {
-  modelInputData: PropTypes.object.isRequired,
-  transform: PropTypes.object.isRequired
+  assetURL: PropTypes.string.isRequired,
+  scale: PropTypes.number,
+  materialParameters:PropTypes.object,
+  materialType:PropTypes.string
 };
