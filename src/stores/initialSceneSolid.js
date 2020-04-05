@@ -74,7 +74,7 @@ export const initialScene = {
           }
         },
         transform: {
-          position: { x: 0, y: 0, z: 20 }
+          position: { x: 0, y: 0, z: 2 }
         }
       },
       testCubeGameObject1: {
@@ -92,10 +92,10 @@ export const initialScene = {
         components:{
           textGeometry: {
             randomColors:false,
-            colors:[0xffaaaa],
+            colors:[0xff1111],
             text: "SOLID",
             height: 2,
-            size: 7,
+            size: 20,
             hover: 30,
             curveSegments:  4,
             bevelThickness: .2,
@@ -149,7 +149,7 @@ export const initialScene = {
         components: {
           boardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 100, y: 100, z: 2 },
+            dimensions: { x: 200, y: 200, z: 2 },
             mass: 0
           }
         },
@@ -242,7 +242,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 10, z: 0 }
+                position: { x: 0, y: 70, z: 200 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }
@@ -264,6 +264,9 @@ export const initialScene = {
               },
               nier: {
                 position: { x: 0, y: -55, z: 35 }
+              },
+              solid: {
+                position: { x: 0, y: -155, z: 35 }
               },
               custom: {
                 position: {
