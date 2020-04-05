@@ -14,8 +14,8 @@ export class BoardPlaneGeometry extends React.Component {
       this.props.dimensions.y,
       this.props.dimensions.z
     );
-    let material = new THREE.MeshLambertMaterial({
-      color: 0xd1cdb7,
+    let material = new THREE.MeshPhysicalMaterial({
+      emissive: 0xd1cdb7,
       side: THREE.DoubleSide
     });
     this.mesh = new THREE.Mesh(geometry, material);

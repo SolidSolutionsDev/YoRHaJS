@@ -75,7 +75,7 @@ export class TextGeometry extends React.Component {
             for (let i = 0; i < this.text.length; i++) {
                 const color = Math.random() * 0xffffff;
                 this.materials.push(new THREE.MeshPhongMaterial({
-                        color: color,
+                        emissive: color,
                         flatShading: false,
                         // wireframe:Math.random() > 0.5
                     }), // front
@@ -196,10 +196,11 @@ export class TextGeometry extends React.Component {
 
         this.textMesh1.rotation.x = 0;
         this.textMesh1.rotation.y = Math.PI * 2;
+        this.textMesh1.castShadow = true;
 
         this.group.add(this.textMesh1);
 
-        // this.textMesh1.rotation.x = Math.PI / 2;
+         this.textMesh1.rotation.x = Math.PI / 2;
 
         if (this.mirror) {
 
