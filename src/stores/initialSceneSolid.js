@@ -176,7 +176,7 @@ export const initialScene = {
         },
         components: {
           planeShader:{
-            shaderURL:"./assets/shaders/fragment/raymarching_cubes_spheres.glsl"
+            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl"
           },
           autoRotate:{
             speed: {
@@ -363,7 +363,7 @@ export const initialScene = {
         debug: true,
         components: {
           planeShader:{
-            shaderURL:"./assets/shaders/fragment/raymarching_cubes_spheres.glsl"
+            shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
           playerControls: {
           },

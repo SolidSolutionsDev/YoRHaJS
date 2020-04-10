@@ -117,6 +117,7 @@ export class PlaneShaderMaterial extends React.Component {
     this.uniforms.iResolution.value.y = window.innerHeight;
   };
 
+  
   updateMesh = () => {
     const { availableComponent } = this.props;
     const camera = availableComponent.scene.camera._main;
