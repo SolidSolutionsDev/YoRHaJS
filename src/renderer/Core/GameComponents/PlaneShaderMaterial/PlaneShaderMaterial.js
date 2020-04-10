@@ -92,6 +92,7 @@ export class PlaneShaderMaterial extends React.Component {
   };
 
   initMaterial() {
+    console.log(this.shaderText);
     this.material = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
       fragmentShader: this.shaderText //pixel

@@ -1,24 +1,3 @@
-#ifdef GL_ES
-precision mediump float;
-#endif
-
-#define PI 3.14159265359
-#define TWO_PI 6.28318530718
-
-//const int MAX_STEPS = 32;
-//const float PRECISION = 0.05;
-//const int SPHERE_COUNT = 6;
-
-
-const int MAX_STEPS = 32;
-const float PRECISION = 0.1;
-const float MAX_DISTANCE = 99999.;
-const int SPHERE_COUNT = 8;
-
-
-uniform float iTime;       // Time in seconds since load
-uniform vec3 iResolution;  // Canvas size (width,height)
-
 
 vec3 diffuseLight (vec3 lightPosition, vec3 lightColor, vec3 point, vec3 normal) {
     vec3 lightDirection = normalize(lightPosition - point);
@@ -83,6 +62,10 @@ float opSmoothUnion (float distance1, float distance2, float amount) {
     return mix(distance2, distance1, h) - amount * h * (1. - h);
 }
 
+const int MAX_STEPS = 32;
+const float PRECISION = 0.1;
+const float MAX_DISTANCE = 99999.;
+const int SPHERE_COUNT = 8;
 
 float spheresMap (vec3 point) {
     vec3 center = vec3(0., 0., 0.);
@@ -160,14 +143,11 @@ vec3 castRay (vec3 rayOrigin, vec3 rayDirection) {
     return background(rayOrigin, rayDirection);
 }
 
-void main( ) {
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
     vec3 rayOrigin = vec3(0., 0., 1.);
-    vec2 vUv = gl_FragCoord.xy/iResolution.xy;
+    vec2 vUv = fragCoord/iResolution.xy;
     vec2 q = (vUv.xy * iResolution.xy - .5 * iResolution.xy) / iResolution.y;
     vec3 rayDirection = normalize(vec3(q, 0.) - rayOrigin);
 
-    gl_FragColor = vec4(castRay(rayOrigin, rayDirection), 1.0);
-    if(gl_FragColor == vec4 (0.0,0.0,0.0,1.0)) {
-        gl_FragColor.a = 0.0;
-    }
+    fragColor = vec4(castRay(rayOrigin, rayDirection), 1.0);
 }
