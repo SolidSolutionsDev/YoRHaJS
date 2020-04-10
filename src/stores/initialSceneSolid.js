@@ -32,11 +32,11 @@ export const initialScene = {
     }
   },
   scene: {
-    fog :{
-      color:0x222222,
-      near:105,
-      far: 200
-    },
+    // fog :{
+    //   color:0x222222,
+    //   near:105,
+    //   far: 400
+    // },
     camera: {
       main: null,
       allCameras: []
@@ -54,7 +54,7 @@ export const initialScene = {
 
       "camera1",
       "mountainSolid",
-      "water1",
+      // "water1",
       "shaderPlane1"
     ]
   },
@@ -157,7 +157,7 @@ export const initialScene = {
         components: {
           boardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 200, y: 200, z: .1 },
+            dimensions: { x: 500, y: 500, z: .1 },
             position: {z:-3},
             mass: 0
           }
@@ -360,6 +360,7 @@ export const initialScene = {
         debug: true,
         components: {
           planeShader:{
+            position:{x:0,y:0,z:100},
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
             shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },

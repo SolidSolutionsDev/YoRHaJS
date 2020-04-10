@@ -105,7 +105,8 @@ export class PlaneShaderMaterial extends React.Component {
     this.material = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
       vertexShader: this.vertexShaderText, //pixel
-      fragmentShader: this.fragmentShaderText //pixel
+      fragmentShader: this.fragmentShaderText, //pixel,
+      side: THREE.DoubleSide,
     });
     console.log(this);
 
@@ -117,8 +118,12 @@ export class PlaneShaderMaterial extends React.Component {
   };
 
   initShaderMesh = () => {
+    const {position, availableService} = this.props
     this.shaderMesh = new THREE.Mesh(this.geometry, this.material);
     this.props.transform.add(this.shaderMesh);
+    if (position) {
+        availableService.animation.travelTo(this.shaderMesh,position,2000);
+    }
   };
 
   updateUniforms = (time) => {
@@ -144,19 +149,26 @@ export class PlaneShaderMaterial extends React.Component {
     const { scene } = availableComponent;
     const camera = scene.camera._main;
     const sceneThree  = scene.scene;
-    // this.shaderMesh.lookAt(camera.position);
     this.shaderMesh.rotation.x = camera.rotation.x;
     this.shaderMesh.rotation.z = camera.rotation.z;
     this.shaderMesh.rotation.y = camera.rotation.y;
+    // this.shaderMesh.lookAt(camera.position);
 
-    // const position = new THREE.Vector3();
-    // const quaternion = new THREE.Quaternion();
-    // const scale = new THREE.Vector3();
+
+  scene.scene.attach(this.shaderMesh);
+
+
+    const position = new THREE.Vector3();
+    const quaternion = new THREE.Quaternion();
+    const scale = new THREE.Vector3();
     //
     //
-    // camera.matrixWorld.decompose( position, quaternion, scale );
-    // this.shaderMesh.quaternion.copy( quaternion );
-    // camera.updateMatrixWorld( true );
+    camera.matrixWorld.decompose( position, quaternion, scale );
+    this.shaderMesh.quaternion.copy( quaternion );
+    camera.updateMatrixWorld( true );
+    this.shaderMesh.updateMatrix();
+
+   transform.attach( this.shaderMesh);
 
 
 

@@ -93,7 +93,7 @@ float cubeMap (vec3 point) {
 }
 
 float map (vec3 point) {
-    vec3 transformedPoint = (point + vec3(0., 0., 10.)) * rotX(iTime) * rotY(iTime) * rotZ(iTime);
+    vec3 transformedPoint = (point + vec3(0., 0., 10.)) ;//* rotX(iTime) * rotY(iTime) * rotZ(iTime);
     return opSmoothUnion(spheresMap(transformedPoint), cubeMap(transformedPoint), .4);
 }
 
