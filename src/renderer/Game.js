@@ -7,6 +7,7 @@ import { PhysicsService } from "./Services/PhysicsService";
 import { AudioService } from "./Services/AudioService";
 import { AnimationService } from "./Services/AnimationService";
 import { InputService } from "./Services/InputService";
+import { UtilsService } from "./Services/UtilsService";
 
 import * as GameContext from "./GameContext";
 
@@ -174,6 +175,7 @@ export class Game extends React.Component {
           id="animation"
         />
         <InputService ref={this.addGameService} key="input" id="input" />
+        <UtilsService ref={this.addGameService} key="utils" id="utils" />
       </GameContext.Provider>
     );
   };

@@ -53,7 +53,8 @@ export const initialScene = {
       // "testEnemy4",
       "camera1",
       "mountainSolid",
-      "water1"
+      "water1",
+      "shaderPlane1"
     ]
   },
   gameObjects: {
@@ -168,6 +169,22 @@ export const initialScene = {
           water:{},
         }
       },
+      shaderPlane1: {
+        debug: true,
+        transform: {
+          position: { x: 5, y: 5, z: 5 }
+        },
+        components: {
+          planeShader:{
+            shaderURL:"./assets/shaders/fragment/raymarching_cubes_spheres.glsl"
+          },
+          autoRotate:{
+            speed: {
+              z:0.01
+            }
+          }
+        }
+      },
       lightGroup: {
         transform: {},
         components: {},
@@ -215,6 +232,7 @@ export const initialScene = {
       "ambientLight1",
       "mountainSolid",
       "water1",
+      "shaderPlane1",
     ]
   },
   prefabs: {

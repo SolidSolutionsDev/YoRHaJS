@@ -23,6 +23,7 @@ import { SphereGeometry } from "./SphereGeometry/SphereGeometry";
 import {TextGeometry} from "./TextGeometry/TextGeometry";
 import {AutoRotate} from "./AutoRotate/AutoRotate";
 import {WaterComponent} from "./WaterComponent/WaterComponent";
+import {PlaneShaderMaterial} from "./PlaneShaderMaterial/PlaneShaderMaterial";
 
 export const components = {
   objMesh: OBJMeshGeometry,
@@ -49,4 +50,5 @@ export const components = {
   textGeometry: TextGeometry,
   autoRotate: AutoRotate,
   water: WaterComponent,
+  planeShader: PlaneShaderMaterial,
 };

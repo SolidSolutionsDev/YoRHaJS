@@ -332,6 +332,6 @@ TextGeometry.propTypes = {
     bevelSize: PropTypes.number,
     bevelEnabled: PropTypes.bool,
     fontName: PropTypes.string,
-    fontWeight: PropTypes.number,
+    fontWeight: PropTypes.string,
     mirror: PropTypes.bool,
 };
