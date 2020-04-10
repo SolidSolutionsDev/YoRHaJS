@@ -4,9 +4,15 @@ import * as THREE from "three";
 
 export class UtilsService extends Component {
 
-
+    basicVertexShader = "" +
+        "varying vec2 vPosition;" +
+        "void main() {\n" +
+        "      vPosition = uv;\n"+
+        "      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n" +
+        "  }";
 
   shaderLoad(ShaderURL, onLoad, onProgress, onError) {
+
 
       const shaderToyHeader =
           //"#version 300 es\n" +
@@ -16,6 +22,7 @@ export class UtilsService extends Component {
           // "    precision mediump sampler3D;\n" +
           // "#endif\n" +
           "#define HW_PERFORMANCE 1\n" +
+          "varying vec2 vPosition;\n"+
           "uniform vec3      iResolution;\n" +
           "uniform float     iTime;\n" +
           "uniform float     iChannelTime[4];\n" +
@@ -27,6 +34,10 @@ export class UtilsService extends Component {
           "uniform float     iTimeDelta;\n" +
           "uniform float     iFrameRate;\n" +
           "uniform sampler2D iChannel0;\n" +
+          "uniform float uAspectRatio;\n" +
+          "uniform vec3 uCameraPosition;\n" +
+          "uniform mat3 uCameraOrientation;\n" +
+          "uniform float uViewDistance;" +
           "uniform struct {\n" +
           "    sampler2D sampler;\n" +
           "    vec3  size;\n" +
@@ -68,7 +79,7 @@ export class UtilsService extends Component {
           "    color.w = 1.0;\n" +
           "    gl_FragColor = color;\n" +
           "     if(gl_FragColor == vec4 (0.0,0.0,0.0,1.0)) {\n" +
-          "        gl_FragColor.a = 0.5;\n" +
+          "        gl_FragColor.a = 0.0;\n" +
           "    } \n" +
           "}\n";
 

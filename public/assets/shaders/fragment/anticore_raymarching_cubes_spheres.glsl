@@ -144,10 +144,9 @@ vec3 castRay (vec3 rayOrigin, vec3 rayDirection) {
 }
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
-    vec3 rayOrigin = vec3(0., 0., 1.);
-    vec2 vUv = fragCoord/iResolution.xy;
-    vec2 q = (vUv.xy * iResolution.xy - .5 * iResolution.xy) / iResolution.y;
-    vec3 rayDirection = normalize(vec3(q, 0.) - rayOrigin);
-
+    vec2 vUv = normalize(vPosition);
+    vec3 rayOrigin = vec3(0.5, 0.5, 1.);
+//    vec3 rayOrigin = vec3(0.5, 0.5, 1.);
+    vec3 rayDirection = normalize(vec3(vPosition, 0.) - rayOrigin);
     fragColor = vec4(castRay(rayOrigin, rayDirection), 1.0);
 }

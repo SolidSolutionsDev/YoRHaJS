@@ -51,6 +51,7 @@ export const initialScene = {
       "testEnemy2",
       // "testEnemy3",
       // "testEnemy4",
+
       "camera1",
       "mountainSolid",
       "water1",
@@ -172,17 +173,13 @@ export const initialScene = {
       shaderPlane1: {
         debug: true,
         transform: {
-          position: { x: 5, y: 5, z: 5 }
+          position: { x: 5, y: 5, z: 100 }
         },
         components: {
           planeShader:{
-            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl"
+            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
+             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
-          autoRotate:{
-            speed: {
-              z:0.01
-            }
-          }
         }
       },
       lightGroup: {
@@ -363,6 +360,7 @@ export const initialScene = {
         debug: true,
         components: {
           planeShader:{
+            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
             shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
           playerControls: {
