@@ -68,15 +68,14 @@ export class UtilsService extends Component {
           "    color.w = 1.0;\n" +
           "    gl_FragColor = color;\n" +
           "     if(gl_FragColor == vec4 (0.0,0.0,0.0,1.0)) {\n" +
-          "        gl_FragColor.a = 0.9;\n" +
+          "        gl_FragColor.a = 0.5;\n" +
           "    } \n" +
           "}\n";
 
       const loader = new THREE.FileLoader(THREE.DefaultLoadingManager);
       loader.setResponseType('text');
       loader.load(ShaderURL, function (shaderText) {
-          const composedShaderText = shaderToyHeader + shaderText + shaderToyFooter;
-          console.log(composedShaderText);
+          const composedShaderText = shaderToyHeader + shaderToyFooter + shaderText ;
         onLoad(composedShaderText);
       }, onProgress, onError);
   }

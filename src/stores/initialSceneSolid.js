@@ -362,6 +362,9 @@ export const initialScene = {
       TestShooter: {
         debug: true,
         components: {
+          planeShader:{
+            shaderURL:"./assets/shaders/fragment/raymarching_cubes_spheres.glsl"
+          },
           playerControls: {
           },
           shooter: {

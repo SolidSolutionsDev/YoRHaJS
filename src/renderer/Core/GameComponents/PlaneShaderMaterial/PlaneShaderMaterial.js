@@ -25,6 +25,7 @@ export class PlaneShaderMaterial extends React.Component {
 
   speed = 1;
   time = 10;
+  startTime = Math.random()*10;
   direction = this.SHADER_DIRECTION.FORWARD;
   shaderTimeCount = this.SHADER_TIME_COUNT.DELTA_TIME;
   playState = this.SHADER_PLAY_STATES.STOP;
@@ -92,7 +93,6 @@ export class PlaneShaderMaterial extends React.Component {
   };
 
   initMaterial() {
-    console.log(this.shaderText);
     this.material = new THREE.ShaderMaterial({
       uniforms: this.uniforms,
       fragmentShader: this.shaderText //pixel
@@ -112,7 +112,7 @@ export class PlaneShaderMaterial extends React.Component {
 
   updateUniforms = (time) => {
     // console.log(this.uniforms);
-    this.uniforms.iTime.value =10+ time/1000;
+    this.uniforms.iTime.value =this.startTime+ time/1000;
     this.uniforms.iResolution.value.x = window.innerWidth;
     this.uniforms.iResolution.value.y = window.innerHeight;
   };
