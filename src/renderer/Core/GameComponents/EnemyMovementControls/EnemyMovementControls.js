@@ -119,7 +119,7 @@ export class EnemyMovementControls extends React.Component {
         const {transform, availableService} = this.props;
         const _sound = availableService.audio.buildPositionalSound(
             this.props.selfSettings.soundLocation
-        );
+        ).sound;
         _sound.setLoop(false);
         _sound.loop = false;
         transform.add(_sound);

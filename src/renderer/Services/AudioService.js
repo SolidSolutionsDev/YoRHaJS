@@ -9,6 +9,8 @@ export class AudioService extends Component {
   };
   // mesh = new THREE.PerspectiveCamera( this.attribs.fov, this.attribs.aspect, this.attribs.near, this.attribs.far );
 
+  availableAudio = {};
+
   listener = new THREE.AudioListener();
   audioLoader = new THREE.AudioLoader();
   cameraWithListener;
@@ -32,27 +34,39 @@ export class AudioService extends Component {
     }
   };
 
-  buildPositionalSound = soundPath => {
+  buildPositionalSound = (soundPath, tagName, analyser) => {
     const sound = new THREE.PositionalAudio(this.listener);
     this.audioLoader.load(soundPath, function(buffer) {
       sound.setBuffer(buffer);
       sound.setRefDistance(20);
     });
-    return sound;
+
+    this.availableAudio[tagName] = { sound: sound };
+    if (analyser) {
+      this.buildAnalyserFromSound(tagName);
+    }
+    return this.availableAudio[tagName];
   };
 
-  buildNonPositionalSound = soundPath => {
+  buildNonPositionalSound = (soundPath, tagName, analyser) => {
     const sound = new THREE.Audio(this.listener);
     this.audioLoader.load(soundPath, function(buffer) {
       sound.setBuffer(buffer);
       sound.setLoop(true);
       sound.play();
     });
-    return sound;
+    this.availableAudio[tagName] = { sound: sound };
+    if (analyser) {
+      this.buildAnalyserFromSound(tagName);
+    }
+    return this.availableAudio[tagName];
   };
 
-  buildAnalyserFromSound = sound => {
+  buildAnalyserFromSound = tagName => {
+    const sound = this.availableAudio[tagName].sound;
     const analyser = new THREE.AudioAnalyser(sound, 32);
+
+    this.availableAudio[tagName].analyser = analyser;
     return analyser;
   };
 

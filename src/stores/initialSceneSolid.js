@@ -55,7 +55,8 @@ export const initialScene = {
       "camera1",
       "mountainSolid",
        "water1",
-      "shaderPlane1"
+      "shaderPlane1",
+      "soundPlayer1",
     ]
   },
   gameObjects: {
@@ -63,12 +64,22 @@ export const initialScene = {
       camera1: {
         prefab: "DynamicCamera"
       },
+      soundPlayer1: {
+        components:{
+          soundPlayer: {
+            positional: false,
+            path: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
+            tag: "backgroundMusic",
+            analyser:true,
+            // path: "./assets/sounds/stereo-left-and-right-test.mp3",
+          },
+        }
+      },
       mountainSolid: {
-        debug:true,
+        debug: true,
         components: {
           audioScale: {
-            sound: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3"
-            // sound: "./assets/sounds/stereo-left-and-right-test.mp3"
+            audioTag: "backgroundMusic"
           },
           autoRotate:{
             speed: {

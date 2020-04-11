@@ -297,9 +297,11 @@ export class Shooter extends React.Component {
     if (!selfSettings.soundLocation) {
       return;
     }
-    const _sound = availableService.audio.buildPositionalSound(
+    const _soundObject = availableService.audio.buildPositionalSound(
       selfSettings.soundLocation
     );
+    const _sound = _soundObject.sound;
+
     _sound.setLoop(false);
     _sound.loop = false;
     transform.add(_sound);
