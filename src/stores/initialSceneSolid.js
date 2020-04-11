@@ -66,6 +66,9 @@ export const initialScene = {
       mountainSolid: {
         debug:true,
         components: {
+          audioScale: {
+            sound: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3"
+          },
           autoRotate:{
             speed: {
               z:0.001

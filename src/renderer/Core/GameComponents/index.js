@@ -24,6 +24,7 @@ import {TextGeometry} from "./TextGeometry/TextGeometry";
 import {AutoRotate} from "./AutoRotate/AutoRotate";
 import {WaterComponent} from "./WaterComponent/WaterComponent";
 import {PlaneShaderMaterial} from "./PlaneShaderMaterial/PlaneShaderMaterial";
+import {AudioScaleComponent} from "./AudioScaleComponent/AudioScaleComponent";
 
 export const components = {
   objMesh: OBJMeshGeometry,
@@ -51,4 +52,5 @@ export const components = {
   autoRotate: AutoRotate,
   water: WaterComponent,
   planeShader: PlaneShaderMaterial,
+  audioScale: AudioScaleComponent,
 };
