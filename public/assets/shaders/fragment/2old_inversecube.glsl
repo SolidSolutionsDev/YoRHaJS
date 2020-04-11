@@ -1,32 +1,5 @@
-#ifdef GL_ES
-precision mediump float;
-#endif
-
-//based on anticore raymarching cubes spheres
-//Add this to your requestAnimationFrame loop for a 3 seconds animation
-// if (uniform.u_movementTiming.value < 10) {
-// if (uniform.u_rotationTiming.value <= 0.7) {
-//     uniform.u_movementTiming.value += 0.4;
-//     if (uniform.u_rotationTiming.value >= 0.5) {
-//     uniform.u_rotationTiming.value -= 0.01;
-//     }
-// } else {
-//     uniform.u_rotationTiming.value -= 0.01;
-// }
-// uniform.u_time.value += 0.02;
-
 #define PI 3.14159265359
 #define TWO_PI 6.28318530718
-
-const int MAX_STEPS = 32;
-const float PRECISION = 0.1;
-const float MAX_DISTANCE = 99999.;
-const int SPHERE_COUNT = 1;
-
-uniform float u_time;       // Time in seconds since load
-uniform vec2 u_resolution;  // Canvas size (width,height)
-uniform float u_rotationTiming;
-uniform float u_movementTiming;
 
 vec3 diffuseLight (vec3 lightPosition, vec3 lightColor, vec3 point, vec3 normal) {
     vec3 lightDirection = normalize(lightPosition - point);
@@ -91,6 +64,11 @@ float opSmoothUnion (float distance1, float distance2, float amount) {
     return mix(distance2, distance1, h) - amount * h * (1. - h); 
 }
 
+const int MAX_STEPS = 32;
+const float PRECISION = 0.1;
+const float MAX_DISTANCE = 99999.;
+const int SPHERE_COUNT = 1;
+
 float spheresMap (vec3 point) {
      vec3 center = vec3(3., 0., 0.);
 
@@ -102,7 +80,7 @@ float spheresMap (vec3 point) {
         sphereRand = 5.0;
         sphereSpeed = 1. / sphereRand;
         sphereRadius = 1.0;
-        spherePos = vec3(center.x + sin(u_time * sphereRand *  - randSignal(sphereRand) * .6)*10.0, center.y, center.z);
+        spherePos = vec3(center.x + sin(iTime * sphereRand *  - randSignal(sphereRand) * .6)*10.0, center.y, center.z);
 
         d = opSmoothUnion(d, sdSphere(point, spherePos, sphereRadius), 1.);
     }
@@ -117,9 +95,7 @@ float cubeMap (vec3 point) {
 }
 
 float map (vec3 point) {
-    //vec3 transformedPoint = (point + vec3(0., 0., 10.)) * rotX(-PI/4.0) * rotY(PI/2.0) * rotZ(-PI/2.0); //Beginning
-    //vec3 transformedPoint = (point + vec3(0., 0., -1.)) * rotX(-PI/2.0) * rotY(PI/2.0) * rotZ(-PI/2.0); //End frame
-    vec3 transformedPoint = (point + vec3(0., 0., 10. - u_movementTiming)) * rotX(-PI/(4.0*u_rotationTiming)) * rotY(PI/2.0) * rotZ(-PI/2.0); //INICIO
+    vec3 transformedPoint = (point + vec3(0., 0., 10.)) * rotX(-PI/(4.0)) * rotY(PI/2.0) * rotZ(-PI/2.0); //INICIO
     return opSmoothUnion(spheresMap(transformedPoint), cubeMap(transformedPoint), .4);
 }
 
@@ -169,16 +145,9 @@ vec3 castRay (vec3 rayOrigin, vec3 rayDirection) {
     return background(rayOrigin, rayDirection);
 }
 
-void main() {
-    vec3 rayOrigin = vec3(0., 0., 1.);
-	vec2 vUv = gl_FragCoord.xy/u_resolution.xy;
-    vec2 q = (vUv.xy * u_resolution.xy - .5 * u_resolution.xy) / u_resolution.y;
-    vec3 rayDirection = normalize(vec3(q, 0.) - rayOrigin);
-
-    gl_FragColor = vec4(castRay(rayOrigin, rayDirection), 1.0);
-
-    if(gl_FragColor == vec4 (0.0,0.0,0.0,1.0)) {
-        gl_FragColor.a = 0.0;
-    } 
-    
+void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
+    vec2 vUv = normalize(vPosition);
+    vec3 rayOrigin = vec3(0.5, 0.5, 1.);
+    vec3 rayDirection = normalize(vec3(vPosition, 0.) - rayOrigin);
+    fragColor = vec4(castRay(rayOrigin, rayDirection), 1.0);
 }
