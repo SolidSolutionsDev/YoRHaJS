@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 
 export const initialScene = {
-  title:{
-    color:"#000000",
-    subText:"We build epic, realtime interactive experiences to blow people's minds",
-    subTextColor:"#ffffff"
+  title: {
+    color: "#000000",
+    subText:
+      "We build epic, realtime interactive experiences to blow people's minds",
+    subTextColor: "#ffffff"
   },
   // TODO: split data in a better high level state strucuture (game, engine)
   game: {
@@ -26,8 +27,8 @@ export const initialScene = {
       antialias: false,
       postprocessing: true,
       backgroundColor: {
-        clearColor:0x222222,
-        alpha:1.0
+        clearColor: 0x222222,
+        alpha: 1.0
       }
     }
   },
@@ -42,19 +43,19 @@ export const initialScene = {
       allCameras: []
     },
     children: [
-      "lightGroup",
-      "board1",
+      // "lightGroup",
+      //"board1",
       // "testCubeGameObject1",
-      "testShooter1",
+      //"testShooter1",
       // "testBoss0",
-      "testBoss1",
-      "testEnemy2",
+      // "testBoss1",
+      // "testEnemy2",
       // "testEnemy3",
       // "testEnemy4",
-
       "camera1",
-      "mountainSolid",
-       "water1",
+      //"mountainSolid",
+      "shaderPlane2",
+      "water1",
       "shaderPlane1"
     ]
   },
@@ -64,28 +65,29 @@ export const initialScene = {
         prefab: "DynamicCamera"
       },
       mountainSolid: {
-        debug:true,
+        debug: true,
         components: {
           audioScale: {
-            sound: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3"
+            sound:
+              "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3"
           },
-          autoRotate:{
+          autoRotate: {
             speed: {
-              z:0.001
+              z: 0.001
             }
           },
-          objMesh:{
+          objMesh: {
             assetURL: "./assets/models/64-everest/everest.obj",
             scale: 100,
-            materialParameters:{
+            materialParameters: {
               color: 0x777777,
-              wireframe:true
+              wireframe: true
             },
             materialType: "basic"
           }
         },
         transform: {
-          position: { x: 0, y: 0, z: 30}
+          position: { x: 0, y: 0, z: 30 }
         }
       },
       testCubeGameObject1: {
@@ -100,112 +102,96 @@ export const initialScene = {
         transform: {
           position: { x: 0, y: 0, z: 4 }
         },
-        components:{
+        components: {
           textGeometry: {
-            randomColors:false,
-            colors:[0xff1111],
+            randomColors: false,
+            colors: [0xff1111],
             text: "SOLID",
             height: 2,
             size: 20,
             hover: 30,
-            curveSegments:  4,
-            bevelThickness: .2,
-            bevelSize: .15,
+            curveSegments: 4,
+            bevelThickness: 0.2,
+            bevelSize: 0.15,
             bevelEnabled: true,
             fontName: "opensans", // helvetiker, optimer, gentilis, droid sans, droid seri,
-            fontWeight: "bold",// normal bol,
-            mirror:  false,
-          },
+            fontWeight: "bold", // normal bol,
+            mirror: false
+          }
         },
         tags: ["playerShooter"],
-        prefab: "TestShooter",
-      },
-      testBoss0: {
-        debug: true,
-        transform: {
-          position: { x: 30, y: -30, z: 3 }
-        },
-        prefab: "EnemySphereBoss"
-      },
-      testBoss1: {
-        debug: true,
-        transform: {
-          position: { x: -30, y: 30, z: 10 }
-        },
-        /// sprefab: "EnemySphereBoss"
-      },
-      testEnemy2: {
-        debug: true,
-        transform: {
-          position: { x: 12, y: -12, z: 3 }
-        },
-        prefab: "EnemyFollower"
-      },
-      testEnemy3: {
-        debug: true,
-        transform: {
-          position: { x: -12, y: -12, z: 3 }
-        },
-        prefab: "EnemyFollower"
-      },
-      testEnemy4: {
-        debug: true,
-        transform: {
-          position: { x: 12, y: 12, z: 3 }
-        },
-        prefab: "EnemyFollower"
+        prefab: "TestShooter"
       },
       board1: {
         debug: true,
         components: {
           boardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 500, y: 500, z: .1 },
-            position: {z:-3},
+            dimensions: { x: 500, y: 500, z: 0.1 },
+            position: { z: -3 },
             mass: 0
           }
         },
         prefab: "Board"
       },
       water1: {
-        transform:{
-          rotation: { x:-Math.PI/2 },
-          position: {y:-300}
+        transform: {
+          rotation: { x: -Math.PI / 2 },
+          position: { y: -100 }
         },
         debug: true,
         components: {
-          water:{},
+          water: {}
         }
       },
       shaderPlane1: {
         debug: true,
         transform: {
-          position: { x: 5, y: 5, z: -500 },
+          position: { x: 0, y: 0, z: -500 },
+          rotation: { x: -Math.PI / 2 }
         },
         components: {
-          planeShader:{
-            width:900,
-            height:600,
-            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
-             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
-          },
+          planeShader: {
+            width: 4000,
+            height: 2000,
+            shaderURL:
+              "./assets/shaders/fragment/anticore_raymarching_sands.glsl"
+            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+          }
+        }
+      },
+      shaderPlane2: {
+        debug: true,
+        transform: {
+          position: { x: 0, y: 0, z: -300 },
+          rotation: { x: -Math.PI / 2 }
+        },
+        components: {
+          planeShader: {
+            width: 200,
+            height: 200,
+            shaderURL:
+              "./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+          }
         }
       },
       lightGroup: {
         transform: {},
         components: {},
         children: [
-          "directionalLight1",
-          "ambientLight1"
+          "directionalLight1"
+          //"ambientLight1"
           // "pointLight1"
         ]
       },
       directionalLight1: {
-        transform: {position: {
+        transform: {
+          position: {
             x: 10,
             y: -70,
-            z:100
-          }},
+            z: 100
+          }
+        },
         components: {},
         prefab: "DirectionalLight",
         parentId: "lightGroup"
@@ -217,11 +203,13 @@ export const initialScene = {
         parentId: "lightGroup"
       },
       pointLight1: {
-        transform: {position: {
-          x:10,
-            y:7,
-            z:5
-          }},
+        transform: {
+          position: {
+            x: 10,
+            y: 7,
+            z: 5
+          }
+        },
         components: {},
         prefab: "PointLight",
         parentId: "lightGroup"
@@ -239,6 +227,7 @@ export const initialScene = {
       "mountainSolid",
       "water1",
       "shaderPlane1",
+      "shaderPlane2"
     ]
   },
   prefabs: {
@@ -255,8 +244,8 @@ export const initialScene = {
           dynamicCameraManager: {
             cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "top",
-            cameraAutoRotate: true,
-            cameraAutoRotateSpeed:3,
+            cameraAutoRotate: false,
+            cameraAutoRotateSpeed: 3,
             cameraMinDistance: 10,
             cameraPanLock: false,
             // lookAt: { x: 0, y: 0, z: 0 },
@@ -345,8 +334,8 @@ export const initialScene = {
         transform: {},
         components: {
           playerBulletGeometry: {
-            dimensions: [5,5,5],
-            color:0xff2222
+            dimensions: [5, 5, 5],
+            color: 0xff2222
           },
           bulletMovement: {
             // debug:true,
@@ -360,28 +349,28 @@ export const initialScene = {
         components: {
           sphereGeometry: {
             basicMaterial: true,
-            castShadow:false,
-          },
+            castShadow: false
+          }
         },
         children: []
       },
       TestShooter: {
         debug: true,
         components: {
-          planeShader:{
-            position:{x:0,y:0,z:100},
+          planeShader: {
+            position: { x: 0, y: 0, z: 100 },
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
-            shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+            shaderURL:
+              "./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
-          playerControls: {
-          },
+          playerControls: {},
           shooter: {
             soundLocation:
               "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
             moveRatio: 7,
             displacementRatio: 5,
             bulletPrefab: "PlayerBullet",
-            selfDestructTime: 2000,
+            selfDestructTime: 2000
           },
           shooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
@@ -397,7 +386,7 @@ export const initialScene = {
           enemyMovementControls: {
             type: "follow",
             speed: 50,
-            rotationSpeed: 10,
+            rotationSpeed: 10
           },
           shooter: {
             shooting: true,
@@ -411,7 +400,7 @@ export const initialScene = {
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
             mass: 1,
-            tip: true,
+            tip: true
           }
         },
         children: []
@@ -422,22 +411,21 @@ export const initialScene = {
           enemyMovementControls: {
             type: "rotate",
             speed: 50,
-            rotationSpeed: 2,
+            rotationSpeed: 2
           },
           shooter: {
             shooting: true,
             moveRatio: 2,
-            displacementRatio:1,
+            displacementRatio: 1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
-            aroundBullets: 1,
-
+            aroundBullets: 1
           },
           sphereGeometry: {
-            radius:1.4,
+            radius: 1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
-            castShadow:true,
+            castShadow: true
           }
         },
         children: []
@@ -456,7 +444,7 @@ export const initialScene = {
           directionalLight: {
             castShadow: true,
             color: 0xffffff,
-            intensity: 0.9,
+            intensity: 0.9
           }
         }
       },
