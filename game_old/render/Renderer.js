@@ -19,7 +19,8 @@ export class Renderer extends Component {
   registeredUpdates = [];
   renderer = new THREE.WebGLRenderer({
     alpha: true,
-    antialias: true
+    antialias: true,
+    logarithmicDepthBuffer:true
   });
   ui = {};
   canvas = this.renderer.domElement;
