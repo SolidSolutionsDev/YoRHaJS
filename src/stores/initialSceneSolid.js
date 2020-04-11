@@ -196,6 +196,12 @@ export const initialScene = {
         },
         components: {
           planeShader:{
+            explode: {
+              directionFunction:"random",
+              distance:200.0,
+              timeScale: 0.0005,
+              audioTag:"backgroundMusic"
+            },
             width:900,
             height:600,
             audioTag: "backgroundMusic",

@@ -52,7 +52,7 @@ export class AudioScaleComponent extends React.Component {
     // return  1 + Math.cos((this.analyser.getAverageFrequency() - 125) / 10) * 0.2;
   };
 
-  generateNewScale2 = (frequencies, averageFrequency )=> {
+  generateNewScale2 = ( frequencies, averageFrequency )=> {
     let frequency = frequencies.reduce((accumulator, value) => {
       return accumulator + value;
     }, 0);

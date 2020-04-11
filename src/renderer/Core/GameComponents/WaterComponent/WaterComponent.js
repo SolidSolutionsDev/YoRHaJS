@@ -11,7 +11,6 @@ export class WaterComponent extends React.Component {
       const { scene } = availableComponent;
       const lightPosition= this.props.gameObjects["directionalLight1"].transform.position;
       const normalizedLightPosition = new THREE.Vector3(lightPosition.x,lightPosition.y,lightPosition.z).normalize();
-      console.log(normalizedLightPosition);
       this.waterGeometry = new THREE.PlaneBufferGeometry( 10000, 10000 );
     this.water = new Water(
         this.waterGeometry,

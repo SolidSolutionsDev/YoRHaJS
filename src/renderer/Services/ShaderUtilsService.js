@@ -5,10 +5,25 @@ import * as THREE from "three";
 export class ShaderUtilsService extends Component {
 
     basicVertexShader = "" +
-        "varying vec2 vPosition;" +
+        "varying vec2 vPosition;\n" +
         "void main() {\n" +
         "      vPosition = uv;\n"+
         "      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n" +
+        "  }";
+
+    explosionVertexShader = "" +
+        "uniform float amplitude;\n" +
+        "attribute vec3 displacement;\n" +
+        "varying vec2 vPosition;\n" +
+        "void main() {\n" +
+        "      vPosition = uv;\n"+
+        "      if (amplitude > .0){\n"+
+        "           vec3 explodedPosition = position + normal * amplitude * displacement;\n"+
+        "           gl_Position = projectionMatrix * modelViewMatrix * vec4( explodedPosition, 1.0 );\n" +
+        "       }\n" +
+        "       else {\n" +
+        "           gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );\n" +
+        "       };\n" +
         "  }";
 
   shaderLoad(ShaderURL, onLoad, onProgress, onError) {

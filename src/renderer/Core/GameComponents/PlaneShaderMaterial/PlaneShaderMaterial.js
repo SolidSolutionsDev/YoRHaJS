@@ -87,11 +87,13 @@ export class PlaneShaderMaterial extends React.Component {
     this.startShader();
   };
 
-  startShader = (sh)=> {
-    this.updateUniforms({time:10});
+  startShader = ()=> {
+    this.initUniforms();
     this.initMaterial();
     this.initGeometry();
+    this.initExplode();
     this.initShaderMesh();
+    // this.updateUniforms({time:10});
     this.ready = true;
   };
 
@@ -116,20 +118,36 @@ export class PlaneShaderMaterial extends React.Component {
 
   initGeometry = ()=> {
     const {width, height} = this.props;
-    this.geometry = new THREE.PlaneBufferGeometry(width || 100, height || 100);
+    this.geometry = new THREE.PlaneGeometry(width || 100, height || 100);
+
   };
 
   initShaderMesh = () => {
-    const {position, availableService} = this.props
+    const {position, availableService} = this.props;
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.props.transform.add(this.mesh);
     if (position) {
         availableService.animation.travelTo(this.mesh,position,2000);
     }
+
   };
 
+  initExplode = ()=> {
+      const {explode,availableService } = this.props;
+      if ( explode ) {
+          this.uniforms.amplitude = {type:"f", value: 0};
+          this.geometry = availableService.geometry.generateExplodableBufferGeometryFromGeometry(this.geometry, explode.directionFunction);
+          this.vertexShaderText = availableService.shader.explosionVertexShader;
+          this.initMaterial();
+      }
+  };
+
+  initUniforms = () => {
+    // TODO: to init custom uniforms from state
+  }
+
   updateUniforms = (time) => {
-    const { availableComponent, availableService, audioTag } = this.props;
+    const { availableComponent, availableService, audioTag, explode } = this.props;
     const { scene } = availableComponent;
     const { audio } = availableService;
     const camera = scene.camera._main;
@@ -150,6 +168,11 @@ export class PlaneShaderMaterial extends React.Component {
     if (audioObject && audioObject.analyser){
         this.uniforms.uSoundFrequencyAverage.value = audioObject.analyser.getAverageFrequency();
         this.uniforms.uSoundFrequencyMatrix.value = audioObject.analyser.getFrequencyData();
+    }
+      // console.log(audioObject);
+    if (explode){
+        const audioMultiplier = explode.audioTag ? audio.availableAudio[audioTag].analyser.getAverageFrequency()/255:1.0;
+        this.uniforms.amplitude.value = 1.0+audioMultiplier*Math.abs(Math.sin( time * explode.timeScale))*explode.distance;
     }
   };
 
