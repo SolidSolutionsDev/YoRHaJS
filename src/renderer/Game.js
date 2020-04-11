@@ -7,9 +7,10 @@ import { PhysicsService } from "./Services/PhysicsService";
 import { AudioService } from "./Services/AudioService";
 import { AnimationService } from "./Services/AnimationService";
 import { InputService } from "./Services/InputService";
-import { UtilsService } from "./Services/UtilsService";
+import { ShaderUtilsService } from "./Services/ShaderUtilsService";
 
 import * as GameContext from "./GameContext";
+import {GeometryUtilsService} from "./Services/GeometryUtilsService";
 
 export class Game extends React.Component {
   frame = null;
@@ -175,7 +176,8 @@ export class Game extends React.Component {
           id="animation"
         />
         <InputService ref={this.addGameService} key="input" id="input" />
-        <UtilsService ref={this.addGameService} key="utils" id="utils" />
+        <ShaderUtilsService ref={this.addGameService} key="shader" id="shader" />
+        <GeometryUtilsService ref={this.addGameService} key="geometry" id="geometry" />
       </GameContext.Provider>
     );
   };

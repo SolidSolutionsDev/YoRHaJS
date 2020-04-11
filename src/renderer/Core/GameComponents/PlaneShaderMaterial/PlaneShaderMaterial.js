@@ -67,7 +67,7 @@ export class PlaneShaderMaterial extends React.Component {
 
   material;
   geometry;
-  shaderMesh;
+  mesh;
 
   start = () => {
     this.loadShader();
@@ -75,12 +75,12 @@ export class PlaneShaderMaterial extends React.Component {
 
   loadShader = ()=> {
     const { availableService,shaderURL } = this.props;
-    availableService.utils.shaderLoad(shaderURL, this.shaderLoaded)
+    availableService.shader.shaderLoad(shaderURL, this.shaderLoaded)
   };
 
   shaderLoaded = (shaderText) => {
     const { availableService } = this.props;
-    this.vertexShaderText = availableService.utils.basicVertexShader;
+    this.vertexShaderText = availableService.shader.basicVertexShader;
     this.fragmentShaderText = shaderText;
     this.startShader();
   };
@@ -119,10 +119,10 @@ export class PlaneShaderMaterial extends React.Component {
 
   initShaderMesh = () => {
     const {position, availableService} = this.props
-    this.shaderMesh = new THREE.Mesh(this.geometry, this.material);
-    this.props.transform.add(this.shaderMesh);
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
+    this.props.transform.add(this.mesh);
     if (position) {
-        availableService.animation.travelTo(this.shaderMesh,position,2000);
+        availableService.animation.travelTo(this.mesh,position,2000);
     }
   };
 
@@ -145,33 +145,17 @@ export class PlaneShaderMaterial extends React.Component {
   };
 
   updateMesh = () => {
-    const { availableComponent,transform } = this.props;
-    const { scene } = availableComponent;
-    const camera = scene.camera._main;
-    const sceneThree  = scene.scene;
-    this.shaderMesh.rotation.x = camera.rotation.x;
-    this.shaderMesh.rotation.z = camera.rotation.z;
-    this.shaderMesh.rotation.y = camera.rotation.y;
-    // this.shaderMesh.lookAt(camera.position);
-
-
-  scene.scene.attach(this.shaderMesh);
-
-
-    const position = new THREE.Vector3();
-    const quaternion = new THREE.Quaternion();
-    const scale = new THREE.Vector3();
-
-    camera.matrixWorld.decompose( position, quaternion, scale );
-    this.shaderMesh.quaternion.copy( quaternion );
-    camera.updateMatrixWorld( true );
-    this.shaderMesh.updateMatrix();
-
-   transform.attach( this.shaderMesh);
-
-
+    this.hardLookAtCamera();
   };
 
+  hardLookAtCamera() {
+    const {availableComponent, availableService} = this.props;
+    const {scene} = availableComponent;
+    const {geometry} = availableService;
+    const camera = scene.camera._main;
+
+    geometry.hardLookAt(this.mesh, camera);
+  }
 
   update = (time) => {
     if (this.ready) {
