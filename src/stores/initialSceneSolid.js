@@ -176,10 +176,12 @@ export const initialScene = {
       shaderPlane1: {
         debug: true,
         transform: {
-          position: { x: 5, y: 5, z: 100 }
+          position: { x: 5, y: 5, z: -100 },
         },
         components: {
           planeShader:{
+            width:1000,
+            height:1000,
             shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
              // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
@@ -285,7 +287,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 70, z: 200 }
+                position: { x: 0, y: 0, z: 800 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }

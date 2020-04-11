@@ -108,13 +108,13 @@ export class PlaneShaderMaterial extends React.Component {
       fragmentShader: this.fragmentShaderText, //pixel,
       side: THREE.DoubleSide,
     });
-    console.log(this);
 
     this.material.transparent = true;
   };
 
   initGeometry = ()=> {
-    this.geometry = new THREE.PlaneBufferGeometry(100, 100);
+    const {width, height} = this.props;
+    this.geometry = new THREE.PlaneBufferGeometry(width || 100, height || 100);
   };
 
   initShaderMesh = () => {
@@ -161,8 +161,7 @@ export class PlaneShaderMaterial extends React.Component {
     const position = new THREE.Vector3();
     const quaternion = new THREE.Quaternion();
     const scale = new THREE.Vector3();
-    //
-    //
+
     camera.matrixWorld.decompose( position, quaternion, scale );
     this.shaderMesh.quaternion.copy( quaternion );
     camera.updateMatrixWorld( true );
@@ -170,19 +169,6 @@ export class PlaneShaderMaterial extends React.Component {
 
    transform.attach( this.shaderMesh);
 
-
-
-    // camera.getWorldQuaternion( this.shaderMesh.quaternion);
-    this.shaderMesh.updateMatrixWorld( true );
-
-    //
-    // this.shaderMesh.rotateX(-transform.rotation.x);
-    // this.shaderMesh.rotateY(-transform.rotation.y);
-    // this.shaderMesh.rotateZ(-transform.rotation.z);
-    this.shaderMesh.updateMatrixWorld( true );
-    // this.shaderMesh.lookAt(camera.position);
-
-    // this.shaderMesh.setRotationFromMatrix(camera.matrixWorld)
 
   };
 

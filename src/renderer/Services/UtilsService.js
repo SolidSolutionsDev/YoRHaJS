@@ -79,7 +79,7 @@ export class UtilsService extends Component {
           "    color.w = 1.0;\n" +
           "    gl_FragColor = color;\n" +
           "     if(gl_FragColor == vec4 (0.0,0.0,0.0,1.0)) {\n" +
-          "        gl_FragColor.a = 0.0;\n" +
+          "        gl_FragColor.a = 0.1;\n" +
           "    } \n" +
           "}\n";
 
