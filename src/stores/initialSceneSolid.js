@@ -54,9 +54,9 @@ export const initialScene = {
       // "testEnemy4",
       "camera1",
       //"mountainSolid",
+      "shaderPlane1",
       "shaderPlane2",
-      "water1",
-      "shaderPlane1"
+      "water1"
     ]
   },
   gameObjects: {
