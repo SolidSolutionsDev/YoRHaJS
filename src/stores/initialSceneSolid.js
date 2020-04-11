@@ -68,6 +68,7 @@ export const initialScene = {
         components: {
           audioScale: {
             sound: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3"
+            // sound: "./assets/sounds/stereo-left-and-right-test.mp3"
           },
           autoRotate:{
             speed: {
