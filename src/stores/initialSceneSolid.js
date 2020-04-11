@@ -54,8 +54,11 @@ export const initialScene = {
       // "testEnemy4",
       "camera1",
       //"mountainSolid",
-      "shaderPlane1",
-      "shaderPlane2",
+
+      "shaderSandPlane1",
+      "shaderPathPlane3",
+      "shaderCubePlane2",
+
       "water1"
     ]
   },
@@ -144,7 +147,7 @@ export const initialScene = {
           water: {}
         }
       },
-      shaderPlane1: {
+      shaderSandPlane1: {
         debug: true,
         transform: {
           position: { x: 0, y: 0, z: -500 },
@@ -160,7 +163,7 @@ export const initialScene = {
           }
         }
       },
-      shaderPlane2: {
+      shaderCubePlane2: {
         debug: true,
         transform: {
           position: { x: 0, y: 0, z: -300 },
@@ -172,6 +175,20 @@ export const initialScene = {
             height: 200,
             shaderURL:
               "./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+          }
+        }
+      },
+      shaderPathPlane3: {
+        debug: true,
+        transform: {
+          position: { x: 0, y: 100, z: -400 },
+          rotation: { x: -Math.PI / 2 }
+        },
+        components: {
+          planeShader: {
+            width: 800,
+            height: 800,
+            shaderURL: "./assets/shaders/fragment/2old_inversecube.glsl"
           }
         }
       },
@@ -227,7 +244,8 @@ export const initialScene = {
       "mountainSolid",
       "water1",
       "shaderPlane1",
-      "shaderPlane2"
+      "shaderPlane2",
+      "shaderPlane3"
     ]
   },
   prefabs: {
