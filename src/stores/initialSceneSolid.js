@@ -198,7 +198,8 @@ export const initialScene = {
           planeShader:{
             width:900,
             height:600,
-            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
+            audioTag: "backgroundMusic",
+            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
              // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
         }

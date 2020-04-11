@@ -13,7 +13,6 @@ export class ShaderUtilsService extends Component {
 
   shaderLoad(ShaderURL, onLoad, onProgress, onError) {
 
-
       const shaderToyHeader =
           //"#version 300 es\n" +
           // "#ifdef GL_ES\n" +
@@ -37,7 +36,9 @@ export class ShaderUtilsService extends Component {
           "uniform float uAspectRatio;\n" +
           "uniform vec3 uCameraPosition;\n" +
           "uniform mat3 uCameraOrientation;\n" +
-          "uniform float uViewDistance;" +
+          "uniform float uViewDistance;\n" +
+          "uniform mat4 uSoundFrequencyMatrix;\n" +
+          "uniform float uSoundFrequencyAverage;\n" +
           "uniform struct {\n" +
           "    sampler2D sampler;\n" +
           "    vec3  size;\n" +

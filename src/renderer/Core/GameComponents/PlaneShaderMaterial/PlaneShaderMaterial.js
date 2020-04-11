@@ -42,6 +42,8 @@ export class PlaneShaderMaterial extends React.Component {
     uCameraPosition: {type: "v3", value: new THREE.Vector3() } ,
     uCameraOrientation: {type: "m3", value: new THREE.Matrix3() } ,
     uViewDistance: {type: "f" , value: new THREE.Vector3()} ,
+    uSoundFrequencyMatrix: {type: "m4" , value: new THREE.Matrix4()} ,
+    uSoundFrequencyAverage: {type: "f" , value: 0} ,
 
     iResolution: { type: "v3", value: new THREE.Vector3() },                                        // viewport resolution (in pixels)
     iTime: { type: "f", value: 0 },                                                                 // shader playback time (in seconds)
@@ -127,8 +129,9 @@ export class PlaneShaderMaterial extends React.Component {
   };
 
   updateUniforms = (time) => {
-    const { availableComponent,transform } = this.props;
+    const { availableComponent, availableService, audioTag } = this.props;
     const { scene } = availableComponent;
+    const { audio } = availableService;
     const camera = scene.camera._main;
     // console.log(this.uniforms);
     this.uniforms.iTime.value =this.startTime+ time/1000;
@@ -141,7 +144,13 @@ export class PlaneShaderMaterial extends React.Component {
     this.uniforms.uCameraOrientation.value = camera.normalMatrix;
     this.uniforms.uViewDistance.value =1;
     // console.log(camera,"\ncamera.position:",camera.position,"\ncamera.rotation:",camera.rotation);
+    const audioObject = audio.availableAudio[audioTag];
 
+      // console.log(audioObject);
+    if (audioObject && audioObject.analyser){
+        this.uniforms.uSoundFrequencyAverage.value = audioObject.analyser.getAverageFrequency();
+        this.uniforms.uSoundFrequencyMatrix.value = audioObject.analyser.getFrequencyData();
+    }
   };
 
   updateMesh = () => {

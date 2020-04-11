@@ -9,11 +9,10 @@ export class AudioService extends Component {
   };
   // mesh = new THREE.PerspectiveCamera( this.attribs.fov, this.attribs.aspect, this.attribs.near, this.attribs.far );
 
-  availableAudio = {};
-
-  listener = new THREE.AudioListener();
-  audioLoader = new THREE.AudioLoader();
-  cameraWithListener;
+    listener = new THREE.AudioListener();
+    audioLoader = new THREE.AudioLoader();
+    cameraWithListener;
+    availableAudio = {};
 
   componentDidMount() {}
 

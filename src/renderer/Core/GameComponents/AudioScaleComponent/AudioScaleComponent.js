@@ -29,7 +29,7 @@ export class AudioScaleComponent extends React.Component {
     const upperHalfScale = this.generateNewScale2(upperHalfArray, averageFrequency);
 
     transform.scale.set(lowerHalfScale, lowerHalfScale, upperHalfScale);
-    console.log(frequencyData, transform.scale);
+    // console.log(frequencyData, transform.scale);
   }
 
   scaleDivideAudioInThree(transform, analyser) {
@@ -39,7 +39,7 @@ export class AudioScaleComponent extends React.Component {
     const newScaleZ = this.generateNewScale(frequencyData.slice(8, 11));
 
     transform.scale.set(newScaleX, newScaleY, newScaleZ);
-    console.log(frequencyData);
+    // console.log(frequencyData);
   }
 
   generateNewScale = (frequencies, averageFrequency )=> {
