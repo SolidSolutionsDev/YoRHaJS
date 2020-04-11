@@ -54,7 +54,7 @@ export const initialScene = {
 
       "camera1",
       "mountainSolid",
-      // "water1",
+       "water1",
       "shaderPlane1"
     ]
   },
@@ -85,7 +85,7 @@ export const initialScene = {
           }
         },
         transform: {
-          position: { x: 0, y: 0, z: 2 }
+          position: { x: 0, y: 0, z: 30}
         }
       },
       testCubeGameObject1: {
@@ -168,6 +168,10 @@ export const initialScene = {
         prefab: "Board"
       },
       water1: {
+        transform:{
+          rotation: { x:-Math.PI/2 },
+          position: {y:-300}
+        },
         debug: true,
         components: {
           water:{},
@@ -176,12 +180,12 @@ export const initialScene = {
       shaderPlane1: {
         debug: true,
         transform: {
-          position: { x: 5, y: 5, z: -100 },
+          position: { x: 5, y: 5, z: -500 },
         },
         components: {
           planeShader:{
-            width:1000,
-            height:1000,
+            width:900,
+            height:600,
             shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
              // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
