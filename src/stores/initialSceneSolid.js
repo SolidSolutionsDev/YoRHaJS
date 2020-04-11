@@ -251,16 +251,16 @@ export const initialScene = {
           dynamicCameraManager: {
             cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "top",
-            cameraAutoRotate: false,
-            cameraAutoRotateSpeed:1,
+            cameraAutoRotate: true,
+            cameraAutoRotateSpeed:3,
             cameraMinDistance: 10,
             cameraPanLock: false,
             // lookAt: { x: 0, y: 0, z: 0 },
             animatedTransformations: true,
-            animatedIntroTime: 1000,
+            animatedIntroTime: 3000,
             animatedRegularTransitionTime: 1000,
             near: 0.1,
-            far: 10000,
+            far: 5000,
             fov: 45,
             unspecified_supportedCameraAngles: [
               "",
@@ -287,7 +287,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 0, z: 800 }
+                position: { x: 0, y: 0, z: 2000 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }

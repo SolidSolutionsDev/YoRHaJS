@@ -10,13 +10,15 @@ export class Camera extends React.Component {
   camera;
 
   start = () => {
-    const { availableComponent, updateSelf } = this.props;
-    // this.camera = new THREE.OrthographicCamera(
-    //   (this.frustumSize * renderer.getAspect()) / -2,
-    //   (this.frustumSize * renderer.getAspect()) / 2,
-    //   this.frustumSize / 2,
-    //   this.frustumSize / -2,
-    this.camera = new THREE.PerspectiveCamera();
+    const { availableComponent, updateSelf ,fov,
+      aspect,
+      near,
+      far } = this.props;
+    this.camera = new THREE.PerspectiveCamera(
+        fov,
+        aspect || availableComponent.renderer.getAspect(),
+        near,
+        far);
     const { renderer } = availableComponent;
     this.controls = new OrbitControls(
       this.camera,
