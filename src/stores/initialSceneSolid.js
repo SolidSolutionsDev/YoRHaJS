@@ -43,18 +43,17 @@ export const initialScene = {
     },
     children: [
       "lightGroup",
-      "board1",
+      // "board1",
       // "testCubeGameObject1",
-      "testShooter1",
+      // "testShooter1",
       // "testBoss0",
       "testBoss1",
-      "testEnemy2",
+      // "testEnemy2",
       // "testEnemy3",
       // "testEnemy4",
-
       "camera1",
-      "mountainSolid",
-       "water1",
+      // "mountainSolid",
+      // "water1",
       "shaderPlane1",
       "soundPlayer1",
     ]
@@ -205,7 +204,8 @@ export const initialScene = {
             width:900,
             height:600,
             audioTag: "backgroundMusic",
-            shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
+            shaderURL:"./assets/shaders/fragment/anticore_worley_tunnel.glsl",
+            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
              // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
         }
