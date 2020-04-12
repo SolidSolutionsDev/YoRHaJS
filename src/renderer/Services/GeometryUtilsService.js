@@ -45,14 +45,14 @@ export class GeometryUtilsService extends Component {
         random: this.randomExplosionDirectionFunction,
         default: this.randomExplosionDirectionFunction,
     }
-  generateExplodableBufferGeometryFromGeometry = (geometry, displacementFunctionId) => {
+  generateExplodableBufferGeometryFromGeometry = (geometry, displacementFunctionId, maxEdgeLength, tessellateIterations) => {
 
-      const tessellateModifier = new TessellateModifier( 8 );
+      const _maxEdgeLength = maxEdgeLength || 8;
+      const tessellateModifier = new TessellateModifier( _maxEdgeLength );
 
-      for ( let i = 0; i < 6; i ++ ) {
-
+      const _tessellateIterations = tessellateIterations || 6;
+      for ( let i = 0; i < _tessellateIterations; i ++ ) {
           tessellateModifier.modify( geometry );
-
       }
 
       const explodeModifier = new ExplodeModifier();

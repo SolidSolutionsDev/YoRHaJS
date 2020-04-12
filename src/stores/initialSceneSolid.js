@@ -191,7 +191,7 @@ export const initialScene = {
       shaderPlane1: {
         debug: true,
         transform: {
-          position: { x: 5, y: 5, z: -500 },
+          position: { x: 5, y: 5, z: -10 },
         },
         components: {
           planeShader:{
@@ -199,10 +199,14 @@ export const initialScene = {
               directionFunction:"random",
               distance:200.0,
               timeScale: 0.0005,
-              audioTag:"backgroundMusic"
+              audioTag:"backgroundMusic",
+              maxEdgeLength:5,
+              tessellateIterations:12,
+
             },
-            width:900,
-            height:600,
+            hardLookAtCamera:false,
+            width:2900,
+            height:2600,
             audioTag: "backgroundMusic",
             shaderURL:"./assets/shaders/fragment/anticore_worley_tunnel.glsl",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
@@ -274,7 +278,7 @@ export const initialScene = {
           dynamicCameraManager: {
             cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "top",
-            cameraAutoRotate: true,
+            // cameraAutoRotate: true,
             cameraAutoRotateSpeed:3,
             cameraMinDistance: 10,
             cameraPanLock: false,

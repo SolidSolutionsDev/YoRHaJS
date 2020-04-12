@@ -132,11 +132,12 @@ export class PlaneShaderMaterial extends React.Component {
 
   };
 
+  // TODO: extract explode to a GameComponent
   initExplode = ()=> {
       const {explode,availableService } = this.props;
       if ( explode ) {
           this.uniforms.amplitude = {type:"f", value: 0};
-          this.geometry = availableService.geometry.generateExplodableBufferGeometryFromGeometry(this.geometry, explode.directionFunction);
+          this.geometry = availableService.geometry.generateExplodableBufferGeometryFromGeometry(this.geometry, explode.directionFunction, explode.maxEdgeLength, explode.tessellateIterations);
           this.vertexShaderText = availableService.shader.explosionVertexShader;
           this.initMaterial();
       }
@@ -172,12 +173,15 @@ export class PlaneShaderMaterial extends React.Component {
       // console.log(audioObject);
     if (explode){
         const audioMultiplier = explode.audioTag ? audio.availableAudio[audioTag].analyser.getAverageFrequency()/255:1.0;
-        this.uniforms.amplitude.value = 1.0+audioMultiplier*Math.abs(Math.sin( time * explode.timeScale))*explode.distance;
+        this.uniforms.amplitude.value = audioMultiplier*Math.sin( time * explode.timeScale)*explode.distance;
     }
   };
 
   updateMesh = () => {
-    this.hardLookAtCamera();
+    const {hardLookAtCamera} = this.props;
+    if (hardLookAtCamera) {
+      this.hardLookAtCamera();
+    }
   };
 
   hardLookAtCamera() {
