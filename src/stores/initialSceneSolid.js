@@ -54,6 +54,7 @@ export const initialScene = {
       "camera1",
       // "mountainSolid",
       // "water1",
+      "sephiroth1",
       "shaderPlane1",
       "soundPlayer1",
     ]
@@ -62,6 +63,13 @@ export const initialScene = {
     byId: {
       camera1: {
         prefab: "DynamicCamera"
+      },
+      sephiroth1: {
+        components:{
+          MMDLoader:{
+            assetURL:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx"
+          }
+        }
       },
       soundPlayer1: {
         components:{
@@ -262,6 +270,7 @@ export const initialScene = {
       "mountainSolid",
       "water1",
       "shaderPlane1",
+      "sephiroth1",
     ]
   },
   prefabs: {

@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 import * as THREE from "three";
 
 // import OBJLoader from "three-obj-loader";
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 
-const FBXLoader = require("three-fbx-loader");
 
-export class OBJMeshGeometry extends React.Component {
-  transform = new THREE.Object3D();
+export class MMDMeshGeometry extends React.Component {
   modelToUse;
 
   //TODO: export this to a generic acessible enum
@@ -24,9 +22,9 @@ export class OBJMeshGeometry extends React.Component {
 
   modelLoadedCallback = loadedModel => {
     const {transform, scale, materialType, materialParameters } = this.props;
-    this.modelToUse = loadedModel.children[0];
+    this.modelToUse = loadedModel;
 
-    this.modelToUse.rotateX(Math.PI/2);
+    // this.modelToUse.rotateX(Math.PI/2);
     console.log(this);
 
     // this.transform.add(modelToUse);
@@ -48,13 +46,8 @@ export class OBJMeshGeometry extends React.Component {
     return;
   };
 
-  _loadFBX = assetURL => {
-    const loader = new FBXLoader();
-    loader.load(assetURL, this.modelLoadedCallback);
-  };
-
-  _loadOBJ = assetURL => {
-    const loader = new OBJLoader();
+  _loadMMD = assetURL => {
+    const loader = new MMDLoader();
     loader.load(assetURL, this.modelLoadedCallback);
   };
 
@@ -63,16 +56,7 @@ export class OBJMeshGeometry extends React.Component {
     const splittedUrl = assetURL.split(".");
     const extension = splittedUrl[splittedUrl.length - 1];
 
-    switch (extension) {
-      case "fbx":
-        this._loadFBX(assetURL);
-        break;
-      case "obj":
-        this._loadOBJ(assetURL);
-        break;
-      default:
-        this._loadOBJ(assetURL);
-    }
+    this._loadMMD(assetURL)
   };
 
   start = () => {
@@ -88,7 +72,7 @@ export class OBJMeshGeometry extends React.Component {
   }
 }
 
-OBJMeshGeometry.propTypes = {
+MMDMeshGeometry.propTypes = {
   assetURL: PropTypes.string.isRequired,
   scale: PropTypes.number,
   materialParameters:PropTypes.object,

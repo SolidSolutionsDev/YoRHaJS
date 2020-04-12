@@ -6,6 +6,33 @@ import { TessellateModifier } from "three/examples/jsm/modifiers/TessellateModif
 
 export class GeometryUtilsService extends Component {
 
+    resetGeometryScale = modelToResetScale => {
+        // Compute and Get the Bounding Box
+        modelToResetScale.geometry.computeBoundingBox();
+        const boundingBox = modelToResetScale.geometry.boundingBox.clone();
+
+        // Set an array with the distance of each edge
+        const edgeSizes = [
+            boundingBox.max.x - boundingBox.min.x,
+            boundingBox.max.y - boundingBox.min.y,
+            boundingBox.max.z - boundingBox.min.z
+        ];
+
+        // Get the bigger edge
+        const biggerEdge = Math.max(...edgeSizes);
+
+        // Get the Scale value from the default Box (1, 1, 1) to this Model
+        const scaleToSet = 1 / biggerEdge;
+
+        // Do scale!
+        modelToResetScale.geometry.scale(scaleToSet, scaleToSet, scaleToSet);
+
+        // Set the current center
+        // modelToResetScale.geometry.center();
+
+        return modelToResetScale;
+    };
+
   getObjectTopParent = (object3D) => {
     const {parent} =  object3D;
 

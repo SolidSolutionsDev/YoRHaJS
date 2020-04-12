@@ -20,38 +20,14 @@ export class ObjectLoaderMesh extends React.Component {
 
   // TODO: Create geometry uniformize component
   // TODO2: compute groups scale
-  _resetGeometryScale = modelToResetScale => {
-    // Compute and Get the Bounding Box
-    modelToResetScale.geometry.computeBoundingBox();
-    const boundingBox = modelToResetScale.geometry.boundingBox.clone();
 
-    // Set an array with the distance of each edge
-    const edgeSizes = [
-      boundingBox.max.x - boundingBox.min.x,
-      boundingBox.max.y - boundingBox.min.y,
-      boundingBox.max.z - boundingBox.min.z
-    ];
-
-    // Get the bigger edge
-    const biggerEdge = Math.max(...edgeSizes);
-
-    // Get the Scale value from the default Box (1, 1, 1) to this Model
-    const scaleToSet = 1 / biggerEdge;
-
-    // Do scale!
-    modelToResetScale.geometry.scale(scaleToSet, scaleToSet, scaleToSet);
-
-    // Set the current center
-    // modelToResetScale.geometry.center();
-
-    return modelToResetScale;
-  };
 
   modelLoadedCallback = loadedModel => {
-    const { normalizeSize, centerGeometry, emitLoadingAsset } = this.props;
+    const { normalizeSize, centerGeometry, emitLoadingAsset, availableService } = this.props;
+    const { geometry } = availableService;
     const modelsToUse = loadedModel.children;
     let models = normalizeSize
-      ? modelsToUse.map(this._resetGeometryScale)
+      ? modelsToUse.map(geometry.resetGeometryScale)
       : modelsToUse;
 
     models = centerGeometry ? models.map(this._centerGeometry) : models;
