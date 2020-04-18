@@ -76,8 +76,8 @@ export const initialScene = {
       },
       sephiroth1: {
         transform: {
-          scale:1,
-          position: { x: 0, y: 0, z: 1900},
+          scale:{x:10,y:10,z:10},
+          position: { x: 0, y: 0, z: 1390},
         },
         components:{
           meshGeometryLoader:{

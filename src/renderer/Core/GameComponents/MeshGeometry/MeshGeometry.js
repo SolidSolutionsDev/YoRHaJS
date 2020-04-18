@@ -41,7 +41,6 @@ export class MeshGeometry extends React.Component {
     transform.add(this.modelToUse);
     // console.log("\nthis:",this,"\ntransform:",transform,"\nthis.modelToUse:",this.modelToUse,"\nthis.modelToUse.parent:",this.modelToUse.parent);
     this.modelToUse.position.set(0,0,0);
-    return;
   };
 
 
@@ -49,7 +48,16 @@ export class MeshGeometry extends React.Component {
     this.modelLoad();
   };
 
-  update = () => {};
+  update = (time,delta) => {
+    if (this.modelToUse && this.modelToUse.skeleton){
+      this.modelToUse.skeleton.bones.forEach((bone,index)=> {
+        const ind= index+1;
+        // bone.rotation.x = Math.sin(time / (1000*ind)) * (Math.cos(ind) / 10);
+        bone.rotation.y = Math.cos(time / (100000/ind)) * (Math.sin(ind/20));
+      })
+      }
+    };
+
 
   render() {
     return null;

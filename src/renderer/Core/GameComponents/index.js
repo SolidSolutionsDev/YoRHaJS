@@ -1,4 +1,3 @@
-import { OBJMeshGeometry } from "./OBJMeshGeometry/OBJMeshGeometry";
 // import { EditorTransformObjectUpdate } from "../../Components/EditorTransformObjectUpdate/EditorTransformObjectUpdate";
 import { ObjectLoaderMesh } from "./ObjectLoaderMesh/ObjectLoaderMesh";
 import { TransformUpdate } from "./TransformUpdate/TransformUpdate";
@@ -29,7 +28,6 @@ import {SoundPlayer} from "./SoundPlayer/SoundPlayer";
 import {MeshGeometry} from "./MeshGeometry/MeshGeometry";
 
 export const components = {
-  objMesh: OBJMeshGeometry,
   objectLoader: ObjectLoaderMesh,
   cssLabelTo3d: CSSLabelTo3D,
   sprite: SpriteComponent,
