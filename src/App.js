@@ -25,9 +25,7 @@ class App extends Component {
         </header>
         <p className="App-intro" style={{color:title.subTextColor}}>{title.subText} </p>
           <Provider store={store} key={"provider"}>
-              <Preloader>
                 <Game key={"game"}/>
-              </Preloader>
           </Provider>
       </div>
     );

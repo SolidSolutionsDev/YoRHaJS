@@ -55,16 +55,16 @@ export class Renderer extends React.Component {
         prevScene.camera._main !== scene.camera._main);
 
     const mainCameraReady = scene.camera._main;
-
-    console.log(
-      "componentDidUpdate renderer",
-      "_sceneChanged:",
-      _sceneChanged,
-      "_cameraChanged:",
-      _cameraChanged,
-      "mainCameraReady:",
-      mainCameraReady
-    );
+    //
+    // console.log(
+    //   "componentDidUpdate renderer",
+    //   "_sceneChanged:",
+    //   _sceneChanged,
+    //   "_cameraChanged:",
+    //   _cameraChanged,
+    //   "mainCameraReady:",
+    //   mainCameraReady
+    // );
 
     return (
       _sceneChanged ||
@@ -221,7 +221,7 @@ export class Renderer extends React.Component {
 Renderer.propTypes = {
   availableWidth: PropTypes.number,
   availableHeight: PropTypes.number,
-  assetsLoadState: PropTypes.object
+  // assetsLoadState: PropTypes.object
   // backgroundColor: PropTypes.string.isRequired,
   // availableComponent: PropTypes.object.isRequired,
 };

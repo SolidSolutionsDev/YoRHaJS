@@ -26,7 +26,7 @@ import {WaterComponent} from "./WaterComponent/WaterComponent";
 import {PlaneShaderMaterial} from "./PlaneShaderMaterial/PlaneShaderMaterial";
 import {AudioScaleComponent} from "./AudioScaleComponent/AudioScaleComponent";
 import {SoundPlayer} from "./SoundPlayer/SoundPlayer";
-import {MMDMeshGeometry} from "./MMDMeshGeometry/MMDMeshGeometry";
+import {MeshGeometry} from "./MeshGeometry/MeshGeometry";
 
 export const components = {
   objMesh: OBJMeshGeometry,
@@ -56,5 +56,5 @@ export const components = {
   planeShader: PlaneShaderMaterial,
   audioScale: AudioScaleComponent,
   soundPlayer: SoundPlayer,
-  MMDLoader: MMDMeshGeometry,
+  meshGeometryLoader: MeshGeometry,
 };

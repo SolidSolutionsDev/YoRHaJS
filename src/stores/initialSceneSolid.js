@@ -12,6 +12,7 @@ export const initialScene = {
       speed: 1,
       current_level: 0
     },
+    preloadWaitToStart:true,
     assets: {
       sephirothPMXModel:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
       fariaDemoMP3:"./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
@@ -61,7 +62,7 @@ export const initialScene = {
       // "testEnemy3",
       // "testEnemy4",
       "camera1",
-      // "mountainSolid",
+      "mountainSolid",
       // "water1",
       "sephiroth1",
       "shaderPlane1",
@@ -74,9 +75,12 @@ export const initialScene = {
         prefab: "DynamicCamera"
       },
       sephiroth1: {
+        transform: {
+          scale:1,
+          position: { x: 0, y: 0, z: 1900},
+        },
         components:{
-          MMDLoader:{
-            // assetURL:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx"
+          meshGeometryLoader:{
             assetId:"sephirothPMXModel"
           }
         }
@@ -104,9 +108,9 @@ export const initialScene = {
               z:0.001
             }
           },
-          objMesh:{
+          meshGeometryLoader:{
             // assetURL: "./assets/models/64-everest/everest.obj",
-            assetID:"everestOBJ",
+            assetId:"everestOBJ",
             scale: 100,
             materialParameters:{
               color: 0x777777,
@@ -116,7 +120,10 @@ export const initialScene = {
           }
         },
         transform: {
-          position: { x: 0, y: 0, z: 30}
+          position: { x: 0, y: 0, z: 30},
+          rotation:{
+            x:Math.PI/2
+          }
         }
       },
       testCubeGameObject1: {

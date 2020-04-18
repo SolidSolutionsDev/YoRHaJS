@@ -26,7 +26,10 @@ export class ShaderUtilsService extends Component {
         "       };\n" +
         "  }";
 
-  shaderLoad(ShaderURL, onLoad, onProgress, onError) {
+  shaderLoad(shaderAssetID) {
+      console.log(this);
+      const {availableService} = this.props;
+      const {assetsProvider} = availableService;
 
       const shaderToyHeader =
           //"#version 300 es\n" +
@@ -99,12 +102,9 @@ export class ShaderUtilsService extends Component {
           "    } \n" +
           "}\n";
 
-      const loader = new THREE.FileLoader(THREE.DefaultLoadingManager);
-      loader.setResponseType('text');
-      loader.load(ShaderURL, function (shaderText) {
+            const shaderText = assetsProvider.getAssetById(shaderAssetID);
           const composedShaderText = shaderToyHeader + shaderToyFooter + shaderText ;
-        onLoad(composedShaderText);
-      }, onProgress, onError);
+          return composedShaderText;
   }
 
   update = time => {

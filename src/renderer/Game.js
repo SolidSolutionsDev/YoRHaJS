@@ -11,6 +11,8 @@ import { ShaderUtilsService } from "./Services/ShaderUtilsService";
 
 import * as GameContext from "./GameContext";
 import {GeometryUtilsService} from "./Services/GeometryUtilsService";
+import Preloader from "./Preloader/Preloader";
+import {Provider} from "react-redux";
 
 export class Game extends React.Component {
   frame = null;
@@ -142,9 +144,14 @@ export class Game extends React.Component {
       game: this,
       loadedCallback: this.props.loadedCallback
     };
-
     return (
       <GameContext.Provider value={{ ..._propsList }}>
+        <Preloader
+            {..._propsList}
+            ref={this.addGameService}
+            key="assetsProvider"
+            id="assetsProvider"
+        >
         <Renderer
           {..._propsList}
           ref={this.addGameComponent}
@@ -175,9 +182,13 @@ export class Game extends React.Component {
           key="animation"
           id="animation"
         />
-        <InputService ref={this.addGameService} key="input" id="input" />
-        <ShaderUtilsService ref={this.addGameService} key="shader" id="shader" />
-        <GeometryUtilsService ref={this.addGameService} key="geometry" id="geometry" />
+        <InputService
+          {..._propsList} ref={this.addGameService} key="input" id="input" />
+        <ShaderUtilsService
+          {..._propsList} ref={this.addGameService} key="shader" id="shader" />
+        <GeometryUtilsService
+          {..._propsList} ref={this.addGameService} key="geometry" id="geometry" />
+        </Preloader>
       </GameContext.Provider>
     );
   };

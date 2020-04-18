@@ -19,18 +19,23 @@ class Preloader extends Component {
         loaded: {},
     };
 
+    getAssetById = (assetId) => {
+        return this.state.loaded[assetId];
+    };
+
     load = () => {
+        const {preloadWaitToStart,markAssetsAsLoaded} = this.props;
 
         this.manager.onStart = (url, itemsLoaded, itemsTotal) => {
 
-            console.log('[LoaderManager] Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+            console.log('[LoaderManager] Started pre loading on file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
 
         };
 
         this.manager.onProgress = (item, loaded, total) => {
             // this gets called after an object has been loaded
             this.setState({loading: [...this.state.loading, item]});
-            console.log("[LoaderManager] loaded item:", item, loaded, total);
+            // console.log("[LoaderManager] loaded item:", item, loaded, total);
         };
 
         this.manager.onLoad = () => {
@@ -38,8 +43,10 @@ class Preloader extends Component {
             // call your other function
             //
             this.setState({ready:true});
-            alert("[LoaderManager] loaded");
-            console.log("[LoaderManager] loaded", this);
+            console.log("[LoaderManager] Preload complete", this);
+            if (!preloadWaitToStart){
+                markAssetsAsLoaded();
+            }
         };
 
         this.manager.onError = (url) => {
@@ -51,16 +58,25 @@ class Preloader extends Component {
 
         Object.keys(this.props.assets).forEach(assetTag => {
             const assetFileURL = this.props.assets[assetTag];
-            console.log(assetTag, assetFileURL);
             const currentLoader = this.manager.getHandler(this.props.assets[assetTag]);
             currentLoader.load(assetFileURL, (loadedAsset) => {
+                let asset = loadedAsset;
+                if (asset.isMesh){
+                    // console.log("mesh",loadedAsset,asset);
+                }
+                if (asset.isGroup){
+                    asset = loadedAsset.children[0];
+                    // console.log("group",loadedAsset,asset);
+                }
+
                 this.setState(
                     {
                         loaded: {
                             ...this.state.loaded,
-                            [assetTag]: loadedAsset
+                            [assetTag]: asset
                         }
-                    })
+                    });
+
             });
         });
     };
@@ -93,7 +109,7 @@ class Preloader extends Component {
                 </div>}
                 )}
                 {}
-                {ready ? <button className="full" onClick={this.props.markAssetsAsLoaded}>Start</button>:null}
+                {ready ?<div key={"preloader_ready"}> READY! <br/> <button className="full" onClick={this.props.markAssetsAsLoaded}>Start</button></div>:null}
             </div>
         } else {
             return this.props.children;
@@ -109,7 +125,8 @@ const getAssetLoadState = state => {
 const mapStateToProps = (state, ownProps) => {
     return {
         assetsLoadState: getAssetLoadState(state),
-        assets: state.mainReducer.game.assets
+        assets: state.mainReducer.game.assets,
+        preloadWaitToStart: state.mainReducer.game.preloadWaitToStart,
     };
 };
 

@@ -76,12 +76,8 @@ export class PlaneShaderMaterial extends React.Component {
   };
 
   loadShader = ()=> {
-    const { availableService,shaderURL } = this.props;
-    availableService.shader.shaderLoad(shaderURL, this.shaderLoaded)
-  };
-
-  shaderLoaded = (shaderText) => {
-    const { availableService } = this.props;
+    const { availableService,shaderAssetID } = this.props;
+    const shaderText = availableService.shader.shaderLoad(shaderAssetID)
     this.vertexShaderText = availableService.shader.basicVertexShader;
     this.fragmentShaderText = shaderText;
     this.startShader();
@@ -129,7 +125,6 @@ export class PlaneShaderMaterial extends React.Component {
     if (position) {
         availableService.animation.travelTo(this.mesh,position,2000);
     }
-
   };
 
   // TODO: extract explode to a GameComponent
@@ -207,5 +202,5 @@ export class PlaneShaderMaterial extends React.Component {
 
 PlaneShaderMaterial.propTypes = {
   transform: PropTypes.object.isRequired,
-  shaderURL:PropTypes.string.isRequired,
+  shaderAssetID:PropTypes.string.isRequired,
 };

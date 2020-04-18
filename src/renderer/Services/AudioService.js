@@ -33,12 +33,12 @@ export class AudioService extends Component {
     }
   };
 
-  buildPositionalSound = (soundPath, tagName, analyser) => {
+  buildPositionalSound = (assetId, tagName, analyser) => {
+    const { assetsProvider } = this.props.availableService;
     const sound = new THREE.PositionalAudio(this.listener);
-    this.audioLoader.load(soundPath, function(buffer) {
+    const buffer = assetsProvider.getAssetById(assetId);
       sound.setBuffer(buffer);
       sound.setRefDistance(20);
-    });
 
     this.availableAudio[tagName] = { sound: sound };
     if (analyser) {
@@ -47,13 +47,15 @@ export class AudioService extends Component {
     return this.availableAudio[tagName];
   };
 
-  buildNonPositionalSound = (soundPath, tagName, analyser) => {
+  buildNonPositionalSound = (assetId, tagName, analyser) => {
+    const { assetsProvider } = this.props.availableService;
     const sound = new THREE.Audio(this.listener);
-    this.audioLoader.load(soundPath, function(buffer) {
-      sound.setBuffer(buffer);
+    const buffer = assetsProvider.getAssetById(assetId);
+    // console.log(this,sound,buffer);
+    sound.setBuffer(buffer);
       sound.setLoop(true);
       sound.play();
-    });
+
     this.availableAudio[tagName] = { sound: sound };
     if (analyser) {
       this.buildAnalyserFromSound(tagName);

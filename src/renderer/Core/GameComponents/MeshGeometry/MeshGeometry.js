@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
 
 
-export class MMDMeshGeometry extends React.Component {
+export class MeshGeometry extends React.Component {
   modelToUse;
 
   //TODO: export this to a generic acessible enum
@@ -20,15 +20,10 @@ export class MMDMeshGeometry extends React.Component {
   materialToUse;
   materialInstance;
 
-  modelLoadedCallback = loadedModel => {
-    const {transform, scale, materialType, materialParameters } = this.props;
-    this.modelToUse = loadedModel;
-
-    // this.modelToUse.rotateX(Math.PI/2);
-    console.log(this);
-
-    // this.transform.add(modelToUse);
-    transform.add(this.modelToUse);
+  modelLoad = () => {
+    const {transform, scale, materialType, materialParameters, availableService,assetId } = this.props;
+    const {assetsProvider} = availableService;
+    this.modelToUse = assetsProvider.getAssetById(assetId);
 
     if (scale) {
       this.modelToUse.scale.set(scale,scale,scale);
@@ -43,26 +38,15 @@ export class MMDMeshGeometry extends React.Component {
     this.modelToUse.material.needsUpdate = true;
     }
 
+    transform.add(this.modelToUse);
+    // console.log("\nthis:",this,"\ntransform:",transform,"\nthis.modelToUse:",this.modelToUse,"\nthis.modelToUse.parent:",this.modelToUse.parent);
+    this.modelToUse.position.set(0,0,0);
     return;
   };
 
-  _loadMMD = assetURL => {
-    const loader = new MMDLoader();
-    loader.load(assetURL, this.modelLoadedCallback);
-  };
-
-  loadModel = () => {
-    const { modelInputData, assetURL } = this.props;
-    const splittedUrl = assetURL.split(".");
-    const extension = splittedUrl[splittedUrl.length - 1];
-
-    this._loadMMD(assetURL)
-  };
 
   start = () => {
-    const { transform } = this.props;
-    this.loadModel();
-    transform.add(this.transform);
+    this.modelLoad();
   };
 
   update = () => {};
@@ -72,8 +56,8 @@ export class MMDMeshGeometry extends React.Component {
   }
 }
 
-MMDMeshGeometry.propTypes = {
-  assetURL: PropTypes.string.isRequired,
+MeshGeometry.propTypes = {
+  assetId: PropTypes.string.isRequired,
   scale: PropTypes.number,
   materialParameters:PropTypes.object,
   materialType:PropTypes.string
