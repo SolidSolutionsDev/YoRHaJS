@@ -1,0 +1,8 @@
+.preloader {
+    text-align: left;
+    color: lightgrey;
+    padding: 2em;
+    z-index: 100;
+    position: absolute;
+    pointer-events: all;
+}

@@ -15,6 +15,11 @@ export const instantiateFromPrefab = (prefabId, newId, transform, parentId,insta
   components
 });
 
+export const updateMainGameObject = (parametersObject) => ({
+  type: "UPDATE_GAME_PARAMETERS",
+  parametersObject,
+});
+
 export const updateSceneObject = (parametersObject) => ({
   type: "UPDATE_SCENE_PARAMETERS",
   parametersObject,

@@ -7,6 +7,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./stores";
 import {Game} from "./renderer/Game";
+import Preloader from "./renderer/Preloader/Preloader";
 
 const store = createStore(
     rootReducer /* preloadedState, */,
@@ -24,7 +25,9 @@ class App extends Component {
         </header>
         <p className="App-intro" style={{color:title.subTextColor}}>{title.subText} </p>
           <Provider store={store} key={"provider"}>
-            <Game key={"game"}/>
+              <Preloader>
+                <Game key={"game"}/>
+              </Preloader>
           </Provider>
       </div>
     );

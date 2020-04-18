@@ -12,6 +12,15 @@ export const initialScene = {
       speed: 1,
       current_level: 0
     },
+    assets: {
+      sephirothPMXModel:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
+      fariaDemoMP3:"./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
+      everestOBJ: "./assets/models/64-everest/everest.obj",
+      worleyTunnelVertShader:"./assets/shaders/fragment/anticore_worley_tunnel.glsl",
+      sandsFragShader:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
+      marchingCubesSpheresFragShader:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl",
+      laserShot:"./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+    },
     levels: {
       byId: {
         zero: {
@@ -67,7 +76,8 @@ export const initialScene = {
       sephiroth1: {
         components:{
           MMDLoader:{
-            assetURL:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx"
+            // assetURL:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx"
+            assetId:"sephirothPMXModel"
           }
         }
       },
@@ -75,7 +85,8 @@ export const initialScene = {
         components:{
           soundPlayer: {
             positional: false,
-            path: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
+            // path: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
+            assetId: "fariaDemoMP3",
             tag: "backgroundMusic",
             analyser:true,
             // path: "./assets/sounds/stereo-left-and-right-test.mp3",
@@ -94,7 +105,8 @@ export const initialScene = {
             }
           },
           objMesh:{
-            assetURL: "./assets/models/64-everest/everest.obj",
+            // assetURL: "./assets/models/64-everest/everest.obj",
+            assetID:"everestOBJ",
             scale: 100,
             materialParameters:{
               color: 0x777777,
@@ -216,7 +228,7 @@ export const initialScene = {
             width:2900,
             height:2600,
             audioTag: "backgroundMusic",
-            shaderURL:"./assets/shaders/fragment/anticore_worley_tunnel.glsl",
+            shaderAssetID:"worleyTunnelVertShader",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
              // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
           },
@@ -285,7 +297,7 @@ export const initialScene = {
           //     lookAt:{x:0,y: 0,z: 0},
           // },
           dynamicCameraManager: {
-            cameraSoundPath: "./assets/sound/camera_change.mp3",
+            // cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "top",
             // cameraAutoRotate: true,
             cameraAutoRotateSpeed:3,
@@ -403,13 +415,15 @@ export const initialScene = {
           planeShader:{
             position:{x:0,y:0,z:100},
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
-            shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+            shaderId:"marchingCubesSpheresFragShader"
           },
           playerControls: {
           },
           shooter: {
-            soundLocation:
-              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+            // soundLocation:
+            //   "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+            soundId:"laserShot",
             moveRatio: 7,
             displacementRatio: 5,
             bulletPrefab: "PlayerBullet",

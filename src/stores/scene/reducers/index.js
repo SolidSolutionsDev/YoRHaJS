@@ -46,6 +46,14 @@ export const mainReducer = (state = initialScene, action) => {
   let assetsLoadState;
   const { gameObjectId, transform, parentId, instantiationTime } = action;
   switch (action.type) {
+    case "UPDATE_GAME_PARAMETERS":
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          ...action.parametersObject
+        }
+      };
     case "UPDATE_SCENE_PARAMETERS":
       return {
         ...state,
