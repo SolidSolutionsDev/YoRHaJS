@@ -26,8 +26,7 @@ export class ShaderUtilsService extends Component {
         "       };\n" +
         "  }";
 
-  shaderLoad(shaderAssetID) {
-      console.log(this);
+  shaderToyLoad(shaderAssetID) {
       const {availableService} = this.props;
       const {assetsProvider} = availableService;
 

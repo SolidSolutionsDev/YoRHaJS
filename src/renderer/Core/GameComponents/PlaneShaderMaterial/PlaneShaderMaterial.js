@@ -77,7 +77,7 @@ export class PlaneShaderMaterial extends React.Component {
 
   loadShader = ()=> {
     const { availableService,shaderAssetID } = this.props;
-    const shaderText = availableService.shader.shaderLoad(shaderAssetID)
+    const shaderText = availableService.shader.shaderToyLoad(shaderAssetID);
     this.vertexShaderText = availableService.shader.basicVertexShader;
     this.fragmentShaderText = shaderText;
     this.startShader();
