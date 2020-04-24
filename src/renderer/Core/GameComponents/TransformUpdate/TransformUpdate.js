@@ -62,8 +62,6 @@ export class TransformUpdate extends React.Component {
     transform.rotation.y = objectInputData.rotation.y;
     transform.rotation.z = objectInputData.rotation.z;
   };
-
-  render = () => null;
 }
 
 TransformUpdate.propTypes = {

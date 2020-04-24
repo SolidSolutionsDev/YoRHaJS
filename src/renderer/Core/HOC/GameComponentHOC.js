@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import * as GameContext from "../../GameContext";
 
 export function makeGameComponent(WrappedComponent, name) {
+
   return class extends React.Component {
     component;
 
@@ -25,9 +26,19 @@ export function makeGameComponent(WrappedComponent, name) {
 
     constructor(props) {
       super(props);
+      this.addDefaultRender(WrappedComponent);
       const _displayName = this.getDisplayName();
       props.registerComponent(this, _displayName);
     }
+
+    addDefaultRender = (component) => {
+      if (component.prototype.render){
+        return;
+      }
+      component.prototype.render = () => {
+        return null;
+      }
+    };
 
     componentWillUnmount() {
       // console.log(this.uniqueId + " component will UNmount ", this.getDisplayName());

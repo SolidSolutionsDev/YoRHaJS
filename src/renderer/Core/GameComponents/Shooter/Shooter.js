@@ -328,6 +328,4 @@ export class Shooter extends React.Component {
   onDestroy = () => {
     this.stopShooting();
   };
-
-  render = () => null;
 }

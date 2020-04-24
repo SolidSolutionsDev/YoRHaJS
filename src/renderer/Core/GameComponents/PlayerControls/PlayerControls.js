@@ -226,6 +226,4 @@ export class PlayerControls extends React.Component {
     this.updateMovement();
     this.updateMouseLook();
   };
-
-  render = () => null;
 }

@@ -194,8 +194,6 @@ export class Camera extends React.Component {
   };
 
   controls;
-
-  render = () => null;
 }
 
 Camera.propTypes = {

@@ -218,6 +218,4 @@ export class EnemyMovementControls extends React.Component {
         // this.updateMouseLook();
         this.updateType[this.type](time, deltaTime);
     };
-
-    render = () => null;
 }

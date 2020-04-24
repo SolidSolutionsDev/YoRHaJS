@@ -59,8 +59,6 @@ export class CSSLabelTo3D extends React.Component {
 
     this.text.innerHTML = `${id}<span>${objectInputData.objectType}</span>`;
   };
-
-  render = () => null;
 }
 
 CSSLabelTo3D.propTypes = {
