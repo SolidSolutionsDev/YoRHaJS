@@ -262,7 +262,6 @@ export class GameObject extends React.Component {
     const { transform, debug, ...passThroughProps } = this.props;
     const GameObjectComponent = GameComponentFactory.create(componentId, this);
     GameObjectComponent.displayName = "Component_" + componentId;
-    //console.log(this.id + " gameobject will build component " + componentId );
 
     return (
       <GameObjectComponent

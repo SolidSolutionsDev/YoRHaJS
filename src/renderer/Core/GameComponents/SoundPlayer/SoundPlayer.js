@@ -5,7 +5,7 @@ import * as THREE from "three";
 export class SoundPlayer extends React.Component {
 
   start = () => {
-      const {availableService,assetId,tag, positional, analyser} = this.props;
+      const {availableService,assetId,tag, positional, analyser, transform} = this.props;
       const {audio} = availableService;
 
       if (!positional) {
@@ -14,7 +14,9 @@ export class SoundPlayer extends React.Component {
           );
       }
       else {
-
+          this.sound = audio.buildPositionalSound(
+              assetId, tag, analyser
+          );
       }
   };
 
