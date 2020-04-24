@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import {kernelConstants} from "./constants";
 
 export const initialScene = {
   title:{
@@ -65,14 +66,19 @@ export const initialScene = {
       "mountainSolid",
       // "water1",
       "sephiroth1",
-      "shaderPlane1",
+      // "shaderPlane1",
       "soundPlayer1",
+      "rpgGame"
     ]
   },
   gameObjects: {
     byId: {
+      // rpgGame: {},
+      rpgGame: {
+        prefab: "RPGGamePrefab",
+      },
       camera1: {
-        prefab: "DynamicCamera"
+        prefab: "DynamicCameraPrefab"
       },
       sephiroth1: {
         transform: {
@@ -294,7 +300,7 @@ export const initialScene = {
   },
   prefabs: {
     byId: {
-      DynamicCamera: {
+      DynamicCameraPrefab: {
         components: {
           // perspectiveCamera:{
           //     fov: 45,
@@ -444,6 +450,9 @@ export const initialScene = {
         },
         children: []
       },
+
+
+
       EnemyFollower: {
         debug: true,
         components: {
@@ -538,7 +547,34 @@ export const initialScene = {
           }
         },
         children: []
-      }
+      },
+      RPGKernelModulePrefab: {
+        debug: true,
+        components: {
+          rpgKernelModuleComponent: {
+            type: kernelConstants.moduleTypes.kernel,
+          },
+        },
+        children: []
+      },
+
+
+      RPGGamePrefab: {
+        debug: true,
+        components: {
+          rpgGameComponent: {
+            modulesPrefabs:{
+              [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
+              [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
+              // battle:"RPGBattleModulePrefab",
+              // field:"RPGFieldModule",
+              // minigame:"RPGMiniGameModule",
+            },
+            modules: {},
+          },
+        },
+        children: []
+      },
     },
     allIds: [
       // "Camera",
@@ -553,7 +589,8 @@ export const initialScene = {
       "TestShooter",
       "PlayerBullet",
       "EnemyBullet",
-      "DynamicCamera"
+      "DynamicCameraPrefab",
+      "RPGGamePrefab"
     ]
   }
 };

@@ -42,6 +42,8 @@ export const initialScene = {
   },
   gameObjects: {
     byId: {
+
+
       camera1: {
         prefab: "DynamicCamera"
       },

@@ -26,6 +26,8 @@ import {PlaneShaderMaterial} from "./PlaneShaderMaterial/PlaneShaderMaterial";
 import {AudioScaleComponent} from "./AudioScaleComponent/AudioScaleComponent";
 import {SoundPlayer} from "./SoundPlayer/SoundPlayer";
 import {MeshGeometry} from "./MeshGeometry/MeshGeometry";
+import {RPGGameComponent} from "./RPGGame/RPGGameComponent";
+import {RPGKernelModuleGameComponent} from "./RPGGame/RPGKernelModuleGameComponent";
 
 export const components = {
   objectLoader: ObjectLoaderMesh,
@@ -55,4 +57,6 @@ export const components = {
   audioScale: AudioScaleComponent,
   soundPlayer: SoundPlayer,
   meshGeometryLoader: MeshGeometry,
+  rpgGameComponent: RPGGameComponent,
+  rpgKernelModuleComponent: RPGKernelModuleGameComponent,
 };
