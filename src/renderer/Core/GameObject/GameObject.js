@@ -313,7 +313,7 @@ export class GameObject extends React.Component {
   };
 
   buildChildGameObjects = () => {
-    const { selfSettings, prefabSettings, availableService } = this.props;
+    const { selfSettings, prefabSettings, availableService, availableComponent } = this.props;
     const selfChildGameObjects =
       selfSettings && selfSettings.children ? selfSettings.children : [];
     const prefabChildGameObjects =
@@ -330,6 +330,7 @@ export class GameObject extends React.Component {
           id={gameObjectId}
           scene={this.scene}
           availableService={availableService}
+          availableComponent={availableComponent}
         />
       );
     });

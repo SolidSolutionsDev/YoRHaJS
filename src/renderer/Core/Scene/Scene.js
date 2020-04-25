@@ -17,7 +17,9 @@ export class Scene extends React.Component {
     // loaded: false,
   };
 
-  init = () => {};
+  init = () => {
+    this.scene.gameObject = this;
+  };
 
 
 
@@ -92,6 +94,7 @@ export class Scene extends React.Component {
                     <GameObject
                       {...context}
                       {..._gameObjectProps}
+                      scene={this.scene}
                       key={gameObjectId}
                       id={gameObjectId}
                     />

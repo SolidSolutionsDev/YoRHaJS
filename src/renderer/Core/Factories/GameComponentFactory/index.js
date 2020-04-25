@@ -87,11 +87,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   updateSelf: componentParameters => {
     dispatch(
-      updateGameObjectComponent(
-        ownProps._parentId,
-        ownProps.id,
-        componentParameters
-      )
+        updateGameObjectComponent(
+            ownProps._parentId,
+            ownProps.id,
+            componentParameters
+        )
+    );
+  },
+  enqueueUpdateSelf: componentParameters => {
+    const {enqueueAction} = ownProps.availableComponent.scene;
+    enqueueAction(
+        updateGameObjectComponent(
+            ownProps._parentId,
+            ownProps.id,
+            componentParameters
+        )
     );
   }
 });

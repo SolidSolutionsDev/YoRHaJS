@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {kernelConstants} from "../../../../stores/constants";
+import {updateGameObjectComponent} from "../../../../stores/scene/actions";
 
 export class RPGKernelModuleGameComponent extends React.Component {
 
@@ -37,8 +38,19 @@ export class RPGKernelModuleGameComponent extends React.Component {
         this.swapModule(modules);
     };
 
+    changeCurrentModuleScene = (newSceneId) => {
+        const {
+            availableComponent,
+            enqueueUpdateSelf
+        } = this.props;
+        const {scene} = availableComponent;
+        enqueueUpdateSelf({
+                currentModuleScene: newSceneId
+                })
+    };
+
     swapModule = (modules = this.state.modules) => {
-        console.log("[RPGKernel] - swapping Module");
+        console.log("[RPGKernel] - swapping Module",this);
         // const {modules} = this.state;
         const {currentModuleScene} = this.props;
         const _currentModuleType = this.getCurrentModuleSceneType();

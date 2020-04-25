@@ -65,7 +65,8 @@ export class RPGGameComponent extends React.Component {
         modulesPrefabs,
         modules,
         availableComponent,
-        gameObject
+        gameObject,
+        enqueueUpdateSelf
     } = this.props;
     const {scene} = availableComponent;
 
@@ -83,18 +84,15 @@ export class RPGGameComponent extends React.Component {
                 null,
             )
         );
-        scene.enqueueAction(
-            updateGameObjectComponent(
-                gameObject.id,
-                "rpgGameComponent", {
+        enqueueUpdateSelf ( {
                     modules: {
                         ...modules,
                         [modulePrefabKey]: currentModuleId
                     },
                 })
-        );
+
     });
-}
+};
 
 start()
 {
