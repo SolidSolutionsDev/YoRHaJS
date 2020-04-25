@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./RPGMenuModuleGameComponent.css";
 
 export class RPGMenuModuleGameComponent extends React.Component {
 
@@ -28,7 +29,8 @@ export class RPGMenuModuleGameComponent extends React.Component {
     };
 
     render = ()=> {
-        return <div key={"module"} >{this.props.type} Active : {this.state.active.toString()}</div>;
+        const {active} = this.state;
+        return <div key={"module"} className={`menu ${active ? "" : "hidden"}`}>{this.props.type} Active : {active.toString()}</div>;
     }
 }
 

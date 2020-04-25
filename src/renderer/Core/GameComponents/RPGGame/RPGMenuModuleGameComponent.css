@@ -1,0 +1,10 @@
+.menu  {
+    opacity: 1;
+    transition: opacity 1s;
+    color: green;
+}
+
+.menu.hidden {
+    opacity:0;
+    color:red;
+}
