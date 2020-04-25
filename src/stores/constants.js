@@ -52,7 +52,7 @@ const moduleScenes = {
         availableBattles: {
             battle1: {}
         },
-        connections: {
+        triggers: {
             entrance: {
                 x: 10,
                 y: 2,
