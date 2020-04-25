@@ -30,6 +30,7 @@ import {RPGGameComponent} from "./RPGGame/RPGGameComponent";
 import {RPGKernelModuleGameComponent} from "./RPGGame/RPGKernelModuleGameComponent";
 import {RPGBattleModuleGameComponent} from "./RPGGame/RPGBattleModuleGameComponent";
 import {RPGMenuModuleGameComponent} from "./RPGGame/RPGMenuModuleGameComponent";
+import {TETSUOParticlesGeometryTest} from "./TETSUOParticlesGeometryTest/TETSUOParticlesGeometryTest";
 
 export const components = {
   objectLoader: ObjectLoaderMesh,
@@ -63,4 +64,5 @@ export const components = {
   rpgKernelModuleComponent: RPGKernelModuleGameComponent,
   rpgBattleModuleComponent:RPGBattleModuleGameComponent,
   rpgMenuModuleComponent : RPGMenuModuleGameComponent,
+  tetsuoParticles : TETSUOParticlesGeometryTest,
 };

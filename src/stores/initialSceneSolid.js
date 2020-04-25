@@ -88,7 +88,8 @@ export const initialScene = {
         components:{
           meshGeometryLoader:{
             assetId:"sephirothPMXModel"
-          }
+          },
+          tetsuoParticles: {}
         }
       },
       soundPlayer1: {
