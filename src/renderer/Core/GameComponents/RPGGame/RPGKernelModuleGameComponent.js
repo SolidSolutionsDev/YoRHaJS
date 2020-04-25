@@ -1,23 +1,92 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {RPGGameComponent} from "./RPGGameComponent";
+import {kernelConstants} from "../../../../stores/constants";
 
 export class RPGKernelModuleGameComponent extends React.Component {
+
+    state = {
+        modules:{},
+        activeModule:undefined
+    };
     rpgModuleManager = this.props.parent.getComponent("rpgGameComponent");
 
+    update = (time, deltaTime) => {
+        if (this.rpgModuleManager.isReady() && this.activeModule) {
+            this.activeModule.updateModule(time,deltaTime)
+        }
+    };
+
+
+    getCurrentModuleSceneId = () => {
+        return this.props.currentModuleScene;
+    };
+
+    getCurrentModuleSceneType = () => {
+        console.log(kernelConstants.moduleScenes,this.props.currentModuleScene);
+        return kernelConstants.moduleScenes[this.getCurrentModuleSceneId()].type;
+    };
+
+    getCurrentModuleSceneInitData = () => {
+        return kernelConstants.moduleScenes[this.getCurrentModuleSceneId()];
+    };
+
+    init = (modules) =>{
+        const sceneId = this.getCurrentModuleSceneId();
+        const sceneType = this.getCurrentModuleSceneType();
+        this.setState({modules: modules, sceneId, sceneType});
+        this.swapModule(modules);
+    };
+
+    swapModule = (modules = this.state.modules) => {
+        console.log("[RPGKernel] - swapping Module");
+        // const {modules} = this.state;
+        const {currentModuleScene} = this.props;
+        const _currentModuleType = this.getCurrentModuleSceneType();
+        const _newActiveModule = modules[_currentModuleType];
+        console.log(modules,currentModuleScene,_newActiveModule)
+        this.setState({activeModule: _newActiveModule});
+    };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+    if (!this.state.activeModule || this.props.currentModuleScene !== prevProps.currentModuleScene){
+        console.log(this.props.currentModuleScene, prevProps.currentModuleScene);
+        this.swapModule();
+        return;
+    }
+    if ( this.state.activeModule && this.state.activeModule !== prevState.activeModule){
+        console.log(this.state.activeModule,prevState.activeModule);
+        if (prevState.activeModule) {
+            prevState.activeModule.deactivate();
+        }
+        this.state.activeModule.activate();
+    }
+
+    }
+
+    playMusic = () => {};
+    stopMusic = () => {};
+    changeMusic = () => {};
+    resumeMusic = () => {};
+    restartMusic = () => {};
+
     start = ()=> {
-        const {type,parent} = this.props;
+        const {type} = this.props;
         this.rpgModuleManager.registerModule(type,this);
+    };
+
+
+    render = ()=> {
+        return this.state.ready ? <div key={"module"} >Kernel {this.state.activeModule}</div>: null;
     };
 }
 
 RPGKernelModuleGameComponent.propTypes = {
     // initializationData: PropTypes.object.isRequired,
     type:PropTypes.string.isRequired,
-    rpgModuleManager:PropTypes.string.isRequired,
     // soundPlayer:PropTypes.string.isRequired,
     // battleModule:PropTypes.string.isRequired,
     // menuModule:PropTypes.string.isRequired,
     // fieldModule:PropTypes.string,
+    currentModuleScene:PropTypes.string.isRequired,
 
 };

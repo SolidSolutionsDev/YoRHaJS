@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 
-// import OBJLoader from "three-obj-loader";
-import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader.js';
-
-
 export class MeshGeometry extends React.Component {
   modelToUse;
 

@@ -192,11 +192,6 @@ export class Renderer extends React.Component {
   //     }
   // }
 
-  updateChildren = time => {
-    this.updateCallbacksArray.forEach(update => {
-      update(time);
-    });
-  };
 
   subscribeResize = onResizeFunction => {
     this.resizeFunctions.push(onResizeFunction);

@@ -28,6 +28,8 @@ import {SoundPlayer} from "./SoundPlayer/SoundPlayer";
 import {MeshGeometry} from "./MeshGeometry/MeshGeometry";
 import {RPGGameComponent} from "./RPGGame/RPGGameComponent";
 import {RPGKernelModuleGameComponent} from "./RPGGame/RPGKernelModuleGameComponent";
+import {RPGBattleModuleGameComponent} from "./RPGGame/RPGBattleModuleGameComponent";
+import {RPGMenuModuleGameComponent} from "./RPGGame/RPGMenuModuleGameComponent";
 
 export const components = {
   objectLoader: ObjectLoaderMesh,
@@ -59,4 +61,6 @@ export const components = {
   meshGeometryLoader: MeshGeometry,
   rpgGameComponent: RPGGameComponent,
   rpgKernelModuleComponent: RPGKernelModuleGameComponent,
+  rpgBattleModuleComponent:RPGBattleModuleGameComponent,
+  rpgMenuModuleComponent : RPGMenuModuleGameComponent,
 };

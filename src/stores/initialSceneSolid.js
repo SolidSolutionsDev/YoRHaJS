@@ -548,17 +548,39 @@ export const initialScene = {
         },
         children: []
       },
+      RPGBattleModulePrefab: {
+        debug: true,
+        components: {
+          rpgBattleModuleComponent: {
+            type: kernelConstants.moduleTypes.battle,
+          },
+        },
+        children: []
+      },
+      RPGMenuModulePrefab: {
+        debug: true,
+        components: {
+          rpgMenuModuleComponent: {
+            type: kernelConstants.moduleTypes.menu,
+          },
+        },
+        children: []
+      },
       RPGKernelModulePrefab: {
         debug: true,
         components: {
           rpgKernelModuleComponent: {
             type: kernelConstants.moduleTypes.kernel,
+            currentModuleScene: "menuScene1",
+            // currentModuleScene: "battle1",
+            currentBattle: null,
+            currentField: {
+              scene: kernelConstants.moduleScenes.fieldScene1
+            }
           },
         },
         children: []
       },
-
-
       RPGGamePrefab: {
         debug: true,
         components: {
@@ -566,7 +588,7 @@ export const initialScene = {
             modulesPrefabs:{
               [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
               [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
-              // battle:"RPGBattleModulePrefab",
+              [kernelConstants.moduleTypes.battle]:"RPGBattleModulePrefab",
               // field:"RPGFieldModule",
               // minigame:"RPGMiniGameModule",
             },

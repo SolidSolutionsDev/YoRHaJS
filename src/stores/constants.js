@@ -1,8 +1,8 @@
 const moduleTypes = {
-  kernel:"kernel",
-  menu:"menu",
-  battle:"battle",
-  field:"field",
+    kernel: "kernel",
+    menu: "menu",
+    battle: "battle",
+    field: "field",
 };
 const menuCommands = {
     Attack: ["mainAttack"],
@@ -30,10 +30,54 @@ const attackData = {
     },
 };
 
+const moduleScenes = {
+    battle1: {
+        type: "battle",
+        enemies: ["enemy1"],
+        ai: true,
+    },
+    menuScene1: {
+        type: "menu",
+        defaultEntry:"start",
+        entries: [{id: "start", label: "Start", goTo: "battle1"}, {
+            id: "continue",
+            label: "Continue",
+            goTo: "fieldScene1"
+        }],
+        ai: true,
+    },
+    fieldScene1: {
+        type: "field",
+        scenario: "scenario1",
+        availableBattles: {
+            battle1: {}
+        },
+        connections: {
+            entrance: {
+                x: 10,
+                y: 2,
+                goTo: {
+                    scene: "battle1"
+                }
+            },
+            exit: {
+                x: 30,
+                y: 2,
+                goTo: {
+                    scene: "fieldScene1",
+                    connection: "entrance"
+                }
+            },
+        },
+        defaultConnection: "entrance",
+    }
+};
+
 export const kernelConstants = {
     menuCommands,
     attackData,
     attackTypes,
     targetTypes,
-    moduleTypes
+    moduleTypes,
+    moduleScenes
 };

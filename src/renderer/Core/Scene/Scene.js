@@ -122,7 +122,7 @@ export class Scene extends React.Component {
     if (fog){
       this.scene.fog = new THREE.Fog( fog.color, fog.near, fog.far );
     }
-  }
+  };
 
   camera = {
     _main: null,
