@@ -33,18 +33,18 @@ export class AudioService extends Component {
     }
   };
 
-  buildPositionalSound = (assetId, tagName, analyser) => {
+  buildPositionalSound = (assetId, customTagName, analyser) => {
     const { assetsProvider } = this.props.availableService;
     const sound = new THREE.PositionalAudio(this.listener);
     const buffer = assetsProvider.getAssetById(assetId);
       sound.setBuffer(buffer);
       sound.setRefDistance(20);
 
-    this.availableAudio[tagName] = { sound: sound };
+    this.availableAudio[customTagName] = { sound: sound };
     if (analyser) {
-      this.buildAnalyserFromSound(tagName);
+      this.buildAnalyserFromSound(customTagName);
     }
-    return this.availableAudio[tagName];
+    return this.availableAudio[customTagName];
   };
 
   buildNonPositionalSound = (assetId, tagName, analyser) => {

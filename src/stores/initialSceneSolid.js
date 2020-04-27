@@ -22,6 +22,8 @@ export const initialScene = {
       sandsFragShader:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
       marchingCubesSpheresFragShader:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl",
       laserShot:"./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+      menuMove:"./assets/sounds/The Legend of Zelda Cartoon Sound Effects Health Heart.wav",
+      menuSelect:"./assets/sounds/The Legend of Zelda Cartoon Sound Effects Power Zap.wav",
     },
     levels: {
       byId: {
@@ -67,7 +69,7 @@ export const initialScene = {
       // "water1",
       "sephiroth1",
       // "shaderPlane1",
-      "soundPlayer1",
+      "backgroundMusicPlayer1",
       "rpgGame",
       "rpgTestPlayer1"
     ]
@@ -91,7 +93,7 @@ export const initialScene = {
       sephiroth1: {
         transform: {
           scale:{x:10,y:10,z:10},
-          position: { x: 0, y: 0, z: 1390},
+          position: { x: 220, y: -120, z: 990},
         },
         components:{
           meshGeometryLoader:{
@@ -99,7 +101,7 @@ export const initialScene = {
           },
         }
       },
-      soundPlayer1: {
+      backgroundMusicPlayer1: {
         components:{
           soundPlayer: {
             positional: false,
@@ -611,6 +613,8 @@ export const initialScene = {
         components: {
           cssLabelTo3d:{},
           rpgBattlePlayerControls: {
+            menuMoveSoundId: "menuMove",
+            menuSelectSoundId: "menuSelect",
           },
           rpgBattleCharacterCore: {
             name:"Carlos"

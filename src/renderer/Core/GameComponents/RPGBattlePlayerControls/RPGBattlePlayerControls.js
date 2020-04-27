@@ -14,6 +14,9 @@ export class RPGBattlePlayerControls extends React.Component {
     startActiveMenuMovementTime = 0;
     activeTimesMenuMoved = 0;
 
+    menuMoveSound;
+    menuMoveSelectSound;
+
     state = {
         selectedCommand: this.defaultCommandIndex,
         activeLeft: false,
@@ -27,6 +30,27 @@ export class RPGBattlePlayerControls extends React.Component {
     menuDiv;
     cssGameComponent;
 
+    //TODO: Move to sound player component - also used in shooter
+    initSound = (soundId) => {
+        //menuMoveSoundId
+        //menuSelectSoundId
+        const { transform, availableService, selfSettings } = this.props;
+        if (!selfSettings[soundId]) {
+            return;
+        }
+        const _menuMoveSoundObject = availableService.audio.buildNonPositionalSound(
+            selfSettings[soundId], selfSettings[soundId]
+        );
+        const _sound = _menuMoveSoundObject.sound;
+
+        _sound.setLoop(false);
+        _sound.loop = false;
+        transform.add(_sound);
+        if (_sound.isPlaying) {
+            _sound.stop();
+        }
+        return _sound;
+    };
 
     moveLeft = () => { };
 
@@ -51,6 +75,7 @@ export class RPGBattlePlayerControls extends React.Component {
     };
 
     selectMenu = () => {
+        this.menuMoveSelectSound.play();
     };
 
     backMenu = () => {
@@ -61,37 +86,49 @@ export class RPGBattlePlayerControls extends React.Component {
         this.startActiveMenuMovementTime = this.updateTime;
     };
 
+    setActivateMoveInDirection = (activeStateId) => {
+        this.resetMenuMovement();
+        this.setState({[activeStateId]: true});
+    };
+
     eventsMap = {
         moveLeft_keydown: () => {
-            this.resetMenuMovement();
-            this.setState({activeLeft: true});
+            this.setActivateMoveInDirection("activeLeft");
         },
         moveRight_keydown: () => {
-            this.resetMenuMovement();
-            this.setState({activeRight: true});
+            this.setActivateMoveInDirection("activeRight");
         },
         moveUp_keydown: () => {
-            this.resetMenuMovement();
-            this.setState({activeUp: true});
+            this.setActivateMoveInDirection("activeUp");
         },
         moveDown_keydown: () => {
-            this.resetMenuMovement();
-            this.setState({activeDown: true});
+            this.setActivateMoveInDirection("activeDown");
         },
         moveLeft_keyup: () => this.setState({activeLeft: false}),
         moveRight_keyup: () => this.setState({activeRight: false}),
         moveUp_keyup: () => this.setState({activeUp: false}),
         moveDown_keyup: () => this.setState({activeDown: false}),
-        shoot: this.selectMenu,
-        shoot_keyup: this.backMenu,
+        select_keydown: this.selectMenu,
+        backSelect_keydown: this.backMenu,
     };
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.selectedCommand !== prevState.selectedCommand ){
+            if (!this.menuMoveSound) {
+                return;
+            }
+            if (this.menuMoveSound.isPlaying) {
+            this.menuMoveSound.stop();
+        }
+            this.menuMoveSound.play();
+        }
+    }
 
     updateMenuMovement = () => {
         if (this.state.activeLeft) this.moveLeft();
         if (this.state.activeRight) this.moveRight();
-        if (this.state.activeUp) this.moveUp();
-        if (this.state.activeDown) this.moveDown();
-
+        if (this.state.activeUp && !this.state.activeDown) this.moveUp();
+        if (this.state.activeDown && !this.state.activeUp) this.moveDown();
     };
 
     updateSelectedMenuCommand = (time) => {
@@ -158,6 +195,9 @@ export class RPGBattlePlayerControls extends React.Component {
 
     start = () => {
         this.initMenuDiv();
+
+        this.menuMoveSound = this.initSound("menuMoveSoundId");
+        this.menuMoveSelectSound =this.initSound("menuSelectSoundId");
         this.registerEvents();
         // transform.add( this.mesh );
         // this.addMouseDebugMesh();
