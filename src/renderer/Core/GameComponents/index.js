@@ -64,5 +64,6 @@ export const components = {
   rpgKernelModuleComponent: RPGKernelModuleGameComponent,
   rpgBattleModuleComponent:RPGBattleModuleGameComponent,
   rpgMenuModuleComponent : RPGMenuModuleGameComponent,
+  rpgBattleCharacterCore :RPGBattleCharacterCore,
   tetsuoParticles : TETSUOParticlesGeometryTest,
 };
