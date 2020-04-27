@@ -8,21 +8,22 @@ import * as THREE from "three";
 export class CSSLabelTo3D extends React.Component {
   position = new THREE.Vector3(0, 0, 0);
 
-  text;
+  floatingDiv;
+  customDiv = false;
 
   setHTML = html => {
-    this.text.dangerouslySetInnerHtml = html;
+    this.floatingDiv.dangerouslySetInnerHtml = html;
   };
 
   start = () => {
     //const { transform } = this.props;
-    this.text = this.createTextLabel();
+    this.floatingDiv = this.createTextLabel();
 
     this.setHTML(`Label`);
   };
 
   onDestroy = () => {
-    this.text.parentNode.removeChild(this.text);
+    this.floatingDiv.parentNode.removeChild(this.floatingDiv);
   };
 
   get2DCoords = (position, camera) => {
@@ -41,10 +42,17 @@ export class CSSLabelTo3D extends React.Component {
     return div;
   };
 
-  update = () => {
-    const { transform, availableComponent, objectInputData } = this.props;
+  attachDiv = (divToAttach) => {
+    this.onDestroy();
+    this.floatingDiv = divToAttach;
+    document.body.appendChild(divToAttach);
+    this.customDiv = true;
+  };
 
-    const id = objectInputData.id;
+  update = () => {
+    const { transform, availableComponent, gameObject } = this.props;
+
+    const id = gameObject.id;
 
     if (transform) {
       transform.getWorldPosition(this.position);
@@ -54,15 +62,20 @@ export class CSSLabelTo3D extends React.Component {
       this.position,
       availableComponent.scene.camera._main
     );
-    this.text.style.left = `${coords2d.x}px`;
-    this.text.style.top = `${coords2d.y}px`;
+    this.floatingDiv.style.position = `absolute`;
+    this.floatingDiv.style.pointerEvents = `none`;
+    this.floatingDiv.style.left = `${coords2d.x}px`;
+    this.floatingDiv.style.top = `${coords2d.y}px`;
 
-    this.text.innerHTML = `${id}<span>${objectInputData.objectType}</span>`;
+    if (this.customDiv){
+      return;
+    }
+
+    this.floatingDiv.innerHTML = `${id}<span>${gameObject.id}</span>`;
   };
 }
 
 CSSLabelTo3D.propTypes = {
-  objectInputData: PropTypes.object,
   availableComponent: PropTypes.object,
   registerUpdate: PropTypes.func,
   transform: PropTypes.object
