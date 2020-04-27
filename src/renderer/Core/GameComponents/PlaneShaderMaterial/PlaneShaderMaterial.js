@@ -123,7 +123,7 @@ export class PlaneShaderMaterial extends React.Component {
     this.mesh = new THREE.Mesh(this.geometry, this.material);
     this.props.transform.add(this.mesh);
     if (position) {
-        availableService.animation.travelTo(this.mesh,position,2000);
+        availableService.animation.travelTo(this.mesh,position,2000,{autoStart:true});
     }
   };
 

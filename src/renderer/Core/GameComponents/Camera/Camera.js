@@ -151,7 +151,8 @@ export class Camera extends React.Component {
         animatedIntroTime || 6000,
         {
           target: scene.scene.position,
-          easing: availableService.animation.Easing.Exponential.Out
+          easing: availableService.animation.Easing.Exponential.Out,
+          autoStart:true
         }
       );
     }
@@ -182,7 +183,8 @@ export class Camera extends React.Component {
         animatedRegularTransitionTime || 1000,
       {
         target: scene.scene.position,
-        easing: availableService.animation.Easing.Exponential.Out
+        easing: availableService.animation.Easing.Exponential.Out,
+        autoStart:true
       }
     );
   };

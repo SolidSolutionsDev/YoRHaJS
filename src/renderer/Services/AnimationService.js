@@ -27,10 +27,16 @@ export class AnimationService extends Component {
         ? parameters.easing
         : TWEEN.Easing.Linear.None;
     const _target = parameters && parameters.target ? parameters.target : false;
+    const _onStart = parameters && parameters.onStart ? null.onStart : null;
 
     const tween = new TWEEN.Tween(_from)
       .to(_to, time)
       .easing(_easing)
+        .onStart(()=> {
+          if (_onStart){
+            _onStart();
+          }
+        })
       .onUpdate(function() {
         gameObjectTravelling.position.set(_from.x, _from.y, _from.z);
         if (_target) {
@@ -39,8 +45,10 @@ export class AnimationService extends Component {
       })
       .onComplete(function() {
         // TODO: emit event or dispatch to redux
-      })
-      .start();
+      });
+      if (parameters.autoStart) {
+        tween.start();
+      }
   }
 
   lookAt(gameObjectlooking, targetPosition, time, parameters) {
