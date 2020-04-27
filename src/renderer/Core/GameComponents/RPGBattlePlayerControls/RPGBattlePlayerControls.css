@@ -2,3 +2,21 @@
     position: absolute;
     pointer-events: none;
 }
+
+.battle-menu {
+    background-color: blue;
+    color:white;
+    font-weight: 200;
+    list-style-type:none;
+    padding: 1em;
+    border: white solid .5em;
+    border-radius: 1em;
+}
+
+.battle-menu-option {
+}
+
+.battle-menu-option-selected {
+    font-weight: 800;
+    color: red;
+}

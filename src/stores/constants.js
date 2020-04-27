@@ -49,6 +49,24 @@ const attackData = {
         all: false,
         priority: 0,
     },
+    mainAbsorb: {
+        label: "Color Absorb",
+        castingCost: 0,
+        type: attackTypes.colorAbsorb,
+        // animation: animations.mainAbsorbAnimation,
+        targets: [targetTypes.enemies],
+        all: false,
+        priority: 0,
+    },
+    mainDefense: {
+        label: "Defend",
+        castingCost: 0,
+        type: attackTypes.colorDefense,
+        // animation: animations.mainDefenseAnimation,
+        targets: [targetTypes.self],
+        all: false,
+        priority: 0,
+    },
 };
 
 
