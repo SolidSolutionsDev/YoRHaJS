@@ -4,7 +4,7 @@ import "./RPGMenuModuleGameComponent.css";
 
 export class RPGMenuModuleGameComponent extends React.Component {
 
-    rpgModuleManager = this.props.parent.getComponent("rpgGameComponent");
+    rpgModuleManager = this.props.parent.getComponent("RPGGameComponent");
     state = {
         active:false
     };

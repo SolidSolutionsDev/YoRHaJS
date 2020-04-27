@@ -79,7 +79,7 @@ export class ShoeController extends React.Component {
   disableAutoScale = () => {
     const { transform } = this.props;
     transform.gameObject.getComponent(
-      "transformUpdate"
+      "TransformUpdate"
     ).ignoreTransformScaleUpdate = true;
     transform.scale.set(1, 1, 1);
   };

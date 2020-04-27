@@ -9,7 +9,7 @@ export class RPGKernelModuleGameComponent extends React.Component {
         modules:{},
         activeModule:undefined
     };
-    rpgModuleManager = this.props.parent.getComponent("rpgGameComponent");
+    rpgModuleManager = this.props.parent.getComponent("RPGGameComponent");
 
     update = (time, deltaTime) => {
         if (this.rpgModuleManager.isReady() && this.activeModule) {

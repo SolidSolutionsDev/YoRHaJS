@@ -97,12 +97,12 @@ export class PlayerControls extends React.Component {
   };
 
   startShooting = () => {
-    this.props.gameObject.getComponent("shooter").startShooting();
+    this.props.gameObject.getComponent("Shooter").startShooting();
   };
 
 
   stopShooting = () => {
-    this.props.gameObject.getComponent("shooter").stopShooting();
+    this.props.gameObject.getComponent("Shooter").stopShooting();
   };
 
 

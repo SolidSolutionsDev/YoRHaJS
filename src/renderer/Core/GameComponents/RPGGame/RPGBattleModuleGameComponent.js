@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export class RPGBattleModuleGameComponent extends React.Component {
 
-    rpgModuleManager = this.props.parent.getComponent("rpgGameComponent");
+    rpgModuleManager = this.props.parent.getComponent("RPGGameComponent");
     state = {
         active:false
     };

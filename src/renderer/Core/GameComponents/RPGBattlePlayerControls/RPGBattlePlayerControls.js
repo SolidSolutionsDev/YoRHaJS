@@ -188,7 +188,7 @@ export class RPGBattlePlayerControls extends React.Component {
     attachMenu = (menuDiv) => {
         const {gameObject} = this.props;
         this.cssGameComponent = gameObject.getComponent(
-            "cssLabelTo3d"
+            "CSSLabelTo3D"
         );
         this.cssGameComponent.attachDiv(menuDiv);
     };

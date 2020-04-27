@@ -96,14 +96,14 @@ export const initialScene = {
           position: { x: 220, y: -120, z: 990},
         },
         components:{
-          meshGeometryLoader:{
+          MeshGeometry:{
             assetId:"sephirothPMXModel"
           },
         }
       },
       backgroundMusicPlayer1: {
         components:{
-          soundPlayer: {
+          SoundPlayer: {
             positional: false,
             // path: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
             assetId: "fariaDemoMP3",
@@ -116,15 +116,15 @@ export const initialScene = {
       mountainSolid: {
         debug: true,
         components: {
-          audioScale: {
+          AudioScaleComponent: {
             audioTag: "backgroundMusic"
           },
-          autoRotate:{
+          AutoRotate:{
             speed: {
               z:0.001
             }
           },
-          meshGeometryLoader:{
+          MeshGeometry:{
             // assetURL: "./assets/models/64-everest/everest.obj",
             assetId:"everestOBJ",
             scale: 100,
@@ -155,7 +155,7 @@ export const initialScene = {
           position: { x: 0, y: 0, z: 4 }
         },
         components:{
-          textGeometry: {
+          TextGeometry: {
             randomColors:false,
             colors:[0xff1111],
             text: "SOLID",
@@ -212,7 +212,7 @@ export const initialScene = {
       board1: {
         debug: true,
         components: {
-          boardPlaneGeometry: {
+          BoardPlaneGeometry: {
             rotationX: 0.01,
             dimensions: { x: 500, y: 500, z: .1 },
             position: {z:-3},
@@ -228,7 +228,7 @@ export const initialScene = {
         },
         debug: true,
         components: {
-          water:{},
+          WaterComponent:{},
         }
       },
       shaderPlane1: {
@@ -237,7 +237,7 @@ export const initialScene = {
           position: { x: 5, y: 5, z: -10 },
         },
         components: {
-          planeShader:{
+          PlaneShaderMaterial:{
             explode: {
               directionFunction:"random",
               distance:200.0,
@@ -319,7 +319,7 @@ export const initialScene = {
           //     position:{x:0,y: -55,z: 35},
           //     lookAt:{x:0,y: 0,z: 0},
           // },
-          dynamicCameraManager: {
+          Camera: {
             // cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "top",
             // cameraAutoRotate: true,
@@ -400,7 +400,7 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          testCube: {
+          TestCube: {
             rotationX: 0.01,
             opacity: 0.9
           }
@@ -411,7 +411,7 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          playerBulletGeometry: {
+          PlayerBulletGeometry: {
             dimensions: [5,5,5],
             color:0xff2222
           },
@@ -425,7 +425,7 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          sphereGeometry: {
+          SphereGeometry: {
             basicMaterial: true,
             castShadow:false,
           },
@@ -435,7 +435,7 @@ export const initialScene = {
       TestShooter: {
         debug: true,
         components: {
-          planeShader:{
+          PlaneShader:{
             position:{x:0,y:0,z:100},
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
@@ -466,19 +466,19 @@ export const initialScene = {
       EnemyFollower: {
         debug: true,
         components: {
-          enemyMovementControls: {
+          EnemyMovementControls: {
             type: "follow",
             speed: 50,
             rotationSpeed: 10,
           },
-          shooter: {
+          Shooter: {
             shooting: true,
             moveRatio: 2,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 2000,
             aroundBullets: 1
           },
-          enemyCubeGeometry: {
+          EnemyCubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
@@ -491,12 +491,12 @@ export const initialScene = {
       EnemySphereBoss: {
         debug: true,
         components: {
-          enemyMovementControls: {
+          EnemyMovementControls: {
             type: "rotate",
             speed: 50,
             rotationSpeed: 2,
           },
-          shooter: {
+          Shooter: {
             shooting: true,
             moveRatio: 2,
             displacementRatio:1,
@@ -505,7 +505,7 @@ export const initialScene = {
             aroundBullets: 1,
 
           },
-          sphereGeometry: {
+          SphereGeometry: {
             radius:1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
@@ -518,14 +518,14 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          boardPlaneGeometry: {}
+          BoardPlaneGeometry: {}
         },
         children: []
       },
       DirectionalLight: {
         transform: {},
         components: {
-          directionalLight: {
+          DirectionalLight: {
             castShadow: true,
             color: 0xffffff,
             intensity: 0.9,
@@ -541,7 +541,7 @@ export const initialScene = {
           }
         },
         components: {
-          pointLight: {
+          PointLight: {
             castShadow: true,
             color: 0xffffff,
             intensity: 1,
@@ -552,7 +552,7 @@ export const initialScene = {
       AmbientLight: {
         transform: {},
         components: {
-          ambientLight: {
+          AmbientLight: {
             // color: 0x222222
           }
         },
@@ -561,7 +561,7 @@ export const initialScene = {
       RPGBattleModulePrefab: {
         debug: true,
         components: {
-          rpgBattleModuleComponent: {
+          RPGBattleModuleGameComponent: {
             type: kernelConstants.moduleTypes.battle,
           },
         },
@@ -570,7 +570,7 @@ export const initialScene = {
       RPGMenuModulePrefab: {
         debug: true,
         components: {
-          rpgMenuModuleComponent: {
+          RPGMenuModuleGameComponent: {
             type: kernelConstants.moduleTypes.menu,
           },
         },
@@ -579,7 +579,7 @@ export const initialScene = {
       RPGKernelModulePrefab: {
         debug: true,
         components: {
-          rpgKernelModuleComponent: {
+          RPGKernelModuleGameComponent: {
             type: kernelConstants.moduleTypes.kernel,
             currentModuleScene: "menuScene1",
             // currentModuleScene: "battle1",
@@ -594,7 +594,7 @@ export const initialScene = {
       RPGGamePrefab: {
         debug: true,
         components: {
-          rpgGameComponent: {
+          RPGGameComponent: {
             modulesPrefabs:{
               [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
               [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
@@ -611,15 +611,15 @@ export const initialScene = {
       TestRPGPlayer: {
         debug: true,
         components: {
-          cssLabelTo3d:{},
-          rpgBattlePlayerControls: {
+          CSSLabelTo3D:{},
+          RPGBattlePlayerControls: {
             menuMoveSoundId: "menuMove",
             menuSelectSoundId: "menuSelect",
           },
-          rpgBattleCharacterCore: {
+          RPGBattleCharacterCore: {
             name:"Carlos"
           },
-          tetsuoParticles: {},
+          TETSUOParticlesGeometryTest: {},
           },
         children: []
       },
