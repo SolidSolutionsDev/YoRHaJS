@@ -154,14 +154,14 @@ export class PlayerControls extends React.Component {
   };
 
   eventsMap = {
-    moveleft: () => this.setState({ activeLeft: true }),
-    moveright: () => this.setState({ activeRight: true }),
-    moveup: () => this.setState({ activeUp: true }),
-    movedown: () => this.setState({ activeDown: true }),
-    moveleft_keyup: () => this.setState({ activeLeft: false }),
-    moveright_keyup: () => this.setState({ activeRight: false }),
-    moveup_keyup: () => this.setState({ activeUp: false }),
-    movedown_keyup: () => this.setState({ activeDown: false }),
+    moveLeft: () => this.setState({ activeLeft: true }),
+    moveRight: () => this.setState({ activeRight: true }),
+    moveUp: () => this.setState({ activeUp: true }),
+    moveDown: () => this.setState({ activeDown: true }),
+    moveLeft_keyup: () => this.setState({ activeLeft: false }),
+    moveRight_keyup: () => this.setState({ activeRight: false }),
+    moveUp_keyup: () => this.setState({ activeUp: false }),
+    moveDown_keyup: () => this.setState({ activeDown: false }),
     lookup: () => this.setState({ activeLookUp: true }),
     lookup_keyup: () => this.setState({ activeLookUp: false }),
     lookdown: () => this.setState({ activeLookDown: true }),
@@ -172,7 +172,7 @@ export class PlayerControls extends React.Component {
     lookright_keyup: () => this.setState({ activeLookRight: false }),
     shoot: this.startShooting,
     shoot_keyup: this.stopShooting,
-    mousem: this.mouseLook
+    mouseM: this.mouseLook
   };
 
   registerEvents = () => {

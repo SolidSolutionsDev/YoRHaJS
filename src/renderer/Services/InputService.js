@@ -10,7 +10,7 @@ export class InputService extends Component {
         z: 0.5
       };
       document.dispatchEvent(
-        new CustomEvent("mousem", { detail: { coordinates: _mouse3D } })
+        new CustomEvent("mouseM", { detail: { coordinates: _mouse3D } })
       );
     });
 
@@ -33,19 +33,19 @@ export class InputService extends Component {
       }
       // console.log(event.key);
       if (event.key === "s") {
-        document.dispatchEvent(new Event("movedown"));
+        document.dispatchEvent(new Event("moveDown"));
       }
 
       if (event.key === "a") {
-        document.dispatchEvent(new Event("moveleft"));
+        document.dispatchEvent(new Event("moveLeft"));
       }
 
       if (event.key === "d") {
-        document.dispatchEvent(new Event("moveright"));
+        document.dispatchEvent(new Event("moveRight"));
       }
 
       if (event.key === "w") {
-        document.dispatchEvent(new Event("moveup"));
+        document.dispatchEvent(new Event("moveUp"));
       }
 
       if (event.key === "r") {
@@ -79,19 +79,19 @@ export class InputService extends Component {
       }
 
       if (event.key === "s") {
-        document.dispatchEvent(new Event("movedown_keyup"));
+        document.dispatchEvent(new Event("moveDown_keyup"));
       }
 
       if (event.key === "a") {
-        document.dispatchEvent(new Event("moveleft_keyup"));
+        document.dispatchEvent(new Event("moveLeft_keyup"));
       }
 
       if (event.key === "d") {
-        document.dispatchEvent(new Event("moveright_keyup"));
+        document.dispatchEvent(new Event("moveRight_keyup"));
       }
 
       if (event.key === "w") {
-        document.dispatchEvent(new Event("moveup_keyup"));
+        document.dispatchEvent(new Event("moveUp_keyup"));
       }
 
       if (event.key === "r") {
