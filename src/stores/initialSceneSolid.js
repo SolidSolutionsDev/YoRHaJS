@@ -68,7 +68,8 @@ export const initialScene = {
       "sephiroth1",
       // "shaderPlane1",
       "soundPlayer1",
-      "rpgGame"
+      "rpgGame",
+      "rpgTestPlayer1"
     ]
   },
   gameObjects: {
@@ -76,6 +77,13 @@ export const initialScene = {
       // rpgGame: {},
       rpgGame: {
         prefab: "RPGGamePrefab",
+      },
+      rpgTestPlayer1: {
+        transform: {
+          scale:{x:100,y:100,z:100},
+          position: { x: 10, y: 10, z: 1390},
+        },
+        prefab:"TestRPGPlayer"
       },
       camera1: {
         prefab: "DynamicCameraPrefab"
@@ -89,7 +97,6 @@ export const initialScene = {
           meshGeometryLoader:{
             assetId:"sephirothPMXModel"
           },
-          tetsuoParticles: {}
         }
       },
       soundPlayer1: {
@@ -598,6 +605,18 @@ export const initialScene = {
         },
         children: []
       },
+
+      TestRPGPlayer: {
+        debug: true,
+        components: {
+          cssLabelTo3d:{},
+          rpgBattleCharacterCore: {
+            name:"Carlos"
+          },
+          tetsuoParticles: {},
+          },
+        children: []
+      },
     },
     allIds: [
       // "Camera",
@@ -613,7 +632,8 @@ export const initialScene = {
       "PlayerBullet",
       "EnemyBullet",
       "DynamicCameraPrefab",
-      "RPGGamePrefab"
+      "RPGGamePrefab",
+      "TestRPGPlayer"
     ]
   }
 };
