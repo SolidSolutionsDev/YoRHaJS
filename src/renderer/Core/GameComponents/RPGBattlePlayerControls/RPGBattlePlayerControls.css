@@ -1,0 +1,4 @@
+.battle-player-controls {
+    position: absolute;
+    pointer-events: none;
+}

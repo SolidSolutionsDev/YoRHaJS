@@ -610,6 +610,8 @@ export const initialScene = {
         debug: true,
         components: {
           cssLabelTo3d:{},
+          rpgBattlePlayerControls: {
+          },
           rpgBattleCharacterCore: {
             name:"Carlos"
           },
