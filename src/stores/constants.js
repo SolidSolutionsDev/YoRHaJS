@@ -9,6 +9,8 @@ const menuCommands = {
     Absorb: ["mainAbsorb"],
     Defense: ["mainDefense"],
 };
+
+// ATTACKS
 const attackTypes = {
     colorAttack: 0,
     colorDefense: 1,
@@ -19,16 +21,36 @@ const targetTypes = {
     party: 1,
     self: 2
 };
+
+
+const battleCharacterState = {
+    ready: 0,
+    action: 1,
+    idle: 2,
+    dead: 3,
+    stopped:4
+};
+
+
+const effects = {
+    colorAttack: {
+        attackerPrepare: "energyCast",
+        attackExecute:"energyBlast"
+    },
+};
+
 const attackData = {
     mainAttack: {
         label: "Color Attack",
         castingCost: 0,
         type: attackTypes.colorAttack,
-        animation: "mainAttackAnimation",
+        animation: animations.mainAttackAnimation,
         targets: [targetTypes.enemies],
         all: false,
+        priority: 0,
     },
 };
+
 
 const moduleScenes = {
     battle1: {
@@ -38,7 +60,7 @@ const moduleScenes = {
     },
     menuScene1: {
         type: "menu",
-        defaultEntry:"start",
+        defaultEntry: "start",
         entries: [{id: "start", label: "Start", goTo: "battle1"}, {
             id: "continue",
             label: "Continue",
@@ -79,5 +101,7 @@ export const kernelConstants = {
     attackTypes,
     targetTypes,
     moduleTypes,
-    moduleScenes
+    moduleScenes,
+    effects,
+    battleCharacterState
 };
