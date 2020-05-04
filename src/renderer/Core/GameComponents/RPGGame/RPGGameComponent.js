@@ -6,7 +6,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as _ from "lodash";
 import {instantiateFromPrefab, updateGameObjectComponent} from "../../../../stores/scene/actions";
-import {kernelConstants} from "../../../../stores/constants";
+import {kernelConstants} from "../../../../stores/rpgConstants";
 
 export class RPGGameComponent extends React.Component {
 
@@ -59,19 +59,16 @@ export class RPGGameComponent extends React.Component {
         }
     }
 
-    init = () =>
-{
-    const {
-        modulesPrefabs,
-        modules,
-        availableComponent,
-        gameObject,
-        enqueueUpdateSelf
-    } = this.props;
-    const {scene} = availableComponent;
-
-
-    Object.keys(modulesPrefabs).forEach(modulePrefabKey => {
+    initModule = (modulePrefabKey, parentId)=> {
+        const {
+            modulesPrefabs,
+            modules,
+            availableComponent,
+            gameObject,
+            enqueueUpdateSelf
+        } = this.props;
+        const _parentId = parentId || gameObject.id;
+        const {scene} = availableComponent;
         const modulePrefab = modulesPrefabs[modulePrefabKey];
         const currentModuleId = _.uniqueId(modulePrefab);
         scene.enqueueAction(
@@ -79,19 +76,26 @@ export class RPGGameComponent extends React.Component {
                 modulePrefab,
                 currentModuleId,
                 null,
-                gameObject.id,
+                parent,
                 null,
                 null,
             )
         );
         enqueueUpdateSelf ( {
-                    modules: {
-                        ...modules,
-                        [modulePrefabKey]: currentModuleId
-                    },
-                })
+            modules: {
+                ...modules,
+                [modulePrefabKey]: currentModuleId
+            },
+        })
 
-    });
+    };
+
+    init = () =>
+{
+    const {        modulesPrefabs    } = this.props;
+
+
+    Object.keys(modulesPrefabs).forEach(modulePrefabKey => this.initModule);
 };
 
 start()

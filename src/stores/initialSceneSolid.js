@@ -581,8 +581,8 @@ export const initialScene = {
         components: {
           RPGKernelModuleGameComponent: {
             type: kernelConstants.moduleTypes.kernel,
-            currentModuleScene: "menuScene1",
-            // currentModuleScene: "battle1",
+            //currentModuleScene: "menuScene1",
+            currentModuleScene: "battle1",
             currentBattle: null,
             currentField: {
               scene: kernelConstants.moduleScenes.fieldScene1
@@ -613,9 +613,12 @@ export const initialScene = {
         components: {
           CSSLabelTo3D:{},
           RPGBattlePlayerControls: {
+            // this sounds names should be from the battle module manager
+            // the menu should move
             menuMoveSoundId: "menuMove",
             menuSelectSoundId: "menuSelect",
           },
+          // all players should have this class
           RPGBattleCharacterCore: {
             name:"Carlos"
           },

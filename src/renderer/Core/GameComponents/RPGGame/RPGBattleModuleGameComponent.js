@@ -1,37 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {RPGModuleGameComponent} from "./RPGModuleGameComponent";
 
-export class RPGBattleModuleGameComponent extends React.Component {
+//TODO: this should use RPGModuleGameComponent as an HOC
+export class RPGBattleModuleGameComponent extends RPGModuleGameComponent {
 
-    rpgModuleManager = this.props.parent.getComponent("RPGGameComponent");
-    state = {
-        active:false
-    };
-
-    activate = () => {
-        this.setState({active:true});
-        console.log(this.props.type," activate ", this.state);
-    };
-
-    deactivate = () => {
-        this.setState({active:false});
-        console.log(this.props.type," deactivate ", this.state);
-    };
-
-    updateModule = (time, deltaTime) => {
-        console.log("updating Module ", this.props.type);
-    };
-
-    start = ()=> {
-        const {type} = this.props;
-        this.rpgModuleManager.registerModule(type,this);
-    };
-
-    render = ()=> {
-        return <div key={"module"} >{this.props.type} Active : {this.state.active.toString()}</div>;
-    }
 }
-
-RPGBattleModuleGameComponent.propTypes = {
-    type:PropTypes.string.isRequired,
-};

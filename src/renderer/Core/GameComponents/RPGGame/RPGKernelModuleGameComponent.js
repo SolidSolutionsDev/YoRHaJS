@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {kernelConstants} from "../../../../stores/constants";
+import {kernelConstants} from "../../../../stores/rpgConstants";
 import {updateGameObjectComponent} from "../../../../stores/scene/actions";
 
 export class RPGKernelModuleGameComponent extends React.Component {
@@ -12,8 +12,8 @@ export class RPGKernelModuleGameComponent extends React.Component {
     rpgModuleManager = this.props.parent.getComponent("RPGGameComponent");
 
     update = (time, deltaTime) => {
-        if (this.rpgModuleManager.isReady() && this.activeModule) {
-            this.activeModule.updateModule(time,deltaTime)
+        if (this.rpgModuleManager.isReady() && this.state.activeModule) {
+            this.state.activeModule.updateModule(time,deltaTime)
         }
     };
 
@@ -74,6 +74,10 @@ export class RPGKernelModuleGameComponent extends React.Component {
     }
 
     }
+
+    registerModule = (type,module) => {
+        this.rpgModuleManager.registerModule(type,module);
+    };
 
     playMusic = () => {};
     stopMusic = () => {};
