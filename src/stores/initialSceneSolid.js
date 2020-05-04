@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {kernelConstants} from "./constants";
+import {kernelConstants} from "./rpgConstants";
 
 export const initialScene = {
   title:{
