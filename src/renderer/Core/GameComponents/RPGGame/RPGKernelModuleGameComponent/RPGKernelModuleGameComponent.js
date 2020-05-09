@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {kernelConstants} from "../../../../stores/rpgConstants";
-import {updateGameObjectComponent} from "../../../../stores/scene/actions";
+import {kernelConstants} from "../../../../../stores/rpgConstants";
+import {updateGameObjectComponent} from "../../../../../stores/scene/actions";
 
 export class RPGKernelModuleGameComponent extends React.Component {
 

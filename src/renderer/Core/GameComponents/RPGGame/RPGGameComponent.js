@@ -76,7 +76,7 @@ export class RPGGameComponent extends React.Component {
                 modulePrefab,
                 currentModuleId,
                 null,
-                parent,
+                _parentId,
                 null,
                 null,
             )

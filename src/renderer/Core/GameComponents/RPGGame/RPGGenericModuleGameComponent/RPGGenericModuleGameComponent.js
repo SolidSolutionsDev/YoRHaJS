@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
  * This is the RPGModuleGaameComponent super class
  * All RPGModules except kernel ? should derive from this
  */
-export class RPGModuleGameComponent extends React.Component {
+export class RPGGenericModuleGameComponent extends React.Component {
 
     rpgKernelModule = this.props.parent.getComponent("RPGKernelComponent");
     state = {
@@ -37,7 +37,7 @@ export class RPGModuleGameComponent extends React.Component {
     }
 }
 
-RPGModuleGameComponent.propTypes = {
+RPGGenericModuleGameComponent.propTypes = {
     type:PropTypes.string.isRequired,
 
 };

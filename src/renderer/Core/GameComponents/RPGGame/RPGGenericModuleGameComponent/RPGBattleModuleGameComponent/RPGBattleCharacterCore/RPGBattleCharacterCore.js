@@ -3,7 +3,7 @@ import * as CANNON from "cannon";
 import * as _ from "lodash";
 // mousedebug
 import * as THREE from "three";
-import {kernelConstants} from "../../../../stores/rpgConstants";
+import {kernelConstants} from "../../../../../../../stores/rpgConstants";
 import PropTypes from "prop-types";
 import {RPGBattlePlayerControls} from "../RPGBattlePlayerControls/RPGBattlePlayerControls";
 
