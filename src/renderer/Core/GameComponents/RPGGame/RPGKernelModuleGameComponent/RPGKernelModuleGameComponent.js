@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {kernelConstants} from "../../../../../stores/rpgConstants";
-import {updateGameObjectComponent} from "../../../../../stores/scene/actions";
 
+// modules load and share, game logic, sound, launch events
+// TODO: split these in the future?
 export class RPGKernelModuleGameComponent extends React.Component {
-
     state = {
         modules:{},
         activeModule:undefined
@@ -23,12 +22,12 @@ export class RPGKernelModuleGameComponent extends React.Component {
     };
 
     getCurrentModuleSceneType = () => {
-        console.log(kernelConstants.moduleScenes,this.props.currentModuleScene);
-        return kernelConstants.moduleScenes[this.getCurrentModuleSceneId()].type;
+        console.log(this.props.moduleScenes,this.props.currentModuleScene);
+        return this.props.moduleScenes[this.getCurrentModuleSceneId()].type;
     };
 
     getCurrentModuleSceneInitData = () => {
-        return kernelConstants.moduleScenes[this.getCurrentModuleSceneId()];
+        return this.props.moduleScenes[this.getCurrentModuleSceneId()];
     };
 
     init = (modules) =>{
@@ -96,6 +95,22 @@ export class RPGKernelModuleGameComponent extends React.Component {
     };
 }
 
+// todo : use typescript to split types
+const moduleScenePropTypeShape = {
+    type:PropTypes.string.isRequired,
+    ai:PropTypes.bool,
+    // battle
+    enemiesParty:PropTypes.array,
+    // menu
+    defaultEntry:PropTypes.string,
+    entries:PropTypes.array,
+    // field
+    availableBattles:PropTypes.object,
+    triggers:PropTypes.object,
+    scenario:PropTypes.string.isRequired,
+    defaultConnection:PropTypes.string.isRequired,
+}
+
 RPGKernelModuleGameComponent.propTypes = {
     // initializationData: PropTypes.object.isRequired,
     type:PropTypes.string.isRequired,
@@ -104,5 +119,5 @@ RPGKernelModuleGameComponent.propTypes = {
     // menuModule:PropTypes.string.isRequired,
     // fieldModule:PropTypes.string,
     currentModuleScene:PropTypes.string.isRequired,
-
+    moduleScenes:PropTypes.objectOf(PropTypes.shape(moduleScenePropTypeShape)),
 };

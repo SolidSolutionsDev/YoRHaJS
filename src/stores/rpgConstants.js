@@ -28,7 +28,7 @@ const battleCharacterState = {
     action: 1,
     idle: 2,
     dead: 3,
-    stopped:4
+    stopped: 4
 };
 // ATTACKS
 const attackTypes = {
@@ -48,9 +48,9 @@ const players = {
         prefab: "player1",
         defaultName: "Esteves",
         maxHp: 1001,
-        hp:200,
-        level:2,
-        exp:22322,
+        hp: 200,
+        level: 2,
+        exp: 22322,
         magic: 101,
         maxMagic: 200,
         time: .5,
@@ -62,25 +62,25 @@ const players = {
         prefab: "player2",
         defaultName: "Faria",
         maxHp: 1002,
-        hp:50,
-        level:3,
-        exp:22322,
+        hp: 50,
+        level: 3,
+        exp: 22322,
         magic: 101,
         maxMagic: 200,
         time: .5,
         defaultSpeed: 0.4,
         speed: 0.2,
         currentStatus: battleCharacterState.ready,
-        
-        
+
+
     },
     orey: {
         prefab: "player3",
         defaultName: "Orey",
         maxHp: 1003,
-        hp:25,
-        level:4,
-        exp:22322,
+        hp: 25,
+        level: 4,
+        exp: 22322,
         status: ["poison"],
         magic: 101,
         maxMagic: 200,
@@ -91,17 +91,17 @@ const players = {
     }
 };
 
-const party = ["esteves","faria","dorey"];
+const party = ["esteves", "faria", "dorey"];
 
 const enemies = {
     carlos: {
         prefab: "carlos",
         defaultName: "Carlos",
         maxHp: 100,
-        hp:200,
-        level:1,
+        hp: 200,
+        level: 1,
 
-        exp:22322,
+        exp: 22322,
         magic: 101,
         maxMagic: 200,
         time: .5,
@@ -113,10 +113,10 @@ const enemies = {
         prefab: "enemy2",
         defaultName: "Sousa",
         maxHp: 1002,
-        hp:50,
-        level:3,
+        hp: 50,
+        level: 3,
 
-        exp:22322,
+        exp: 22322,
         magic: 101,
         maxMagic: 200,
         time: .5,
@@ -128,10 +128,10 @@ const enemies = {
         prefab: "enemy3",
         defaultName: "Neves",
         maxHp: 1003,
-        hp:25,
-        level:4,
+        hp: 25,
+        level: 4,
 
-        exp:22322,
+        exp: 22322,
         magic: 101,
         maxMagic: 200,
         time: .5,
@@ -143,7 +143,7 @@ const enemies = {
 
 const enemiesParties = {
     enemyParty1: ["carlos", "enemy1"],
-    enemyParty2: ["carlos", "enemy2","enemy3"],
+    enemyParty2: ["carlos", "enemy2", "enemy3"],
 };
 
 const sounds = {
@@ -169,7 +169,7 @@ const animations = {
 const effects = {
     colorAttack: {
         attackerPrepare: "energyCast",
-        attackExecute:"energyBlast"
+        attackExecute: "energyBlast"
     },
 };
 
@@ -213,11 +213,17 @@ const moduleScenes = {
     menuScene1: {
         type: "menu",
         defaultEntry: "start",
-        entries: [{id: "start", label: "Start", goTo: "battle1"}, {
-            id: "continue",
-            label: "Continue",
-            goTo: "fieldScene1"
-        }],
+        entries: [
+            {
+                id: "start",
+                label: "Start",
+                goTo: "battle1"
+            },
+            {
+                id: "continue",
+                label: "Continue",
+                goTo: "fieldScene1"
+            }],
         ai: true,
     },
     fieldScene1: {

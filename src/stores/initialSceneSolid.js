@@ -72,7 +72,7 @@ export const initialScene = {
       // "shaderPlane1",
       "backgroundMusicPlayer1",
       "rpgGame",
-      "rpgTestPlayer1"
+      //"rpgTestPlayer1"
     ]
   },
   gameObjects: {
@@ -556,6 +556,22 @@ export const initialScene = {
         },
         children: []
       },
+      RPGGamePrefab: {
+        debug: true,
+        components: {
+          RPGGameComponent: {
+            modulesPrefabs:{
+              [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
+              [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
+              [kernelConstants.moduleTypes.battle]:"RPGBattleModulePrefab",
+              // field:"RPGFieldModule",
+              // minigame:"RPGMiniGameModule",
+            },
+            modules: {},
+          },
+        },
+        children: []
+      },
       RPGBattleModulePrefab: {
         debug: true,
         components: {
@@ -618,26 +634,11 @@ export const initialScene = {
             type: kernelConstants.moduleTypes.kernel,
             //currentModuleScene: "menuScene1",
             currentModuleScene: "battle1",
+            moduleScenes: kernelConstants.moduleScenes,
             currentBattle: null,
             currentField: {
               scene: kernelConstants.moduleScenes.fieldScene1
             }
-          },
-        },
-        children: []
-      },
-      RPGGamePrefab: {
-        debug: true,
-        components: {
-          RPGGameComponent: {
-            modulesPrefabs:{
-              [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
-              [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
-              [kernelConstants.moduleTypes.battle]:"RPGBattleModulePrefab",
-              // field:"RPGFieldModule",
-              // minigame:"RPGMiniGameModule",
-            },
-            modules: {},
           },
         },
         children: []

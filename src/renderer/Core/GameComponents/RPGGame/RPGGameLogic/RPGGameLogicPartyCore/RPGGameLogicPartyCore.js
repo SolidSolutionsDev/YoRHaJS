@@ -2,7 +2,7 @@ import React from "react";
 import {kernelConstants} from "../../../../../../../../stores/rpgConstants";
 import PropTypes from "prop-types";
 
-export class RPGKernelPartyCore extends React.Component {
+export class RPGGameLogicPartyCore extends React.Component {
 // party base shared by all
 // launch events?
 
@@ -62,6 +62,6 @@ export class RPGKernelPartyCore extends React.Component {
     };
 }
 
-RPGKernelPartyCore.propTypes = {
+RPGGameLogicPartyCore.propTypes = {
     name: PropTypes.string.isRequired
 };
