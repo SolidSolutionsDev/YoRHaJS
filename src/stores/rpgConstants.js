@@ -5,6 +5,17 @@ const moduleTypes = {
     field: "field",
 };
 
+const battleModuleConstituentTypes = {
+    ui: "ui",
+    scenario: "scenario",
+    party: "party",
+};
+
+const battleUIConstituentTypes = {
+    overview: "overview",
+    playerControls: "playerControls",
+};
+
 const menuCommands = {
     Attack: ["mainAttack"],
     Absorb: ["mainAbsorb"],
@@ -80,11 +91,11 @@ const players = {
     }
 };
 
-const party = ["esteves","faria"];
+const party = ["esteves","faria","dorey"];
 
 const enemies = {
     carlos: {
-        prefab: "enemy1",
+        prefab: "carlos",
         defaultName: "Carlos",
         maxHp: 100,
         hp:200,
@@ -131,8 +142,8 @@ const enemies = {
 };
 
 const enemiesParties = {
-    enemyParty1: ["enemy1", "enemy1"],
-    enemyParty2: ["enemy1", "enemy2","enemy3"],
+    enemyParty1: ["carlos", "enemy1"],
+    enemyParty2: ["carlos", "enemy2","enemy3"],
 };
 
 const sounds = {
@@ -251,4 +262,6 @@ export const kernelConstants = {
     enemies,
     enemiesParties,
     sounds,
+    battleModuleConstituentTypes,
+    battleUIConstituentTypes,
 };

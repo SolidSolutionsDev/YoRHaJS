@@ -1,10 +1,10 @@
 import React from "react";
 
-import {kernelConstants} from "../../../../../../../stores/rpgConstants";
+import {kernelConstants} from "../../../../../../../../stores/rpgConstants";
 import "./RPGBattlePlayerControls.css";
 
 // character control menu
-export class RPGBattlePlayerControls extends React.Component {
+export class RPGBattleUIPlayerControls extends React.Component {
 
     availableCommands = kernelConstants.menuCommands;
     commandsDetails = kernelConstants.attackData;

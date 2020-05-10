@@ -1,17 +1,13 @@
 import React from "react";
-import * as CANNON from "cannon";
-import * as _ from "lodash";
-// mousedebug
-import * as THREE from "three";
-import {kernelConstants} from "../../../../../../../stores/rpgConstants";
+import {kernelConstants} from "../../../../../../../../stores/rpgConstants";
 import PropTypes from "prop-types";
-import {RPGBattlePlayerControls} from "../RPGBattlePlayerControls/RPGBattlePlayerControls";
 
-// character base shared by all
-export class RPGBattleCharacterCore extends React.Component {
-
+export class RPGKernelPartyCore extends React.Component {
+// party base shared by all
+// launch events?
 
     availableStatuses = kernelConstants.battleCharacterState;
+    availableStatuses = kernelConstants.party;
     currentStatus = this.availableStatuses["ready"];
     time = .5;
     defaultSpeed = 0.4;
@@ -66,6 +62,6 @@ export class RPGBattleCharacterCore extends React.Component {
     };
 }
 
-RPGBattleCharacterCore.propTypes = {
+RPGKernelPartyCore.propTypes = {
     name: PropTypes.string.isRequired
 };

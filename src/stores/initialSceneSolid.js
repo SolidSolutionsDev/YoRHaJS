@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import {kernelConstants} from "./rpgConstants";
+import {RPGBattleCharacterGameComponent} from "../renderer/Core/GameComponents/RPGGame/RPGGenericModuleGameComponent/RPGBattleModuleGameComponent/RPGBattleParty/RPGBattleCharacterGameComponent/RPGBattleCharacterGameComponent";
 
 export const initialScene = {
   title:{
@@ -85,7 +86,7 @@ export const initialScene = {
           scale:{x:100,y:100,z:100},
           position: { x: 10, y: 10, z: 1390},
         },
-        prefab:"TestRPGPlayer"
+        prefab:"RPGKernelCharacterCorePrefab"
       },
       camera1: {
         prefab: "DynamicCameraPrefab"
@@ -460,9 +461,6 @@ export const initialScene = {
         },
         children: []
       },
-
-
-
       EnemyFollower: {
         debug: true,
         components: {
@@ -563,6 +561,43 @@ export const initialScene = {
         components: {
           RPGBattleModuleGameComponent: {
             type: kernelConstants.moduleTypes.battle,
+            childPrefabs:{
+              [kernelConstants.battleModuleConstituentTypes.ui]:"RPGBattleUIPrefab",
+              [kernelConstants.battleModuleConstituentTypes.party]:"RPGBattlePartyPrefab",
+              [kernelConstants.battleModuleConstituentTypes.scenario]:"RPGBattleScenarioPrefab",
+              // field:"RPGFieldModule",
+              // minigame:"RPGMiniGameModule",
+            },
+          },
+        },
+        children: []
+      },
+      RPGBattleUIPlayerControlsPrefab: {
+        debug: true,
+        components: {
+          CSSLabelTo3D:{},
+          RPGBattleUIPlayerControls: {
+            // this sounds names should be from the battle module manager
+            // the menu should move
+            menuMoveSoundId: "menuMove",
+            menuSelectSoundId: "menuSelect",
+            actions: {
+              // TODO: check used constants imported and map to events (native js and/or redux)
+            },
+          },
+        },
+        children: []
+      },
+      RPGBattleUIPrefab: {
+        debug: true,
+        components: {
+          RPGBattleUI: {
+            childPrefabs:{
+              [kernelConstants.battleUIConstituentTypes.overview]:"RPGBattleUIOverviewPrefab",
+              [kernelConstants.battleUIConstituentTypes.playerControls]:"RPGBattleUIPlayerControlsPrefab",
+              // field:"RPGFieldModule",
+              // minigame:"RPGMiniGameModule",
+            },
           },
         },
         children: []
@@ -607,23 +642,37 @@ export const initialScene = {
         },
         children: []
       },
-
-      TestRPGPlayer: {
+      RPGKernelCharacterCorePrefab: {
+        debug: true,
+        components: {
+          // all players should have this class
+          RPGKernelCharacterCore: {
+            name:"Carlos",
+            battlePrefab:"RPGBattleCharacterPrefab",
+            id:"carlos"
+          },
+        },
+        children: []
+      },
+      RPGBattleCharacterPrefab: {
+        debug: true,
+        components: {
+          RPGBattleCharacterGameComponent:{},
+          TETSUOParticlesGeometryTest: {},
+        },
+        children: []
+      },
+      RPGMenuCharacterPrefab: {
         debug: true,
         components: {
           CSSLabelTo3D:{},
-          RPGBattlePlayerControls: {
+          RPGBattleUIPlayerControls: {
             // this sounds names should be from the battle module manager
             // the menu should move
             menuMoveSoundId: "menuMove",
             menuSelectSoundId: "menuSelect",
           },
-          // all players should have this class
-          RPGBattleCharacterCore: {
-            name:"Carlos"
-          },
-          TETSUOParticlesGeometryTest: {},
-          },
+        },
         children: []
       },
     },
@@ -642,7 +691,7 @@ export const initialScene = {
       "EnemyBullet",
       "DynamicCameraPrefab",
       "RPGGamePrefab",
-      "TestRPGPlayer"
+      "RPGKernelCharacterCorePrefab"
     ]
   }
 };
