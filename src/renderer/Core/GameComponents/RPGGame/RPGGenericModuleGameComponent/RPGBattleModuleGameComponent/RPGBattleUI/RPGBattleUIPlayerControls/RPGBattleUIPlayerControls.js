@@ -1,7 +1,7 @@
 import React from "react";
 
-import {kernelConstants} from "../../../../../../../../stores/rpgConstants";
-import "./RPGBattlePlayerControls.css";
+import {kernelConstants} from "../../../../../../../../stores/logic/rpgConstants";
+import "./RPGBattleUIPlayerControls.css";
 
 // character control menu
 export class RPGBattleUIPlayerControls extends React.Component {

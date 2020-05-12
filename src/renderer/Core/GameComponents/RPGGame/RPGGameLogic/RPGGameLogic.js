@@ -1,5 +1,5 @@
 import React from "react";
-import {kernelConstants} from "../../../../../../../../stores/rpgConstants";
+import {kernelConstants} from "../../../../../stores/logic/rpgConstants";
 import PropTypes from "prop-types";
 
 export class RPGGameLogic extends React.Component {

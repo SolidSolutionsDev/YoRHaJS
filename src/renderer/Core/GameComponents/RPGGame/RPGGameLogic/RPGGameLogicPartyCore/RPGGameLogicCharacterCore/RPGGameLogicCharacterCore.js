@@ -2,9 +2,8 @@ import React from "react";
 import * as CANNON from "cannon";
 import * as _ from "lodash";
 import * as THREE from "three";
-import {kernelConstants} from "../../../../../../../../stores/rpgConstants";
+import {kernelConstants} from "../../../../../../../stores/logic/rpgConstants";
 import PropTypes from "prop-types";
-import {RPGBattleUIPlayerControls} from "../../RPGBattleUI/RPGBattleUIPlayerControls/RPGBattlePlayerControls";
 
 export class RPGGameLogicCharacterCore extends React.Component {
 // character base shared by all

@@ -6,7 +6,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import * as _ from "lodash";
 import {instantiateFromPrefab, updateGameObjectComponent} from "../../../../stores/scene/actions";
-import {kernelConstants} from "../../../../stores/rpgConstants";
+import {kernelConstants} from "../../../../stores/logic/rpgConstants";
 
 export class RPGGameComponent extends React.Component {
 

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {kernelConstants} from "./rpgConstants";
+import {kernelConstants} from "./logic/rpgConstants";
 import {RPGBattleCharacterGameComponent} from "../renderer/Core/GameComponents/RPGGame/RPGGenericModuleGameComponent/RPGBattleModuleGameComponent/RPGBattleParty/RPGBattleCharacterGameComponent/RPGBattleCharacterGameComponent";
 
 export const initialScene = {
