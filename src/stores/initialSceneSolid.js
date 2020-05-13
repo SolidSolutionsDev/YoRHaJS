@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import {kernelConstants} from "./logic/rpgConstants";
+import {kernelConstants} from "./rpgLogic/rpgConstants";
 import {RPGBattleCharacterGameComponent} from "../renderer/Core/GameComponents/RPGGame/RPGGenericModuleGameComponent/RPGBattleModuleGameComponent/RPGBattleParty/RPGBattleCharacterGameComponent/RPGBattleCharacterGameComponent";
+
+// TODO: add concept of Scriptable Objects to attach game logic variables freely
 
 export const initialScene = {
   title:{

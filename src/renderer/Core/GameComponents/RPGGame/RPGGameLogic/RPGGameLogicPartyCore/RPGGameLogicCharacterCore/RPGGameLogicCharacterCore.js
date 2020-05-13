@@ -2,7 +2,7 @@ import React from "react";
 import * as CANNON from "cannon";
 import * as _ from "lodash";
 import * as THREE from "three";
-import {kernelConstants} from "../../../../../../../stores/logic/rpgConstants";
+import {kernelConstants} from "../../../../../../../stores/rpgLogic/rpgConstants";
 import PropTypes from "prop-types";
 
 export class RPGGameLogicCharacterCore extends React.Component {

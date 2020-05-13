@@ -253,6 +253,8 @@ const moduleScenes = {
     }
 };
 
+
+
 export const kernelConstants = {
     menuCommands,
     attackData,
@@ -271,3 +273,7 @@ export const kernelConstants = {
     battleModuleConstituentTypes,
     battleUIConstituentTypes,
 };
+
+//todo:
+//storyPoints - points of the story passed
+//events - events to trigger - animations, damage,etc

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {kernelConstants} from "../../../../../../../../stores/logic/rpgConstants";
+import {kernelConstants} from "../../../../../../../../stores/rpgLogic/rpgConstants";
 import "./RPGBattleUIPlayerControls.css";
 
 // character control menu
