@@ -27,6 +27,7 @@ export function makeGameComponent(WrappedComponent, name) {
     constructor(props) {
       super(props);
       this.addDefaultRender(WrappedComponent);
+      this.addDefaultStart(WrappedComponent);
       const _displayName = this.getDisplayName();
       props.registerComponent(this, _displayName);
     }
@@ -36,6 +37,15 @@ export function makeGameComponent(WrappedComponent, name) {
         return;
       }
       component.prototype.render = () => {
+        return null;
+      }
+    };
+
+    addDefaultStart = (component) => {
+      if (component.prototype.start){
+        return;
+      }
+      component.prototype.start = () => {
         return null;
       }
     };

@@ -1,0 +1,9 @@
+.debug-battle {
+    z-index: 100;
+    pointer-events: all;
+    background-color: white;
+}
+
+.debug-battle  button{
+    margin: 0.51em;
+}

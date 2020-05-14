@@ -75,7 +75,8 @@ export const initialScene = {
       // "shaderPlane1",
       "backgroundMusicPlayer1",
       // "rpgGame",
-      //"rpgTestPlayer1"
+      //"rpgTestPlayer1",
+        "colorSphere"
     ]
   },
   gameObjects: {
@@ -91,6 +92,9 @@ export const initialScene = {
       //   },
       //   prefab:"RPGKernelCharacterCorePrefab"
       // },
+      colorSphere: {
+        prefab: "ColorSpherePrefab"
+      },
       camera1: {
         prefab: "DynamicCameraPrefab"
       },
@@ -317,6 +321,7 @@ export const initialScene = {
 
       ColorSpherePrefab : {
         components: {
+          ColorGameBattleLogic:{},
           SphereGeometry: {
             radius:1,
           },
@@ -330,7 +335,7 @@ export const initialScene = {
             sizeChangeRatio: 0.01,
             meshComponentName:"SphereGeometry",
             sphereSpeedIndex:0.5,
-            opponentId:null,
+            opponentId:"null",
             color:{ r: 100, g: 100, b: 100 }
           },
         }

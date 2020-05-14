@@ -7,10 +7,13 @@ import * as CANNON from "cannon";
 export class ColorSphereLogic extends React.Component {
 
     currentSize = this.props.size;
-    sphereMesh = this.props.parent.gameObject.getComponent(this.props.meshComponentName);
+    sphereMeshComponent;
+    sphereMesh;
     speed2target = {};
 
     start = () => {
+        this.sphereMeshComponent = this.props.gameObject.getComponent(this.props.meshComponentName);
+        this.sphereMesh = this.sphereMeshComponent.mesh;
         const {transform} = this.props;
         transform.position.set(0, 0, 0);
     }
@@ -20,7 +23,8 @@ export class ColorSphereLogic extends React.Component {
         let error = 0.01;
 
         //TODO: replace this by the correct method
-        reparentObject3D(this.sphereMesh, parent.opponent.mesh);
+        alert("dont forget this");
+        // reparentObject3D(this.sphereMesh, parent.opponent.mesh);
 
         if (!this.speed2target.x) {
             let max = Math.max(
@@ -79,8 +83,8 @@ export class ColorSphereLogic extends React.Component {
     initCheck = () => {
         const {initing, enqueueUpdateSelf} = this.props;
         if (initing) {
-            if (this.sphereMesh.mesh.position.z < 4) {
-                this.sphereMesh.mesh.position.z += 0.1;
+            if (this.sphereMesh.position.z < 4) {
+                this.sphereMesh.position.z += 0.1;
             } else {
                 enqueueUpdateSelf({initing: false});
             }

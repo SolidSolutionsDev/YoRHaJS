@@ -28,10 +28,10 @@ export class SphereGeometry extends React.Component {
     const geometry = new THREE.SphereGeometry(this.radius, 32, 32);
     const material = selfSettings.basicMaterial
       ? new THREE.MeshBasicMaterial({
-          color: color
+          color: this.color
         })
       : new THREE.MeshLambertMaterial({
-          color: color
+          color: this.color
         });
     this.updateColor();
     opacity && (material.opacity = opacity);
