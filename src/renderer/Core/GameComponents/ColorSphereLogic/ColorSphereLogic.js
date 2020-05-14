@@ -16,11 +16,11 @@ export class ColorSphereLogic extends React.Component {
     }
 
     moveSphere = (speedIndex) => {
-        const {enqueueUpdateSelf} = this.props;
+        const {enqueueUpdateSelf,parent} = this.props;
         let error = 0.01;
 
         //TODO: replace this by the correct method
-        reparentObject3D(this.sphereMesh, _parent.opponent.mesh);
+        reparentObject3D(this.sphereMesh, parent.opponent.mesh);
 
         if (!this.speed2target.x) {
             let max = Math.max(
@@ -128,12 +128,21 @@ export class ColorSphereLogic extends React.Component {
         }
         this.scaleCheck();
         this.initCheck();
-        //
-
-
+        this.rotatingCheck();
+        this.explodingCheck();
     }
 }
 
 ColorSphereLogic.propTypes = {
-    transform: PropTypes.object.isRequired
+    initing: PropTypes.bool.isRequired,
+    rotating: PropTypes.bool.isRequired,
+    attacking: PropTypes.bool.isRequired,
+    exploding: PropTypes.bool.isRequired,
+    dead: PropTypes.bool.isRequired,
+    size: PropTypes.number.isRequired,
+    sizeChangeRatio: PropTypes.number.isRequired,
+    meshComponentName: PropTypes.string.isRequired,
+    sphereSpeedIndex: PropTypes.number.isRequired,
+    opponentId: PropTypes.string.isRequired,
+    color: PropTypes.object.isRequired,
 };
