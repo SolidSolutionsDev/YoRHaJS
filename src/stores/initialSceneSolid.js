@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import {kernelConstants} from "./rpgLogic/rpgConstants";
 import {RPGBattleCharacterGameComponent} from "../renderer/Core/GameComponents/RPGGame/RPGGenericModuleGameComponent/RPGBattleModuleGameComponent/RPGBattleParty/RPGBattleCharacterGameComponent/RPGBattleCharacterGameComponent";
+import {sphereOptions} from "../solid-solutions-backend/constants/states";
 
 // TODO: add concept of Scriptable Objects to attach game logic variables freely
 
@@ -73,23 +74,23 @@ export const initialScene = {
       "sephiroth1",
       // "shaderPlane1",
       "backgroundMusicPlayer1",
-      "rpgGame",
+      // "rpgGame",
       //"rpgTestPlayer1"
     ]
   },
   gameObjects: {
     byId: {
       // rpgGame: {},
-      rpgGame: {
-        prefab: "RPGGamePrefab",
-      },
-      rpgTestPlayer1: {
-        transform: {
-          scale:{x:100,y:100,z:100},
-          position: { x: 10, y: 10, z: 1390},
-        },
-        prefab:"RPGKernelCharacterCorePrefab"
-      },
+      // rpgGame: {
+      //   prefab: "RPGGamePrefab",
+      // },
+      // rpgTestPlayer1: {
+      //   transform: {
+      //     scale:{x:100,y:100,z:100},
+      //     position: { x: 10, y: 10, z: 1390},
+      //   },
+      //   prefab:"RPGKernelCharacterCorePrefab"
+      // },
       camera1: {
         prefab: "DynamicCameraPrefab"
       },
@@ -313,6 +314,27 @@ export const initialScene = {
   },
   prefabs: {
     byId: {
+
+      ColorSpherePrefab : {
+        components: {
+          SphereGeometry: {
+            radius:1,
+          },
+          ColorSphereLogic: {
+            initing: true,
+            rotating: true,
+            attacking: false,
+            exploding: false,
+            dead: false,
+            size: sphereOptions.startingSize,
+            sizeChangeRatio: 0.01,
+            meshComponentName:"SphereGeometry",
+            sphereSpeedIndex:0.5,
+            opponentId:null,
+            color:{ r: 100, g: 100, b: 100 }
+          },
+        }
+      },
       DynamicCameraPrefab: {
         components: {
           // perspectiveCamera:{
@@ -558,126 +580,126 @@ export const initialScene = {
         },
         children: []
       },
-      RPGGamePrefab: {
-        debug: true,
-        components: {
-          RPGGameComponent: {
-            modulesPrefabs:{
-              [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
-              [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
-              [kernelConstants.moduleTypes.battle]:"RPGBattleModulePrefab",
-              // field:"RPGFieldModule",
-              // minigame:"RPGMiniGameModule",
-            },
-            modules: {},
-          },
-        },
-        children: []
-      },
-      RPGBattleModulePrefab: {
-        debug: true,
-        components: {
-          RPGBattleModuleGameComponent: {
-            type: kernelConstants.moduleTypes.battle,
-            childPrefabs:{
-              [kernelConstants.battleModuleConstituentTypes.ui]:"RPGBattleUIPrefab",
-              [kernelConstants.battleModuleConstituentTypes.party]:"RPGBattlePartyPrefab",
-              [kernelConstants.battleModuleConstituentTypes.scenario]:"RPGBattleScenarioPrefab",
-              // field:"RPGFieldModule",
-              // minigame:"RPGMiniGameModule",
-            },
-          },
-        },
-        children: []
-      },
-      RPGBattleUIPlayerControlsPrefab: {
-        debug: true,
-        components: {
-          CSSLabelTo3D:{},
-          RPGBattleUIPlayerControls: {
-            // this sounds names should be from the battle module manager
-            // the menu should move
-            menuMoveSoundId: "menuMove",
-            menuSelectSoundId: "menuSelect",
-            actions: {
-              // TODO: check used constants imported and map to events (native js and/or redux)
-            },
-          },
-        },
-        children: []
-      },
-      RPGBattleUIPrefab: {
-        debug: true,
-        components: {
-          RPGBattleUI: {
-            childPrefabs:{
-              [kernelConstants.battleUIConstituentTypes.overview]:"RPGBattleUIOverviewPrefab",
-              [kernelConstants.battleUIConstituentTypes.playerControls]:"RPGBattleUIPlayerControlsPrefab",
-              // field:"RPGFieldModule",
-              // minigame:"RPGMiniGameModule",
-            },
-          },
-        },
-        children: []
-      },
-      RPGMenuModulePrefab: {
-        debug: true,
-        components: {
-          RPGMenuModuleGameComponent: {
-            type: kernelConstants.moduleTypes.menu,
-          },
-        },
-        children: []
-      },
-      RPGKernelModulePrefab: {
-        debug: true,
-        components: {
-          RPGKernelModuleGameComponent: {
-            type: kernelConstants.moduleTypes.kernel,
-            //currentModuleScene: "menuScene1",
-            currentModuleScene: "battle1",
-            moduleScenes: kernelConstants.moduleScenes,
-            currentBattle: null,
-            currentField: {
-              scene: kernelConstants.moduleScenes.fieldScene1
-            }
-          },
-        },
-        children: []
-      },
-      RPGKernelCharacterCorePrefab: {
-        debug: true,
-        components: {
-          // all players should have this class
-          RPGKernelCharacterCore: {
-            name:"Carlos",
-            battlePrefab:"RPGBattleCharacterPrefab",
-            id:"carlos"
-          },
-        },
-        children: []
-      },
-      RPGBattleCharacterPrefab: {
-        debug: true,
-        components: {
-          RPGBattleCharacterGameComponent:{},
-          TETSUOParticlesGeometryTest: {},
-        },
-        children: []
-      },
-      RPGMenuCharacterPrefab: {
-        debug: true,
-        components: {
-          CSSLabelTo3D:{},
-          RPGBattleUIPlayerControls: {
-            // this sounds names should be from the battle module manager
-            // the menu should move
-            menuMoveSoundId: "menuMove",
-            menuSelectSoundId: "menuSelect",
-          },
-        },
-        children: []
-      },
+      // RPGGamePrefab: {
+      //   debug: true,
+      //   components: {
+      //     RPGGameComponent: {
+      //       modulesPrefabs:{
+      //         [kernelConstants.moduleTypes.kernel]:"RPGKernelModulePrefab",
+      //         [kernelConstants.moduleTypes.menu]:"RPGMenuModulePrefab",
+      //         [kernelConstants.moduleTypes.battle]:"RPGBattleModulePrefab",
+      //         // field:"RPGFieldModule",
+      //         // minigame:"RPGMiniGameModule",
+      //       },
+      //       modules: {},
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGBattleModulePrefab: {
+      //   debug: true,
+      //   components: {
+      //     RPGBattleModuleGameComponent: {
+      //       type: kernelConstants.moduleTypes.battle,
+      //       childPrefabs:{
+      //         [kernelConstants.battleModuleConstituentTypes.ui]:"RPGBattleUIPrefab",
+      //         [kernelConstants.battleModuleConstituentTypes.party]:"RPGBattlePartyPrefab",
+      //         [kernelConstants.battleModuleConstituentTypes.scenario]:"RPGBattleScenarioPrefab",
+      //         // field:"RPGFieldModule",
+      //         // minigame:"RPGMiniGameModule",
+      //       },
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGBattleUIPlayerControlsPrefab: {
+      //   debug: true,
+      //   components: {
+      //     CSSLabelTo3D:{},
+      //     RPGBattleUIPlayerControls: {
+      //       // this sounds names should be from the battle module manager
+      //       // the menu should move
+      //       menuMoveSoundId: "menuMove",
+      //       menuSelectSoundId: "menuSelect",
+      //       actions: {
+      //         // TODO: check used constants imported and map to events (native js and/or redux)
+      //       },
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGBattleUIPrefab: {
+      //   debug: true,
+      //   components: {
+      //     RPGBattleUI: {
+      //       childPrefabs:{
+      //         [kernelConstants.battleUIConstituentTypes.overview]:"RPGBattleUIOverviewPrefab",
+      //         [kernelConstants.battleUIConstituentTypes.playerControls]:"RPGBattleUIPlayerControlsPrefab",
+      //         // field:"RPGFieldModule",
+      //         // minigame:"RPGMiniGameModule",
+      //       },
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGMenuModulePrefab: {
+      //   debug: true,
+      //   components: {
+      //     RPGMenuModuleGameComponent: {
+      //       type: kernelConstants.moduleTypes.menu,
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGKernelModulePrefab: {
+      //   debug: true,
+      //   components: {
+      //     RPGKernelModuleGameComponent: {
+      //       type: kernelConstants.moduleTypes.kernel,
+      //       //currentModuleScene: "menuScene1",
+      //       currentModuleScene: "battle1",
+      //       moduleScenes: kernelConstants.moduleScenes,
+      //       currentBattle: null,
+      //       currentField: {
+      //         scene: kernelConstants.moduleScenes.fieldScene1
+      //       }
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGKernelCharacterCorePrefab: {
+      //   debug: true,
+      //   components: {
+      //     // all players should have this class
+      //     RPGKernelCharacterCore: {
+      //       name:"Carlos",
+      //       battlePrefab:"RPGBattleCharacterPrefab",
+      //       id:"carlos"
+      //     },
+      //   },
+      //   children: []
+      // },
+      // RPGBattleCharacterPrefab: {
+      //   debug: true,
+      //   components: {
+      //     RPGBattleCharacterGameComponent:{},
+      //     TETSUOParticlesGeometryTest: {},
+      //   },
+      //   children: []
+      // },
+      // RPGMenuCharacterPrefab: {
+      //   debug: true,
+      //   components: {
+      //     CSSLabelTo3D:{},
+      //     RPGBattleUIPlayerControls: {
+      //       // this sounds names should be from the battle module manager
+      //       // the menu should move
+      //       menuMoveSoundId: "menuMove",
+      //       menuSelectSoundId: "menuSelect",
+      //     },
+      //   },
+      //   children: []
+      // },
     },
     allIds: [
       // "Camera",
@@ -693,8 +715,8 @@ export const initialScene = {
       "PlayerBullet",
       "EnemyBullet",
       "DynamicCameraPrefab",
-      "RPGGamePrefab",
-      "RPGKernelCharacterCorePrefab"
+      // "RPGGamePrefab",
+      // "RPGKernelCharacterCorePrefab"
     ]
   }
 };

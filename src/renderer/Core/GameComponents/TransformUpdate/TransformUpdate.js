@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export class TransformUpdate extends React.Component {
-  ignoreTransformUpdate = false;
+  ignoreTransformUpdate = false || this.props.ignoreTransformUpdate;
 
-  ignoreTransformScaleUpdate = false;
+  ignoreTransformScaleUpdate = false || this.props.ignoreTransformScaleUpdate;
 
-  ignoreTransformRotationUpdate = false;
+  ignoreTransformRotationUpdate = false || this.props.ignoreTransformRotationUpdate;
 
-  ignoreTransformPositionUpdate = false;
+  ignoreTransformPositionUpdate = false || this.props.ignoreTransformPositionUpdate;
 
   start = () => {
     this.updateAllTransforms();
@@ -39,33 +39,32 @@ export class TransformUpdate extends React.Component {
   };
 
   setPosition = () => {
-    const { transform, objectInputData } = this.props;
+    const { transform, position } = this.props;
     transform.position.set(
-      objectInputData.position.x,
-      objectInputData.position.y,
-      objectInputData.position.z
+      position.x,
+      position.y,
+      position.z
     );
   };
 
   setScale = () => {
-    const { transform, objectInputData } = this.props;
+    const { transform, scale } = this.props;
     transform.scale.set(
-      objectInputData.scale.x,
-      objectInputData.scale.y,
-      objectInputData.scale.z
+      scale.x,
+      scale.y,
+      scale.z
     );
   };
 
   setRotation = () => {
-    const { transform, objectInputData } = this.props;
-    transform.rotation.x = objectInputData.rotation.x;
-    transform.rotation.y = objectInputData.rotation.y;
-    transform.rotation.z = objectInputData.rotation.z;
+    const { transform, rotation } = this.props;
+    transform.rotation.x = rotation.x;
+    transform.rotation.y = rotation.y;
+    transform.rotation.z = rotation.z;
   };
 }
 
 TransformUpdate.propTypes = {
   transform: PropTypes.object,
-  objectInputData: PropTypes.object,
   ignoreTransformUpdate: PropTypes.bool
 };

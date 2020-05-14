@@ -107,6 +107,12 @@ export class GeometryUtilsService extends Component {
 
   }
 
+  // props to @ruicarest
+  reparentObject3D(subject, newParent) {
+        subject.matrix.copy(subject.matrixWorld);
+        subject.applyMatrix(new THREE.Matrix4().getInverse(newParent.matrixWorld));
+        newParent.add(subject);
+    }
 
   update = time => {
   };

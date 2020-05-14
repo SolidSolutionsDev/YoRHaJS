@@ -14,6 +14,7 @@
     "react-scripts": "2.0.3",
     "redux": "^4.0.5",
     "stats.js": "^0.17.0",
+    "theaterjs": "^3.2.0",
     "three": "0.110.0",
     "three-fbx-loader": "^1.0.3",
     "yorha": "^1.2.0"
