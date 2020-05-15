@@ -1,8 +1,8 @@
 //props to @ruicarest
-export const drawCircleOnCanvas = (_playerNumber) => {
-    let circleCanvas = document.getElementById(
-        `slot${_playerNumber}_colorCanvas`
-    );
+import {hsv2rgb} from "./unitConvertUtils";
+
+export const drawCircleOnCanvas = (circleCanvas) => {
+
     let ctx = circleCanvas.getContext("2d");
 
     function drawCircle() {

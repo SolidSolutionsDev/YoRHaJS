@@ -1,0 +1,19 @@
+
+.indicator {
+    color: #000000;
+    font-weight: bold;
+    position: absolute;
+    z-index: 200;
+    height: 1px;
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+
+.colorCanvas {
+    display: flex;
+    flex-direction: column;
+}

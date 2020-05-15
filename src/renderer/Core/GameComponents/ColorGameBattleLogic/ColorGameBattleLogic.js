@@ -38,6 +38,7 @@ export class ColorGameBattleLogic extends React.Component {
         return (<div key={"debug-battle"} className={"debug-battle"}>
                 {stateChangeButtons}
                 <div>{value}</div>
+                <div>{current.context.player}</div>
             </div>
         );
     }

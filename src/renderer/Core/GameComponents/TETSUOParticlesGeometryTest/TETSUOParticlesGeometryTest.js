@@ -2,7 +2,7 @@ import React from "react";
 import * as THREE from "three";
 
 export class TETSUOParticlesGeometryTest extends React.Component {
-
+  mesh = new THREE.Object3D();
   initTetsuoGeometry = () => {
     const { transform } = this.props;
     let cylCount = 25;
@@ -16,7 +16,7 @@ export class TETSUOParticlesGeometryTest extends React.Component {
       cyl.position.y = i * (cylHeight + cylSpacing);
       cyl.rotation.y = i / 20;
       cyls.push(cyl);
-      transform.add(cyl);
+      this.mesh.add(cyl);
     }
 
     // create particles
@@ -33,12 +33,14 @@ export class TETSUOParticlesGeometryTest extends React.Component {
     }
     const pMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.05 });
     this.pMesh = new THREE.Points(pGeo, pMat);
-    transform.add(this.pMesh);
+    this.mesh.add(this.pMesh);
     this.cyls = cyls;
+    transform.add(this.mesh);
   };
 
   start = ()=> {
     this.initTetsuoGeometry();
+
   };
 
   update = () => {

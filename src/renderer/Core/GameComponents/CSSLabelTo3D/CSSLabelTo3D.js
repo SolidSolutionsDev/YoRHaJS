@@ -5,6 +5,7 @@ import "./CSSLabelTo3D.css";
 
 import * as THREE from "three";
 
+//TODO: make this default to all gameObjects
 export class CSSLabelTo3D extends React.Component {
   position = new THREE.Vector3(0, 0, 0);
 
@@ -23,6 +24,9 @@ export class CSSLabelTo3D extends React.Component {
   };
 
   onDestroy = () => {
+    if (!this.floatingDiv) {
+      return;
+    }
     this.floatingDiv.parentNode.removeChild(this.floatingDiv);
   };
 
@@ -43,14 +47,18 @@ export class CSSLabelTo3D extends React.Component {
   };
 
   attachDiv = (divToAttach) => {
-    this.onDestroy();
+    // this.onDestroy();
     this.floatingDiv = divToAttach;
     document.body.appendChild(divToAttach);
     this.customDiv = true;
   };
 
   update = () => {
-    const { transform, availableComponent, gameObject } = this.props;
+    this.updateCSS();
+  };
+
+  updateCSS() {
+    const {transform, availableComponent, gameObject} = this.props;
 
     const id = gameObject.id;
 
@@ -59,20 +67,20 @@ export class CSSLabelTo3D extends React.Component {
     }
 
     const coords2d = this.get2DCoords(
-      this.position,
-      availableComponent.scene.camera._main
+        this.position,
+        availableComponent.scene.camera._main
     );
     this.floatingDiv.style.position = `absolute`;
     this.floatingDiv.style.pointerEvents = `none`;
     this.floatingDiv.style.left = `${coords2d.x}px`;
     this.floatingDiv.style.top = `${coords2d.y}px`;
 
-    if (this.customDiv){
+    if (this.customDiv) {
       return;
     }
 
     this.floatingDiv.innerHTML = `${id}<span>${gameObject.id}</span>`;
-  };
+  }
 }
 
 CSSLabelTo3D.propTypes = {

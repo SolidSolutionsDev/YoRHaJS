@@ -76,7 +76,8 @@ export const initialScene = {
       "backgroundMusicPlayer1",
       // "rpgGame",
       //"rpgTestPlayer1",
-        "colorSphere"
+        "colorSphere",
+        "pokemon"
     ]
   },
   gameObjects: {
@@ -92,6 +93,9 @@ export const initialScene = {
       //   },
       //   prefab:"RPGKernelCharacterCorePrefab"
       // },
+      pokemon: {
+        prefab: "PokemonPrefab"
+      },
       colorSphere: {
         prefab: "ColorSpherePrefab"
       },
@@ -318,7 +322,27 @@ export const initialScene = {
   },
   prefabs: {
     byId: {
-
+      PokemonPrefab: {
+        components: {
+          ColorPokemonLogic:{
+            meshComponentName:"",
+            playerNumber: 1,
+            myTurn: true,
+            // isBot: playerStats[playerNumber - 1].isBot,
+            meshComponentNames:["SphereGeometry", "ColorIndicator", "ColorPokemonBattleMenu"],
+          },
+          CSSLabelTo3D:{},
+          ColorIndicator:{
+            attachDivComponent: "CSSLabelTo3D"
+          },
+          ColorPokemonBattleMenu:{
+            attachDivComponent: "CSSLabelTo3D"
+          },
+          SphereGeometry: {
+            radius:1,
+          },
+        }
+      },
       ColorSpherePrefab : {
         components: {
           ColorGameBattleLogic:{},
