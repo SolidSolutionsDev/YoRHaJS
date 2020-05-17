@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import * as CANNON from "cannon";
+import {sphereOptions} from "../../../../solid-solutions-backend/constants/states";
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class ColorSphereLogic extends React.Component {
@@ -69,7 +70,6 @@ export class ColorSphereLogic extends React.Component {
 
     scaleCheck = () => {
         const {size, sizeChangeRatio, transform} = this.props;
-        console.log(size);
             transform.scale.set(
                 size,
                 size,
@@ -124,10 +124,11 @@ export class ColorSphereLogic extends React.Component {
 
     setMeshColor = () => {
         console.log("setMeshColor");
+        const color = this.props.color || sphereOptions.colors[this.props.playerNumber];
         this.props.updateGameObjectComponent(
             this.props.gameObject.id,
             [this.props.meshComponentName], {
-                color:this.props.color,
+                color:color,
             });
     }
 
@@ -138,6 +139,7 @@ export class ColorSphereLogic extends React.Component {
     rgbColorDiff = (
         color1, color2
     )=> {
+        if (!color1 || !color2) { return false;}
         return (color1.r !== color2.r) && (color1.g !== color2.g) &&  (color1.b !== color2.b)
     }
 

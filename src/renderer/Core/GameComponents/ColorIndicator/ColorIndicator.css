@@ -15,5 +15,8 @@
 
 .colorCanvas {
     display: flex;
+
+    transform: translate(-50px,-50px);
     flex-direction: column;
+    opacity: 0.9;
 }

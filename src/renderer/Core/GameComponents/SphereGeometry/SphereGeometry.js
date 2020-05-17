@@ -12,7 +12,7 @@ export class SphereGeometry extends React.Component {
 
   updateColor = () => {
     const { selfSettings } = this.props;
-    const { color } = selfSettings;
+    const { color } = this.props;
     // TODO: this random is to test for Yorha bullets, remove later
     let _color = Math.random() > 0.5 ? 0xfa7911 : 0x290642;
     if (color) {
@@ -42,12 +42,13 @@ export class SphereGeometry extends React.Component {
 
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.selfSettings.color !== this.props.selfSettings.color) {
+    if (prevProps.color !== this.props.color) {
       this.updateColor();
     }
   }
 
   update = ()=> {
+    this.updateColor()
   }
 
   start = () => {

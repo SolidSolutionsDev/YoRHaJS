@@ -35,9 +35,19 @@ export class ColorPokemonLogic extends React.Component {
         });
     }
 
+    setMeshColor = () => {
+        console.log("setMeshColor");
+        const color = this.props.color || sphereOptions.colors[this.props.playerNumber];
+        this.props.meshComponentNames.forEach(meshComponentName=>{
+        this.props.updateGameObjectComponent(
+            this.props.gameObject.id,
+            [meshComponentName], {
+                color:color,
+            });});
+    }
+
     componentDidMount() {
-
-
+        this.setMeshColor()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

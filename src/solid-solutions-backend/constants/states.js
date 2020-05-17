@@ -10,7 +10,7 @@ export const sphereOptions = {
   colors: [
     { r: 255, g: 0, b: 255 },
     { r: 0, g: 255, b: 255 },
-    { r: 255, g: 255, b: 25 },
+    { r: 255, g: 255, b: 0 },
   ],
   startingSize: 0.4,
 };

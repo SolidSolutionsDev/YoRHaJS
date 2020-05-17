@@ -10,6 +10,8 @@
     padding: 10px;
     pointer-events: all!important;
     z-index: 1000;
+
+    transform: translate(150px,-25px);
 }
 
 .attacks {

@@ -117,7 +117,7 @@ export const initialScene = {
       badPokemon: {
 
         transform: {
-          position: { x: 5, y: 0, z: 0},
+          position: { x: 20, y: 0, z: 0},
         },
         tags:["badPokemon"],
         prefab: "PokemonPrefab",
@@ -126,6 +126,7 @@ export const initialScene = {
               meshComponentName:"",
               playerNumber: 2,
               myTurn: false,
+            meshComponentNames:["SphereGeometry", "ColorIndicator"],
             bot:true,
             opponentId: "pokemon"
           }
@@ -374,7 +375,7 @@ export const initialScene = {
             myTurn: true,
             // isBot: playerStats[playerNumber - 1].isBot,
             meshComponentNames:["SphereGeometry", "ColorIndicator", "ColorPokemonBattleMenu"],
-            colorAttachementPrefab: "ColorSpherePrefab"
+            colorAttachementPrefab: "ColorSpherePrefab",
           },
           CSSLabelTo3D:{},
           ColorIndicator:{

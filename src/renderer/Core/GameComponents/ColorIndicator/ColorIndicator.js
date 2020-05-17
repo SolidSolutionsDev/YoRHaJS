@@ -53,7 +53,7 @@ export class ColorIndicator extends React.Component {
 
     updateIndicator = () => {
         const {color} = this.props;
-        if (!color) {
+        if (!color || !this.indicator) {
             return;
         }
         const newPosition = rgb2xy(color.r, color.g, color.b);
