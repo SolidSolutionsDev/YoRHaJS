@@ -8,7 +8,7 @@ export class ColorGameBattleLogic extends React.Component {
 
     service = interpret(rpgMachine).onTransition(current => {
         console.log("transition", current);
-        this.setState({current, value: current.value});
+        this.setState({current, value: current.value,currentPlayer:current.context.player});
     });
 
     state = {
@@ -28,7 +28,7 @@ export class ColorGameBattleLogic extends React.Component {
 
 
     render() {
-        const {value, current} = this.state;
+        const {value, current,currentPlayer} = this.state;
         const {send} = this.service;
         const stateChangeButtons = current.nextEvents.map(event => {
             return <button key={event} onClick={() => {
@@ -38,7 +38,7 @@ export class ColorGameBattleLogic extends React.Component {
         return (<div key={"debug-battle"} className={"debug-battle"}>
                 {stateChangeButtons}
                 <div>{value}</div>
-                <div>{current.context.player}</div>
+                <div>{currentPlayer}</div>
             </div>
         );
     }

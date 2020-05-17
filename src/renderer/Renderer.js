@@ -31,6 +31,23 @@ export class Renderer extends React.Component {
 
   state = {};
 
+  componentDidMount = () => {};
+
+  init = () => {
+    THREE.Cache.enabled = true;
+
+    ReactDOM.findDOMNode(this).appendChild(this.canvas);
+    document.body.appendChild( this.stats.dom );
+    this.setupRendererDefaults();
+    this.setupCanvasDefaults();
+    this.registerEventListeners();
+    this.setState({ ready: true });
+
+    window.THREE = THREE;
+    this.onWindowResize();
+  };
+
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { assetsLoadState, loadedCallback, availableComponent } = this.props;
 
@@ -90,21 +107,6 @@ export class Renderer extends React.Component {
     this.composer.addPass(this.effectPass);
   };
 
-  componentDidMount = () => {};
-
-  init = () => {
-    THREE.Cache.enabled = true;
-
-    ReactDOM.findDOMNode(this).appendChild(this.canvas);
-    document.body.appendChild( this.stats.dom );
-    this.setupRendererDefaults();
-    this.setupCanvasDefaults();
-    this.registerEventListeners();
-    this.setState({ ready: true });
-
-    window.THREE = THREE;
-    this.onWindowResize();
-  };
 
   update = time => {
     this.stats.begin();

@@ -22,7 +22,7 @@ export class ColorPokemonLogic extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(prevProps.selfSettings,this.props.selfSettings);
+        // console.log(prevProps.selfSettings,this.props.selfSettings);
         if (isEqual(prevProps.selfSettings,this.props.selfSettings)){
             return;
         }

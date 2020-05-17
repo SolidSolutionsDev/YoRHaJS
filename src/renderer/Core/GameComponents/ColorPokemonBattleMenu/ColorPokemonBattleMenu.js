@@ -12,17 +12,26 @@ export class ColorPokemonBattleMenu extends React.Component {
     mainDiv;
     attacksMenu;
     indicator;
+    pokemonBattleLogic;
 
-    state= {
-        inited:false
+    state = {
+        inited: false
     };
 
-    service = interpret(rpgMachine).onTransition(current => {
-        console.log("transition", current);
-        this.setState({current, activePlayer: current.context.player});
-    });
+    // service = interpret(rpgMachine).onTransition(current => {
+    //     console.log("transition", current);
+    //     this.setState({current, activePlayer: current.context.player});
+    // });
 
     start = () => {
+        // this.service = gameObject.getComponent(
+        //     "ColorPokemonLogic"
+        // );
+        this.pokemonBattleLogic = this.props.parent.getComponent("ColorGameBattleLogic");
+        this.service = this.pokemonBattleLogic.service.onTransition(current => {
+            console.log("transition", current);
+            this.setState({current, activePlayer: current.context.player});
+        });
     };
 
     initMainDiv = () => {
@@ -37,19 +46,26 @@ export class ColorPokemonBattleMenu extends React.Component {
         const {send} = this.service;
         const {activePlayer} = this.state;
         const {playerNumber} = this.props;
-        this.attacksMenu =  document.createElement("div");
-        this.attacksMenu.id=`slot${playerNumber}_attacks`;
-        this.attacksMenu.className ="attacks";
+
+        this.attacksMenu = document.createElement("div");
+        this.attacksMenu.id = `slot${playerNumber}_attacks`;
+        this.attacksMenu.className = "attacks";
         this.mainDiv.appendChild(this.attacksMenu);
         console.log(playerNumber);
-        if (!playerStats[playerNumber-1].isBot) {
-            playerStats[playerNumber- 1].attacks.forEach((attack) => {
+
+        this.label = document.createElement("div");
+        this.label.className = "battle-menu-label";
+        this.label.innerHTML = "Player: " + playerNumber;
+        this.attacksMenu.appendChild(this.label);
+        if (!playerStats[playerNumber - 1].isBot) {
+            playerStats[playerNumber - 1].attacks.forEach((attack) => {
                 let attackBtn = document.createElement("button");
                 attackBtn.innerHTML = attack.label;
                 attackBtn.style.backgroundColor = rgbToHex(attack.damage);
                 attackBtn.id = "btn";
 
                 attackBtn.onclick = () => {
+                    console.log("here", playerNumber, this.service);
                     send(`PLAYER_${playerNumber}_ATTACK`)
                 };
                 this.attacksMenu.appendChild(attackBtn);
@@ -67,11 +83,21 @@ export class ColorPokemonBattleMenu extends React.Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (!this.state.inited && this.props.playerNumber !== undefined) {
+        const {activePlayer, inited} = this.state;
+        const {playerNumber} = this.props;
 
-            this.initMainDiv();
-            this.initAttackUI();
-            this.setState({inited:true});
+        if (!inited) {
+            if (playerNumber !== undefined) {
+                this.initMainDiv();
+                this.initAttackUI();
+                this.setState({inited: true});
+            }
+        } else {
+            if (activePlayer === playerNumber) {
+                this.attacksMenu.style.display = "inherit";
+            } else {
+                this.attacksMenu.style.display = "none";
+            }
         }
     }
 
@@ -81,5 +107,5 @@ export class ColorPokemonBattleMenu extends React.Component {
 }
 
 ColorPokemonBattleMenu.propTypes = {
-    color:PropTypes.shape({r:PropTypes.number,g:PropTypes.number,b:PropTypes.number}),
+    color: PropTypes.shape({r: PropTypes.number, g: PropTypes.number, b: PropTypes.number}),
 };

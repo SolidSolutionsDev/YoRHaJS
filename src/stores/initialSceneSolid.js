@@ -76,8 +76,9 @@ export const initialScene = {
       "backgroundMusicPlayer1",
       // "rpgGame",
       //"rpgTestPlayer1",
-        "colorSphere",
-        "pokemon"
+      //   "colorSphere",
+      //   "pokemon",
+        "pokemonLogic"
     ]
   },
   gameObjects: {
@@ -93,10 +94,15 @@ export const initialScene = {
       //   },
       //   prefab:"RPGKernelCharacterCorePrefab"
       // },
-      pokemon: {
-        prefab: "PokemonPrefab"
+      pokemonLogic: {
+        prefab: "PokemonGameLogicPrefab",
+        children:["pokemon"]
       },
-      colorSphere: {
+      pokemon: {
+        prefab: "PokemonPrefab",
+        children:["colorSphere1"]
+      },
+      colorSphere1: {
         prefab: "ColorSpherePrefab"
       },
       camera1: {
@@ -322,6 +328,11 @@ export const initialScene = {
   },
   prefabs: {
     byId: {
+      PokemonGameLogicPrefab: {
+        components: {
+          ColorGameBattleLogic: {},
+        }
+      },
       PokemonPrefab: {
         components: {
           ColorPokemonLogic:{
@@ -345,7 +356,6 @@ export const initialScene = {
       },
       ColorSpherePrefab : {
         components: {
-          ColorGameBattleLogic:{},
           SphereGeometry: {
             radius:1,
           },
