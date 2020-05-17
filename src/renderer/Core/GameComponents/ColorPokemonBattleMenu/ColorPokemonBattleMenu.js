@@ -26,9 +26,6 @@ export class ColorPokemonBattleMenu extends React.Component {
     // });
 
     start = () => {
-        // this.service = gameObject.getComponent(
-        //     "ColorPokemonLogic"
-        // );
         this.pokemonBattleLogic = this.props.gameObject.getComponent("ColorPokemonLogic");
         this.service = this.pokemonBattleLogic.service.onTransition(current => {
             console.log("ColorPokemonBattleMenu transition", current);

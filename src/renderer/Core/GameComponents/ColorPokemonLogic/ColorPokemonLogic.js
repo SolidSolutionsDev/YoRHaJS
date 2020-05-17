@@ -133,7 +133,7 @@ export class ColorPokemonLogic extends React.Component {
                             );}
                         );
                     },
-        "discharge": (attack) => {
+        "release": (attack) => {
             const childGameObjectsIds = this.props.gameObject.childGameObjects.map(gameObject=>gameObject.id);
             const { opponentId, gameObject, availableComponent } = this.props;
             const { scene } = availableComponent;
@@ -149,9 +149,16 @@ export class ColorPokemonLogic extends React.Component {
             //     })
             // );
             // updateGameObject()
-            // childGameObjects
-            //     .map(childGameObject=>childGameObject.id)
-            //     .forEach()
+            childGameObjectsIds
+                .forEach(childGameObjectsId=>
+                     scene.enqueueAction(
+                        updateGameObjectComponent(childGameObjectsId ,
+                            [this.props.colorAttachementLogicComponent],
+                            {
+                            attacking:true,
+                        })
+                    )
+                );
             // pokemon
             //     .childrenObjects
             //     .forEach(

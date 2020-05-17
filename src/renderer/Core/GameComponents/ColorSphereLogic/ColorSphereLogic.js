@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import * as CANNON from "cannon";
+import * as THREE from "three";
 import {sphereOptions} from "../../../../solid-solutions-backend/constants/states";
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
@@ -9,63 +9,49 @@ export class ColorSphereLogic extends React.Component {
 
     sphereMeshComponent;
     sphereMesh;
-    speed2target = {};
+    opponent;
 
     start = () => {
         this.sphereMeshComponent = this.props.gameObject.getComponent(this.props.meshComponentName);
+        this.opponent = this.props.parent.getComponent("ColorPokemonLogic").pokemonOpponent;
+        this.opponentTransform = this.opponent.props.transform;
+        this.opponentPosition = this.opponent.props.transform.position;
         this.sphereMesh = this.sphereMeshComponent.mesh;
         const {transform} = this.props;
         transform.position.set(0, 0, 0);
     }
 
     moveSphere = (speedIndex) => {
-        const {enqueueUpdateSelf,parent} = this.props;
-        let error = 0.01;
+        const {enqueueUpdateSelf,parent, transform} = this.props;
+        let error = 0.1;
 
         //TODO: replace this by the correct method
-        alert("dont forget this");
+        // alert("dont forget this");
         // reparentObject3D(this.sphereMesh, parent.opponent.mesh);
 
-        if (!this.speed2target.x) {
-            let max = Math.max(
-                Math.abs(this.sphereMesh.position.x),
-                Math.abs(this.sphereMesh.position.y),
-                Math.abs(this.sphereMesh.position.z)
-            );
-            this.speed2target.x = (Math.abs(this.sphereMesh.position.x) * speedIndex) / max;
-            this.speed2target.y = (Math.abs(this.sphereMesh.position.y) * speedIndex) / max;
-            this.speed2target.z = (Math.abs(this.sphereMesh.position.z) * speedIndex) / max;
-        }
 
-        if (this.sphereMesh.position.x > error) {
-            this.sphereMesh.position.x -= this.speed2target.x;
-        } else if (this.sphereMesh.position.x < -error) {
-            this.sphereMesh.position.x += this.speed2target.x;
-        } else {
+        const directionToTarget = new THREE.Vector3();
+            directionToTarget.subVectors(transform.getWorldPosition(),this.opponentTransform.getWorldPosition()).normalize();
+
+        const speed2target = new THREE.Vector3();
+        speed2target.x = (Math.abs(directionToTarget.x) * speedIndex);
+        speed2target.y = (Math.abs(directionToTarget.y) * speedIndex);
+        speed2target.z = (Math.abs(directionToTarget.z) * speedIndex);
+
+        const distanceToTarget = transform.getWorldPosition().distanceTo(this.opponentTransform.getWorldPosition());
+        // console.log(directionToTarget,distanceToTarget,transform.rotation);
+        if (Math.abs(distanceToTarget) > error) {
+            transform.position.add(speed2target);
+            if (this.sphereMesh.position.z>=0){
+                    this.sphereMesh.position.z -= 0.1;
+            }
+
+        }
+        else {
             console.log("collidded in x");
-
             enqueueUpdateSelf({exploding: true});
         }
 
-        if (this.sphereMesh.position.y > +error) {
-            this.sphereMesh.position.y -= this.speed2target.y;
-        } else if (this.sphereMesh.position.y < -error) {
-            this.sphereMesh.position.y += this.speed2target.y;
-        } else {
-            console.log("collidded in y");
-
-            enqueueUpdateSelf({exploding: true});
-        }
-
-        if (this.sphereMesh.position.z > +error) {
-            this.sphereMesh.position.z -= this.speed2target.z;
-        } else if (this.sphereMesh.position.z < -error) {
-            this.sphereMesh.position.z += this.speed2target.z;
-        } else {
-            console.log("collidded in z");
-
-            enqueueUpdateSelf({exploding: true});
-        }
     }
 
     scaleCheck = () => {
@@ -90,10 +76,15 @@ export class ColorSphereLogic extends React.Component {
     }
 
     rotatingCheck = () => {
-        const {rotating, attacking, exploding, transform, sphereSpeedIndex} = this.props;
+        const {rotating, attacking,  transform} = this.props;
         if (rotating && !attacking) {
             transform.rotation.y += 0.1;
-        } else if (attacking && !exploding) {
+        }
+    }
+
+    attackingCheck = () => {
+        const { attacking, exploding, sphereSpeedIndex} = this.props;
+    if (attacking && !exploding) {
             this.moveSphere(sphereSpeedIndex);
         }
     }
@@ -105,7 +96,7 @@ export class ColorSphereLogic extends React.Component {
             g: color.g * size,
             b: color.b * size,
         }
-        parent.oponentLogic.addColor(_colorToPaint);
+        this.opponent.addColor(_colorToPaint);
 
         console.log("Color added: ", {
             r: _colorToPaint.r,
@@ -160,6 +151,7 @@ export class ColorSphereLogic extends React.Component {
         this.scaleCheck();
         this.initCheck();
         this.rotatingCheck();
+        this.attackingCheck();
         this.explodingCheck();
     }
 }

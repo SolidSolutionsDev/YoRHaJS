@@ -376,6 +376,7 @@ export const initialScene = {
             // isBot: playerStats[playerNumber - 1].isBot,
             meshComponentNames:["SphereGeometry", "ColorIndicator", "ColorPokemonBattleMenu"],
             colorAttachementPrefab: "ColorSpherePrefab",
+            colorAttachementLogicComponent: "ColorSphereLogic",
           },
           CSSLabelTo3D:{},
           ColorIndicator:{

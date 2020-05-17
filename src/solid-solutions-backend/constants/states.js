@@ -52,7 +52,7 @@ export const pokeList = [
       },
       {
         label: "Release",
-        type: "discharge",
+        type: "release",
         damage: { r: 0, g: 0, b: 0 },
         dialog: " realeases every color on the enemy!",
       },
@@ -94,7 +94,7 @@ export const pokeList = [
       },
       {
         label: "Release",
-        type: "discharge",
+        type: "release",
         damage: { r: 0, g: 0, b: 0 },
         dialog: " realeases every color on the enemy!",
       },
@@ -148,7 +148,7 @@ export const playerStats = [
       },
       {
         label: "Release",
-        type: "discharge",
+        type: "release",
         damage: { r: 0, g: 0, b: 0 },
         dialog: " realeases every color on the enemy!",
       },
@@ -199,7 +199,7 @@ export const playerStats = [
       },
       {
         label: "Release",
-        type: "discharge",
+        type: "release",
         damage: { r: 0, g: 0, b: 0 },
         dialog: " realeases every color on the enemy!",
       },
