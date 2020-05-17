@@ -6,7 +6,6 @@ import * as CANNON from "cannon";
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class ColorSphereLogic extends React.Component {
 
-    currentSize = this.props.size;
     sphereMeshComponent;
     sphereMesh;
     speed2target = {};
@@ -70,14 +69,13 @@ export class ColorSphereLogic extends React.Component {
 
     scaleCheck = () => {
         const {size, sizeChangeRatio, transform} = this.props;
-        if (size > this.currentSize) {
-            this.currentSize += sizeChangeRatio;
+        console.log(size);
             transform.scale.set(
-                this.currentSize,
-                this.currentSize,
-                this.currentSize,
+                size,
+                size,
+                size,
             );
-        }
+
     }
 
     initCheck = () => {
@@ -145,7 +143,7 @@ export class ColorSphereLogic extends React.Component {
 
     componentDidUpdate = (prevProps, prevState, snapshot) =>{
         const colorDiff = this.rgbColorDiff(this.props.color, prevProps.color);
-        console.log(this.props.color, prevProps.color,colorDiff,this.props.gameObject.id);
+        // console.log(this.props.color, prevProps.color,colorDiff,this.props.gameObject.id);
         if (colorDiff) {
             this.setMeshColor();
         }

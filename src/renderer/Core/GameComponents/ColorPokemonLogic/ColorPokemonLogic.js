@@ -3,8 +3,9 @@ import {playerStats, sphereOptions} from "../../../../solid-solutions-backend/co
 import {cloneDeep,isEqual} from "lodash";
 import * as THREE from "three";
 import PropTypes from "prop-types";
-import {instantiateFromPrefab, updateGameObject} from "../../../../stores/scene/actions";
+import {instantiateFromPrefab, updateGameObject, updateGameObjectComponent} from "../../../../stores/scene/actions";
 import * as _ from "lodash";
+import {ColorSphereLogic} from "../ColorSphereLogic/ColorSphereLogic";
 
 export class ColorPokemonLogic extends React.Component {
     childrenColorSpheres = [];
@@ -98,36 +99,62 @@ export class ColorPokemonLogic extends React.Component {
             );
             this.pokemonOpponent.removeColor(attack.damage);
         },
-        // "recharge": (attack) => {
-        //     pokemon
-        //         .childrenObjects
-        //         .forEach(
-        //             (
-        //                 children
-        //             ) => (
-        //                 children
-        //                     .stats
-        //                     .size
-        //                     +=
-        //                     0.2
-        //             )
-        //         )
-        //     ;
-        // },
-        // "discharge": (attack) => {
-        //     pokemon
-        //         .childrenObjects
-        //         .forEach(
-        //             (
-        //                 children
-        //             ) => (
-        //                 children
-        //                     .state
-        //                     .attacking = true
-        //             )
-        //         )
-        //     ;
-        // },
+        "recharge": (attack) => {
+            const childGameObjectsIds = this.props.gameObject.childGameObjects;
+            const {availableComponent} = this.props;
+            const {scene} = availableComponent;
+            childGameObjectsIds
+                .forEach(
+                    (
+                        childGameObject
+                    ) => {
+                        const childGameObjectsId = childGameObject.id;
+                        const size = childGameObject.getComponent("ColorSphereLogic").props.size;
+                        // const initialScale = size ? size : 1;
+                        scene.enqueueAction(
+                            updateGameObjectComponent(
+                                childGameObjectsId,
+                                "ColorSphereLogic",
+                                 {
+                                     size: size + 0.2
+                                    ,
+                                }
+                    )
+                            );}
+                        );
+                    },
+        "discharge": (attack) => {
+            const childGameObjectsIds = this.props.gameObject.childGameObjects.map(gameObject=>gameObject.id);
+            const { opponentId, gameObject, availableComponent } = this.props;
+            const { scene } = availableComponent;
+            console.log(childGameObjectsIds,this.props.opponentId);
+            // scene.enqueueAction(
+            //     updateGameObject(gameObject.id, {
+            //         children: [],
+            //     })
+            // );
+            // scene.enqueueAction(
+            //     updateGameObject(opponentId ,{
+            //         children: childGameObjectsIds,
+            //     })
+            // );
+            // updateGameObject()
+            // childGameObjects
+            //     .map(childGameObject=>childGameObject.id)
+            //     .forEach()
+            // pokemon
+            //     .childrenObjects
+            //     .forEach(
+            //         (
+            //             children
+            //         ) => (
+            //             children
+            //                 .state
+            //                 .attacking = true
+            //         )
+            //     )
+            // ;
+        },
         // // TODO: understand what is this
         // "unknown": (attack) => {
         //     pokemon.opponent.addColor(attack.damage);
