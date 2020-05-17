@@ -124,6 +124,33 @@ export class ColorSphereLogic extends React.Component {
         }
     }
 
+    setMeshColor = () => {
+        console.log("setMeshColor");
+        this.props.updateGameObjectComponent(
+            this.props.gameObject.id,
+            [this.props.meshComponentName], {
+                color:this.props.color,
+            });
+    }
+
+    componentDidMount() {
+        this.setMeshColor()
+    }
+
+    rgbColorDiff = (
+        color1, color2
+    )=> {
+        return (color1.r !== color2.r) && (color1.g !== color2.g) &&  (color1.b !== color2.b)
+    }
+
+    componentDidUpdate = (prevProps, prevState, snapshot) =>{
+        const colorDiff = this.rgbColorDiff(this.props.color, prevProps.color);
+        console.log(this.props.color, prevProps.color,colorDiff,this.props.gameObject.id);
+        if (colorDiff) {
+            this.setMeshColor();
+        }
+    }
+
     update = (time, deltaTime) => {
 
         const {dead} = this.props;

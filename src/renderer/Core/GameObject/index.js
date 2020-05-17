@@ -7,6 +7,10 @@ const getGameObjects = state => {
 };
 
 const getSelf = (state, id) => {
+  const self = state.mainReducer.gameObjects.byId[id];
+  if (!self) {
+    alert(`Error: Trying to initialize GameObject with id ${id} that does not exist!`);
+  }
   return state.mainReducer.gameObjects.byId[id];
 };
 

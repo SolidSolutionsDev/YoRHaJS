@@ -73,6 +73,7 @@ export function makeGameComponent(WrappedComponent, name) {
 
     update = ( time, deltaTime ) => {
       const { started } = this.state;
+      // console.log(started);
       if (this.unmounting) {
         return;
       }

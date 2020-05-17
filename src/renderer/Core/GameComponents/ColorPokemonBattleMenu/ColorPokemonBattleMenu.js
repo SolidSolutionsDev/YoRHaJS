@@ -7,6 +7,8 @@ import {Machine, interpret} from "xstate";
 import {rpgMachine} from "../../../../state-machines/rpgStateMachine";
 import {playerStats} from "../../../../solid-solutions-backend/constants/states";
 import "./ColorPokemonBattleMenu.css"
+import {instantiateFromPrefab} from "../../../../stores/scene/actions";
+import * as _ from "lodash";
 
 export class ColorPokemonBattleMenu extends React.Component {
     mainDiv;
@@ -27,9 +29,9 @@ export class ColorPokemonBattleMenu extends React.Component {
         // this.service = gameObject.getComponent(
         //     "ColorPokemonLogic"
         // );
-        this.pokemonBattleLogic = this.props.parent.getComponent("ColorGameBattleLogic");
+        this.pokemonBattleLogic = this.props.gameObject.getComponent("ColorPokemonLogic");
         this.service = this.pokemonBattleLogic.service.onTransition(current => {
-            console.log("transition", current);
+            console.log("ColorPokemonBattleMenu transition", current);
             this.setState({current, activePlayer: current.context.player});
         });
     };
@@ -40,6 +42,7 @@ export class ColorPokemonBattleMenu extends React.Component {
         this.mainDiv.className = "player_UI";
         this.attachMenu(this.mainDiv);
     };
+
 
     initAttackUI = () => {
         const {gameObject} = this.props;
@@ -65,7 +68,8 @@ export class ColorPokemonBattleMenu extends React.Component {
                 attackBtn.id = "btn";
 
                 attackBtn.onclick = () => {
-                    console.log("here", playerNumber, this.service);
+                    console.log("here", playerNumber, this.service, attack);
+                    this.pokemonBattleLogic.attackByType[attack.type](attack);
                     send(`PLAYER_${playerNumber}_ATTACK`)
                 };
                 this.attacksMenu.appendChild(attackBtn);

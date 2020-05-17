@@ -3,22 +3,40 @@ import {playerStats, sphereOptions} from "../../../../solid-solutions-backend/co
 import {cloneDeep,isEqual} from "lodash";
 import * as THREE from "three";
 import PropTypes from "prop-types";
-import {updateGameObject} from "../../../../stores/scene/actions";
+import {instantiateFromPrefab, updateGameObject} from "../../../../stores/scene/actions";
+import * as _ from "lodash";
 
 export class ColorPokemonLogic extends React.Component {
     childrenColorSpheres = [];
     pokemonInitialStats;
     color;
     startingColor;
+    pokemonBattleLogic;
 
     start = () => {
-        const {playerNumber, gameObject, meshComponentName, updateSelf} = this.props;
-        // this.sphereMeshComponent = gameObject.getComponent(meshComponentName);
+        const {playerNumber, gameObject, meshComponentName, updateSelf} = this.props; // this.sphereMeshComponent = gameObject.getComponent(meshComponentName);
         // this.sphereMesh = this.sphereMeshComponent.mesh;
         this.pokemonInitialStats = cloneDeep(playerStats[playerNumber - 1]);
         this.pokemonInitialStats.color = cloneDeep(this.pokemonInitialStats.initColor);
+        this.initReferences();
         updateSelf(this.pokemonInitialStats);
         // this.updateGameObjectAndComponents();
+    }
+
+    initReferences = () => {
+        const {parent, opponentId, id} = this.props;
+        this.pokemonBattleLogic = parent.getComponent("ColorGameBattleLogic");
+        console.log(this.props.parent,this.props.opponentId,this);
+        this.pokemonOpponent = parent.getChildGameObjectByTag(opponentId).getComponent(id);
+        this.service = this.pokemonBattleLogic.service.onTransition(current => {
+            console.log("ColorPokemonLogic transition", current);
+            this.setState({current, activePlayer: current.context.player});
+        });
+    }
+
+    componentDidMount() {
+
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -59,6 +77,63 @@ export class ColorPokemonLogic extends React.Component {
         );
     }
 
+    // TODO: pass to ColorPokemonLogic
+    attackByType = {
+        "absorb": (attack) => {
+            const {colorAttachementPrefab, availableComponent, gameObject} = this.props;
+            const {scene} = availableComponent;
+            const currentColorAttachementPrefabId = _.uniqueId(colorAttachementPrefab);
+            scene.enqueueAction(
+                instantiateFromPrefab(
+                    colorAttachementPrefab,
+                    currentColorAttachementPrefabId,
+                    null,
+                    gameObject.id,
+                    null,
+                    {
+                        ColorSphereLogic:
+                            {color:attack.damage}
+                            },
+                )
+            );
+            this.pokemonOpponent.removeColor(attack.damage);
+        },
+        // "recharge": (attack) => {
+        //     pokemon
+        //         .childrenObjects
+        //         .forEach(
+        //             (
+        //                 children
+        //             ) => (
+        //                 children
+        //                     .stats
+        //                     .size
+        //                     +=
+        //                     0.2
+        //             )
+        //         )
+        //     ;
+        // },
+        // "discharge": (attack) => {
+        //     pokemon
+        //         .childrenObjects
+        //         .forEach(
+        //             (
+        //                 children
+        //             ) => (
+        //                 children
+        //                     .state
+        //                     .attacking = true
+        //             )
+        //         )
+        //     ;
+        // },
+        // // TODO: understand what is this
+        // "unknown": (attack) => {
+        //     pokemon.opponent.addColor(attack.damage);
+        // }
+
+    }
 
    removeColor = (_colorDamage) => {
        const {color, updateSelf} = this.props;
@@ -67,7 +142,7 @@ export class ColorPokemonLogic extends React.Component {
             g: Math.floor(_colorDamage.g * sphereOptions.startingSize * 0.5),
             b: Math.floor(_colorDamage.b * sphereOptions.startingSize * 0.5),
         };
-
+        console.log(color,colorDamage);
        updateSelf({
            color: {
             r: Math.max(color.r - colorDamage.r , 0),
@@ -92,4 +167,6 @@ export class ColorPokemonLogic extends React.Component {
 ColorPokemonLogic.propTypes = {
     playerNumber: PropTypes.number.isRequired,
     meshComponentNames: PropTypes.array.isRequired,
+    opponentId: PropTypes.string.isRequired,
+    colorAttachementPrefab: PropTypes.string.isRequired,
 };

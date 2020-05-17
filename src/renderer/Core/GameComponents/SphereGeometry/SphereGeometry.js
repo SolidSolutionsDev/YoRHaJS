@@ -16,7 +16,7 @@ export class SphereGeometry extends React.Component {
     // TODO: this random is to test for Yorha bullets, remove later
     let _color = Math.random() > 0.5 ? 0xfa7911 : 0x290642;
     if (color) {
-      color.r ?
+      color.r !== undefined ?
           this.color.setRGB(color.r, color.g, color.b) :
           this.color.setHex( color );
     }

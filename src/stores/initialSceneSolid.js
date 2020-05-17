@@ -96,11 +96,44 @@ export const initialScene = {
       // },
       pokemonLogic: {
         prefab: "PokemonGameLogicPrefab",
-        children:["pokemon"]
+        children:["pokemon","badPokemon"],
+        components: {
+          ColorGameBattleLogic: {
+            player1:"pokemon",
+            player2:"badPokemon",
+          },
+        }
       },
       pokemon: {
+        tags:["pokemon"],
         prefab: "PokemonPrefab",
+        components: {
+          ColorPokemonLogic: {
+            opponentId: "badPokemon"
+          }
+        },
         children:["colorSphere1"]
+      },
+      badPokemon: {
+
+        transform: {
+          position: { x: 5, y: 0, z: 0},
+        },
+        tags:["badPokemon"],
+        prefab: "PokemonPrefab",
+        components: {
+          ColorPokemonLogic: {
+              meshComponentName:"",
+              playerNumber: 2,
+              myTurn: false,
+            bot:true,
+            opponentId: "pokemon"
+          }
+        },
+        children:["colorSphere2"]
+      },
+      colorSphere2: {
+        prefab: "ColorSpherePrefab"
       },
       colorSphere1: {
         prefab: "ColorSpherePrefab"
@@ -341,13 +374,14 @@ export const initialScene = {
             myTurn: true,
             // isBot: playerStats[playerNumber - 1].isBot,
             meshComponentNames:["SphereGeometry", "ColorIndicator", "ColorPokemonBattleMenu"],
+            colorAttachementPrefab: "ColorSpherePrefab"
           },
           CSSLabelTo3D:{},
           ColorIndicator:{
             attachDivComponent: "CSSLabelTo3D"
           },
           ColorPokemonBattleMenu:{
-            attachDivComponent: "CSSLabelTo3D"
+            attachDivComponent: "CSSLabelTo3D",
           },
           SphereGeometry: {
             radius:1,
@@ -422,7 +456,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 0, z: 2000 }
+                position: { x: 0, y: 10, z: 0 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }
