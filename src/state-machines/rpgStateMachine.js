@@ -1,62 +1,59 @@
-import {Machine, assign} from "xstate";
+import {Machine, assign, spawn} from "xstate";
+import {createPlayerMachine, rpgBattlePlayerTurnStateMachine} from "./playerMachine";
 
-const changePlayer1 = assign({player:1});
-const changePlayer2 = assign({player:2});
+const setNewGameData = assign({startScene: 0});
+const changePlayer2 = assign({player: 2});
 
 export const rpgMachine = Machine({
-    id: "battle",
+    id: "game",
     initial: "intro",
     context: {
-        player:0,
-        attack:"",
     },
-    states:{
+    states: {
         intro: {
             on: {
-                PLAYER_1_TURN: {
-                    target:'player1Turn',
+                GO_TO_MAIN_MENU: {
+                    target: 'mainMenu',
                 },
-                PLAYER_2_TURN: {
-                    target:'player2Turn',
-                }
             },
         },
-        player1Turn: {
-
-            entry:changePlayer1,
+        mainMenu: {
             on: {
-                PLAYER_1_ATTACK: 'player1Attack',
+                START_NEW_GAME: 'startNewGame',
+                LOAD_GAME: 'loadGame',
             },
         },
-        player2Turn: {
-
-            entry:changePlayer2,
+        startGame: {
+            entry: setNewGameData,
             on: {
-                PLAYER_2_ATTACK: 'player2Attack',
+                GO_TO_MAIN_MENU: 'mainMenu',
             },
         },
-        player1Attack: {
+        loadGame: {
             on: {
-                PLAYER_2_TURN: 'player2Turn',
-                PLAYER_2_DEATH: 'player2Death',
+                GO_TO_MAIN_MENU: 'mainMenu',
+                LOAD_SELECTED_GAME: 'enemyDeath',
             },
         },
-        player2Attack: {
+        enemyAttacking: {
             on: {
-                PLAYER_1_TURN: 'player1Turn',
-                PLAYER_1_DEATH: 'player1Death',
+                PASS_TURN_TO_PLAYER: 'playerTurn',
+                PLAYER_DEATH: 'playerDeath',
             },
         },
-        player1Death: {
+        playerDeath: {
             on: {
-                END_BATTLE: 'battleFinished',
+                END_BATTLE: 'gameOver',
             },
         },
-        player2Death: {
+        enemyDeath: {
             on: {
                 END_BATTLE: 'battleFinished',
             },
         },
-        battleFinished:{}
+        battleFinished: {},
+        gameOver: {},
     }
 });
+
+
