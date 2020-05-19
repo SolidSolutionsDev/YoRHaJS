@@ -24,9 +24,10 @@ export class ColorPokemonLogic extends React.Component {
         // this.updateGameObjectAndComponents();
     }
 
+    // gets main game logic, state machine and opponent
     initReferences = () => {
         const {parent, opponentId, id} = this.props;
-        this.pokemonBattleLogic = parent.getComponent("ColorGameBattleLogic");
+        this.pokemonBattleLogic = parent.getComponent("PokemonColorGameBattleLogic");
         console.log(this.props.parent,this.props.opponentId,this);
         this.pokemonOpponent = parent.getChildGameObjectByTag(opponentId).getComponent(id);
         this.service = this.pokemonBattleLogic.service.onTransition(current => {
@@ -55,13 +56,14 @@ export class ColorPokemonLogic extends React.Component {
         if (isEqual(prevProps.selfSettings,this.props.selfSettings)){
             return;
         }
-        this.updateGameObjectAndComponents();
+        this.updateGameObjectAndComponents(this.props.color);
     }
 
-    updateGameObjectAndComponents = () => {
+    updateGameObjectAndComponents = (color) => {
         const {availableComponent, gameObject, meshComponentNames,playerNumber} = this.props;
         const {scene} =availableComponent;
-        if (!this.props.color) {
+        const _color = color || this.props.color;
+        if (!_color) {
             return;
         }
         const componentsToUpdate = meshComponentNames.reduce((acc, siblingComponent) => {
@@ -69,7 +71,7 @@ export class ColorPokemonLogic extends React.Component {
                 ...acc,
                 [siblingComponent]:
                     {
-                        color: this.props.color,
+                        color: _color,
                         playerNumber
                     }
             }
@@ -197,14 +199,17 @@ export class ColorPokemonLogic extends React.Component {
     };
 
     addColor = (colorDamage) => {
-        const {color, updateSelf} = this.props;
-        updateSelf({
-            color: {
-                r: Math.min(color.r + colorDamage.r , 255),
-                g: Math.min(color.g + colorDamage.g , 255),
-                b: Math.min(color.b + colorDamage.b , 255),
-            }
+        const {color, enqueueUpdateSelf} = this.props;
+        const _newColor = {
+            r: Math.min(color.r + colorDamage.r , 255) || 0,
+            g: Math.min(color.g + colorDamage.g , 255) || 0,
+            b: Math.min(color.b + colorDamage.b , 255) || 0,
+        };
+        console.log("addColor old:",color );
+        enqueueUpdateSelf({
+            color: _newColor,
         });
+        this.updateGameObjectAndComponents(_newColor);
     }
 }
 

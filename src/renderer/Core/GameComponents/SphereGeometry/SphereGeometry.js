@@ -19,6 +19,10 @@ export class SphereGeometry extends React.Component {
       color.r !== undefined ?
           this.color.setRGB(color.r, color.g, color.b) :
           this.color.setHex( color );
+      console.log("updateColor",color,this.color,this.mesh);
+      if (this.mesh) {
+        this.mesh.material.color = this.color;
+      }
     }
     return color;
   }
@@ -26,6 +30,7 @@ export class SphereGeometry extends React.Component {
   initSphereGeometry = () => {
     const { transform, opacity, selfSettings } = this.props;
     const geometry = new THREE.SphereGeometry(this.radius, 32, 32);
+    this.updateColor();
     const material = selfSettings.basicMaterial
       ? new THREE.MeshBasicMaterial({
           color: this.color
@@ -33,10 +38,10 @@ export class SphereGeometry extends React.Component {
       : new THREE.MeshLambertMaterial({
           color: this.color
         });
-    this.updateColor();
     opacity && (material.opacity = opacity);
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.castShadow = this.props.castShadow;
+    // this.color = this.mesh.material.color;
     transform.add(this.mesh);
   };
 
@@ -48,7 +53,7 @@ export class SphereGeometry extends React.Component {
   }
 
   update = ()=> {
-    this.updateColor()
+    // this.updateColor()
   }
 
   start = () => {

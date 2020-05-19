@@ -228,14 +228,14 @@ export const mainReducer = (state = initialScene, action) => {
     case "DESTROY_GAMEOBJECT_BYID":
       temp.gameObjects = _.cloneDeep(state.gameObjects);
       temp.scene = _.cloneDeep(state.scene);
-      if (!temp.gameObjects.allIds.includes(gameObjectId)) {
+      if (!Object.keys(temp.gameObjects.byId).includes(gameObjectId)) {
         console.log("GameObject does not exist ", gameObjectId);
         return state;
       }
       let _parent;
-      if (temp.gameObjects.allIds.includes(action.gameObjectId)) {
-        if (temp.gameObjects.byId[action.gameObjectId].parentId) {
-          const _parentId = temp.gameObjects.byId[action.gameObjectId].parentId;
+      if (Object.keys(temp.gameObjects.byId).includes(action.gameObjectId)) {
+        if (action.parentId) {
+          const _parentId = action.parentId;
           _parent = temp.gameObjects.byId[_parentId];
         } else {
           _parent = temp.scene;

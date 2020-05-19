@@ -98,7 +98,7 @@ export const initialScene = {
         prefab: "PokemonGameLogicPrefab",
         children:["pokemon","badPokemon"],
         components: {
-          ColorGameBattleLogic: {
+          PokemonColorGameBattleLogic: {
             player1:"pokemon",
             player2:"badPokemon",
           },
@@ -123,9 +123,9 @@ export const initialScene = {
         prefab: "PokemonPrefab",
         components: {
           ColorPokemonLogic: {
-              meshComponentName:"",
-              playerNumber: 2,
-              myTurn: false,
+            meshComponentName:"",
+            playerNumber: 2,
+            myTurn: false,
             meshComponentNames:["SphereGeometry", "ColorIndicator"],
             bot:true,
             opponentId: "pokemon"
@@ -364,7 +364,7 @@ export const initialScene = {
     byId: {
       PokemonGameLogicPrefab: {
         components: {
-          ColorGameBattleLogic: {},
+          PokemonColorGameBattleLogic: {},
         }
       },
       PokemonPrefab: {
@@ -406,7 +406,7 @@ export const initialScene = {
             meshComponentName:"SphereGeometry",
             sphereSpeedIndex:0.5,
             opponentId:"null",
-            color:{ r: 100, g: 100, b: 100 }
+            // color:{ r: 100, g: 100, b: 100 }
           },
         }
       },
@@ -428,7 +428,7 @@ export const initialScene = {
             cameraPanLock: false,
             // lookAt: { x: 0, y: 0, z: 0 },
             animatedTransformations: true,
-            animatedIntroTime: 3000,
+            animatedIntroTime: 1000,
             animatedRegularTransitionTime: 1000,
             near: 0.1,
             far: 5000,
@@ -458,7 +458,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 10, z: 0 }
+                position: { x: 0, y: 50, z: 0 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }

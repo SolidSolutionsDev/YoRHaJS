@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import * as THREE from "three";
 import {sphereOptions} from "../../../../solid-solutions-backend/constants/states";
+import {destroyGameObjectById} from "../../../../stores/scene/actions";
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class ColorSphereLogic extends React.Component {
@@ -91,6 +92,7 @@ export class ColorSphereLogic extends React.Component {
 
     addColorToOpponent = () => {
         const {color, size, parent} = this.props;
+        console.log("addColorToOpponent",this.props);
         const _colorToPaint = {
             r: color.r * size,
             g: color.g * size,
@@ -106,10 +108,12 @@ export class ColorSphereLogic extends React.Component {
     }
 
     explodingCheck = () => {
-        const {exploding, enqueueUpdateSelf} = this.props;
+        const {exploding, enqueueUpdateSelf, availableComponent} = this.props;
+        const {scene} = availableComponent;
         if (exploding) {
             this.addColorToOpponent();
-            enqueueUpdateSelf({dead: true});
+            enqueueUpdateSelf({rotating:false,exploding:false,dead: true});
+            scene.enqueueAction(destroyGameObjectById(this.props.gameObject.id,this.props.parent.id));
         }
     }
 
@@ -167,5 +171,5 @@ ColorSphereLogic.propTypes = {
     meshComponentName: PropTypes.string.isRequired,
     sphereSpeedIndex: PropTypes.number.isRequired,
     opponentId: PropTypes.string.isRequired,
-    color: PropTypes.object.isRequired,
+    // color: PropTypes.object.isRequired,
 };
