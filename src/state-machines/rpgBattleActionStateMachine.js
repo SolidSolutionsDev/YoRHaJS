@@ -1,79 +1,38 @@
-import {Machine, assign, spawn} from "xstate";
-import {createPlayerMachine, rpgBattlePlayerTurnStateMachine} from "./playerMachine";
+import {Machine,} from "xstate";
 
-const changePlayer1 = assign({player: 1});
-const changePlayer2 = assign({player: 2});
-
-export const rpgMachine = Machine({
-    id: "battle",
-    initial: "intro",
-    context: {
-        playerGenerated:0,
-        player: 0,
-        attack: "",
-        playerActors: []
+export const actionMachine = Machine({
+    id: "action",
+    initial: "idle",
+    context:{
+        actionId: "",
+        animation: null,
+        resolveResult: 1,
     },
     states: {
-        intro: {
+        idle: {
             on: {
-                NEW_PLAYER: {
-                    actions: [
-                        assign({
-                            playerActors: (ctx, event) => {
-                                const newPlayer = event.playerData;
-                                return  [...ctx.playerActors,spawn(rpgBattlePlayerTurnStateMachine.withContext(newPlayer))]
-                                },
-                            playerGenerated: (ctx,event)=> {return ctx.playerGenerated++}
-                            }),
-                        "persist"
-                    ]
-                },
-                PLAYER_TURN: {
-                    target: 'playerTurn',
-                },
-                ENEMY_TURN: {
-                    target: 'enemyTurn',
+                START_ACTION: {
+                    target: "playAnimation"
                 }
-            },
+            }
         },
-        playerTurn: {
-            entry: changePlayer1,
+        playAnimation: {
             on: {
-                PLAYER_ATTACK: 'playerAttacking',
-            },
+                RESOLVE_ACTION: {
+                    target: "resolveAction"
+                }
+            }
         },
-        enemyTurn: {
-
-            entry: changePlayer2,
+        resolveAction: {
             on: {
-                ENEMY_ATTACK: 'enemyAttacking',
-            },
+                RESOLVE_DONE: {
+                    target: "end"
+                }
+            }
         },
-        playerAttacking: {
-            on: {
-                PASS_TURN_TO_ENEMY: 'enemyTurn',
-                ENEMY_DEATH: 'enemyDeath',
-            },
-        },
-        enemyAttacking: {
-            on: {
-                PASS_TURN_TO_PLAYER: 'playerTurn',
-                PLAYER_DEATH: 'playerDeath',
-            },
-        },
-        playerDeath: {
-            on: {
-                END_BATTLE: 'gameOver',
-            },
-        },
-        enemyDeath: {
-            on: {
-                END_BATTLE: 'battleFinished',
-            },
-        },
-        battleFinished: {},
-        gameOver: {},
+        end: {
+            type: "final",
+            data: {resolveResult: (context) => context.resolveResult}
+        }
     }
 });
-
-

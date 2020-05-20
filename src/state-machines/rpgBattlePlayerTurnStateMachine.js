@@ -1,59 +1,118 @@
-import {Machine} from "xstate";
+import {Machine, assign} from "xstate";
+import {actionMachine} from "./rpgBattleActionStateMachine";
 
+const setAction = assign({
+    action: (_, event) => {return event.action}
+})
+
+const allowedActions = (ctx,event)=> {return (event && event.action < ctx.playerStats.attacks.length && event.action >= 0);}
+
+const setResolve = assign({
+    resolveResult: (ctx, event) => {
+        console.log(event);
+        return event.data.resolveResult
+    },
+});
 export const rpgBattlePlayerTurnStateMachine = Machine({
     id: "player",
-    initial: "intro",
+    initial: "idle",
     context: {
+        resolveResult:"",
         player:0,
         attack:"",
+        action:0,
+        balls:[],
+        playerStats:{
+            name: "Blue White Mouse",
+            isBot: false,
+            initColor: {
+                r: 200,
+                g: 200,
+                b: 40,
+            },
+            position: {
+                x: -3,
+                y: -2,
+                z: 25,
+            },
+            rotation: {
+                x: 0.1,
+                y: -0.4,
+                z: 0.4,
+            },
+            attacks: [
+                {
+                    label: ".",
+                    type: "absorb",
+                    damage: { r: 255, g: 0, b: 255 },
+                    dialog: " hmmm hmmm hmmm",
+                },
+                {
+                    label: ".",
+                    type: "absorb",
+                    damage: { r: 0, g: 255, b: 255 },
+                    dialog: " 'bytes' the enemy!",
+                },
+                {
+                    label: ".",
+                    type: "absorb",
+                    damage: { r: 255, g: 255, b: 0 },
+                    dialog: " 'bytes' the enemy!",
+                },
+                {
+                    label: "Focus",
+                    type: "recharge",
+                    damage: { r: 0, g: 0, b: 0 },
+                    dialog: " is feeling a surge of color!",
+                },
+                {
+                    label: "Release",
+                    type: "release",
+                    damage: { r: 0, g: 0, b: 0 },
+                    dialog: " realeases every color on the enemy!",
+                },
+            ],
+        },
     },
     states:{
-        intro: {
+        idle: {
             on: {
-                PLAYER_1_TURN: {
-                    target:'player1Turn',
+                START_TURN: {
+                    target:'selectAction',
                 },
-                PLAYER_2_TURN: {
-                    target:'player2Turn',
+            },
+        },
+        selectAction: {
+            on: {
+                ACTION: {
+                    target: "executeAction",
+                    cond:   allowedActions,
+                    actions: setAction
                 }
+            }
+        },
+        executeAction:{
+            invoke: {
+                id: 'action-player',
+                src: actionMachine,
+                data: {
+                    actionId: (context, event) => context.action
+                },
+                onDone: {
+                    //TODO:inform parent of resolve - onTransition ?
+                    target: 'informResolve',
+                    actions:  assign({
+                        resolveResult: (ctx, event) => {
+                            console.log(event);
+                            return event.data.resolveResult
+                        },
+                    }),
+                },
             },
         },
-        player1Turn: {
-
-            // entry:changePlayer1,
-            on: {
-                PLAYER_1_ATTACK: 'player1Attack',
-            },
+        battleFinished:{},
+        informResolve:{
+            type:"final"
         },
-        player2Turn: {
-
-            // entry:changePlayer2,
-            on: {
-                PLAYER_2_ATTACK: 'player2Attack',
-            },
-        },
-        player1Attack: {
-            on: {
-                PLAYER_2_TURN: 'player2Turn',
-                PLAYER_2_DEATH: 'player2Death',
-            },
-        },
-        player2Attack: {
-            on: {
-                PLAYER_1_TURN: 'player1Turn',
-                PLAYER_1_DEATH: 'player1Death',
-            },
-        },
-        player1Death: {
-            on: {
-                END_BATTLE: 'battleFinished',
-            },
-        },
-        player2Death: {
-            on: {
-                END_BATTLE: 'battleFinished',
-            },
-        },
-        battleFinished:{}
     }
 });

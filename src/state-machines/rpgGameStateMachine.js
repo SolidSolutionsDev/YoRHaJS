@@ -41,7 +41,7 @@ export const rpgGameStateMachine = Machine({
             on: {
                 GO_TO_MAIN_MENU: 'mainMenu',
                 //TODO: send loaded data
-                LOAD_SELECTED_SCENE: [{target:"startGame",cond:submittedTargetScene},"persist"],
+                LOAD_SELECTED_SCENE: [{target:"startGame",cond:submittedTargetScene}],
             },
         },
         startGame: {},

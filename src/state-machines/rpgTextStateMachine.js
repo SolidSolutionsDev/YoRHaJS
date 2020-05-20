@@ -11,7 +11,7 @@ import {Machine, assign} from "xstate";
     }
   ]
 }
-* */
+*/
 const setSteps = assign(
      {
         steps: (_,event)=>{return event && event.steps ? event.steps :[]},
@@ -19,7 +19,7 @@ const setSteps = assign(
      }
         );
 
-const goToStep = assign({currentTextSceneStep:(_, event) =>  { console.log("goToStep",event);return event.step}});
+const goToStep = assign({currentTextSceneStep:(_, event) =>  { return event.step}});
 
 const resetCurrentTextScene = assign({currentTextSceneStep: 0});
 
@@ -40,7 +40,6 @@ const newStepIsPossible = (ctx, event) => {
 };
 
 const currentStepIsImpossible = (ctx, _,condMeta) => {
-    console.log("currentStepIsImpossible",condMeta.state,ctx.currentTextSceneStep >= ctx.steps.length || ctx.currentTextSceneStep<0);
     return ctx.currentTextSceneStep >= ctx.steps.length || ctx.currentTextSceneStep<0;
 };
 const newStepIsImpossible = (ctx, event) => {
@@ -48,7 +47,6 @@ const newStepIsImpossible = (ctx, event) => {
 };
 
 const isAudio = (ctx,_,condMeta) => {
-    console.log(ctx,condMeta.state,"isAudio");
     return ctx.steps[ctx.currentTextSceneStep] && ctx.steps[ctx.currentTextSceneStep].type === "audio";
 };
 
@@ -151,7 +149,9 @@ export const textMachine = Machine({
         invalid :{
             on: {"":"end"}
         },
-        end:{}
+        end:{
+            type: 'final'
+        }
     }
 });
 
