@@ -1,19 +1,19 @@
 import React from "react";
 import {Machine, interpret} from "xstate";
-import {rpgMachine} from "../../../../state-machines/rpgStateMachine";
-import "./ColorGameBattleLogic.css"
+import {rpgBattleMachine} from "../../../../state-machines/rpgBattleStateMachine";
+import "./PokemonColorGameBattleLogic.css"
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
-export class ColorGameBattleLogic extends React.Component {
+export class PokemonColorGameBattleLogic extends React.Component {
 
-    service = interpret(rpgMachine).onTransition(current => {
+    service = interpret(rpgBattleMachine, { devTools: true}).onTransition(current => {
         console.log("transition", current);
         this.setState({current, value: current.value,currentPlayer:current.context.player});
     });
 
     state = {
-        current: rpgMachine.initialState,
-        value: rpgMachine.initialState.value
+        current: rpgBattleMachine.initialState,
+        value: rpgBattleMachine.initialState.value
     }
 
 
@@ -44,4 +44,4 @@ export class ColorGameBattleLogic extends React.Component {
     }
 }
 
-ColorGameBattleLogic.propTypes = {};
+PokemonColorGameBattleLogic.propTypes = {};
