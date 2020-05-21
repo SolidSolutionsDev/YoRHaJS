@@ -1,7 +1,5 @@
 import {Machine, assign, spawn,interpret} from "xstate";
 import { rpgBattlePlayerTurnStateMachine} from "./rpgBattlePlayerTurnStateMachine";
-import {actionQueueMachine} from "./rpgBattleActionQueueStateMachine";
-// import {playerStats, sphereOptions} from "../solid-solutions-backend/constants/states";
 
 // TODO : remove - just for dev
 
@@ -57,57 +55,9 @@ const playerStats = [
             },
         ],
     },
-    {
-        name: "BEAUTIFUL CUBE",
-        isBot: true,
-        initColor: {
-            r: 40,
-            g: 200,
-            b: 40,
-        },
-        position: {
-            x: 6,
-            y: 6,
-            z: 10,
-        },
-        rotation: {
-            x: 0.3,
-            y: -0.4,
-            z: 0.3,
-        },
-        attacks: [
-            {
-                label: ".",
-                type: "absorb",
-                damage: { r: 255, g: 0, b: 255 },
-                dialog: " hmmm hmmm hmmm",
-            },
-            {
-                label: ".",
-                type: "absorb",
-                damage: { r: 0, g: 255, b: 255 },
-                dialog: " 'bytes' the enemy!",
-            },
-            {
-                label: ".",
-                type: "absorb",
-                damage: { r: 255, g: 255, b: 0 },
-                dialog: " 'bytes' the enemy!",
-            },
-            {
-                label: "Focus",
-                type: "recharge",
-                damage: { r: 0, g: 0, b: 0 },
-                dialog: " is feeling a surge of color!",
-            },
-            {
-                label: "Release",
-                type: "release",
-                damage: { r: 0, g: 0, b: 0 },
-                dialog: " realeases every color on the enemy!",
-            },
-        ],
-    },
+];
+const enemyStats = [
+
 ];
 const sphereOptions = {
     colors: [

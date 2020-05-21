@@ -1,17 +1,5 @@
 import {Machine, assign} from "xstate";
-/*
-{
-  "type": "LOAD_STEPS",
-  "steps": [
-    {
-      "type": "audio"
-    },
-    {
-      "type": "text"
-    }
-  ]
-}
-*/
+
 const setSteps = assign(
      {
         steps: (_,event)=>{return event && event.steps ? event.steps :[]},
@@ -22,13 +10,6 @@ const setSteps = assign(
 const goToStep = assign({currentTextSceneStep:(_, event) =>  { return event.step}});
 
 const resetCurrentTextScene = assign({currentTextSceneStep: 0});
-
-// const setCurrentTextScene = assign((_, event) => {
-//     return {
-//         currentTextSceneStep: 0,
-//         currentTextScene: event.currentTextScene
-//     }
-// });
 
 const increaseStep = assign({currentTextSceneStep:(ctx, _) =>  {return ctx.currentTextSceneStep+1}});
 
@@ -44,6 +25,10 @@ const currentStepIsImpossible = (ctx, _,condMeta) => {
 };
 const newStepIsImpossible = (ctx, event) => {
     return event.step >= ctx.steps.length ||  event.step<0;
+};
+
+const isBattle = (ctx,_,condMeta) => {
+    return ctx.steps[ctx.currentTextSceneStep] && ctx.steps[ctx.currentTextSceneStep].type === "battle";
 };
 
 const isAudio = (ctx,_,condMeta) => {
@@ -72,6 +57,7 @@ export const textMachine = Machine({
         currentTextScene: 0,
         currentTextSceneStep: 0,
         steps: [],
+        goToQueue: [],
     },
     states: {
         intro: {
