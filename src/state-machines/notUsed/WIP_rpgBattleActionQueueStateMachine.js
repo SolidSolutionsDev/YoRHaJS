@@ -1,5 +1,5 @@
 import {Machine, assign, send} from "xstate";
-import {actionMachine} from "./rpgBattleActionStateMachine";
+import {actionMachine} from "../rpgBattleActionStateMachine";
 
 const enqueueAction = assign({
     actionsQueue: (ctx, event) => {return [event.action,...ctx.actionsQueue]}
