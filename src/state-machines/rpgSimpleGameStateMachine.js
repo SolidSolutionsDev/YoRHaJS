@@ -1,6 +1,22 @@
-import {Machine, assign} from "xstate";
+import {Machine, assign, send} from "xstate";
 import {initialContext} from "./intialContextDnD";
+import {rpgSimpleBattle} from "./rpgSimpleBattle";
 //https://xstate.js.org/viz/?gist=23e0b41518a8268e45c1bbe8cd82ee9b
+
+const updateCharactersData = assign({
+        player: (context, event) => {
+            // { type: 'done.invoke.player', data: { player: {...}, enemy:{...} }
+            console.log("got event to update character!", event);
+            return event.data.player;
+        },
+        enemies: (context, event) => {
+            const enemyId= context.constants.steps[context.stepsQueue[0]].enemy;
+            return {
+                ...context.enemies,[enemyId]:event.data.enemy
+            };
+        }
+    }
+);
 
 const resetCurrentTextScene = assign({
     stepsQueue: ctx => {
@@ -105,6 +121,10 @@ const nextQueuedStepDoesNotExist = (ctx) => {
     return ctx.stepsQueue.length <= 1;
 };
 
+const playerIsAlive = (ctx) => {
+    return ctx.player.hp >0 ;
+};
+
 
 const isBattle = (ctx) => {
     const currentStep = ctx.stepsQueue[0];
@@ -131,7 +151,7 @@ const isBackgroundChange = (ctx) => {
     return ctx.constants && ctx.constants.steps && ctx.constants.steps[currentStep] && ctx.constants.steps[currentStep].type === "backgroundChange";
 };
 
-const simpleGameStateMachine = Machine({
+export const rpgSimpleGameStateMachine = Machine({
     id: "text",
     initial: "intro",
     context: {
@@ -212,18 +232,44 @@ const simpleGameStateMachine = Machine({
             }
         },
         playBattle: {
-            on: {
-                "NEXT_STEP": {
-                    target: "incrementAndNextStep",
+            invoke: {
+                id: 'battle',
+                src: rpgSimpleBattle,
+                // Deriving child context from parent context
+                data: {
+                    player: (context) => context.player,
+                    enemy: (context) => {
+                        const enemyId= context.constants.steps[context.stepsQueue[0]].enemy;
+                        return context.enemies[enemyId];
+                        },
                 },
-                "UPDATE_BATTLE_RESULTS": {
-                    actions: "updateBattleResults"
-                },
-                "GAME_OVER": {
-                    target: "nextStep",
-                    actions: setGameOverStep,
-                    cond:currentStepIsNotGameOverStep
+                onDone: {
+                    target: 'resolveBattle',
+                    actions: updateCharactersData
                 }
+            },
+            on: {
+                INPUT:{
+                    actions:send('PLAYER_INPUT',{to:"battle"})
+                },
+                UPDATE_PLAYER:{
+                    actions:updateCharactersData
+                },
+            }
+        },
+        resolveBattle: {
+            on: {
+                "NEXT_STEP": [
+                    {
+                    target: "incrementAndNextStep",
+                        cond:playerIsAlive,
+                    },
+                    {
+                        target: "nextStep",
+                        actions: setGameOverStep,
+                        cond:currentStepIsNotGameOverStep
+                    }
+                ],
             }
         },
         playText: {
@@ -277,4 +323,6 @@ const simpleGameStateMachine = Machine({
     }
 });
 
-export const dynamicSimpleGameStateMachine = simpleGameStateMachine.withContext(initialContext);
+
+
+// export const dynamicSimpleGameStateMachine = rpgSimpleGameStateMachine.withContext(initialContext);

@@ -4,58 +4,6 @@ export const initialContext = {
     gameOverStep:"gameOverText",
     winStep:"winText",
     currentTextOption:0,
-    player:{
-        name: "Blue White Mouse",
-        prefab: "CylinderPrefab",
-        hp: 300,
-        defense:3,
-        attack:0,
-        // raises level, raises this ones
-        maxAttack:6,
-        minAttack:1
-    },
-    enemies:{
-        whiteGreyMouse: {
-            name: "White Grey Mouse",
-            prefab: "SpherePrefab",
-            hp: 100,
-            defense:2,
-            attack:0,
-            // raises level, raises this ones
-            maxAttack:4,
-            minAttack:1
-        },
-        darkMouse: {
-            name: "Dark Mouse",
-            prefab: "HeadPrefab",
-            hp: 500,
-            defense:6,
-            attack:0,
-            // raises level, raises this ones
-            maxAttack:8,
-            minAttack:3
-        },
-        blueWhiteMouse: {
-            name: "Blue White Mouse",
-            prefab: "ShooterPrefab",
-            hp: 1000,
-            defense:6,
-            attack:0,
-            // raises level, raises this ones
-            maxAttack:12,
-            minAttack:6
-        },
-        beautifulCube: {
-            name: "BEAUTIFUL CUBE",
-            prefab: "ShooterPrefab",
-            hp: 1200,
-            defense:6,
-            attack:0,
-            // raises level, raises this ones
-            maxAttack:12,
-            minAttack:6
-        }
-    },
     constants: {
         lines:{
             awesome: [
@@ -131,10 +79,11 @@ export const initialContext = {
             name: "Blue White Mouse",
             prefab: "CylinderPrefab",
             hp: 300,
+            maxHp:300,
             defense:3,
             attack:0,
             // raises level, raises this ones
-            maxAttack:6,
+            maxAttack:14,
             minAttack:1
         },
         enemies:{
@@ -145,8 +94,8 @@ export const initialContext = {
                 defense:2,
                 attack:0,
                 // raises level, raises this ones
-                maxAttack:4,
-                minAttack:1
+                maxAttack:14,
+                minAttack:3
             },
             darkMouse: {
                 name: "Dark Mouse",
