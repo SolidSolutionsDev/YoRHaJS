@@ -1,6 +1,7 @@
 {
   "name": "yorhajs",
   "version": "0.1.0",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@tweenjs/tween.js": "^17.2.0",
