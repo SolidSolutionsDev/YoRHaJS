@@ -197,7 +197,7 @@ export class GameObject extends React.Component {
     };
 
     registerChildGameObject = gameObject => {
-        console.log("registerChildGO",this,gameObject);
+        // console.log("registerChildGO",this,gameObject);
         if (!gameObject) {
             return;
         }

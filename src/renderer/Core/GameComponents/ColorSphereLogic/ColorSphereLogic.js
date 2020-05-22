@@ -118,7 +118,7 @@ export class ColorSphereLogic extends React.Component {
     }
 
     setMeshColor = () => {
-        console.log("setMeshColor");
+        // console.log("setMeshColor");
         const color = this.props.color || sphereOptions.colors[this.props.playerNumber];
         this.props.updateGameObjectComponent(
             this.props.gameObject.id,

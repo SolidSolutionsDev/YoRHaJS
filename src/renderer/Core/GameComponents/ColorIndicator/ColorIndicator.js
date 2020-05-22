@@ -57,7 +57,7 @@ export class ColorIndicator extends React.Component {
             return;
         }
         const newPosition = rgb2xy(color.r, color.g, color.b);
-        console.log("new indicator position:",newPosition,this,color,this.indicator);
+        // console.log("new indicator position:",newPosition,this,color,this.indicator);
         this.indicator.style.left = this.canvas.offsetLeft - 4 - newPosition.x + 50 + "px";
         this.indicator.style.top = this.canvas.offsetTop - newPosition.y + 50 + "px";
     }

@@ -168,12 +168,12 @@ export const initialScene = {
       mountainSolid: {
         debug: true,
         components: {
-          AudioScaleComponent: {
-            audioTag: "backgroundMusic"
-          },
+          // AudioScaleComponent: {
+          //   audioTag: "backgroundMusic"
+          // },
           AutoRotate:{
             speed: {
-              z:0.001
+              y:0.0001
             }
           },
           MeshGeometry:{

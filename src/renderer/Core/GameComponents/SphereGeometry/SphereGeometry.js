@@ -19,7 +19,7 @@ export class SphereGeometry extends React.Component {
       color.r !== undefined ?
           this.color.setRGB(color.r, color.g, color.b) :
           this.color.setHex( color );
-      console.log("updateColor",color,this.color,this.mesh);
+      // console.log("updateColor",color,this.color,this.mesh);
       if (this.mesh) {
         this.mesh.material.color = this.color;
       }

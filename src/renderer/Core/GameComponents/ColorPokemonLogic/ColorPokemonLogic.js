@@ -31,13 +31,13 @@ export class ColorPokemonLogic extends React.Component {
         console.log(this.props.parent,this.props.opponentId,this);
         this.pokemonOpponent = parent.getChildGameObjectByTag(opponentId).getComponent(id);
         this.service = this.pokemonBattleLogic.service.onTransition(current => {
-            console.log("ColorPokemonLogic transition", current);
+            // console.log("ColorPokemonLogic transition", current);
             this.setState({current, activePlayer: current.context.player});
         });
     }
 
     setMeshColor = () => {
-        console.log("setMeshColor");
+        // console.log("setMeshColor");
         const color = this.props.color || sphereOptions.colors[this.props.playerNumber];
         this.props.meshComponentNames.forEach(meshComponentName=>{
         this.props.updateGameObjectComponent(
