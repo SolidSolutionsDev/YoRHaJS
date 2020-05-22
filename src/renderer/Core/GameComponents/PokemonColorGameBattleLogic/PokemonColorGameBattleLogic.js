@@ -1,7 +1,7 @@
 import React from "react";
 import {Machine, interpret} from "xstate";
 import {rpgBattleMachine} from "../../../../state-machines/notUsed/rpgBattleStateMachine";
-import {rpgSimpleGameStateMachine} from "../../../../state-machines/rpgSimpleGameStateMachine";
+import {rpgSimpleGameStateMachine} from "../../../../state-machines/simpleRpg/rpgSimpleGameStateMachine";
 import "./PokemonColorGameBattleLogic.css"
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)

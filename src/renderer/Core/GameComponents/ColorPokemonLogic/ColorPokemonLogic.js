@@ -1,5 +1,5 @@
 import React from "react";
-import {playerStats, sphereOptions} from "../../../../solid-solutions-backend/constants/states";
+import {playerStats, sphereOptions} from "../../../../../solid-solutions-backend/constants/states";
 import {cloneDeep,isEqual} from "lodash";
 import * as THREE from "three";
 import PropTypes from "prop-types";

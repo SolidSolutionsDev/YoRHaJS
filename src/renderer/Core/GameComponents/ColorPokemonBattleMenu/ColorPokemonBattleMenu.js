@@ -5,7 +5,7 @@ import {rgbToHex} from "../../../../utils/unitConvertUtils";
 // TODO: see if this is the best approach to share state machine state
 import {Machine, interpret} from "xstate";
 import {rpgBattleMachine} from "../../../../state-machines/notUsed/rpgBattleStateMachine";
-import {playerStats} from "../../../../solid-solutions-backend/constants/states";
+import {playerStats} from "../../../../../solid-solutions-backend/constants/states";
 import "./ColorPokemonBattleMenu.css"
 import {instantiateFromPrefab} from "../../../../stores/scene/actions";
 import * as _ from "lodash";

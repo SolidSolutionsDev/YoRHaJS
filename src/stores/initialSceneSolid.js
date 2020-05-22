@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import {kernelConstants} from "./rpgLogic/rpgConstants";
 import {RPGBattleCharacterGameComponent} from "../renderer/Core/GameComponents/RPGGame/RPGGenericModuleGameComponent/RPGBattleModuleGameComponent/RPGBattleParty/RPGBattleCharacterGameComponent/RPGBattleCharacterGameComponent";
-import {sphereOptions} from "../solid-solutions-backend/constants/states";
+import {sphereOptions} from "../../solid-solutions-backend/constants/states";
 
 // TODO: add concept of Scriptable Objects to attach game logic variables freely
 
