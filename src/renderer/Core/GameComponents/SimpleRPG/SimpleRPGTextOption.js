@@ -31,6 +31,7 @@ export class SimpleRPGTextOption extends React.Component {
             marginLeft: 200,
             paddingBottom: 50,
             paddingLeft: 100,
+            opacity:1,
 
             defaultTextStyle: {
                 fontSize: 24,
@@ -112,11 +113,19 @@ export class SimpleRPGTextOption extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active) {
             const textData = this.state.data;
+            const text = textData.text.join("\n");
             if (this.state.value === "playText"){
-                const text = textData.text.join("\n");
                     this.textScreen.addText(text);
-
         }
+            if (this.state.value === "playTextOption"){
+                if (textData === prevState.data) {
+                    this.textScreen.selectAnswer(this.state.selectedCommand.toString());
+                }
+                else {
+                    const answers = textData.options.map((textOption,index)=> {return {id:index.toString(), textContent:textOption.text}});
+                    this.textScreen.addQuestion(text, answers);
+                }
+            }
     }
     }
 
