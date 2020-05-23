@@ -435,15 +435,15 @@ export const initialScene = {
           // },
           Camera: {
             // cameraSoundPath: "./assets/sound/camera_change.mp3",
-            cameraAngle: "top",
+            cameraAngle: "front",
             // cameraAutoRotate: true,
             cameraAutoRotateSpeed:3,
-            cameraMinDistance: 10,
+            // cameraMinDistance: 10,
             cameraPanLock: false,
             // lookAt: { x: 0, y: 0, z: 0 },
             animatedTransformations: true,
-            animatedIntroTime: 1000,
-            animatedRegularTransitionTime: 1000,
+            animatedIntroTime: 100,
+            animatedRegularTransitionTime: 100,
             near: 0.1,
             far: 5000,
             fov: 45,
@@ -466,7 +466,7 @@ export const initialScene = {
                 position: { x: 10, y: 0, z: 0 }
               },
               front: {
-                position: { x: 0, y: 0, z: 10 }
+                position: { x: 0, y: 0, z: 2}
               },
               back: {
                 position: { x: 0, y: 0, z: -10 }

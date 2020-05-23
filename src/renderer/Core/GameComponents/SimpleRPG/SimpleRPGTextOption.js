@@ -1,12 +1,14 @@
 import React from "react";
-import TETSUO from "@SolidSolutionsDev/tetsuo";
+
+import * as TETSUO from "@SolidSolutionsDev/tetsuo";
 
 import "./SimpleRPGTextOption.css";
 
 export class SimpleRPGTextOption extends React.Component {
 
     defaultCommandIndex = 0;
-    debug=true;
+    debug = true;
+    textScreen;
 
     state = {
         init: false,
@@ -15,6 +17,34 @@ export class SimpleRPGTextOption extends React.Component {
         activeUp: false,
         activeDown: false,
     };
+
+
+    initTetsuoScreen = () => {
+        // init the text screen
+        this.textScreen = new window.TETSUO.Premade.TextScreen({
+            width: 1280,
+            height: 720,
+
+            // optional options
+            backgroundColor: 0x1c1e1c,
+            marginTop: 100,
+            marginLeft: 200,
+            paddingBottom: 50,
+            paddingLeft: 100,
+
+            defaultTextStyle: {
+                fontSize: 24,
+                fill: 0x3cdc7c,
+            },
+        });
+
+        // build and prepare for render
+        this.textScreen.prepare();
+
+        // add the output quad to the scene
+        // quad = textScreen.quad;
+        this.props.transform.add(this.textScreen.quad);
+    }
 
 
     advance = () => {
@@ -63,13 +93,31 @@ export class SimpleRPGTextOption extends React.Component {
             const state = current.value;
             const active = current.value === "playText" || current.value === "playTextOption";
             if (active) {
-                this.setState({active, stepId, data: stepData, init: true, value:current.value, selectedCommand:currentTextOption});
+                this.setState({
+                    active,
+                    stepId,
+                    data: stepData,
+                    init: true,
+                    value: current.value,
+                    selectedCommand: currentTextOption
+                });
             } else {
                 this.setState({active, init: true});
             }
         });
         console.log("here", this.state.init);
         this.registerEvents();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.active) {
+            const textData = this.state.data;
+            if (this.state.value === "playText"){
+                const text = textData.text.join("\n");
+                    this.textScreen.addText(text);
+
+        }
+    }
     }
 
     registerEvents = () => {
@@ -91,25 +139,28 @@ export class SimpleRPGTextOption extends React.Component {
     };
 
 
-
+    start = () => {
+        this.initTetsuoScreen()
+    }
 
     update = (time, deltaTime) => {
         this.initListenToStateTransitions();
-        };
+        console.log(deltaTime);
+        this.textScreen.update(deltaTime);
+    };
 
 
-    buildCommandList = ()=>{
-        if (this.state.value==="playTextOption"){
-            return this.state.data.options.map((option,index)=>{
+    buildCommandList = () => {
+        if (this.state.value === "playTextOption") {
+            return this.state.data.options.map((option, index) => {
                 const textToFill = option.text;
                 const selected = index === this.state.selectedCommand;
-                const className = selected ? "selectedOption": "";
-                return <div key={"option"+index} className={className}>-{option.text}</div>
+                const className = selected ? "selectedOption" : "";
+                return <div key={"option" + index} className={className}>-{option.text}</div>
             });
         }
         return null;
     }
-
 
 
     render() {
