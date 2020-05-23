@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import {kernelConstants} from "./rpgLogic/rpgConstants";
 import {RPGBattleCharacterGameComponent} from "../renderer/Core/GameComponents/RPGGame/RPGGenericModuleGameComponent/RPGBattleModuleGameComponent/RPGBattleParty/RPGBattleCharacterGameComponent/RPGBattleCharacterGameComponent";
-import {sphereOptions} from "../../solid-solutions-backend/constants/states";
+import {sphereOptions} from "../solid-solutions-backend/constants/states";
 
 // TODO: add concept of Scriptable Objects to attach game logic variables freely
 
@@ -78,7 +78,8 @@ export const initialScene = {
       //"rpgTestPlayer1",
       //   "colorSphere",
       //   "pokemon",
-        "pokemonLogic"
+      //   "pokemonLogic",
+      "simpleRPGIntro"
     ]
   },
   gameObjects: {
@@ -94,6 +95,9 @@ export const initialScene = {
       //   },
       //   prefab:"RPGKernelCharacterCorePrefab"
       // },
+      simpleRPGIntro: {
+        prefab:"SimpleRPGIntroPrefab"
+      },
       pokemonLogic: {
         prefab: "PokemonGameLogicPrefab",
         children:["pokemon","badPokemon"],
@@ -161,6 +165,8 @@ export const initialScene = {
             assetId: "fariaDemoMP3",
             tag: "backgroundMusic",
             analyser:true,
+            autoPlay:true,
+            loop:true
             // path: "./assets/sounds/stereo-left-and-right-test.mp3",
           },
         }
@@ -362,6 +368,12 @@ export const initialScene = {
   },
   prefabs: {
     byId: {
+      SimpleRPGIntroPrefab: {
+        components: {
+          SimpleRPGIntro:{}
+        }
+      },
+
       PokemonGameLogicPrefab: {
         components: {
           PokemonColorGameBattleLogic: {},

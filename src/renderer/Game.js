@@ -13,6 +13,7 @@ import * as GameContext from "./GameContext";
 import {GeometryUtilsService} from "./Services/GeometryUtilsService";
 import Preloader from "./Preloader/Preloader";
 import {Provider} from "react-redux";
+import {SimpleRPGStateMachineService} from "./Services/SimpleRPGStateMachineService";
 
 export class Game extends React.Component {
   frame = null;
@@ -188,6 +189,8 @@ export class Game extends React.Component {
           {..._propsList} ref={this.addGameService} key="shader" id="shader" />
         <GeometryUtilsService
           {..._propsList} ref={this.addGameService} key="geometry" id="geometry" />
+        <SimpleRPGStateMachineService
+          {..._propsList} ref={this.addGameService} key="stateMachine" id="stateMachine" />
         </Preloader>
       </GameContext.Provider>
     );

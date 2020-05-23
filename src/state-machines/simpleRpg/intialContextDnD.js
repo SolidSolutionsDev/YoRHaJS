@@ -14,6 +14,10 @@ export const initialContext = {
                 "Just another ordinary day at the park",
             ]
         },
+        intro:{
+            title: "Wire",
+            subTitle: "SPACE to get in"
+        },
         steps: {
             text1: {
                 type: "text",
