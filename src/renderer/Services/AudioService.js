@@ -53,8 +53,8 @@ export class AudioService extends Component {
     const buffer = assetsProvider.getAssetById(assetId);
     // console.log(this,sound,buffer);
     sound.setBuffer(buffer);
-      sound.setLoop(true);
-      sound.play();
+      // sound.setLoop(true);
+      // sound.play();
 
     this.availableAudio[tagName] = { sound: sound };
     if (analyser) {

@@ -7,10 +7,10 @@ import "./PokemonColorGameBattleLogic.css"
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
 export class PokemonColorGameBattleLogic extends React.Component {
 
-    service = interpret(rpgBattleMachine, ).onTransition(current => {
-        // console.log("transition", current);
-        this.setState({current, value: current.value,currentPlayer:current.context.player});
-    });
+    // service = interpret(rpgBattleMachine, ).onTransition(current => {
+    //     // console.log("transition", current);
+    //     this.setState({current, value: current.value,currentPlayer:current.context.player});
+    // });
 
     service2 = interpret(rpgSimpleGameStateMachine, { devTools: true}).onTransition(current => {
         console.log("transition simple", current);
@@ -42,13 +42,13 @@ export class PokemonColorGameBattleLogic extends React.Component {
 
     componentDidMount() {
 
-        this.service.start();
-        this.service2.start();
+        // this.service.start();
+        // this.service2.start();
     }
 
     componentWillUnmount() {
-        this.service.stop();
-        this.service2.stop();
+        // this.service.stop();
+        // this.service2.stop();
     }
 
 

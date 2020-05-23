@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import * as THREE from "three";
-import {sphereOptions} from "../../../../../solid-solutions-backend/constants/states";
+// import {sphereOptions} from "../../../../../solid-solutions-backend/constants/states";
 import {destroyGameObjectById} from "../../../../stores/scene/actions";
 
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
@@ -119,7 +119,8 @@ export class ColorSphereLogic extends React.Component {
 
     setMeshColor = () => {
         // console.log("setMeshColor");
-        const color = this.props.color || sphereOptions.colors[this.props.playerNumber];
+        // const color = this.props.color || sphereOptions.colors[this.props.playerNumber];
+        const color = this.props.color;
         this.props.updateGameObjectComponent(
             this.props.gameObject.id,
             [this.props.meshComponentName], {

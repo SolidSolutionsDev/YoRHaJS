@@ -1,5 +1,5 @@
 import React from "react";
-import {playerStats, sphereOptions} from "../../../../../solid-solutions-backend/constants/states";
+import {playerStats, sphereOptions} from "../../../../solid-solutions-backend/constants/states";
 import {cloneDeep,isEqual} from "lodash";
 import * as THREE from "three";
 import PropTypes from "prop-types";
@@ -30,10 +30,10 @@ export class ColorPokemonLogic extends React.Component {
         this.pokemonBattleLogic = parent.getComponent("PokemonColorGameBattleLogic");
         console.log(this.props.parent,this.props.opponentId,this);
         this.pokemonOpponent = parent.getChildGameObjectByTag(opponentId).getComponent(id);
-        this.service = this.pokemonBattleLogic.service.onTransition(current => {
-            // console.log("ColorPokemonLogic transition", current);
-            this.setState({current, activePlayer: current.context.player});
-        });
+        // this.service = this.pokemonBattleLogic.service.onTransition(current => {
+        //     // console.log("ColorPokemonLogic transition", current);
+        //     this.setState({current, activePlayer: current.context.player});
+        // });
     }
 
     setMeshColor = () => {

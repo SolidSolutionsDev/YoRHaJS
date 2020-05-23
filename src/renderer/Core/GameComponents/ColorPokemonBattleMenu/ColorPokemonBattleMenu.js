@@ -5,7 +5,7 @@ import {rgbToHex} from "../../../../utils/unitConvertUtils";
 // TODO: see if this is the best approach to share state machine state
 import {Machine, interpret} from "xstate";
 import {rpgBattleMachine} from "../../../../state-machines/notUsed/rpgBattleStateMachine";
-import {playerStats} from "../../../../../solid-solutions-backend/constants/states";
+// import {playerStats} from "../../../../../solid-solutions-backend/constants/states";
 import "./ColorPokemonBattleMenu.css"
 import {instantiateFromPrefab} from "../../../../stores/scene/actions";
 import * as _ from "lodash";
@@ -57,21 +57,21 @@ export class ColorPokemonBattleMenu extends React.Component {
         this.label.className = "battle-menu-label";
         this.label.innerHTML = "Player: " + playerNumber;
         this.attacksMenu.appendChild(this.label);
-        if (!playerStats[playerNumber - 1].isBot) {
-            playerStats[playerNumber - 1].attacks.forEach((attack) => {
-                let attackBtn = document.createElement("button");
-                attackBtn.innerHTML = attack.label;
-                attackBtn.style.backgroundColor = rgbToHex(attack.damage);
-                attackBtn.id = "btn";
-
-                attackBtn.onclick = () => {
-                    console.log("here", playerNumber, this.service, attack);
-                    this.pokemonBattleLogic.attackByType[attack.type](attack);
-                    send(`PLAYER_${playerNumber}_ATTACK`)
-                };
-                this.attacksMenu.appendChild(attackBtn);
-            });
-        }
+        // if (!playerStats[playerNumber - 1].isBot) {
+        //     playerStats[playerNumber - 1].attacks.forEach((attack) => {
+        //         let attackBtn = document.createElement("button");
+        //         attackBtn.innerHTML = attack.label;
+        //         attackBtn.style.backgroundColor = rgbToHex(attack.damage);
+        //         attackBtn.id = "btn";
+        //
+        //         attackBtn.onclick = () => {
+        //             console.log("here", playerNumber, this.service, attack);
+        //             this.pokemonBattleLogic.attackByType[attack.type](attack);
+        //             send(`PLAYER_${playerNumber}_ATTACK`)
+        //         };
+        //         this.attacksMenu.appendChild(attackBtn);
+        //     });
+        // }
     };
 
     attachMenu = (menuDiv) => {

@@ -1,6 +1,6 @@
 import {Machine, assign, spawn} from "xstate";
 import {createPlayerMachine, rpgBattlePlayerTurnStateMachine} from "./playerMachine";
-import {playerStats} from "../../../solid-solutions-backend/constants/states";
+import {playerStats} from "../../solid-solutions-backend/constants/states";
 
 const setNewGameData = assign((_,event)=>{
     return {startScene: event && event.startScene ? event.startScene : 0}});
