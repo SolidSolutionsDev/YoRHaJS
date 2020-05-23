@@ -73,7 +73,7 @@ export const initialScene = {
       // "water1",
       "sephiroth1",
       // "shaderPlane1",
-      "backgroundMusicPlayer1",
+      // "backgroundMusicPlayer1",
       // "rpgGame",
       //"rpgTestPlayer1",
       //   "colorSphere",
@@ -370,7 +370,8 @@ export const initialScene = {
     byId: {
       SimpleRPGIntroPrefab: {
         components: {
-          SimpleRPGIntro:{}
+          SimpleRPGIntro:{},
+          SimpleRPGAudioPlayer:{},
         }
       },
 

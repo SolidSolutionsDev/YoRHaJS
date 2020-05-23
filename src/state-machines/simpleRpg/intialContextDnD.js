@@ -22,12 +22,12 @@ export const initialContext = {
             text1: {
                 type: "text",
                 text:["Once...", "there was nothing..",""],
-                goTo: ["music1","text2"]
+                goTo: ["music4","text2"]
             },
             text2: {
                 type: "text",
                 text:["Then...", "there was the grid.",""],
-                goTo: ["backgroundCity","option1"]
+                goTo: ["backgroundCity","music2","option1"]
             },
             winText: {
                 type: "text",
@@ -51,21 +51,26 @@ export const initialContext = {
             },
             music1: {
                 type: "audio",
-                audio: "backgroundMusic"
+                assetId: "fariaDemoMP3"
             },
             music2: {
                 type: "audio",
-                audio: "noMusic"
+                assetId: ""
             },
             music3: {
                 type: "audio",
-                audio: "backgroundMusic2"
+                assetId: "fariaDemoMP3"
+            },
+            music4: {
+                type: "audio",
+                assetId: "laserShot",
+                loop:"true",
             },
             option1: {
                 type: "textOption",
                 text:["Who are you?"],
                 options: [
-                    {text:"Man",goTo:["music2","battle1"]},
+                    {text:"Man",goTo:["music1","battle1"]},
                     {text:"Machine",goTo:["music1","battle2"]},
                     ],
             },
