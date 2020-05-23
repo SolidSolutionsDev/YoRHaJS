@@ -372,6 +372,7 @@ export const initialScene = {
         components: {
           SimpleRPGIntro:{},
           SimpleRPGAudioPlayer:{},
+          SimpleRPGTextOption:{},
         }
       },
 

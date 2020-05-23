@@ -1,0 +1,20 @@
+#rpgText {
+  position: absolute;
+  top: 70%;
+  width: 20%;
+  right: 0%;
+  text-align: center;
+  opacity: 0.9;
+  color: blue;
+  transition:opacity 0.5s linear;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
+#rpgText.inactive {
+  color: red;
+}
+
+#rpgText .selectedOption {
+  font-weight: bolder;
+  color:green;
+}
