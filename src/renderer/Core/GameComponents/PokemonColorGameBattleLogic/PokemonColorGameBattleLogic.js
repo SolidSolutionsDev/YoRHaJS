@@ -12,7 +12,7 @@ export class PokemonColorGameBattleLogic extends React.Component {
     //     this.setState({current, value: current.value,currentPlayer:current.context.player});
     // });
 
-    service2 = interpret(rpgSimpleGameStateMachine, { devTools: true}).onTransition(current => {
+    service2 = interpret(rpgSimpleGameStateMachine, ).onTransition(current => {
         console.log("transition simple", current);
         const battleCurrent = {};
         if (this.service2 && this.battleService!== this.service2.children.get("battle")){

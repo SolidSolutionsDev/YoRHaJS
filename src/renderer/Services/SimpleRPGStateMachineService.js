@@ -7,7 +7,9 @@ export class SimpleRPGStateMachineService extends Component {
     stateMachines = {
         battle:{},
         game:{
-            service:interpret(rpgSimpleGameStateMachine, { devTools: true}),
+            service:interpret(rpgSimpleGameStateMachine
+                // , { devTools: true}
+                ),
         },
     }
 
