@@ -45,7 +45,7 @@ export const initialScene = {
       postprocessing: true,
       backgroundColor: {
         clearColor:0x222222,
-        alpha:0.0
+        alpha:0.9
       }
     },
     allCameras: []
@@ -71,7 +71,7 @@ export const initialScene = {
       // "testEnemy3",
       // "testEnemy4",
       "camera1",
-      "mountainSolid",
+      // "mountainSolid",
       // "water1",
       "sephiroth1",
       // "shaderPlane1",
@@ -174,33 +174,7 @@ export const initialScene = {
         }
       },
       mountainSolid: {
-        debug: true,
-        components: {
-          // AudioScaleComponent: {
-          //   audioTag: "backgroundMusic"
-          // },
-          AutoRotate:{
-            speed: {
-              y:0.0001
-            }
-          },
-          MeshGeometry:{
-            // assetURL: "./assets/models/64-everest/everest.obj",
-            assetId:"everestOBJ",
-            scale: 100,
-            materialParameters:{
-              color: 0x777777,
-              wireframe:true
-            },
-            materialType: "basic"
-          }
-        },
-        transform: {
-          position: { x: 0, y: -30, z: -100},
-          rotation:{
-            // x:Math.PI/2
-          }
-        }
+        prefab:"MountainPrefab"
       },
       testCubeGameObject1: {
         debug: true,
@@ -282,16 +256,10 @@ export const initialScene = {
         prefab: "Board"
       },
       water1: {
-        transform:{
-          rotation: { x:-Math.PI/2 },
-          position: {y:-300}
-        },
-        debug: true,
-        components: {
-          WaterComponent:{},
-        }
+        prefab:"WaterPrefab"
       },
       shaderPlane1: {
+        prefab:"ExplodeShaderPlanePrefab",
         debug: true,
         transform: {
           position: { x: 5, y: 5, z: -10 },
@@ -475,7 +443,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 50, z: 0 }
+                position: { x: 0, y: 50, z: 1 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }
@@ -632,7 +600,11 @@ export const initialScene = {
         debug: true,
         transform: {},
         components: {
-          BoardPlaneGeometry: {}
+          BoardPlaneGeometry: {
+            rotationX: 0.01,
+            dimensions: { x: 500, y: 500, z: .1 },
+            position: {z:-3},
+            mass: 0}
         },
         children: []
       },
@@ -792,6 +764,71 @@ export const initialScene = {
       //   },
       //   children: []
       // },
+      MountainPrefab:{
+        debug: true,
+        components: {
+          // AudioScaleComponent: {
+          //   audioTag: "backgroundMusic"
+          // },
+          AutoRotate:{
+            speed: {
+              y:0.0001
+            }
+          },
+          MeshGeometry:{
+            // assetURL: "./assets/models/64-everest/everest.obj",
+            assetId:"everestOBJ",
+            scale: 100,
+            materialParameters:{
+              color: 0x777777,
+              wireframe:true
+            },
+            materialType: "basic"
+          }
+        },
+        transform: {
+          position: { x: 0, y: -30, z: -100},
+          rotation:{
+            // x:Math.PI/2
+          }
+        }
+      },
+      WaterPrefab:{
+        transform:{
+          rotation: { x:-Math.PI/2 },
+          position: {x:0,y:-1,z:0}
+        },
+        debug: true,
+        components: {
+          WaterComponent:{},
+        }
+      },
+      ExplodeShaderPlanePrefab:{
+        debug: true,
+        transform: {
+          position: { x: 0, y: 0, z: -1 },
+        },
+        components: {
+          PlaneShaderMaterial:{
+            // explode: {
+            //   directionFunction:"random",
+            //   distance:50.0,
+            //   timeScale: 0.0005,
+            //   // audioTag:"backgroundMusic",
+            //   maxEdgeLength:5,
+            //   tessellateIterations:12,
+            //
+            // },
+            // hardLookAtCamera:true,
+            width:9,
+            height:6,
+            // audioTag: "backgroundMusic",
+            shaderAssetID:"worleyTunnelVertShader",
+            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
+            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+          },
+        }
+      }
     },
     allIds: [
       // "Camera",

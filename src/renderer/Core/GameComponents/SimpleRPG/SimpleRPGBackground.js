@@ -2,15 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./SimpleRPGBackground.css";
 import * as THREE from "three";
-import {instantiateFromPrefab} from "../../../../stores/scene/actions";
+import {destroyGameObjectById, instantiateFromPrefab} from "../../../../stores/scene/actions";
+import {uniqueId} from "lodash";
 
 export class SimpleRPGBackground extends React.Component {
 
     state = {
         init: false,
         soundPlaying: false,
-        prefabs :{},
+        backgroundObjects: [],
     };
+
+    initTetsuoBackground = () => {
+        const {transform} = this.props;
+
+        this.background = new window.TETSUO.Premade.BackgroundCity({
+            width: 1280,
+            height: 720,
+        });
+
+        this.background.prepare((quad) => {
+            transform.add(quad.clone());
+        });
+        // transform.add(this.background.quad);
+
+    }
 
 
     advance = () => {
@@ -31,7 +47,7 @@ export class SimpleRPGBackground extends React.Component {
         console.log(availableService);
         const {game} = stateMachine.stateMachines;
         game.service.onTransition(current => {
-            console.log("transition", current);
+            // console.log("transition background", current,this.state.backgroundObjects);
             const stepId = current.context.stepsQueue[0];
             const stepData = current.context.constants.steps[stepId];
             const state = current.value;
@@ -39,56 +55,67 @@ export class SimpleRPGBackground extends React.Component {
             if (active) {
                 this.setState({active, stepId, data: stepData, init: true});
             } else {
-                this.setState({active, init: true});
+                this.setState({active:active, init: true});
             }
         });
         console.log("here", this.state.init);
         document.addEventListener("shoot_keydown", () => {
-            console.log("background next step", this.state.active);
+            // console.log("background next step", this.state.active);
             this.advance();
         });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active && !prevState.active) {
+            // console.log(this.state.backgroundObjects.length,"background");
+            this.cleanBackgrounds();
             this.changeBackground();
         }
     }
 
-    changeBackground = () => {
+    cleanBackgrounds = () => {
+        const {scene} = this.props.availableComponent;
+        console.log("cleanBackgrounds",this.state.backgroundObjects,this);
+        this.state.backgroundObjects.forEach(backgroundGameObjectId =>{
+            // console.log("cleanBackgrounds cycle",backgroundGameObjectId, this.props.gameObject.id);
+            scene.enqueueAction(
+                destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
+            );
+            }
+        );
+        // this.setState({backgroundObjects: []});
+    }
 
-        // scene.enqueueAction(
-        //     instantiateFromPrefab(
-        //         this.bulletPrefab,
-        //         currentBulletId,
-        //         {
-        //             position,
-        //             rotation: _rotation,
-        //             scale
-        //         },
-        //         null,
-        //         null,
-        //         {
-        //             bulletMovement: {
-        //                 around: this.aroundBullets > 1,
-        //                 initTime: startTimeForThisBullet,
-        //                 bulletIndex,
-        //                 moveRatio,
-        //                 displacementRatio,
-        //                 shooterId: gameObject.id,
-        //                 shooterTag: gameObject._tags[0],
-        //                 shooterComponentId: this.props.id
-        //             }
-        //         }
-        //     )
-        // );
+    changeBackground = () => {
+        const {scene} = this.props.availableComponent;
+        const {backGroundPrefabs} = this.state.data;
+        const newBackgroundObjectIds = backGroundPrefabs.map(backgroundPrefabId => {
+            const newId = uniqueId(backgroundPrefabId);
+            scene.enqueueAction(
+                instantiateFromPrefab(
+                    backgroundPrefabId,
+                    newId,
+                    null,
+                    this.props.gameObject.id,
+                )
+            );
+            return newId;
+        });
+        // console.log("newBackgroundObjectIds",newBackgroundObjectIds);
+        this.setState({backgroundObjects: newBackgroundObjectIds});
     };
 
-    update = (time) => {
+    start = () => {
+        this.initTetsuoBackground()
+    }
+
+    update = (time, deltaTime) => {
         this.initListenToStateTransitions();
-        const { scene } = this.props.availableComponent;
+        const {scene} = this.props.availableComponent;
+
+        this.background.update(deltaTime);
         // scene.scene.fog.near = 105 * Math.abs(Math.sin(time/100));
-        scene.scene.fog.far =  Math.max(scene.scene.fog.near,(400 *Math.sin(time/1000)));
+        // scene.scene.fog.far =  Math.max(scene.scene.fog.near,(400 *Math.sin(time/1000)));
     };
 
     render() {
@@ -97,6 +124,7 @@ export class SimpleRPGBackground extends React.Component {
             <div>active: {JSON.stringify(this.state.active)}</div>
             <div>last background step: {this.state.stepId}</div>
             <div>last background data: {JSON.stringify(this.state.data)}</div>
+            <div>background backGroundObjects: {JSON.stringify(this.state.backGroundObjects)}</div>
         </div>;
     }
 }

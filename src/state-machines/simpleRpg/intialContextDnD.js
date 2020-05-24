@@ -22,12 +22,12 @@ export const initialContext = {
             text1: {
                 type: "text",
                 text:["Once...", "there was nothing..",""],
-                goTo: ["music4","text2"]
+                goTo: ["music1","text2"]
             },
             text2: {
                 type: "text",
                 text:["Then...", "there was the grid.",""],
-                goTo: ["backgroundCity","music2","option1"]
+                goTo: ["backgroundMountain","music2","option1"]
             },
             winText: {
                 type: "text",
@@ -37,17 +37,25 @@ export const initialContext = {
                 type: "text",
                 text:["You lost the matrix"]
             },
-            backgroundCity: {
+            backgroundMountain: {
                 type: "backgroundChange",
-                background: "backgroundCityPrefab"
+                backGroundPrefabs: ["MountainPrefab"]
             },
             backgroundTunnel: {
                 type: "backgroundChange",
-                background: "backgroundTunnelPrefab"
+                backGroundPrefabs: ["backgroundTunnelPrefab"]
+            },
+            backgroundWater: {
+                type: "backgroundChange",
+                backGroundPrefabs: ["WaterPrefab","Board"]
+            },
+            backgroundExplode: {
+                type: "backgroundChange",
+                backGroundPrefabs: ["ExplodeShaderPlanePrefab"]
             },
             backgroundNone: {
                 type: "backgroundChange",
-                background: "backgroundNonePrefab"
+                backGroundPrefabs: []
             },
             music1: {
                 type: "audio",
@@ -56,10 +64,6 @@ export const initialContext = {
             music2: {
                 type: "audio",
                 assetId: ""
-            },
-            music3: {
-                type: "audio",
-                assetId: "fariaDemoMP3"
             },
             music4: {
                 type: "audio",
@@ -70,8 +74,8 @@ export const initialContext = {
                 type: "textOption",
                 text:["Who are you?"],
                 options: [
-                    {text:"Man",goTo:["music1","battle1"]},
-                    {text:"Machine",goTo:["music1","battle2"]},
+                    {text:"Man",goTo:["backgroundNone","music1","backgroundWater","backgroundExplode","battle1"]},
+                    {text:"Machine",goTo:["music1","backgroundExplode","battle2"]},
                     ],
             },
             battle1: {

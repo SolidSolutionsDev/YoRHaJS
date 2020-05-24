@@ -154,7 +154,6 @@ export class SimpleRPGTextOption extends React.Component {
 
     update = (time, deltaTime) => {
         this.initListenToStateTransitions();
-        console.log(deltaTime);
         this.textScreen.update(deltaTime);
     };
 
