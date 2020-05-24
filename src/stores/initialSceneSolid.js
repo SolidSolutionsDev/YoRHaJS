@@ -373,6 +373,7 @@ export const initialScene = {
           SimpleRPGIntro:{},
           SimpleRPGAudioPlayer:{},
           SimpleRPGTextOption:{},
+          SimpleRPGBackground:{},
         }
       },
 
