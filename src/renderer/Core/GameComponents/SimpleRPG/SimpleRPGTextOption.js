@@ -22,16 +22,16 @@ export class SimpleRPGTextOption extends React.Component {
     initTetsuoScreen = () => {
         // init the text screen
         this.textScreen = new window.TETSUO.Premade.TextScreen({
-            width: 1280,
-            height: 720,
+            width: window.screen.width/2,
+            height: window.screen.height/2,
 
             // optional options
             backgroundColor: 0x1c1e1c,
-            marginTop: 100,
-            marginLeft: 200,
-            paddingBottom: 50,
-            paddingLeft: 100,
-            opacity:1,
+            marginTop: 0,
+            marginLeft: 0,
+            paddingBottom: 0,
+            paddingLeft: 0,
+            opacity:.0,
 
             defaultTextStyle: {
                 fontSize: 24,

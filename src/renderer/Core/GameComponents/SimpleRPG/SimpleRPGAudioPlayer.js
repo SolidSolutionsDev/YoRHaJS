@@ -50,6 +50,7 @@ export class SimpleRPGAudioPlayer extends React.Component {
         if (this.state.active && !prevState.active) {
             this.playAudio();
             this.setState({soundPlaying: true});
+            this.advance();
         }
     }
 

@@ -194,9 +194,9 @@ export const initialScene = {
           }
         },
         transform: {
-          position: { x: 0, y: 0, z: 30},
+          position: { x: 0, y: -30, z: -100},
           rotation:{
-            x:Math.PI/2
+            // x:Math.PI/2
           }
         }
       },
@@ -467,7 +467,7 @@ export const initialScene = {
                 position: { x: 10, y: 0, z: 0 }
               },
               front: {
-                position: { x: 0, y: 0, z: 2}
+                position: { x: 0, y: 0, z: 3}
               },
               back: {
                 position: { x: 0, y: 0, z: -10 }
