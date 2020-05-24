@@ -163,6 +163,7 @@ export class Game extends React.Component {
           {..._propsList}
           ref={this.addGameComponent}
           key="scene"
+          activeSceneId="main"
           id="scene"
         />
         <PhysicsService

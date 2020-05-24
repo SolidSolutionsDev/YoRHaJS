@@ -17,10 +17,10 @@ export const initialScene = {
       speed: 1,
       current_level: 0
     },
+    activeScenes:["main"],
     preloadWaitToStart:true,
     assets: {
       sephirothPMXModel:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
-      fariaDemoMP3:"./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
       everestOBJ: "./assets/models/64-everest/everest.obj",
       worleyTunnelVertShader:"./assets/shaders/fragment/anticore_worley_tunnel.glsl",
       sandsFragShader:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
@@ -28,6 +28,7 @@ export const initialScene = {
       laserShot:"./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
       menuMove:"./assets/sounds/The Legend of Zelda Cartoon Sound Effects Health Heart.wav",
       menuSelect:"./assets/sounds/The Legend of Zelda Cartoon Sound Effects Power Zap.wav",
+      fariaDemoMP3:"./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
     },
     levels: {
       byId: {
@@ -44,19 +45,20 @@ export const initialScene = {
       postprocessing: true,
       backgroundColor: {
         clearColor:0x222222,
-        alpha:1.0
+        alpha:0.0
       }
-    }
+    },
+    allCameras: []
   },
-  scene: {
-    // fog :{
-    //   color:0x222222,
-    //   near:105,
-    //   far: 400
-    // },
+  scenes: {
+    main:{
+    fog :{
+      color:0x222222,
+      near:10,
+      far: 400
+    },
     camera: {
       main: null,
-      allCameras: []
     },
     children: [
       "lightGroup",
@@ -81,7 +83,7 @@ export const initialScene = {
       //   "pokemonLogic",
       "simpleRPGIntro"
     ]
-  },
+  }},
   gameObjects: {
     byId: {
       // rpgGame: {},

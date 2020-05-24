@@ -54,9 +54,10 @@ export const removeCamera = (cameraId) => ({
   cameraId,
 });
 
-export const setMainCamera = (cameraId) => ({
+export const setMainCamera = (cameraId,sceneId) => ({
   type: "SET_MAIN_CAMERA",
   cameraId,
+  sceneId,
 });
 
 export const destroyGameObjectById = (gameObjectId,parentId) => ({
