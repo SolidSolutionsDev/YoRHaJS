@@ -179,8 +179,8 @@ export const rpgSimpleGameStateMachine = Machine({
             },
         },
         nextStep: {
-            on: {
-                "": [
+            after: {
+                1000: [
                     {
                         target: 'playBattle',
                         cond: isBattle
