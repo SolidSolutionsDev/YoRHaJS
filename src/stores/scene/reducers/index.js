@@ -10,10 +10,11 @@ const instantiateFromPrefabReducer = (state, action) => {
     if (temp.state.gameObjects.allIds.includes(newId)) {
       return temp.state;
     }
+    const _transform = {...state.prefabs.byId[prefabId].transform,...transform}
     temp.newGameObject = {
       debug: false,
       prefab: prefabId,
-      transform,
+      transform: _transform,
       parentId: parentId,
       components
     };
@@ -34,7 +35,7 @@ const instantiateFromPrefabReducer = (state, action) => {
       const _currentChildren = temp.parent.children || [];
       temp.parent.children = [..._currentChildren, newId];
     } else {
-      temp.state.scenes[temp.game.activeScenes[0]].children = [...temp.state.scenes[temp.game.activeScenes[0]].children, newId];
+      temp.state.scenes[temp.state.game.activeScenes[0]].children = [...temp.state.scenes[temp.state.game.activeScenes[0]].children, newId];
     }
   }
   return temp.state;
