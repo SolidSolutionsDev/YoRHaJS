@@ -9,15 +9,16 @@ import {
 //     return state.scene.objects;
 // }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state,ownProps) => ({
   // objects: getObjects(state),
   ...state.mainReducer,
-  camera: state.mainReducer.scene.camera,
+  scene:state.mainReducer.scenes[ownProps.activeSceneId],
+  camera: state.mainReducer.scenes[ownProps.activeSceneId].camera,
   gameObjects: state.mainReducer.gameObjects,
   prefabs: state.mainReducer.prefabs.byId
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch,ownProps) => ({
   registerCamera: gameObjectId => {
     dispatch(registerCamera(gameObjectId));
   },
@@ -25,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(removeCamera(gameObjectId));
   },
   setMainCamera: gameObjectId => {
-    dispatch(setMainCamera(gameObjectId));
+    dispatch(setMainCamera(gameObjectId,ownProps.activeSceneId));
   },
   dequeueActions: enqueuedActionsArray => {
     if (enqueuedActionsArray.length) {
