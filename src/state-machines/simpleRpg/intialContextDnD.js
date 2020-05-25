@@ -39,7 +39,7 @@ export const initialContext = {
             },
             backgroundMountain: {
                 type: "backgroundChange",
-                backGroundPrefabs: ["MountainPrefab"]
+                backGroundPrefabs: ["MountainPrefab","TETSUOCityPrefab"]
             },
             backgroundTunnel: {
                 type: "backgroundChange",

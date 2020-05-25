@@ -803,6 +803,16 @@ export const initialScene = {
           WaterComponent:{},
         }
       },
+      TETSUOCityPrefab:{
+        transform:{
+          // rotation: { x:-Math.PI/2 },
+          position: {x:0,y:-1,z:0}
+        },
+        debug: true,
+        components: {
+          TETSUOCity:{},
+        }
+      },
       ExplodeShaderPlanePrefab:{
         debug: true,
         transform: {

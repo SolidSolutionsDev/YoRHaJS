@@ -13,34 +13,6 @@ export class SimpleRPGBackground extends React.Component {
         backgroundObjects: [],
     };
 
-    initTetsuoBackground = () => {
-        const {transform} = this.props;
-
-        this.background = new window.TETSUO.Premade.BackgroundCity({
-            width: 1280,
-            height: 720,
-        });
-
-        this.background.prepare();
-        // transform.add(this.background.quad);
-        // this.background.quad.position.x+=3
-        const geometry = new THREE.PlaneGeometry( 2, 2, 32 );
-        const material = new THREE.MeshLambertMaterial( {
-            map:new THREE.Texture(this.background.texture),
-            side: THREE.DoubleSide} );
-        this.plane = new THREE.Mesh( geometry, material );
-        this.quadToUse =  this.background.quad.clone();
-        transform.add( this.plane);
-        transform.add( this.quadToUse);
-        // transform.add(  );
-        // this.background.quad.material = this.plane.material;
-        console.log(this.background,this.plane);
-        console.log(this.background.quad.material,"material");
-        this.plane.position.x+=2
-        this.quadToUse.position.x-=2
-
-    }
-
 
     advance = () => {
         const {availableService} = this.props;
@@ -68,7 +40,7 @@ export class SimpleRPGBackground extends React.Component {
             if (active) {
                 this.setState({active, stepId, data: stepData, init: true});
             } else {
-                this.setState({active:active, init: true});
+                this.setState({active: active, init: true});
             }
         });
         console.log("here", this.state.init);
@@ -88,12 +60,12 @@ export class SimpleRPGBackground extends React.Component {
 
     cleanBackgrounds = () => {
         const {scene} = this.props.availableComponent;
-        console.log("cleanBackgrounds",this.state.backgroundObjects,this);
-        this.state.backgroundObjects.forEach(backgroundGameObjectId =>{
-            // console.log("cleanBackgrounds cycle",backgroundGameObjectId, this.props.gameObject.id);
-            scene.enqueueAction(
-                destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
-            );
+        console.log("cleanBackgrounds", this.state.backgroundObjects, this);
+        this.state.backgroundObjects.forEach(backgroundGameObjectId => {
+                // console.log("cleanBackgrounds cycle",backgroundGameObjectId, this.props.gameObject.id);
+                scene.enqueueAction(
+                    destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
+                );
             }
         );
         // this.setState({backgroundObjects: []});
@@ -119,21 +91,11 @@ export class SimpleRPGBackground extends React.Component {
     };
 
     start = () => {
-        this.initTetsuoBackground()
     }
 
-    update = (time, deltaTime) => {
+    update = () => {
         this.initListenToStateTransitions();
-        const {scene} = this.props.availableComponent;
-
-        this.background.update(deltaTime);
-
-        if (this.background &&  this.plane && this.background)  {
-            this.plane.material.map = new THREE.CanvasTexture(this.background._renderer.renderer.domElement);
-            this.quadToUse.material = this.plane.material;
-            // this.quadToUse.material.map = new THREE.CanvasTexture(this.background._renderer.renderer.domElement);
-        }
-
+        // const {scene} = this.props.availableComponent;
         // scene.scene.fog.near = 105 * Math.abs(Math.sin(time/100));
         // scene.scene.fog.far =  Math.max(scene.scene.fog.near,(400 *Math.sin(time/1000)));
     };
@@ -150,6 +112,4 @@ export class SimpleRPGBackground extends React.Component {
 }
 
 SimpleRPGBackground.propTypes = {
-    // transform: PropTypes.object.isRequired,
-    // assetId: PropTypes.string.isRequired
 };
