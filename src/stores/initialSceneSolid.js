@@ -443,7 +443,7 @@ export const initialScene = {
                 position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 50, z: 1 }
+                position: { x: 0, y: 50, z: -1 }
               },
               bottom: {
                 position: { x: 0, y: -10, z: 0 }

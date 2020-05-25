@@ -21,10 +21,23 @@ export class SimpleRPGBackground extends React.Component {
             height: 720,
         });
 
-        this.background.prepare((quad) => {
-            transform.add(quad.clone());
-        });
+        this.background.prepare();
         // transform.add(this.background.quad);
+        // this.background.quad.position.x+=3
+        const geometry = new THREE.PlaneGeometry( 2, 2, 32 );
+        const material = new THREE.MeshLambertMaterial( {
+            map:new THREE.Texture(this.background.texture),
+            side: THREE.DoubleSide} );
+        this.plane = new THREE.Mesh( geometry, material );
+        this.quadToUse =  this.background.quad.clone();
+        transform.add( this.plane);
+        transform.add( this.quadToUse);
+        // transform.add(  );
+        // this.background.quad.material = this.plane.material;
+        console.log(this.background,this.plane);
+        console.log(this.background.quad.material,"material");
+        this.plane.position.x+=2
+        this.quadToUse.position.x-=2
 
     }
 
@@ -114,6 +127,13 @@ export class SimpleRPGBackground extends React.Component {
         const {scene} = this.props.availableComponent;
 
         this.background.update(deltaTime);
+
+        if (this.background &&  this.plane && this.background)  {
+            this.plane.material.map = new THREE.CanvasTexture(this.background._renderer.renderer.domElement);
+            this.quadToUse.material = this.plane.material;
+            // this.quadToUse.material.map = new THREE.CanvasTexture(this.background._renderer.renderer.domElement);
+        }
+
         // scene.scene.fog.near = 105 * Math.abs(Math.sin(time/100));
         // scene.scene.fog.far =  Math.max(scene.scene.fog.near,(400 *Math.sin(time/1000)));
     };
