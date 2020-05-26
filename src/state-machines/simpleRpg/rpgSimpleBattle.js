@@ -26,13 +26,46 @@ const resetPlayerHp = assign({
     damageDone:0
 });
 
+const computeDamageDone = assign({
+    player: (ctx) => {
+        if (ctx.currentTurn ==="enemy") {
+            return ctx.player;
+        }
+        const player = {...ctx.player};
+        const damageDone = rand(player.defense*3,player.defense*4)
+        player.hp = player.hp - damageDone;
+        player.damageTaken = damageDone;
+        return player;
+    },
+    enemy: (ctx) => {
+        if (ctx.currentTurn ==="player") {
+            return ctx.enemy;
+        }
+        const enemy = {...ctx.enemy};
+        const damageDone = rand(enemy.defense*3,enemy.defense*4)
+        enemy.hp = enemy.hp - damageDone;
+        enemy.damageTaken = damageDone;
+        return enemy;
+    }
+});
+
 const computeDamageDoneToPlayer = assign({
     player: (ctx) => {
         const player = {...ctx.player};
         const damageDone = rand(player.defense*3,player.defense*4)
-        player.damageTaken = damageDone;
         player.hp = player.hp - damageDone;
+        player.damageTaken = damageDone;
         return player;
+    }
+});
+
+const computeDamageDoneToEnemy = assign({
+    enemy: (ctx) => {
+        const enemy = {...ctx.enemy};
+        const damageDone = rand(enemy.defense*3,enemy.defense*4)
+        enemy.hp = enemy.hp - damageDone;
+        enemy.damageTaken = damageDone;
+        return enemy;
     }
 });
 
@@ -48,15 +81,6 @@ const computeExperienceWon = assign({
 });
 
 
-const computeDamageDoneToEnemy = assign({
-    enemy: (ctx) => {
-        const enemy = {...ctx.enemy};
-        const damageDone = rand(enemy.defense*3,enemy.defense*4)
-        enemy.hp = enemy.hp - damageDone;
-        enemy.damageTaken = damageDone;
-        return enemy;
-    }
-});
 
 const playerTurn = assign({
     currentTurn: "player"
@@ -139,7 +163,8 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             playerTurn: {
-                entry: [playerTurn, updateParentCharacterData, resetDiceValue],
+                entry: [playerTurn, updateParentCharacterData],
+                exit:[resetDiceValue],
                 on: {
                     // Transient transition
                     // Will transition to either 'win' or 'lose' immediately upon
@@ -156,7 +181,8 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             enemyTurn: {
-                entry: [enemyTurn, updateParentCharacterData, resetDiceValue],
+                entry: [enemyTurn, updateParentCharacterData],
+                exit:[resetDiceValue],
                 on: {
                     // Transient transition
                     // Will transition to either 'win' or 'lose' immediately upon
@@ -166,7 +192,7 @@ export const rpgSimpleBattle = Machine(
                         {target: 'lose', cond: 'didPlayerLose'}
                     ],
                     PLAYER_INPUT:{target:'rollDice',cond:"isRoll"}
-                }
+                },
             },
             rollDice: {
                 after: {
@@ -189,27 +215,12 @@ export const rpgSimpleBattle = Machine(
                         // actions: cancelRollTimer,
                         cond: "isPlayerTurn"
                     },
-                    // ROLL: {
-                    //     target: "rollDice",
-                    //     actions: changeToNextDiceValue,
-                    //     cond:"isRoll"
-                    // },
                 }
             },
             computeDamage: {
-                entry: [updateParentCharacterData],
+                entry: [updateParentCharacterData,computeDamageDone,sendTakenDamage,updateParentCharacterData],
                 on: {
-                    "":[
-                        {
-                            target:"playerTurn",
-                            actions:[computeDamageDoneToPlayer,sendTakenDamage,updateParentCharacterData],
-                            cond:"hasPlayerTakenDamage"
-                        },
-                        {
-                            target:"enemyTurn",
-                            actions:[computeDamageDoneToEnemy,sendTakenDamage,updateParentCharacterData],
-                            cond:"hasEnemyTakenDamage"
-                        },
+                    PLAYER_INPUT:[
                         {
                             target:"playerTurn",
                             cond:"isEnemyTurn"
