@@ -344,6 +344,7 @@ export const initialScene = {
           SimpleRPGAudioPlayer:{},
           SimpleRPGTextOption:{},
           SimpleRPGBackground:{},
+          SimpleRPGBattle:{},
         }
       },
 
