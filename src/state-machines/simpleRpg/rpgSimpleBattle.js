@@ -30,6 +30,7 @@ const computeDamageDoneToPlayer = assign({
     player: (ctx) => {
         const player = {...ctx.player};
         const damageDone = rand(player.defense*3,player.defense*4)
+        player.damageTaken = damageDone;
         player.hp = player.hp - damageDone;
         return player;
     }
@@ -52,6 +53,7 @@ const computeDamageDoneToEnemy = assign({
         const enemy = {...ctx.enemy};
         const damageDone = rand(enemy.defense*3,enemy.defense*4)
         enemy.hp = enemy.hp - damageDone;
+        enemy.damageTaken = damageDone;
         return enemy;
     }
 });

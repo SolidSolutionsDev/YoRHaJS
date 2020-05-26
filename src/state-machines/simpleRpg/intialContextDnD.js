@@ -104,6 +104,7 @@ export const initialContext = {
                 name: "White Grey Mouse",
                 prefab: "SpherePrefab",
                 hp: 100,
+                maxHp: 100,
                 defense:2,
                 attack:0,
                 // raises level, raises this ones
@@ -114,6 +115,7 @@ export const initialContext = {
                 name: "Dark Mouse",
                 prefab: "HeadPrefab",
                 hp: 500,
+                maxHp: 500,
                 defense:6,
                 attack:0,
                 // raises level, raises this ones
@@ -124,6 +126,7 @@ export const initialContext = {
                 name: "Blue White Mouse",
                 prefab: "ShooterPrefab",
                 hp: 1000,
+                maxHp: 1000,
                 defense:6,
                 attack:0,
                 // raises level, raises this ones
@@ -134,6 +137,7 @@ export const initialContext = {
                 name: "BEAUTIFUL CUBE",
                 prefab: "ShooterPrefab",
                 hp: 1200,
+                maxHp: 1200,
                 defense:6,
                 attack:0,
                 // raises level, raises this ones
