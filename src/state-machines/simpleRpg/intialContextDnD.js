@@ -22,12 +22,12 @@ export const initialContext = {
             text1: {
                 type: "text",
                 text:["Once...", "there was nothing..",""],
-                goTo: ["music1","text2"]
+                goTo: ["musicFariaDemo","battle1","text2"]
             },
             text2: {
                 type: "text",
                 text:["Then...", "there was the grid.",""],
-                goTo: ["backgroundMountain","music2","option1"]
+                goTo: ["backgroundMountain","musicStop","option1"]
             },
             winText: {
                 type: "text",
@@ -57,15 +57,15 @@ export const initialContext = {
                 type: "backgroundChange",
                 backGroundPrefabs: []
             },
-            music1: {
+            musicFariaDemo: {
                 type: "audio",
                 assetId: "fariaDemoMP3"
             },
-            music2: {
+            musicStop: {
                 type: "audio",
                 assetId: ""
             },
-            music4: {
+            soundLaserShot: {
                 type: "audio",
                 assetId: "laserShot",
                 loop:"true",
@@ -74,8 +74,8 @@ export const initialContext = {
                 type: "textOption",
                 text:["Who are you?"],
                 options: [
-                    {text:"Man",goTo:["backgroundNone","music1","backgroundWater","backgroundExplode","battle1"]},
-                    {text:"Machine",goTo:["music1","backgroundExplode","battle2"]},
+                    {text:"Man",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
+                    {text:"Machine",goTo:["musicFariaDemo","backgroundExplode","battle2"]},
                     ],
             },
             battle1: {

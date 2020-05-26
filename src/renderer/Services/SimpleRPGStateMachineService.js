@@ -30,7 +30,7 @@ export class SimpleRPGStateMachineService extends Component {
                 value: gameState.value,
                 context: gameState.context,
             };
-            console.log("transition main game", this.stateMachines);
+            // console.log("transition main game", this.stateMachines);
             if (this.stateMachines.game.service && this.battleService!== this.stateMachines.game.service.children.get("battle")){
                 this.battleService= this.stateMachines.game.service.children.get("battle");
                 const a = this.battleService ? this.battleService.onTransition(state=> {
