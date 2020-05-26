@@ -16,6 +16,7 @@ export class TETSUOCity extends React.Component {
         const {transform} = this.props;
         this.tetsuoBackgroundObject.prepare();
         this.material = new THREE.MeshBasicMaterial({
+            transparent:true,
             map: new THREE.Texture(this.tetsuoBackgroundObject.texture),
             side: THREE.DoubleSide
         });

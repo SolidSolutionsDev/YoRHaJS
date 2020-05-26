@@ -154,9 +154,11 @@ export class SimpleRPGBattle extends React.Component {
         // quad = textScreen.quad;
         this.props.transform.add(this.graphicElements.player.text.quad);
         this.graphicElements.player.text.quad.position.set(...this.graphicElementsPositions.player.text);
+        this.graphicElements.player.text.quad.material.transparent = true;
 
         this.props.transform.add(this.graphicElements.enemy.text.quad);
         this.graphicElements.enemy.text.quad.position.set(...this.graphicElementsPositions.enemy.text);
+        this.graphicElements.enemy.text.quad.material.transparent = true;
 
         const {player} = this.state.battleCtx;
         const text = player.name + "\nHP:"+player.hp+"/"+player.maxHp;
@@ -214,6 +216,7 @@ export class SimpleRPGBattle extends React.Component {
         // quad = textScreen.quad;
         this.props.transform.add(this.graphicElements.player.counter.quad);
         this.graphicElements.player.counter.quad.position.set(...this.graphicElementsPositions.player.counter);
+        this.graphicElements.player.counter.quad.material.transparent = true;
 
 
     }
