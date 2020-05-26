@@ -265,10 +265,10 @@ export class SimpleRPGBattle extends React.Component {
     };
 
     render() {
-        const {gameValue, gameCurrent,battleCtx,battleCurrent} = this.state;
-        const battleUI = battleCurrent==="playBattle"? <div>BATTLE!
-        <div>{battleCurrent}</div>
-        <div style={{color:"red"}}>Dice:{battleCtx.diceValue}</div>
+        const {gameCurrent,battleCtx,battleCurrent} = this.state;
+        const battleUI = gameCurrent && gameCurrent.value==="playBattle"? <div>BATTLE!
+        <div>{gameCurrent.value+" -> "+battleCurrent.value}</div>
+        <div style={{color:battleCtx.currentTurn === "player" ? "green" : "red"}}>Dice:{battleCtx.diceValue}</div>
         <div>Damage Done {battleCtx.damageDone}</div>
         <div>Player {`${battleCtx.player.name} hp:${battleCtx.player.hp} defense:${battleCtx.player.defense} `}</div>
         <div>Enemy {`${battleCtx.enemy.name} hp:${battleCtx.enemy.hp} defense:${battleCtx.enemy.defense} `}</div>
