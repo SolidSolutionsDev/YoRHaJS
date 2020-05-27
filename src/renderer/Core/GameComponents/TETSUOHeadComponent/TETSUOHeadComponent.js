@@ -4,7 +4,9 @@ import TETSUO from "@SolidSolutionsDev/tetsuo";
 
 export class TETSUOHeadComponent extends React.Component {
 
-    tetsuoObject = new window.TETSUO.Premade.Face({geometryPath: "./assets/models/head/face.json"});
+    tetsuoObject = new window.TETSUO.Premade.Face({
+        geometryPath: "./assets/models/head/face.json",
+    });
     mesh;
 
     initTetsuo = () => {
@@ -25,7 +27,8 @@ export class TETSUOHeadComponent extends React.Component {
 
     update = (time, deltaTime) => {
         this.tetsuoObject.update(deltaTime, {
-            color: new THREE.Vector3(Math.cos(time * 2), 1, Math.sin(time * 2)),
+            // color: new THREE.Vector3(Math.cos(time * 2), 1, Math.sin(time * 2)),
+            color: new THREE.Vector3(1, Math.cos(time * 2), Math.sin(time * 2)),
         });
     };
 
