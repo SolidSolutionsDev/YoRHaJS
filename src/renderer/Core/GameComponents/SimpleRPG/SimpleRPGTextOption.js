@@ -22,8 +22,8 @@ export class SimpleRPGTextOption extends React.Component {
     initTetsuoScreen = () => {
         // init the text screen
         this.textScreen = new window.TETSUO.Premade.TextScreen({
-            width: window.screen.width/2,
-            height: window.screen.height/2,
+            width: window.screen.width / 2,
+            height: window.screen.height / 2,
 
             // optional options
             backgroundColor: 0x1c1e1c,
@@ -31,7 +31,7 @@ export class SimpleRPGTextOption extends React.Component {
             marginLeft: 0,
             paddingBottom: 0,
             paddingLeft: 0,
-            opacity:.0,
+            opacity: .9,
 
             defaultTextStyle: {
                 fontSize: 24,
@@ -43,8 +43,10 @@ export class SimpleRPGTextOption extends React.Component {
         this.textScreen.prepare();
 
         this.textScreen.quad.material.transparent = true;
+        this.textScreen.quad.material.opacity = 0.6;
         // add the output quad to the scene
         // quad = textScreen.quad;
+        console.log(this.textScreen);
         this.props.transform.add(this.textScreen.quad);
     }
 
@@ -54,7 +56,7 @@ export class SimpleRPGTextOption extends React.Component {
         const {stateMachine} = availableService;
         const {game} = stateMachine.stateMachines;
         if (this.state.active) {
-            console.log("text advance");
+            // console.log("text advance");
             game.service.send("NEXT_STEP")
         }
     }
@@ -64,7 +66,7 @@ export class SimpleRPGTextOption extends React.Component {
         const {stateMachine} = availableService;
         const {game} = stateMachine.stateMachines;
         if (this.state.active && this.state.value === "playTextOption") {
-            console.log("text selectPreviousOption");
+            // console.log("text selectPreviousOption");
             game.service.send("SELECT_PREVIOUS_OPTION");
         }
     }
@@ -74,7 +76,7 @@ export class SimpleRPGTextOption extends React.Component {
         const {stateMachine} = availableService;
         const {game} = stateMachine.stateMachines;
         if (this.state.active && this.state.value === "playTextOption") {
-            console.log("text selectNextOption");
+            // console.log("text selectNextOption");
             game.service.send("SELECT_NEXT_OPTION");
         }
     }
@@ -85,10 +87,10 @@ export class SimpleRPGTextOption extends React.Component {
         }
         const {availableService} = this.props;
         const {stateMachine} = availableService;
-        console.log(availableService);
+        // console.log(availableService);
         const {game} = stateMachine.stateMachines;
         game.service.onTransition(current => {
-            console.log("transition", current);
+            // console.log("transition", current);
             const stepId = current.context.stepsQueue[0];
             const stepData = current.context.constants.steps[stepId];
             const currentTextOption = current.context.currentTextOption;
@@ -104,30 +106,41 @@ export class SimpleRPGTextOption extends React.Component {
                     selectedCommand: currentTextOption
                 });
             } else {
-                this.setState({active, init: true});
+                this.setState({active, init: true, value: current.value});
             }
         });
-        console.log("here", this.state.init);
+        // console.log("here", this.state.init);
         this.registerEvents();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active) {
             const textData = this.state.data;
+            if (textData.text.length === 0) {
+                this.textScreen.clear();
+                this.advance();
+                return;
+            }
             const text = textData.text.join("\n");
-            if (this.state.value === "playText"){
-                    this.textScreen.addText(text);
-        }
-            if (this.state.value === "playTextOption"){
+            if (this.state.value === "playText") {
+                this.textScreen.addText(text);
+            }
+            if (this.state.value === "playTextOption") {
                 if (textData === prevState.data) {
                     this.textScreen.selectAnswer(this.state.selectedCommand.toString());
-                }
-                else {
-                    const answers = textData.options.map((textOption,index)=> {return {id:index.toString(), textContent:textOption.text}});
+                } else {
+                    const answers = textData.options.map((textOption, index) => {
+                        return {id: index.toString(), textContent: textOption.text}
+                    });
                     this.textScreen.addQuestion(text, answers);
                 }
             }
-    }
+
+        } else {
+            if (this.state.value === "playBattle") {
+                this.textScreen.clear();
+            }
+        }
     }
 
     registerEvents = () => {
@@ -173,6 +186,10 @@ export class SimpleRPGTextOption extends React.Component {
 
 
     render() {
+
+        if (!this.props.debug) {
+            return null;
+        }
         const commands = this.buildCommandList();
         return <div id={"rpgText"}>
             <h2>SimpleRPGTextOption</h2>

@@ -163,7 +163,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             playerTurn: {
-                entry: [playerTurn, updateParentCharacterData],
+                entry: [playerTurn, updateParentCharacterData,resetDiceValue],
                 exit:[resetDiceValue],
                 on: {
                     // Transient transition
@@ -181,7 +181,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             enemyTurn: {
-                entry: [enemyTurn, updateParentCharacterData],
+                entry: [enemyTurn, updateParentCharacterData,resetDiceValue],
                 exit:[resetDiceValue],
                 on: {
                     // Transient transition
@@ -266,7 +266,7 @@ export const rpgSimpleBattle = Machine(
                 return ctx.currentTurn !== "player";
             },
             willEnemyStop: (ctx) => {
-                return ctx.currentTurn !== "player" && Math.random() > 0.95;
+                return ctx.currentTurn !== "player" && Math.random() > 0.97;
             },
             hasPlayerTakenDamage: (ctx) => {
                 return  ctx.currentTurn !== "player" && ctx.player.defense < ctx.diceValue;

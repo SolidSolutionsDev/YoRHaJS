@@ -25,10 +25,8 @@ export class SimpleRPGAudioPlayer extends React.Component {
         }
         const {availableService} = this.props;
         const {stateMachine} = availableService;
-        console.log(availableService);
         const {game} = stateMachine.stateMachines;
         game.service.onTransition(current => {
-            console.log("transition", current);
             const stepId = current.context.stepsQueue[0];
             const stepData = current.context.constants.steps[stepId];
             const state = current.value;
@@ -39,9 +37,7 @@ export class SimpleRPGAudioPlayer extends React.Component {
                 this.setState({active, init: true});
             }
         });
-        console.log("here", this.state.init);
         document.addEventListener("shoot_keydown", () => {
-            console.log("audio next step", this.state.active);
             this.advance();
         });
     }
@@ -93,6 +89,7 @@ export class SimpleRPGAudioPlayer extends React.Component {
     };
 
     render() {
+        if (!this.props.debug) { return null; }
         return <div id={"rpgAudio"}>
             <h2>SimpleRPGAudioPlayer</h2>
             <div>playing: {JSON.stringify(this.state.soundPlaying)}</div>

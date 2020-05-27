@@ -16,15 +16,11 @@ export class SimpleRPGIntro extends React.Component {
             }
             const {availableService} = this.props;
             const {stateMachine} = availableService;
-            console.log(availableService);
             const {game} = stateMachine.stateMachines;
             game.service.onTransition(current => {
-                console.log("transition", current);
                 this.setState({active:current.value==="intro", data:current.context.constants.intro, init:true});
             });
-            console.log("here",this.state.init);
             document.addEventListener("shoot_keydown", ()=> {
-                console.log("here",this.state.active);
                 if (this.state.active) { game.service.send("START") }
             });
         }

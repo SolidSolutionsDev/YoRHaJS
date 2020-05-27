@@ -3,7 +3,7 @@ import {interpret} from "xstate";
 import {rpgSimpleGameStateMachine} from "../../state-machines/simpleRpg/rpgSimpleGameStateMachine";
 
 export class SimpleRPGStateMachineService extends Component {
-    debug = true;
+    debug = false;
     stateMachines = {
         battle:{},
         game:{
@@ -30,8 +30,8 @@ export class SimpleRPGStateMachineService extends Component {
                 value: gameState.value,
                 context: gameState.context,
             };
-            // console.log("transition main game", this.stateMachines);
-            if (this.stateMachines.game.service && this.battleService!== this.stateMachines.game.service.children.get("battle")){
+            const transitionedToANewBattleState =this.battleService!== this.stateMachines.game.service.children.get("battle");
+            if (transitionedToANewBattleState){
                 this.battleService= this.stateMachines.game.service.children.get("battle");
                 const a = this.battleService ? this.battleService.onTransition(state=> {
                         this.stateMachines.battle = {
@@ -40,7 +40,6 @@ export class SimpleRPGStateMachineService extends Component {
                             value: state.value,
                             context: state.context,
                         };
-                        console.log("transition sub battle",this.stateMachines);
                         this.setState({battleCurrent:state, battleValue: state.value,battleCtx:state.context});
                     })
                     : null;

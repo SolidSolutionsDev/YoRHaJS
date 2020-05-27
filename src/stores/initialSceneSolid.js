@@ -73,7 +73,7 @@ export const initialScene = {
       "camera1",
       // "mountainSolid",
       // "water1",
-      "sephiroth1",
+      // "sephiroth1",
       // "shaderPlane1",
       // "backgroundMusicPlayer1",
       // "rpgGame",
@@ -149,15 +149,8 @@ export const initialScene = {
         prefab: "DynamicCameraPrefab"
       },
       sephiroth1: {
-        transform: {
-          scale:{x:10,y:10,z:10},
-          position: { x: 220, y: -120, z: 990},
-        },
-        components:{
-          MeshGeometry:{
-            assetId:"sephirothPMXModel"
-          },
-        }
+        prefab:"SephirothPrefab",
+
       },
       backgroundMusicPlayer1: {
         components:{
@@ -340,11 +333,11 @@ export const initialScene = {
     byId: {
       SimpleRPGIntroPrefab: {
         components: {
-          SimpleRPGIntro:{},
-          SimpleRPGAudioPlayer:{},
-          SimpleRPGTextOption:{},
-          SimpleRPGBackground:{},
-          SimpleRPGBattle:{},
+          SimpleRPGIntro:{debug:false},
+          SimpleRPGAudioPlayer:{debug:false},
+          SimpleRPGTextOption:{debug:false},
+          SimpleRPGBackground:{debug:false},
+          SimpleRPGBattle:{debug:false},
         }
       },
 
@@ -406,6 +399,7 @@ export const initialScene = {
           //     lookAt:{x:0,y: 0,z: 0},
           // },
           Camera: {
+            orthographic:false,
             // cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "front",
             // cameraAutoRotate: true,
@@ -438,7 +432,7 @@ export const initialScene = {
                 position: { x: 10, y: 0, z: 0 }
               },
               front: {
-                position: { x: 0, y: 0, z: 3}
+                position: { x: 0, y: 0, z: 2}
               },
               back: {
                 position: { x: 0, y: 0, z: -10 }
@@ -807,13 +801,45 @@ export const initialScene = {
       TETSUOCityPrefab:{
         transform:{
           // rotation: { x:-Math.PI/2 },
-          position: {x:0,y:-1,z:0}
+          position: {x:0,y:0,z:-0.5}
         },
         debug: true,
         components: {
           TETSUOCity:{},
         }
       },
+      CylinderPrefab: {
+      transform:{
+        scale: {x:0.5,y:0.5,z:0.5}
+      },
+      debug: true,
+      components: {
+        TETSUOParticlesGeometryTest: {},
+      },
+      children: []
+    },
+      SephirothPrefab: {
+      transform: {
+        scale:{x:.03,y:.03,z:.03},
+        // position: { x: 220, y: -120, z: 990},
+      },
+      components:{
+        MeshGeometry:{
+          assetId:"sephirothPMXModel",
+          materialType:"basic",
+          materialParameters:{color:0xff0000}
+        },
+      }
+    },
+      HeadPrefab: {
+      transform: {
+        // scale:{x:.03,y:.03,z:.03},
+        // position: { x: 220, y: -120, z: 990},
+      },
+      components:{
+        TETSUOHeadComponent:{}
+      }
+    },
       ExplodeShaderPlanePrefab:{
         debug: true,
         transform: {

@@ -7,19 +7,21 @@ import {uniqueId} from "lodash";
 
 export class SimpleRPGBattle extends React.Component {
 
+    battleGroup = new THREE.Group();
+
     state = {
     };
 
     graphicElementsPositions = {
         player: {
-            model: [-2,0,0],
-            text:[-2,1,0],
-            counter:[0.2,-1,0.5],
+            text:[-.5,.5,0.01],
+            model: [-.5,0.,0.05],
+            counter:[-.2,-.5,0.01],
         },
         enemy: {
-            model: [2,0,0],
-            text:[2,1,0],
-            counter:[-0.2,0,0],
+            text:[.5,.5,0.01],
+            model: [.5,0. ,0.05],
+            counter:[.2,-.5,0.01],
         },
         gameMessages:[0,-1,0]
     };
@@ -43,8 +45,10 @@ export class SimpleRPGBattle extends React.Component {
         const {availableService} = this.props;
         const {stateMachine} = availableService;
         const {game} = stateMachine.stateMachines;
-        if (this.state.active) {
-            game.service.send("INPUT")
+        console.log(this.state);
+        if (this.state.active ) {
+            const commandToSend = this.state.gameCurrent.value === "playBattle" ? "INPUT" : "NEXT_STEP"
+            game.service.send(commandToSend)
         }
     }
 
@@ -54,25 +58,40 @@ export class SimpleRPGBattle extends React.Component {
         }
         const {availableService} = this.props;
         const {stateMachine} = availableService;
-        console.log(availableService);
+        // console.log(availableService);
         const {game} = stateMachine.stateMachines;
         game.service.onTransition(current => {
             // console.log("transition background", current,this.state.backgroundObjects);
             const state = current.value;
-            const active = state === "playBattle";
+            const active = state === "playBattle" || state === "resolveBattle";
             if (active) {
                 const battleMachineService = game.service.children.get("battle");
                 if (game.service && this.battleService!== battleMachineService){
                     this.battleService= battleMachineService;
-                    const a = this.battleService ? this.battleService.onTransition(state=> {
+                    console.log("battle service:" , battleMachineService);
+                    const a = this.battleService ? this.battleService.onTransition(newBattleState=> {
                             // this.stateMachines.battle = {
                             //     service: this.battleService,
                             //     current: state,
                             //     value: state.value,
                             //     context: state.context,
                             // };
-                            console.log("transition sub battle",this.state);
-                            this.setState({battleService:this.battleService,battleCurrent:state, battleValue: state.value,battleCtx:state.context});
+
+                            if (this.graphicElements.player.counter !== null && this.state.battleCtx && this.state.battleCtx.currentTurn !==newBattleState.context.currentTurn) {
+                            console.log(this.graphicElements.player.counter.quad.material);
+                                if ( newBattleState.context.currentTurn=== "player" ) {
+                                    this.updatePlayerText();
+                                // this.graphicElements.player.counter.quad.material.color.setHex(0x00ff00);
+                                }
+                            else {
+
+                                    this.updateEnemyText();
+                                // this.graphicElements.player.counter.quad.material.color.setHex(0xff0000);
+                                }
+
+                            }
+                            // console.log("transition sub battle",this.state);
+                            this.setState({battleService:this.battleService,battleCurrent:newBattleState, battleValue: newBattleState.value,battleCtx:newBattleState.context});
                         })
                         : null;
                 }
@@ -89,27 +108,32 @@ export class SimpleRPGBattle extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active && !prevState.active) {
             // console.log(this.state.backgroundObjects.length,"background");
-            this.cleanBattle();
+            // this.cleanBattle();
             this.changeBattle();
+        }
+
+        if (!this.state.active && prevState.active) {
+            // console.log(this.state.backgroundObjects.length,"background");
+            this.cleanBattle();
         }
     }
 
-    cleanBattle = () => {
-        // const {scene} = this.props.availableComponent;
-        // console.log("cleanBackgrounds", this.state.backgroundObjects, this);
-        // this.state.backgroundObjects.forEach(backgroundGameObjectId => {
-        //         // console.log("cleanBackgrounds cycle",backgroundGameObjectId, this.props.gameObject.id);
-        //         scene.enqueueAction(
-        //             destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
-        //         );
-        //     }
-        // );
+    updatePlayerText = () => {
+        const {player} = this.state.battleCtx;
+        const text = player.name + "\nHP:"+player.hp+"/"+player.maxHp;
+        this.graphicElements.player.text.addText(text);
+    }
+
+    updateEnemyText = () => {
+        const {enemy} = this.state.battleCtx;
+        const text = enemy.name + "\nHP:"+enemy.hp+"/"+enemy.maxHp;
+        this.graphicElements.enemy.text.addText(text);
     }
 
     instantiatePlayer = ()=> {
         const {scene} = this.props.availableComponent;
         const {backGroundPrefabs} = this.state.data;
-        console.log(this.state.battleCtx);
+        // console.log(this.state.battleCtx);
 
         this.graphicElements.player.text = new window.TETSUO.Premade.TextScreen({
             width: window.screen.width/4,
@@ -124,7 +148,7 @@ export class SimpleRPGBattle extends React.Component {
             opacity:.0,
 
             defaultTextStyle: {
-                fontSize: 24,
+                fontSize: 32,
                 fill: 0x3cdc7c,
             },
         });
@@ -141,7 +165,7 @@ export class SimpleRPGBattle extends React.Component {
             opacity:.0,
 
             defaultTextStyle: {
-                fontSize: 24,
+                fontSize: 32,
                 fill: 0x3cdc7c,
             },
         });
@@ -150,24 +174,22 @@ export class SimpleRPGBattle extends React.Component {
         this.graphicElements.player.text.prepare();
         this.graphicElements.enemy.text.prepare();
 
+
+        this.graphicElements.player.text.quad.scale.set(0.3,0.3,0.3);
+        this.graphicElements.enemy.text.quad.scale.set(0.3,0.3,0.3);
+
         // add the output quad to the scene
         // quad = textScreen.quad;
-        this.props.transform.add(this.graphicElements.player.text.quad);
+        this.battleGroup.add(this.graphicElements.player.text.quad);
         this.graphicElements.player.text.quad.position.set(...this.graphicElementsPositions.player.text);
         this.graphicElements.player.text.quad.material.transparent = true;
 
-        this.props.transform.add(this.graphicElements.enemy.text.quad);
+        this.battleGroup.add(this.graphicElements.enemy.text.quad);
         this.graphicElements.enemy.text.quad.position.set(...this.graphicElementsPositions.enemy.text);
         this.graphicElements.enemy.text.quad.material.transparent = true;
 
-        const {player} = this.state.battleCtx;
-        const text = player.name + "\nHP:"+player.hp+"/"+player.maxHp;
-        this.graphicElements.player.text.addText(text);
-
-        const {enemy} = this.state.battleCtx;
-        const textEnemy = enemy.name + "\nHP:"+enemy.hp+"/"+enemy.maxHp;
-        this.graphicElements.enemy.text.addText(textEnemy);
-
+        this.updatePlayerText();
+        this.updateEnemyText();
 
 
         // const newBackgroundObjectIds = backGroundPrefabs.map(backgroundPrefabId => {
@@ -188,10 +210,6 @@ export class SimpleRPGBattle extends React.Component {
 
     instantiateDice = () => {
 
-        const {scene} = this.props.availableComponent;
-        const {backGroundPrefabs} = this.state.data;
-        console.log(this.state.battleCtx);
-
         this.graphicElements.player.counter = new window.TETSUO.Premade.TimeCounter({
             width: window.screen.width/4,
             height: window.screen.height/4,
@@ -205,8 +223,8 @@ export class SimpleRPGBattle extends React.Component {
             // opacity:.0,
             //
             defaultTextStyle: {
-                fontSize: 48,
-                fill: 0xff0000,
+                fontSize: 128,
+                fill: 0x00ff00,
             },
         });
 
@@ -214,30 +232,71 @@ export class SimpleRPGBattle extends React.Component {
 
         // add the output quad to the scene
         // quad = textScreen.quad;
-        this.props.transform.add(this.graphicElements.player.counter.quad);
+        this.battleGroup.add(this.graphicElements.player.counter.quad);
         this.graphicElements.player.counter.quad.position.set(...this.graphicElementsPositions.player.counter);
         this.graphicElements.player.counter.quad.material.transparent = true;
 
 
+
+        this.graphicElements.enemy.counter = new window.TETSUO.Premade.TimeCounter({
+            width: window.screen.width/8,
+            height: window.screen.height/8,
+
+            // // optional options
+            // backgroundColor: 0x1c1e1c,
+            // marginTop: 0,
+            // marginLeft: 0,
+            // paddingBottom: 0,
+            // paddingLeft: 0,
+            // opacity:.0,
+            //
+            defaultTextStyle: {
+                fontSize: 72,
+                fill: 0xff0000,
+            },
+        });
+
+        this.graphicElements.enemy.counter.prepare();
+
+        // add the output quad to the scene
+        // quad = textScreen.quad;
+        this.battleGroup.add(this.graphicElements.enemy.counter.quad);
+        this.graphicElements.enemy.counter.quad.position.set(...this.graphicElementsPositions.enemy.counter);
+        this.graphicElements.enemy.counter.quad.material.transparent = true;
+
+        this.graphicElements.player.counter.quad.scale.set(0.3,0.3,0.3);
+        this.graphicElements.enemy.counter.quad.scale.set(0.3,0.3,0.3);
+
+
+        this.graphicElements.player.counter.quad.material.opacity = 1.0
+        this.graphicElements.enemy.counter.quad.material.opacity = 1.0
+
     }
 
-    updatePlayer= (deltaTime) => {
-        console.log(this.state.battleCtx);
-        if (this.graphicElements.player.counter && this.state.battleCtx && this.state.battleCtx.diceValue) {
-            this.graphicElements.player.counter.setTime(this.state.battleCtx.diceValue);
-            this.graphicElements.player.counter.update(deltaTime);
-        }
-        if (this.graphicElements.player.text) {
-            this.graphicElements.player.text.update(deltaTime);
-        }
-        if (this.graphicElements.enemy.text) {
-            this.graphicElements.enemy.text.update(deltaTime);
-        }
+    instantiateModel = (character = "player") => {
+        const characterGameData = this.state.battleCtx[character];
+
+        const {model} = this.graphicElementsPositions[character];
+        const {scene} = this.props.availableComponent;
+
+            const newId = uniqueId(characterGameData.prefab);
+            scene.enqueueAction(
+                instantiateFromPrefab(
+                    characterGameData.prefab,
+                    newId,
+                    {position: { x:model[0], y:model[1], z:model[2]}},
+                    this.props.gameObject.id,
+                )
+            );
+        this.graphicElements[character].model = newId;
+        return newId;
     }
 
     changeBattle = () => {
         this.instantiatePlayer();
         this.instantiateDice();
+        this.instantiateModel("player");
+        this.instantiateModel("enemy");
         // const {scene} = this.props.availableComponent;
         // const {backGroundPrefabs} = this.state.data;
         // const newBackgroundObjectIds = backGroundPrefabs.map(backgroundPrefabId => {
@@ -256,7 +315,43 @@ export class SimpleRPGBattle extends React.Component {
         // this.setState({backgroundObjects: newBackgroundObjectIds});
     };
 
+    destroyModel = (modelType = "player") => {
+        const { scene } = this.props.availableComponent;
+        scene.enqueueAction(
+            destroyGameObjectById(
+                this.graphicElements[modelType].model, this.props.gameObject.id)
+        );
+    }
+
+    cleanBattle = () => {
+        const { scene } = this.props.availableComponent;
+
+        this.battleGroup.remove.apply(this.battleGroup, this.battleGroup.children);
+
+        this.destroyModel("player");
+        this.destroyModel("enemy");
+
+    }
+
+
+    updatePlayer= (deltaTime) => {
+        const {player, enemy} = this.graphicElements;
+        if (this.graphicElements.player.counter && this.state.battleCtx && this.state.battleCtx.diceValue) {
+            const counterToUse = this.state.battleCtx.currentTurn === "player" ? player : enemy;
+            counterToUse.counter.setTime(this.state.battleCtx.diceValue);
+            counterToUse.counter.update(deltaTime);
+        }
+        if (this.graphicElements.player.text) {
+            this.graphicElements.player.text.update(deltaTime);
+        }
+        if (this.graphicElements.enemy.text) {
+            this.graphicElements.enemy.text.update(deltaTime);
+        }
+    }
+
+
     start = () => {
+        this.props.transform.add(this.battleGroup);
     }
 
     update = (deltaTime) => {
@@ -265,6 +360,8 @@ export class SimpleRPGBattle extends React.Component {
     };
 
     render() {
+
+        if (!this.props.debug) { return null; }
         const {gameCurrent,battleCtx,battleCurrent} = this.state;
         const battleUI = gameCurrent && gameCurrent.value==="playBattle"? <div>BATTLE!
         <div>{gameCurrent.value+" -> "+battleCurrent.value}</div>

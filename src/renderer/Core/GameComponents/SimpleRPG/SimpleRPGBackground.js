@@ -29,10 +29,8 @@ export class SimpleRPGBackground extends React.Component {
         }
         const {availableService} = this.props;
         const {stateMachine} = availableService;
-        console.log(availableService);
         const {game} = stateMachine.stateMachines;
         game.service.onTransition(current => {
-            // console.log("transition background", current,this.state.backgroundObjects);
             const stepId = current.context.stepsQueue[0];
             const stepData = current.context.constants.steps[stepId];
             const state = current.value;
@@ -43,26 +41,22 @@ export class SimpleRPGBackground extends React.Component {
                 this.setState({active: active, init: true});
             }
         });
-        console.log("here", this.state.init);
         document.addEventListener("shoot_keydown", () => {
-            // console.log("background next step", this.state.active);
             this.advance();
         });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active && !prevState.active) {
-            // console.log(this.state.backgroundObjects.length,"background");
             this.cleanBackgrounds();
             this.changeBackground();
+            this.advance();
         }
     }
 
     cleanBackgrounds = () => {
         const {scene} = this.props.availableComponent;
-        console.log("cleanBackgrounds", this.state.backgroundObjects, this);
         this.state.backgroundObjects.forEach(backgroundGameObjectId => {
-                // console.log("cleanBackgrounds cycle",backgroundGameObjectId, this.props.gameObject.id);
                 scene.enqueueAction(
                     destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
                 );
@@ -86,7 +80,6 @@ export class SimpleRPGBackground extends React.Component {
             );
             return newId;
         });
-        // console.log("newBackgroundObjectIds",newBackgroundObjectIds);
         this.setState({backgroundObjects: newBackgroundObjectIds});
     };
 
@@ -101,6 +94,7 @@ export class SimpleRPGBackground extends React.Component {
     };
 
     render() {
+        if (!this.props.debug) { return null; }
         return <div id={"rpgBackground"}>
             <h2>SimpleRPGBackground</h2>
             <div>active: {JSON.stringify(this.state.active)}</div>

@@ -19,15 +19,24 @@ export const initialContext = {
             subTitle: "SPACE to get in"
         },
         steps: {
+            emptyText: {
+                type: "text",
+                text:[],
+            },
             text1: {
                 type: "text",
                 text:["Once...", "there was nothing..",""],
-                goTo: ["musicFariaDemo","battle1","text2"]
+                goTo: ["musicFariaDemo","backgroundCity","text2"]
             },
             text2: {
                 type: "text",
                 text:["Then...", "there was the grid.",""],
-                goTo: ["backgroundMountain","musicStop","option1"]
+                goTo: ["text3"]
+            },
+            text3: {
+                type: "text",
+                text:["Something approaches.", "It seems some form of bad data."],
+                goTo: ["option2"]
             },
             winText: {
                 type: "text",
@@ -36,6 +45,10 @@ export const initialContext = {
             gameOverText: {
                 type: "text",
                 text:["You lost the matrix"]
+            },
+            backgroundCity: {
+                type: "backgroundChange",
+                backGroundPrefabs: ["TETSUOCityPrefab"]
             },
             backgroundMountain: {
                 type: "backgroundChange",
@@ -78,6 +91,14 @@ export const initialContext = {
                     {text:"Machine",goTo:["musicFariaDemo","backgroundExplode","battle2"]},
                     ],
             },
+            option2: {
+                type: "textOption",
+                text:["Bad data: This system is ours. Are you with or without us?"],
+                options: [
+                    {text:"With, of course",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
+                    {text:"Without. Prepare for deletion.",goTo:["emptyText","battle1"]},
+                    ],
+            },
             battle1: {
                 type:"battle",
                 enemy: "whiteGreyMouse"
@@ -90,20 +111,20 @@ export const initialContext = {
         },
         player:{
             name: "Blue White Mouse",
-            prefab: "CylinderPrefab",
+            prefab: "SephirothPrefab",
             hp: 300,
             maxHp:300,
             defense:3,
             attack:0,
             // raises level, raises this ones
             maxAttack:14,
-            minAttack:1
+            minAttack:3
         },
         enemies:{
             whiteGreyMouse: {
                 name: "White Grey Mouse",
-                prefab: "SpherePrefab",
-                hp: 100,
+                prefab: "TestCube",
+                hp: 20,
                 maxHp: 100,
                 defense:2,
                 attack:0,
@@ -113,7 +134,7 @@ export const initialContext = {
             },
             darkMouse: {
                 name: "Dark Mouse",
-                prefab: "HeadPrefab",
+                prefab: "CylinderPrefab",
                 hp: 500,
                 maxHp: 500,
                 defense:6,
@@ -124,7 +145,7 @@ export const initialContext = {
             },
             blueWhiteMouse: {
                 name: "Blue White Mouse",
-                prefab: "ShooterPrefab",
+                prefab: "HeadPrefab",
                 hp: 1000,
                 maxHp: 1000,
                 defense:6,

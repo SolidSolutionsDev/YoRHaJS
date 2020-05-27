@@ -6,7 +6,7 @@ import {rpgSimpleBattle} from "./rpgSimpleBattle";
 const updateCharactersData = assign({
         player: (context, event) => {
             // { type: 'done.invoke.player', data: { player: {...}, enemy:{...} }
-            console.log("got event to update character!", event);
+            // console.log("got event to update character!", event);
             return event.data.player;
         },
         enemies: (context, event) => {

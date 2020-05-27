@@ -8,8 +8,8 @@ export class TestCube extends React.Component {
 
   loadCube = () => {
     const { transform, opacity } = this.props;
-    const geometry = new THREE.BoxGeometry(10, 10, 10);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const geometry = new THREE.BoxGeometry(.3, .3, .3);
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     opacity && (material.opacity = opacity);
     material.transparent = true;
     this.cube = new THREE.Mesh(geometry, material);
