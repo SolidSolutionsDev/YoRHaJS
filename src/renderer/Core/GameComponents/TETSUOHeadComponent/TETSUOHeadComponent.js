@@ -6,6 +6,7 @@ export class TETSUOHeadComponent extends React.Component {
 
     tetsuoObject = new window.TETSUO.Premade.Face({
         geometryPath: "./assets/models/head/face.json",
+        lineMultiplier: 100/this.props.transform.scale.x ,
     });
     mesh;
 
@@ -28,7 +29,7 @@ export class TETSUOHeadComponent extends React.Component {
     update = (time, deltaTime) => {
         this.tetsuoObject.update(deltaTime, {
             // color: new THREE.Vector3(Math.cos(time * 2), 1, Math.sin(time * 2)),
-            color: new THREE.Vector3(1, Math.cos(time * 2), Math.sin(time * 2)),
+            color: new THREE.Vector3(1, 0.5*Math.cos(time/100), 0.5*Math.sin(time/100)),
         });
     };
 

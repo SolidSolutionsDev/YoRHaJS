@@ -483,6 +483,7 @@ export const initialScene = {
         components: {
           TestCube: {
             rotationX: 0.01,
+            rotationZ: 0.01,
             opacity: 0.9
           }
         },

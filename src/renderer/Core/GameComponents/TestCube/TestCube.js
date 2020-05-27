@@ -22,6 +22,7 @@ export class TestCube extends React.Component {
 
   update = (time, deltaTime) => {
     this.props.gameObject.transform.rotation.x += (this.props.rotationX * (deltaTime/10));
+    this.props.gameObject.transform.rotation.z += (this.props.rotationZ * (deltaTime/3));
   };
 
   render() {
