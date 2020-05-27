@@ -88,7 +88,7 @@ export const initialContext = {
                 question:{text:["Who are you?"]},
                 options: [
                     {text:"Man",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
-                    {text:"Machine",goTo:["musicFariaDemo","backgroundExplode","battle2"]},
+                    {text:"Machine",goTo:["battle1"]},
                     ],
             },
             option2: {
@@ -96,7 +96,7 @@ export const initialContext = {
                 question:{text:["Bad data: This system is ours. Are you with or without us?"],questionStyle:{fill:0xdc3c7c}},
                 options: [
                     {text:"With, of course",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
-                    {text:"Without. Prepare for deletion.",goTo:["emptyText","battle1"]},
+                    {text:"Without. Prepare for deletion.",goTo:["emptyText","battle1","option1"]},
                     ],
             },
             battle1: {
@@ -105,7 +105,7 @@ export const initialContext = {
             },
             battle2: {
                 type:"battle",
-                enemy: "darkMouse"
+                enemy: "blueWhiteMouse"
             }
 
         },
