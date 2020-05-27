@@ -145,7 +145,7 @@ export class SimpleRPGBattle extends React.Component {
             marginLeft: 0,
             paddingBottom: 0,
             paddingLeft: 0,
-            opacity:.0,
+            opacity:.01,
 
             defaultTextStyle: {
                 fontSize: 32,
@@ -162,11 +162,11 @@ export class SimpleRPGBattle extends React.Component {
             marginLeft: 0,
             paddingBottom: 0,
             paddingLeft: 0,
-            opacity:.0,
+            opacity:.01,
 
             defaultTextStyle: {
                 fontSize: 32,
-                fill: 0x3cdc7c,
+                fill: 0xdc3c7c,
             },
         });
 
@@ -220,11 +220,11 @@ export class SimpleRPGBattle extends React.Component {
             // marginLeft: 0,
             // paddingBottom: 0,
             // paddingLeft: 0,
-            opacity:.0,
+            opacity:.01,
             //
             defaultTextStyle: {
                 fontSize: 128,
-                fill: 0x00ff00,
+                fill:0x3cdc7c,
             },
         });
 
@@ -248,11 +248,11 @@ export class SimpleRPGBattle extends React.Component {
             // marginLeft: 0,
             // paddingBottom: 0,
             // paddingLeft: 0,
-            opacity:.0,
+            opacity:.01,
             //
             defaultTextStyle: {
                 fontSize: 72,
-                fill: 0xff0000,
+                fill: 0xdc3c7c,
             },
         });
 
