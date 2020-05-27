@@ -400,7 +400,7 @@ export const initialScene = {
           //     lookAt:{x:0,y: 0,z: 0},
           // },
           Camera: {
-            orthographic:false,
+            orthographic:true,
             // cameraSoundPath: "./assets/sound/camera_change.mp3",
             cameraAngle: "front",
             // cameraAutoRotate: true,
@@ -433,7 +433,7 @@ export const initialScene = {
                 position: { x: 10, y: 0, z: 0 }
               },
               front: {
-                position: { x: 0, y: 0, z: 2}
+                position: { x: 0, y: 0, z: 1}
               },
               back: {
                 position: { x: 0, y: 0, z: -10 }
