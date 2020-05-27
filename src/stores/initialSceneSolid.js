@@ -22,6 +22,7 @@ export const initialScene = {
     assets: {
       sephirothPMXModel:"./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
       everestOBJ: "./assets/models/64-everest/everest.obj",
+      TETSUOHeadModel:"./assets/models/head/face.json",
       worleyTunnelVertShader:"./assets/shaders/fragment/anticore_worley_tunnel.glsl",
       sandsFragShader:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
       marchingCubesSpheresFragShader:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl",
@@ -833,7 +834,7 @@ export const initialScene = {
     },
       HeadPrefab: {
       transform: {
-        // scale:{x:.03,y:.03,z:.03},
+        scale:{x:.3,y:.3,z:.3},
         // position: { x: 220, y: -120, z: 990},
       },
       components:{

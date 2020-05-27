@@ -4,25 +4,30 @@ import TETSUO from "@SolidSolutionsDev/tetsuo";
 
 export class TETSUOHeadComponent extends React.Component {
 
-  tetsuoObject = new window.TETSUO.Premade.Face();
-  mesh;
+    tetsuoObject = new window.TETSUO.Premade.Face({geometryPath: "./assets/models/head/face.json"});
+    mesh;
 
-  initTetsuo = () => {
+    initTetsuo = () => {
 
-    const {transform} = this.props;
-    this.mesh = this.tetsuoObject.prepare(mesh=>{
-      console.log(mesh);
-      transform.add(mesh)});
-    console.log(this);
-  }
+        const {transform} = this.props;
+        this.tetsuoObject.prepare().then(mesh => {
+            console.log(mesh);
+            this.mesh = mesh;
+            mesh.rotation.x = Math.PI;
+            transform.add(mesh)
+        });
+        console.log(this);
+    }
 
-  start = () => {
-    this.initTetsuo();
-  };
+    start = () => {
+        this.initTetsuo();
+    };
 
-  update = (time, deltaTime) => {
-    this.tetsuoObject.update(deltaTime);
-  };
+    update = (time, deltaTime) => {
+        this.tetsuoObject.update(deltaTime, {
+            color: new THREE.Vector3(Math.cos(time * 2), 1, Math.sin(time * 2)),
+        });
+    };
 
 }
 

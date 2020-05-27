@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import * as THREE from "three";
 import {updateMainGameObject} from "../../stores/scene/actions";
-import {AudioLoader} from "three";
+import {AudioLoader, BufferGeometryLoader, ObjectLoader} from "three";
 import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 import {MMDLoader} from "three/examples/jsm/loaders/MMDLoader";
 import {FileLoader} from "three";
@@ -86,6 +86,7 @@ class Preloader extends Component {
         this.manager.addHandler(/\.mp3$/i, new AudioLoader(this.manager));
         this.manager.addHandler(/\.glsl$/i, new FileLoader(this.manager));
         this.manager.addHandler(/\.obj$/i, new OBJLoader(this.manager));
+        this.manager.addHandler(/\.json$/i, new BufferGeometryLoader(this.manager));
         this.manager.addHandler(/\.wav$/i, new AudioLoader(this.manager));
     }
 

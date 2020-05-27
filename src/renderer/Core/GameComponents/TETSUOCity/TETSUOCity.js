@@ -24,7 +24,6 @@ export class TETSUOCity extends React.Component {
         this.quadToUse =  this.tetsuoBackgroundObject.quad.clone();
         transform.add(this.mesh);
         this.mesh.material.transparent = false;
-        console.log(this.mesh);
         // this.mesh.position.x += 2;
     }
 

@@ -220,7 +220,7 @@ export class SimpleRPGBattle extends React.Component {
             // marginLeft: 0,
             // paddingBottom: 0,
             // paddingLeft: 0,
-            // opacity:.0,
+            opacity:.0,
             //
             defaultTextStyle: {
                 fontSize: 128,
@@ -248,7 +248,7 @@ export class SimpleRPGBattle extends React.Component {
             // marginLeft: 0,
             // paddingBottom: 0,
             // paddingLeft: 0,
-            // opacity:.0,
+            opacity:.0,
             //
             defaultTextStyle: {
                 fontSize: 72,
@@ -266,10 +266,6 @@ export class SimpleRPGBattle extends React.Component {
 
         this.graphicElements.player.counter.quad.scale.set(0.3,0.3,0.3);
         this.graphicElements.enemy.counter.quad.scale.set(0.3,0.3,0.3);
-
-
-        this.graphicElements.player.counter.quad.material.opacity = 1.0
-        this.graphicElements.enemy.counter.quad.material.opacity = 1.0
 
     }
 

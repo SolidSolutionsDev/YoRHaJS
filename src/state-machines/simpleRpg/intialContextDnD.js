@@ -111,7 +111,7 @@ export const initialContext = {
         },
         player:{
             name: "Blue White Mouse",
-            prefab: "SephirothPrefab",
+            prefab: "HeadPrefab",
             hp: 300,
             maxHp:300,
             defense:3,
@@ -145,7 +145,7 @@ export const initialContext = {
             },
             blueWhiteMouse: {
                 name: "Blue White Mouse",
-                prefab: "HeadPrefab",
+                prefab: "SephirothPrefab",
                 hp: 1000,
                 maxHp: 1000,
                 defense:6,
