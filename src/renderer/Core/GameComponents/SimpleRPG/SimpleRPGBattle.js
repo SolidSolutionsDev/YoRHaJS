@@ -14,14 +14,14 @@ export class SimpleRPGBattle extends React.Component {
 
     graphicElementsPositions = {
         player: {
-            text:[-.5,.5,0.01],
-            model: [-.5,0.,0.05],
-            counter:[-.2,-.5,0.01],
+            text:[-.5,.5,0.00],
+            model: [-.5,0.,0.5],
+            counter:[-.2,-.5,0.00],
         },
         enemy: {
-            text:[.5,.5,0.01],
-            model: [.5,0. ,0.05],
-            counter:[.2,-.5,0.01],
+            text:[.5,.5,0.00],
+            model: [.5,0. ,0.5],
+            counter:[.2,-.5,0.00],
         },
         gameMessages:[0,-1,0]
     };
@@ -191,81 +191,67 @@ export class SimpleRPGBattle extends React.Component {
         this.updatePlayerText();
         this.updateEnemyText();
 
-
-        // const newBackgroundObjectIds = backGroundPrefabs.map(backgroundPrefabId => {
-        //     const newId = uniqueId(backgroundPrefabId);
-        //     scene.enqueueAction(
-        //         instantiateFromPrefab(
-        //             backgroundPrefabId,
-        //             newId,
-        //             null,
-        //             this.props.gameObject.id,
-        //         )
-        //     );
-        //     return newId;
-        // });
-        // console.log("newBackgroundObjectIds",newBackgroundObjectIds);
-        // this.setState({backgroundObjects: newBackgroundObjectIds});
     }
 
     instantiateDice = () => {
 
-        this.graphicElements.player.counter = new window.TETSUO.Premade.TimeCounter({
-            width: window.screen.width/4,
-            height: window.screen.height/4,
+            this.graphicElements.player.counter = new window.TETSUO.Premade.TimeCounter({
+                width: window.screen.width / 4,
+                height: window.screen.height / 4,
 
-            // // optional options
-            // backgroundColor: 0x1c1e1c,
-            // marginTop: 0,
-            // marginLeft: 0,
-            // paddingBottom: 0,
-            // paddingLeft: 0,
-            opacity:.01,
-            //
-            defaultTextStyle: {
-                fontSize: 128,
-                fill:0x3cdc7c,
-            },
-        });
+                // // optional options
+                // backgroundColor: 0x1c1e1c,
+                // marginTop: 0,
+                // marginLeft: 0,
+                // paddingBottom: 0,
+                // paddingLeft: 0,
+                opacity: .01,
+                //
+                defaultTextStyle: {
+                    fontSize: 128,
+                    fill: 0x3cdc7c,
+                },
+            });
 
-        this.graphicElements.player.counter.prepare();
+            this.graphicElements.player.counter.prepare();
 
-        // add the output quad to the scene
-        // quad = textScreen.quad;
-        this.battleGroup.add(this.graphicElements.player.counter.quad);
-        this.graphicElements.player.counter.quad.position.set(...this.graphicElementsPositions.player.counter);
-        this.graphicElements.player.counter.quad.material.transparent = true;
+            // add the output quad to the scene
+            // quad = textScreen.quad;
+            this.battleGroup.add(this.graphicElements.player.counter.quad);
+
+            this.graphicElements.player.counter.quad.material.transparent = true;
+            this.graphicElements.player.counter.quad.position.set(...this.graphicElementsPositions.player.counter);
+            this.graphicElements.player.counter.quad.material.transparent = true;
 
 
+            this.graphicElements.enemy.counter = new window.TETSUO.Premade.TimeCounter({
+                width: window.screen.width / 8,
+                height: window.screen.height / 8,
 
-        this.graphicElements.enemy.counter = new window.TETSUO.Premade.TimeCounter({
-            width: window.screen.width/8,
-            height: window.screen.height/8,
+                // // optional options
+                // backgroundColor: 0x1c1e1c,
+                // marginTop: 0,
+                // marginLeft: 0,
+                // paddingBottom: 0,
+                // paddingLeft: 0,
+                opacity: .01,
+                //
+                defaultTextStyle: {
+                    fontSize: 72,
+                    fill: 0xdc3c7c,
+                },
+            });
 
-            // // optional options
-            // backgroundColor: 0x1c1e1c,
-            // marginTop: 0,
-            // marginLeft: 0,
-            // paddingBottom: 0,
-            // paddingLeft: 0,
-            opacity:.01,
-            //
-            defaultTextStyle: {
-                fontSize: 72,
-                fill: 0xdc3c7c,
-            },
-        });
+            this.graphicElements.enemy.counter.prepare();
 
-        this.graphicElements.enemy.counter.prepare();
+            // add the output quad to the scene
+            // quad = textScreen.quad;
+            this.battleGroup.add(this.graphicElements.enemy.counter.quad);
+            this.graphicElements.enemy.counter.quad.position.set(...this.graphicElementsPositions.enemy.counter);
+            this.graphicElements.enemy.counter.quad.material.transparent = true;
 
-        // add the output quad to the scene
-        // quad = textScreen.quad;
-        this.battleGroup.add(this.graphicElements.enemy.counter.quad);
-        this.graphicElements.enemy.counter.quad.position.set(...this.graphicElementsPositions.enemy.counter);
-        this.graphicElements.enemy.counter.quad.material.transparent = true;
-
-        this.graphicElements.player.counter.quad.scale.set(0.3,0.3,0.3);
-        this.graphicElements.enemy.counter.quad.scale.set(0.3,0.3,0.3);
+            this.graphicElements.player.counter.quad.scale.set(0.3, 0.3, 0.3);
+            this.graphicElements.enemy.counter.quad.scale.set(0.3, 0.3, 0.3);
 
     }
 

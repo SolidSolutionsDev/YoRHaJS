@@ -47,7 +47,7 @@ export class SimpleRPGTextOption extends React.Component {
         // add the output quad to the scene
         // quad = textScreen.quad;
         console.log(this.textScreen);
-        this.textScreen.quad.position.z+=0.2;
+        this.textScreen.quad.position.z-=0.001;
         this.textScreen.quad.material.transparent=true;
         this.props.transform.add(this.textScreen.quad);
     }

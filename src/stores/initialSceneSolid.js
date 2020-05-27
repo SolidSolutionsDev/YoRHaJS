@@ -803,7 +803,7 @@ export const initialScene = {
       TETSUOCityPrefab:{
         transform:{
           // rotation: { x:-Math.PI/2 },
-          position: {x:0,y:0,z:-0.5}
+          position: {x:0,y:0,z:-2.5}
         },
         debug: true,
         components: {
