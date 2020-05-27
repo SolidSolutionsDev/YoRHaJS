@@ -109,7 +109,7 @@ export class PlaneShaderMaterial extends React.Component {
       side: THREE.DoubleSide,
     });
 
-    this.material.transparent = true;
+    this.material.transparent = false;
   };
 
   initGeometry = ()=> {
