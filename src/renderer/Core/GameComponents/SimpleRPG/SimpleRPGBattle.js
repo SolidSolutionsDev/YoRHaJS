@@ -135,6 +135,12 @@ export class SimpleRPGBattle extends React.Component {
         const {backGroundPrefabs} = this.state.data;
         // console.log(this.state.battleCtx);
 
+        if (this.graphicElements.enemy.text !== null) {
+            this.graphicElements.player.text.quad.visible=true
+            this.graphicElements.enemy.text.quad.visible=true
+        }
+        else {
+
         this.graphicElements.player.text = new window.TETSUO.Premade.TextScreen({
             width: window.screen.width/4,
             height: window.screen.height/4,
@@ -187,13 +193,18 @@ export class SimpleRPGBattle extends React.Component {
         this.battleGroup.add(this.graphicElements.enemy.text.quad);
         this.graphicElements.enemy.text.quad.position.set(...this.graphicElementsPositions.enemy.text);
         this.graphicElements.enemy.text.quad.material.transparent = true;
-
+        }
         this.updatePlayerText();
         this.updateEnemyText();
 
     }
 
     instantiateDice = () => {
+        if (this.graphicElements.enemy.counter !== null) {
+            this.graphicElements.player.counter.quad.visible=true
+            this.graphicElements.enemy.counter.quad.visible=true
+        }
+        else {
 
             this.graphicElements.player.counter = new window.TETSUO.Premade.TimeCounter({
                 width: window.screen.width / 4,
@@ -252,7 +263,7 @@ export class SimpleRPGBattle extends React.Component {
 
             this.graphicElements.player.counter.quad.scale.set(0.3, 0.3, 0.3);
             this.graphicElements.enemy.counter.quad.scale.set(0.3, 0.3, 0.3);
-
+        }
     }
 
     instantiateModel = (character = "player") => {
@@ -308,7 +319,10 @@ export class SimpleRPGBattle extends React.Component {
     cleanBattle = () => {
         const { scene } = this.props.availableComponent;
 
-        this.battleGroup.remove.apply(this.battleGroup, this.battleGroup.children);
+        this.graphicElements.player.counter.quad.visible=false;
+        this.graphicElements.player.text.quad.visible=false;
+        this.graphicElements.enemy.counter.quad.visible=false;
+        this.graphicElements.enemy.text.quad.visible=false;
 
         this.destroyModel("player");
         this.destroyModel("enemy");
