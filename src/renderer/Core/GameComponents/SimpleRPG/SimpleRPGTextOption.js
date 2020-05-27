@@ -27,10 +27,10 @@ export class SimpleRPGTextOption extends React.Component {
 
             // optional options
             backgroundColor: 0x1c1e1c,
-            marginTop: 0,
-            marginLeft: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
+            marginTop: 20,
+            marginLeft:2,
+            paddingBottom: 200,
+            paddingLeft: 200,
             opacity: .9,
 
             defaultTextStyle: {
@@ -43,10 +43,12 @@ export class SimpleRPGTextOption extends React.Component {
         this.textScreen.prepare();
 
         this.textScreen.quad.material.transparent = true;
-        this.textScreen.quad.material.opacity = 0.6;
+        // this.textScreen.quad.material.opacity = 0.6;
         // add the output quad to the scene
         // quad = textScreen.quad;
         console.log(this.textScreen);
+        this.textScreen.quad.position.z+=0.2;
+        this.textScreen.quad.material.transparent=true;
         this.props.transform.add(this.textScreen.quad);
     }
 
@@ -116,23 +118,24 @@ export class SimpleRPGTextOption extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active) {
             const textData = this.state.data;
-            if (textData.text.length === 0) {
+            if (textData.text && textData.text.length === 0) {
                 this.textScreen.clear();
                 this.advance();
                 return;
             }
-            const text = textData.text.join("\n");
             if (this.state.value === "playText") {
+                const text = textData.text.join("\n");
                 this.textScreen.addText(text);
             }
             if (this.state.value === "playTextOption") {
+                const text = textData.question.text.join("\n");
                 if (textData === prevState.data) {
                     this.textScreen.selectAnswer(this.state.selectedCommand.toString());
                 } else {
                     const answers = textData.options.map((textOption, index) => {
                         return {id: index.toString(), textContent: textOption.text}
                     });
-                    this.textScreen.addQuestion(text, answers);
+                    this.textScreen.addQuestion(text, answers,textData.question);
                 }
             }
 

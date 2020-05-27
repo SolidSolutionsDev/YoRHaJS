@@ -85,7 +85,7 @@ export const initialContext = {
             },
             option1: {
                 type: "textOption",
-                text:["Who are you?"],
+                question:{text:["Who are you?"]},
                 options: [
                     {text:"Man",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
                     {text:"Machine",goTo:["musicFariaDemo","backgroundExplode","battle2"]},
@@ -93,7 +93,7 @@ export const initialContext = {
             },
             option2: {
                 type: "textOption",
-                text:["Bad data: This system is ours. Are you with or without us?"],
+                question:{text:["Bad data: This system is ours. Are you with or without us?"],questionStyle:{fill:0xdc3c7c}},
                 options: [
                     {text:"With, of course",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
                     {text:"Without. Prepare for deletion.",goTo:["emptyText","battle1"]},
@@ -111,7 +111,7 @@ export const initialContext = {
         },
         player:{
             name: "Blue White Mouse",
-            prefab: "HeadPrefab",
+            prefab: "TestCube",
             hp: 300,
             maxHp:300,
             defense:3,
@@ -123,7 +123,7 @@ export const initialContext = {
         enemies:{
             whiteGreyMouse: {
                 name: "White Grey Mouse",
-                prefab: "TestCube",
+                prefab: "HeadPrefab",
                 hp: 20,
                 maxHp: 100,
                 defense:2,
