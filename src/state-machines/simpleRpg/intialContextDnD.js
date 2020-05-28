@@ -5,6 +5,51 @@ export const initialContext = {
     winStep:"winText",
     currentTextOption:0,
     constants: {
+        colors:{
+            player:0x3cdc7c,
+            enemy:0xdc3c7c,
+            gameMessages:0xaaaaaa,
+        },
+        battle:{
+            prefabs:{
+                counter: "TETSUOCounterPrefab",
+                text: "TETSUOTextPrefab",
+            },
+            gameComponents:{
+                counter: "TETSUOCounterComponent",
+                text: "TETSUOTextComponent",
+            },
+            graphicElementsPositions: {
+                player: {
+                    text:[-.5,.5,0.00],
+                    model: [-.5,0.,0.5],
+                    counter:[-.2,-.5,0.00],
+                },
+                enemy: {
+                    text:[.5,.5,0.00],
+                    model: [.5,0. ,0.5],
+                    counter:[.2,-.5,0.00],
+                },
+                gameMessages:{
+                    text:[0,0,0]
+                }
+            },
+            graphicElementsScales: {
+                player: {
+                    text:.3,
+                    model: 1,
+                    counter:.3,
+                },
+                enemy: {
+                    text:.3,
+                    model: 1,
+                    counter:.3,
+                },
+                gameMessages:{
+                    text:.3
+                }
+            },
+            },
         lines:{
             awesome: [
                 "Awesome! Just awesome.",
@@ -114,25 +159,31 @@ export const initialContext = {
             prefab: "TestCube",
             hp: 300,
             maxHp:300,
-            defense:3,
+            defense:4,
             attack:0,
             // raises level, raises this ones
-            maxAttack:14,
-            minAttack:3
+            maxAttack:6,
+            minAttack:0
         },
         enemies:{
             whiteGreyMouse: {
+                introMessage:"Rogues will face immediate deletion.",
+                winMessage:"The AI has been zeroed. Die Motherfucker.",
+                loseMessage:"You've been destroyed.",
                 name: "White Grey Mouse",
                 prefab: "HeadPrefab",
                 hp: 20,
-                maxHp: 100,
-                defense:2,
+                maxHp: 20,
+                defense:4,
                 attack:0,
                 // raises level, raises this ones
                 maxAttack:14,
                 minAttack:3
             },
             darkMouse: {
+                introMessage:"Rogues will face immediate deletion.",
+                winMessage:"The AI has been zeroed. Die Motherfucker.",
+                loseMessage:"You've been destroyed.",
                 name: "Dark Mouse",
                 prefab: "CylinderPrefab",
                 hp: 500,
@@ -144,6 +195,9 @@ export const initialContext = {
                 minAttack:3
             },
             blueWhiteMouse: {
+                introMessage:"Rogues will face immediate deletion.",
+                winMessage:"The AI has been zeroed. Die Motherfucker.",
+                loseMessage:"You've been destroyed.",
                 name: "Blue White Mouse",
                 prefab: "SephirothPrefab",
                 hp: 1000,
@@ -155,6 +209,9 @@ export const initialContext = {
                 minAttack:6
             },
             beautifulCube: {
+                introMessage:"Rogues will face immediate deletion.",
+                winMessage:"The AI has been zeroed. Die Motherfucker.",
+                loseMessage:"You've been destroyed.",
                 name: "BEAUTIFUL CUBE",
                 prefab: "ShooterPrefab",
                 hp: 1200,

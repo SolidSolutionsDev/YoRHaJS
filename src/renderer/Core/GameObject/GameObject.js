@@ -247,7 +247,6 @@ export class GameObject extends React.Component {
     };
 
     _update = (time, deltaTime) => {
-
         if (!this._isEnabled() && !this.unmounting) {
             this.transform.visible = false;
             return;

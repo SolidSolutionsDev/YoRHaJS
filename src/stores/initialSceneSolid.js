@@ -338,10 +338,21 @@ export const initialScene = {
           SimpleRPGAudioPlayer:{debug:false},
           SimpleRPGTextOption:{debug:false},
           SimpleRPGBackground:{debug:false},
-          SimpleRPGBattle:{debug:false},
+          SimpleRPGBattle:{
+            debug:false,
+          },
         }
       },
-
+      TETSUOCounterPrefab: {
+        components: {
+          TETSUOCounterComponent: {},
+        }
+      },
+      TETSUOTextPrefab: {
+        components: {
+          TETSUOTextComponent: {},
+        }
+      },
       PokemonGameLogicPrefab: {
         components: {
           PokemonColorGameBattleLogic: {},

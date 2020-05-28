@@ -2,7 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./SimpleRPGBattle.css";
 import * as THREE from "three";
-import {destroyGameObjectById, instantiateFromPrefab} from "../../../../stores/scene/actions";
+import {
+    destroyGameObjectById, emitLoadingAsset,
+    instantiateFromPrefab,
+    updateGameObject,
+    updateGameObjectComponent
+} from "../../../../stores/scene/actions";
 import {uniqueId} from "lodash";
 
 export class SimpleRPGBattle extends React.Component {
@@ -12,19 +17,21 @@ export class SimpleRPGBattle extends React.Component {
     state = {
     };
 
-    graphicElementsPositions = {
+    entitiesIds= {
         player: {
-            text:[-.5,.5,0.00],
-            model: [-.5,0.,0.5],
-            counter:[-.2,-.5,0.00],
+            model:null,
+            text:null,
+            counter:null,
         },
         enemy: {
-            text:[.5,.5,0.00],
-            model: [.5,0. ,0.5],
-            counter:[.2,-.5,0.00],
+            model:null,
+            text:null,
+            counter:null,
         },
-        gameMessages:[0,-1,0]
+        gameMessages:{text:null}
     };
+
+    persistentObjects=[];
 
     graphicElements= {
         player: {
@@ -52,50 +59,45 @@ export class SimpleRPGBattle extends React.Component {
         }
     }
 
+    // TODO: clean up this and create a more generic component to connect to store
     initListenToStateTransitions = () => {
         if (this.state.init) {
             return;
         }
         const {availableService} = this.props;
         const {stateMachine} = availableService;
-        // console.log(availableService);
         const {game} = stateMachine.stateMachines;
+        this.gameService = game;
         game.service.onTransition(current => {
-            // console.log("transition background", current,this.state.backgroundObjects);
             const state = current.value;
             const active = state === "playBattle" || state === "resolveBattle";
             if (active) {
                 const battleMachineService = game.service.children.get("battle");
                 if (game.service && this.battleService!== battleMachineService){
                     this.battleService= battleMachineService;
-                    console.log("battle service:" , battleMachineService);
+                    console.log("shouldnt be here n times");
+                    console.log(this.battleService);
+                    this.activateTextElements();
+                    this.updateEntitiesTexts();
+                    this.updateMessagesText(this.battleService.state.context.statusMessage,current.context);
+                    console.log(this.battleService);
                     const a = this.battleService ? this.battleService.onTransition(newBattleState=> {
-                            // this.stateMachines.battle = {
-                            //     service: this.battleService,
-                            //     current: state,
-                            //     value: state.value,
-                            //     context: state.context,
-                            // };
-
-                            if (this.graphicElements.player.counter !== null && this.state.battleCtx && this.state.battleCtx.currentTurn !==newBattleState.context.currentTurn) {
-                            console.log(this.graphicElements.player.counter.quad.material);
-                                if ( newBattleState.context.currentTurn=== "player" ) {
-                                    this.updatePlayerText();
-                                // this.graphicElements.player.counter.quad.material.color.setHex(0x00ff00);
-                                }
-                            else {
-
-                                    this.updateEnemyText();
-                                // this.graphicElements.player.counter.quad.material.color.setHex(0xff0000);
-                                }
-
+                        // console.log("battletransition",newBattleState);
+                            const counterExists = this.entitiesIds.player.counter!== null;
+                            if (newBattleState.context.statusMessage) {
+                                this.updateMessagesText(newBattleState.context.statusMessage,current.context);
                             }
-                            // console.log("transition sub battle",this.state);
-                            this.setState({battleService:this.battleService,battleCurrent:newBattleState, battleValue: newBattleState.value,battleCtx:newBattleState.context});
+                        const turnHasChanged = this.state.battleCtx && this.state.battleCtx.currentTurn !==newBattleState.context.currentTurn && newBattleState.context.currentTurn;
+                            // console.log("currentTurn"+newBattleState.context.currentTurn);
+                            if (counterExists && turnHasChanged) {
+                                    this.activateTextElements();
+                                    this.updateEntitiesTexts();
+                            }
+                            this.setState({active, gameCurrent:current, gameCtx: current.context,battleService:this.battleService,battleCurrent:newBattleState, battleValue: newBattleState.value,battleCtx:newBattleState.context});
                         })
                         : null;
                 }
-                this.setState({active, data: current.context, init: true, gameCurrent:current});
+                this.setState({active, gameCtx: current.context, init: true, gameCurrent:current});
             } else {
                 this.setState({active, init: true,gameCurrent:current});
             }
@@ -107,172 +109,150 @@ export class SimpleRPGBattle extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.active && !prevState.active) {
-            // console.log(this.state.backgroundObjects.length,"background");
-            // this.cleanBattle();
             this.changeBattle();
         }
 
         if (!this.state.active && prevState.active) {
-            // console.log(this.state.backgroundObjects.length,"background");
             this.cleanBattle();
         }
-    }
 
-    updatePlayerText = () => {
-        const {player} = this.state.battleCtx;
-        const text = player.name + "\nHP:"+player.hp+"/"+player.maxHp;
-        this.graphicElements.player.text.addText(text);
-    }
+        if (this.state.battleCtx){
+            if (this.state.battleValue !== prevState.battleValue){
+                // this.updateMessagesText();
+            }
 
-    updateEnemyText = () => {
-        const {enemy} = this.state.battleCtx;
-        const text = enemy.name + "\nHP:"+enemy.hp+"/"+enemy.maxHp;
-        this.graphicElements.enemy.text.addText(text);
-    }
-
-    instantiatePlayer = ()=> {
         const {scene} = this.props.availableComponent;
-        const {backGroundPrefabs} = this.state.data;
-        // console.log(this.state.battleCtx);
-
-        if (this.graphicElements.enemy.text !== null) {
-            this.graphicElements.player.text.quad.visible=true
-            this.graphicElements.enemy.text.quad.visible=true
+        if (this.persistentObjects.length && this.state.battleCtx.diceValue && this.state.battleCtx.diceValue!== prevState.battleCtx.diceValue) {
+            const battleConstants = this.state.gameCtx.constants.battle;
+            const {currentTurn} = this.state.battleCtx;
+            scene.enqueueAction(
+                updateGameObjectComponent(
+                    this.entitiesIds[currentTurn].counter,
+                    battleConstants.gameComponents.counter,
+                    {value:this.state.battleCtx.diceValue}
+                )
+            )
+            // counterToUse.counter.update(deltaTime);
         }
-        else {
-
-        this.graphicElements.player.text = new window.TETSUO.Premade.TextScreen({
-            width: window.screen.width/4,
-            height: window.screen.height/4,
-
-            // optional options
-            backgroundColor: 0x1c1e1c,
-            marginTop: 0,
-            marginLeft: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
-            opacity:.01,
-
-            defaultTextStyle: {
-                fontSize: 32,
-                fill: 0x3cdc7c,
-            },
-        });
-        this.graphicElements.enemy.text = new window.TETSUO.Premade.TextScreen({
-            width: window.screen.width/4,
-            height: window.screen.height/4,
-
-            // optional options
-            backgroundColor: 0x1c1e1c,
-            marginTop: 0,
-            marginLeft: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
-            opacity:.01,
-
-            defaultTextStyle: {
-                fontSize: 32,
-                fill: 0xdc3c7c,
-            },
-        });
-
-        // build and prepare for render
-        this.graphicElements.player.text.prepare();
-        this.graphicElements.enemy.text.prepare();
-
-
-        this.graphicElements.player.text.quad.scale.set(0.3,0.3,0.3);
-        this.graphicElements.enemy.text.quad.scale.set(0.3,0.3,0.3);
-
-        // add the output quad to the scene
-        // quad = textScreen.quad;
-        this.battleGroup.add(this.graphicElements.player.text.quad);
-        this.graphicElements.player.text.quad.position.set(...this.graphicElementsPositions.player.text);
-        this.graphicElements.player.text.quad.material.transparent = true;
-
-        this.battleGroup.add(this.graphicElements.enemy.text.quad);
-        this.graphicElements.enemy.text.quad.position.set(...this.graphicElementsPositions.enemy.text);
-        this.graphicElements.enemy.text.quad.material.transparent = true;
         }
-        this.updatePlayerText();
-        this.updateEnemyText();
 
     }
 
-    instantiateDice = () => {
-        if (this.graphicElements.enemy.counter !== null) {
-            this.graphicElements.player.counter.quad.visible=true
-            this.graphicElements.enemy.counter.quad.visible=true
-        }
+    updateEntitiesTexts = ()=>{
+        this.updateEntityText("player");
+        this.updateEntityText("enemy");
+    }
+
+
+    updateMessagesText = (message="",gameContext = this.state.gameCtx) => {
+        const battleConstants = gameContext.constants.battle;
+        const {scene} = this.props.availableComponent;
+        scene.enqueueAction(
+            updateGameObjectComponent(
+                this.entitiesIds.gameMessages.text,
+                battleConstants.gameComponents.text,
+                {value:message}
+            )
+        )
+    }
+
+    updateEntityText = (entity) => {
+        const entityData = this.battleService.state.context[entity];
+        const text = entityData.name + "\nHP:"+entityData.hp+"/"+entityData.maxHp+"\nDefense:"+entityData.defense;
+        const battleConstants = this.gameService.context.constants.battle;
+        const {scene} = this.props.availableComponent;
+
+        scene.enqueueAction(
+            updateGameObjectComponent(
+                this.entitiesIds[entity].text,
+                battleConstants.gameComponents.text,
+                {value:text}
+            )
+        )
+    }
+
+    activateTextElements = ()=> {
+        if (this.persistentObjects.length) {
+            this.persistentObjects.forEach((persistentObjectId)=>this.showObject(persistentObjectId));
+    }
         else {
-
-            this.graphicElements.player.counter = new window.TETSUO.Premade.TimeCounter({
-                width: window.screen.width / 4,
-                height: window.screen.height / 4,
-
-                // // optional options
-                // backgroundColor: 0x1c1e1c,
-                // marginTop: 0,
-                // marginLeft: 0,
-                // paddingBottom: 0,
-                // paddingLeft: 0,
-                opacity: .01,
-                //
-                defaultTextStyle: {
-                    fontSize: 128,
-                    fill: 0x3cdc7c,
-                },
-            });
-
-            this.graphicElements.player.counter.prepare();
-
-            // add the output quad to the scene
-            // quad = textScreen.quad;
-            this.battleGroup.add(this.graphicElements.player.counter.quad);
-
-            this.graphicElements.player.counter.quad.material.transparent = true;
-            this.graphicElements.player.counter.quad.position.set(...this.graphicElementsPositions.player.counter);
-            this.graphicElements.player.counter.quad.material.transparent = true;
-
-
-            this.graphicElements.enemy.counter = new window.TETSUO.Premade.TimeCounter({
-                width: window.screen.width / 8,
-                height: window.screen.height / 8,
-
-                // // optional options
-                // backgroundColor: 0x1c1e1c,
-                // marginTop: 0,
-                // marginLeft: 0,
-                // paddingBottom: 0,
-                // paddingLeft: 0,
-                opacity: .01,
-                //
-                defaultTextStyle: {
-                    fontSize: 72,
-                    fill: 0xdc3c7c,
-                },
-            });
-
-            this.graphicElements.enemy.counter.prepare();
-
-            // add the output quad to the scene
-            // quad = textScreen.quad;
-            this.battleGroup.add(this.graphicElements.enemy.counter.quad);
-            this.graphicElements.enemy.counter.quad.position.set(...this.graphicElementsPositions.enemy.counter);
-            this.graphicElements.enemy.counter.quad.material.transparent = true;
-
-            this.graphicElements.player.counter.quad.scale.set(0.3, 0.3, 0.3);
-            this.graphicElements.enemy.counter.quad.scale.set(0.3, 0.3, 0.3);
+            this.instantiateTextualGraphicElements();
+            this.updateEntitiesTexts();
         }
     }
 
-    instantiateModel = (character = "player") => {
+    getText = (entity)=> {
+        let _text, _data;
+        switch (entity){
+        case "gameMessages":
+            _text = this.battleService.state.context.statusMessage
+            break;
+            case "player":
+                _data = this.battleService.state.context[entity];
+                _text = _data.name + "\nHP:"+_data.hp+"/"+_data.maxHp+"\nDefense:"+_data.defense
+                break;
+            case "enemy":
+                _data = this.battleService.state.context[entity];
+                _text = _data.name + "\nHP:"+_data.hp+"/"+_data.maxHp+"\nDefense:"+_data.defense
+                break;
+            default:
+                break;
+        }
+        return _text;
+    }
+
+    instantiateTextualGraphicElements = ()=> {
+        this.instantiateTextualGraphicElement("player","counter");
+        this.instantiateTextualGraphicElement("player","text", this.getText("player"));
+        this.instantiateTextualGraphicElement("enemy","counter");
+        this.instantiateTextualGraphicElement("enemy","text", this.getText("enemy"));
+        this.instantiateTextualGraphicElement("gameMessages","text", this.getText("gameMessages"));
+    }
+
+    instantiateTextualGraphicElement = (battleEntity = "player", graphicElement="counter", value="") => {
+
+        const battleConstants = this.gameService.context.constants.battle;
+        const gameConstants = this.gameService.context.constants;
+
+        const graphicElementPosition = battleConstants.graphicElementsPositions[battleEntity][graphicElement];
+        const graphicElementScale = battleConstants.graphicElementsScales[battleEntity][graphicElement];
+        const {scene} = this.props.availableComponent;
+
+        console.log("instantiateTextualGraphicElement",battleEntity,graphicElement);
+        const newId = uniqueId(battleConstants.prefabs[graphicElement]);
+        this.entitiesIds[battleEntity][graphicElement] = newId;
+        scene.enqueueAction(
+            instantiateFromPrefab(
+                battleConstants.prefabs[graphicElement],
+                newId,
+                {
+                    position: {
+                        x:graphicElementPosition[0], y:graphicElementPosition[1], z:graphicElementPosition[2]},
+                    scale:{
+                        x:graphicElementScale,y:graphicElementScale,z:graphicElementScale
+                    },
+                    },
+                this.props.gameObject.id,
+                null,
+                {
+                    [battleConstants.gameComponents[graphicElement]]:{
+                        fill:gameConstants.colors[battleEntity],
+                        value
+                    }
+                }
+            )
+        );
+
+        this.persistentObjects.push(newId);
+    }
+
+    instantiateModel = (character) => {
         const characterGameData = this.state.battleCtx[character];
-
-        const {model} = this.graphicElementsPositions[character];
+        const constantsData = this.state.gameCtx.constants.battle;
+        const {model} = constantsData.graphicElementsPositions[character];
         const {scene} = this.props.availableComponent;
 
-            const newId = uniqueId(characterGameData.prefab);
+            const newId = uniqueId(character+characterGameData.prefab);
             scene.enqueueAction(
                 instantiateFromPrefab(
                     characterGameData.prefab,
@@ -286,26 +266,9 @@ export class SimpleRPGBattle extends React.Component {
     }
 
     changeBattle = () => {
-        this.instantiatePlayer();
-        this.instantiateDice();
+        this.activateTextElements();
         this.instantiateModel("player");
         this.instantiateModel("enemy");
-        // const {scene} = this.props.availableComponent;
-        // const {backGroundPrefabs} = this.state.data;
-        // const newBackgroundObjectIds = backGroundPrefabs.map(backgroundPrefabId => {
-        //     const newId = uniqueId(backgroundPrefabId);
-        //     scene.enqueueAction(
-        //         instantiateFromPrefab(
-        //             backgroundPrefabId,
-        //             newId,
-        //             null,
-        //             this.props.gameObject.id,
-        //         )
-        //     );
-        //     return newId;
-        // });
-        // // console.log("newBackgroundObjectIds",newBackgroundObjectIds);
-        // this.setState({backgroundObjects: newBackgroundObjectIds});
     };
 
     destroyModel = (modelType = "player") => {
@@ -319,32 +282,27 @@ export class SimpleRPGBattle extends React.Component {
     cleanBattle = () => {
         const { scene } = this.props.availableComponent;
 
-        this.graphicElements.player.counter.quad.visible=false;
-        this.graphicElements.player.text.quad.visible=false;
-        this.graphicElements.enemy.counter.quad.visible=false;
-        this.graphicElements.enemy.text.quad.visible=false;
+        this.persistentObjects.forEach(persistentObjectId=>this.hideObject(persistentObjectId));
 
         this.destroyModel("player");
         this.destroyModel("enemy");
-
     }
 
-
-    updatePlayer= (deltaTime) => {
-        const {player, enemy} = this.graphicElements;
-        if (this.graphicElements.player.counter && this.state.battleCtx && this.state.battleCtx.diceValue) {
-            const counterToUse = this.state.battleCtx.currentTurn === "player" ? player : enemy;
-            counterToUse.counter.setTime(this.state.battleCtx.diceValue);
-            counterToUse.counter.update(deltaTime);
-        }
-        if (this.graphicElements.player.text) {
-            this.graphicElements.player.text.update(deltaTime);
-        }
-        if (this.graphicElements.enemy.text) {
-            this.graphicElements.enemy.text.update(deltaTime);
-        }
+    hideObject= (objectId)=>{
+        const { scene } = this.props.availableComponent;
+        scene.enqueueAction(updateGameObject(
+            objectId,
+            {enabled:false}
+        ))
     }
 
+    showObject= (objectId)=>{
+        const { scene } = this.props.availableComponent;
+        scene.enqueueAction(updateGameObject(
+            objectId,
+            {enabled:true}
+        ))
+    }
 
     start = () => {
         this.props.transform.add(this.battleGroup);
@@ -352,7 +310,6 @@ export class SimpleRPGBattle extends React.Component {
 
     update = (deltaTime) => {
         this.initListenToStateTransitions();
-        this.updatePlayer(deltaTime);
     };
 
     render() {

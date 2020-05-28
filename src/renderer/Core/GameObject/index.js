@@ -34,6 +34,9 @@ const mapStateToProps = (state, props) => ({
   transform: getSelf(state, props.id)
     ? getSelf(state, props.id).transform
     : undefined,
+  enabled: getSelf(state, props.id)
+    ? getSelf(state, props.id).enabled
+    : undefined,
   debug: getSelf(state, props.id) ? getSelf(state, props.id).debug : undefined,
   prefabs: getPrefabs(state),
   prefabSettings: getSelfPrefab(state, props.id)

@@ -17,32 +17,70 @@ const rand = (min, max)=> {
     return min + Math.floor(Math.random() * (max - min + 1));
 };
 
+const generateStatusMessage = assign({
+    statusMessage: (ctx,event,actionMeta) => {
+        const currentState = actionMeta.state ? actionMeta.state.value:null;
+        const inverseTurn = ctx.currentTurn === "player" ? "enemy": "player";
+        let message =ctx.enemy.introMessage;
+        console.log("generateStatusMessage",ctx,event,actionMeta,currentState);
+        if (currentState==="idle") {
+            message =ctx.enemy.introMessage;
+        }
+        if (currentState==="computeDamage") {
+            message =`Damage done by ${inverseTurn}: ${ctx[ctx.currentTurn].damageTaken}`;
+        }
+        if (currentState==="rollDice") {
+            message =`Ongoing ${ctx.currentTurn} attack!`;
+        }
+        if (currentState==="playerTurn") {
+            message =`Your turn. Press space to attack!`;
+        }
+        if (currentState==="enemyTurn") {
+            message =`Press space to start enemy turn.`;
+        }
+        if (currentState==="win") {
+            message =ctx.enemy.winMessage;
+        }
+        if (currentState==="lose") {
+            message =ctx.enemy.loseMessage;
+        }
+        console.log(message);
+        return message;
+    },
+});
 const resetPlayerHp = assign({
     player: (ctx) => {
         const player = {...ctx.player};
         player.hp = player.maxHp;
         return player;
     },
-    damageDone:0
+});
+
+const resetEnemyHp = assign({
+    enemy: (ctx) => {
+        const enemy = {...ctx.enemy};
+        enemy.hp = enemy.maxHp;
+        return enemy;
+    },
 });
 
 const computeDamageDone = assign({
     player: (ctx) => {
-        if (ctx.currentTurn ==="enemy") {
+        if (ctx.currentTurn ==="player") {
             return ctx.player;
         }
         const player = {...ctx.player};
-        const damageDone = rand(player.defense*3,player.defense*4)
+        const damageDone = ctx.diceValue > ctx.player.defense ? rand(player.defense*3,player.defense*4): 0;
         player.hp = player.hp - damageDone;
         player.damageTaken = damageDone;
         return player;
     },
     enemy: (ctx) => {
-        if (ctx.currentTurn ==="player") {
+        if (ctx.currentTurn ==="enemy") {
             return ctx.enemy;
         }
         const enemy = {...ctx.enemy};
-        const damageDone = rand(enemy.defense*3,enemy.defense*4)
+        const damageDone =  ctx.diceValue > ctx.enemy.defense ? rand(enemy.defense*3,enemy.defense*4): 0;
         enemy.hp = enemy.hp - damageDone;
         enemy.damageTaken = damageDone;
         return enemy;
@@ -155,7 +193,7 @@ export const rpgSimpleBattle = Machine(
         },
         states: {
             idle: {
-                entry: [resetPlayerHp],
+                entry: [resetPlayerHp,resetEnemyHp,generateStatusMessage],
                 on: {
                     PLAYER_INPUT: {
                         target: "playerTurn",
@@ -163,7 +201,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             playerTurn: {
-                entry: [playerTurn, updateParentCharacterData,resetDiceValue],
+                entry: [playerTurn, updateParentCharacterData,resetDiceValue,generateStatusMessage],
                 exit:[resetDiceValue],
                 on: {
                     // Transient transition
@@ -181,7 +219,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             enemyTurn: {
-                entry: [enemyTurn, updateParentCharacterData,resetDiceValue],
+                entry: [enemyTurn, updateParentCharacterData,resetDiceValue,generateStatusMessage],
                 exit:[resetDiceValue],
                 on: {
                     // Transient transition
@@ -202,7 +240,8 @@ export const rpgSimpleBattle = Machine(
                 entry: [
                     // rollAfterTime,
                     changeToNextDiceValue,
-                    updateParentCharacterData
+                    updateParentCharacterData,
+                    generateStatusMessage
                 ],
                 on: {
                     "":{
@@ -218,7 +257,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             computeDamage: {
-                entry: [updateParentCharacterData,computeDamageDone,sendTakenDamage,updateParentCharacterData],
+                entry: [updateParentCharacterData,computeDamageDone,sendTakenDamage,updateParentCharacterData,generateStatusMessage],
                 on: {
                     PLAYER_INPUT:[
                         {
@@ -233,7 +272,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             win: {
-                entry:computeExperienceWon,
+                entry:[computeExperienceWon,generateStatusMessage],
                 type: 'final',
                 data: {
                     player: (context) => context.player,
@@ -241,6 +280,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             lose: {
+                entry:[generateStatusMessage],
                 type: 'final',
                 data: {
                     player: (context) => context.player,

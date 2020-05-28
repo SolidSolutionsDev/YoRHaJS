@@ -66,7 +66,7 @@ export const mainReducer = (state = initialScene, action) => {
     case "UPDATE_GAMEOBJECT_PARAMETERS":
       temp.state = state;
       if (!state.gameObjects.byId[action.gameObjectId]) {
-        console.log("gameobject not found");
+        console.log("gameobject not found:" + action.gameObjectId);
         return temp.state;
       }
       temp.gameObject = _.cloneDeep(
@@ -110,7 +110,7 @@ export const mainReducer = (state = initialScene, action) => {
     case "UPDATE_COMPONENT_PARAMETERS":
       temp.state = state;
       if (!state.gameObjects.byId[action.gameObjectId]) {
-        console.log("gameobject not found");
+        console.log("gameobject not found:"+action.gameObjectId);
         return temp.state;
       }
       temp.gameObject = _.cloneDeep(

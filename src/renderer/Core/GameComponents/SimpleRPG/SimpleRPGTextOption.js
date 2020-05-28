@@ -46,7 +46,6 @@ export class SimpleRPGTextOption extends React.Component {
         // this.textScreen.quad.material.opacity = 0.6;
         // add the output quad to the scene
         // quad = textScreen.quad;
-        console.log(this.textScreen);
         this.textScreen.quad.position.z-=0.001;
         this.textScreen.quad.material.transparent=true;
         this.props.transform.add(this.textScreen.quad);
