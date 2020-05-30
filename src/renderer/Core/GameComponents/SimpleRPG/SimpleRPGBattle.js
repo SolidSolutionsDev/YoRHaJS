@@ -77,9 +77,11 @@ export class SimpleRPGBattle extends React.Component {
                     this.battleService= battleMachineService;
                     console.log("shouldnt be here n times");
                     console.log(this.battleService);
-                    this.activateTextElements();
-                    this.updateEntitiesTexts();
-                    this.updateMessagesText(this.battleService.state.context.statusMessage,current.context);
+                    if (battleMachineService) {
+                        this.activateTextElements();
+                        this.updateEntitiesTexts();
+                        this.updateMessagesText(this.battleService.state.context.statusMessage,current.context);
+                    }
                     console.log(this.battleService);
                     const a = this.battleService ? this.battleService.onTransition(newBattleState=> {
                         // console.log("battletransition",newBattleState);
