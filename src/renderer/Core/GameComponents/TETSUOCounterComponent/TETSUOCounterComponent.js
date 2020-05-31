@@ -7,8 +7,8 @@ import {instantiateFromPrefab} from "../../../../stores/scene/actions";
 export class TETSUOCounterComponent extends React.Component {
 
     tetsuoObject = new window.TETSUO.Premade.TimeCounter({
-        width: window.screen.width / 4,
-        height: window.screen.height / 4,
+        width: 860,
+        height: 360,
 
         // // optional options
         // backgroundColor: 0x1c1e1c,

@@ -22,15 +22,15 @@ export class SimpleRPGTextOption extends React.Component {
     initTetsuoScreen = () => {
         // init the text screen
         this.textScreen = new window.TETSUO.Premade.TextScreen({
-            width: window.screen.width / 2,
-            height: window.screen.height / 2,
+            width: 1720,
+            height: 720,
 
             // optional options
             backgroundColor: 0x1c1e1c,
             marginTop: 20,
-            marginLeft:2,
-            paddingBottom: 200,
-            paddingLeft: 200,
+            marginLeft:6,
+            paddingBottom: 400,
+            paddingLeft: 400,
             opacity: .9,
 
             defaultTextStyle: {
@@ -46,7 +46,7 @@ export class SimpleRPGTextOption extends React.Component {
         // this.textScreen.quad.material.opacity = 0.6;
         // add the output quad to the scene
         // quad = textScreen.quad;
-        this.textScreen.quad.position.z-=0.001;
+        this.textScreen.quad.position.z=.2;
         this.textScreen.quad.material.transparent=true;
         this.props.transform.add(this.textScreen.quad);
     }

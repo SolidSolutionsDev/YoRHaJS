@@ -1,5 +1,5 @@
 export const initialContext = {
-    initialStep:"text1",
+    initialStep:"backgroundCityIntro",
     stepsQueue:[],
     gameOverStep:"gameOverText",
     winStep:"winText",
@@ -21,17 +21,17 @@ export const initialContext = {
             },
             graphicElementsPositions: {
                 player: {
-                    text:[-.5,.5,0.00],
-                    model: [-.5,0.,0.5],
-                    counter:[-.2,-.5,0.00],
+                    text:[-.5,.5,.21],
+                    model: [-.5,0.,0.3],
+                    counter:[-.2,-.5,.21],
                 },
                 enemy: {
-                    text:[.5,.5,0.00],
-                    model: [.5,0. ,0.5],
-                    counter:[.2,-.5,0.00],
+                    text:[.5,.5,.21],
+                    model: [.5,0. ,0.3],
+                    counter:[.2,-.5,.21],
                 },
                 gameMessages:{
-                    text:[0,0,0]
+                    text:[0,0,0.21]
                 }
             },
             graphicElementsScales: {
@@ -60,7 +60,7 @@ export const initialContext = {
             ]
         },
         intro:{
-            title: "Wire",
+            title: "L0n3 M4tr1x",
             subTitle: "SPACE to get in"
         },
         steps: {
@@ -68,10 +68,25 @@ export const initialContext = {
                 type: "text",
                 text:[],
             },
+
+            backgroundCityIntro: {
+                type: "backgroundChange",
+                backGroundPrefabs: ["TETSUOCityPrefab"],
+                goTo: ["text1"]
+            },
+            text0: {
+                type: "text",
+                text:[""],
+                goTo: ["backgroundCity","text1"]
+            },
+            textApproaches: {
+                type: "text",
+                text:["An enemy approaches"],
+            },
             text1: {
                 type: "text",
                 text:["Once...", "there was nothing..",""],
-                goTo: ["musicFariaDemo","backgroundCity","text2"]
+                goTo: ["musicFariaDemo","text2"]
             },
             text2: {
                 type: "text",
@@ -85,11 +100,11 @@ export const initialContext = {
             },
             winText: {
                 type: "text",
-                text:["You won the matrix"]
+                text:["You won the matrix","A Game POC by SOLID:","J.Faria","R.Esteves","R.Orey"]
             },
             gameOverText: {
                 type: "text",
-                text:["You lost the matrix"]
+                text:["You lost the matrix","A Game POC by SOLID:\n"]
             },
             backgroundCity: {
                 type: "backgroundChange",
@@ -117,7 +132,8 @@ export const initialContext = {
             },
             musicFariaDemo: {
                 type: "audio",
-                assetId: "fariaDemoMP3"
+                assetId: "fariaDemoMP3",
+                loop:"true",
             },
             musicStop: {
                 type: "audio",
@@ -132,26 +148,26 @@ export const initialContext = {
                 type: "textOption",
                 question:{text:["Who are you?"]},
                 options: [
-                    {text:"Man",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
+                    {text:"Man",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","enemyCylinderBattle"]},
                     {text:"Machine",goTo:["battle1"]},
                     ],
             },
             option2: {
                 type: "textOption",
-                question:{text:["Bad data: This system is ours. Are you with or without us?"],questionStyle:{fill:0xdc3c7c}},
+                question:{text:["Bad data: This system is ours. Are you with or without us?\n"],questionStyle:{fill:0xdc1111}},
                 options: [
-                    {text:"With, of course",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","battle1"]},
-                    {text:"Without. Prepare for deletion.",goTo:["emptyText","battle1","option1"]},
+                    {text:"With, of course",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","enemyShooterBattle"]},
+                    {text:"Without. Prepare for deletion.",goTo:["emptyText","enemyHeadBattle","textApproaches","enemyCylinderBattle","textApproaches"]},
                     ],
             },
-            battle1: {
+            enemyHeadBattle: {
                 type:"battle",
-                enemy: "whiteGreyMouse"
+                enemy: "enemyHead"
             },
-            battle2: {
+            enemyCylinderBattle: {
                 type:"battle",
-                enemy: "blueWhiteMouse"
-            }
+                enemy: "enemyCylinder"
+            },
 
         },
         player:{
@@ -162,13 +178,13 @@ export const initialContext = {
             defense:4,
             attack:0,
             // raises level, raises this ones
-            maxAttack:6,
-            minAttack:0
+            maxAttack:10,
+            minAttack:3
         },
         enemies:{
-            whiteGreyMouse: {
+            enemyHead: {
                 introMessage:"Rogues will face immediate deletion.",
-                winMessage:"The AI has been zeroed. Die Motherfucker.",
+                winMessage:"The AI has been defeated.",
                 loseMessage:"You've been destroyed.",
                 name: "White Grey Mouse",
                 prefab: "HeadPrefab",
@@ -180,48 +196,20 @@ export const initialContext = {
                 maxAttack:14,
                 minAttack:3
             },
-            darkMouse: {
+            enemyCylinder: {
                 introMessage:"Rogues will face immediate deletion.",
-                winMessage:"The AI has been zeroed. Die Motherfucker.",
+                winMessage:"The AI has been destroyed.",
                 loseMessage:"You've been destroyed.",
                 name: "Dark Mouse",
                 prefab: "CylinderPrefab",
-                hp: 500,
-                maxHp: 500,
+                hp: 30,
+                maxHp: 30,
                 defense:6,
                 attack:0,
                 // raises level, raises this ones
                 maxAttack:8,
                 minAttack:3
             },
-            blueWhiteMouse: {
-                introMessage:"Rogues will face immediate deletion.",
-                winMessage:"The AI has been zeroed. Die Motherfucker.",
-                loseMessage:"You've been destroyed.",
-                name: "Blue White Mouse",
-                prefab: "SephirothPrefab",
-                hp: 1000,
-                maxHp: 1000,
-                defense:6,
-                attack:0,
-                // raises level, raises this ones
-                maxAttack:12,
-                minAttack:6
-            },
-            beautifulCube: {
-                introMessage:"Rogues will face immediate deletion.",
-                winMessage:"The AI has been zeroed. Die Motherfucker.",
-                loseMessage:"You've been destroyed.",
-                name: "BEAUTIFUL CUBE",
-                prefab: "ShooterPrefab",
-                hp: 1200,
-                maxHp: 1200,
-                defense:6,
-                attack:0,
-                // raises level, raises this ones
-                maxAttack:12,
-                minAttack:6
-            }
         },
     }
 }

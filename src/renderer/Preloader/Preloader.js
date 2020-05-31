@@ -9,6 +9,7 @@ import {MMDLoader} from "three/examples/jsm/loaders/MMDLoader";
 import {FileLoader} from "three";
 
 import "./Preloader.css";
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 
 class Preloader extends Component {
 
@@ -68,6 +69,10 @@ class Preloader extends Component {
                     asset = loadedAsset.children[0];
                     // console.log("group",loadedAsset,asset);
                 }
+                if (asset.scene){
+                    asset = loadedAsset.scene;
+                    // console.log("group",loadedAsset,asset);
+                }
 
                 this.setState(
                     {
@@ -85,8 +90,11 @@ class Preloader extends Component {
         this.manager.addHandler(/\.pmx$/i, new MMDLoader(this.manager));
         this.manager.addHandler(/\.mp3$/i, new AudioLoader(this.manager));
         this.manager.addHandler(/\.glsl$/i, new FileLoader(this.manager));
-        this.manager.addHandler(/\.obj$/i, new OBJLoader(this.manager));
+        this.manager.addHandler(/\.glb$/i, new GLTFLoader(this.manager));
+        this.manager.addHandler(/\.gltf/i, new GLTFLoader(this.manager));
+        this.manager.addHandler(/\.mesh.json$/i, new ObjectLoader(this.manager));
         this.manager.addHandler(/\.json$/i, new BufferGeometryLoader(this.manager));
+        this.manager.addHandler(/\.obj$/i, new OBJLoader(this.manager));
         this.manager.addHandler(/\.wav$/i, new AudioLoader(this.manager));
     }
 

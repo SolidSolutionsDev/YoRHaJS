@@ -286,11 +286,13 @@ export const rpgSimpleGameStateMachine = Machine({
             }
         },
         playAudio: {
+            entry: [enqueueTextGoToSteps],
             on: {
                 "NEXT_STEP": "incrementAndNextStep",
             }
         },
         changeBackground: {
+            entry: [enqueueTextGoToSteps],
             on: {
                 "NEXT_STEP": "incrementAndNextStep",
             }

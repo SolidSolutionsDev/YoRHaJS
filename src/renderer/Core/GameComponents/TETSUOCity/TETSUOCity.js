@@ -9,7 +9,7 @@ export class TETSUOCity extends React.Component {
         height: 720,
     });
     mesh;
-    geometry = new THREE.PlaneGeometry(2, 2, 32);
+    geometry = new THREE.PlaneGeometry(1.8, 1.8, 32);
 
     initTetsuoBackground = () => {
 
@@ -18,13 +18,14 @@ export class TETSUOCity extends React.Component {
         this.material = new THREE.MeshBasicMaterial({
             transparent:true,
             map: new THREE.Texture(this.tetsuoBackgroundObject.texture),
-            side: THREE.DoubleSide
+            // side: THREE.DoubleSide
         });
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.quadToUse =  this.tetsuoBackgroundObject.quad.clone();
         transform.add(this.mesh);
         this.mesh.material.transparent = false;
         // this.mesh.position.x += 2;
+        console.log(this.mesh);
     }
 
     start = () => {

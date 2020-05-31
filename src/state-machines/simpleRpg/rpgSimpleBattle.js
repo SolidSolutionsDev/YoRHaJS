@@ -19,29 +19,31 @@ const rand = (min, max)=> {
 
 const idleMessage = assign({
     statusMessage:(ctx) =>{
-        return ctx.enemy.introMessage;
+        return "Enemy:"+ctx.enemy.introMessage;
     }
 });
 const computeDamageMessage = assign({
     statusMessage:(ctx,event,actionMeta) =>{
         const currentState = actionMeta.state ? actionMeta.state.value:null;
         const inverseTurn = ctx.currentTurn === "player" ? "enemy": "player";
-        return `Damage done by ${ctx.currentTurn}: ${ctx[inverseTurn].damageTaken}`;;
+        let introMessage = ctx[inverseTurn].damageTaken > 0 ? "Success" : "Failed";
+        introMessage+=" to  exceed " + inverseTurn + " defenses!\n"
+        return introMessage+`Damage done by ${ctx.currentTurn}: ${ctx[inverseTurn].damageTaken}`;;
     }
 });
 const rollDiceMessage = assign({
     statusMessage:(ctx) =>{
-         return `Ongoing ${ctx.currentTurn} attack!`
+         return `Ongoing ${ctx.currentTurn} attack!\n${ctx.currentTurn === "player"? "Press space to stop counter!": "Waiting..."}`
     }
 });
 const playerTurnMessage = assign({
     statusMessage:(ctx) =>{
-         return `Your turn. Press space to attack!`
+         return `Your turn. Press space to start attack!`
     }
 });
 const enemyTurnMessage = assign({
     statusMessage:(ctx) =>{
-         return `Your turn. Press space to attack!`
+         return `Enemy turn. Press space to start attack!`
     }
 });
 const winMessage = assign({
@@ -226,7 +228,7 @@ export const rpgSimpleBattle = Machine(
                 }
             },
             enemyTurn: {
-                entry: [enemyTurn, updateParentCharacterData,resetDiceValue,enemyTurn],
+                entry: [enemyTurn, updateParentCharacterData,resetDiceValue,enemyTurn,enemyTurnMessage],
                 exit:[resetDiceValue],
                 on: {
                     // Transient transition

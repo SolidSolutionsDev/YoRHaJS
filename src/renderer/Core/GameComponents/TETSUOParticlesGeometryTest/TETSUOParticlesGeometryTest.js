@@ -36,6 +36,8 @@ export class TETSUOParticlesGeometryTest extends React.Component {
     this.mesh.add(this.pMesh);
     this.cyls = cyls;
     transform.add(this.mesh);
+    this.mesh.position.y-=2;
+    console.log(this.mesh);
   };
 
   start = ()=> {

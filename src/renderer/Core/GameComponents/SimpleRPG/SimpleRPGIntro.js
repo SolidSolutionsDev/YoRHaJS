@@ -30,8 +30,8 @@ export class SimpleRPGIntro extends React.Component {
            if (!this.state.init){
                return null;
            }
-           return <div id="rpgIntro" className={this.state.active ? "" : "inactive" }>intro
-               <h1 className={"rpgIntro-subTitle"}>{this.state.data.title}</h1><h2>{this.state.data.subTitle}</h2></div>;
+           return <div id="rpgIntro" className={this.state.active ? "" : "inactive" }>
+               <h1 className={"rpgIntro-subTitle"}>{this.state.data.title}</h1><h2 style={{border:"none"}}>{this.state.data.subTitle}</h2></div>;
     }
 }
 

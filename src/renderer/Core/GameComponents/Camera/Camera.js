@@ -20,7 +20,7 @@ export class Camera extends React.Component {
         near,
         far);
     console.log(this.camera);
-    this.camera.zoom=10;
+    this.camera.zoom=5;
     // this.camera.updateProjectionMatrix();
     const { renderer } = availableComponent;
     this.controls = new OrbitControls(

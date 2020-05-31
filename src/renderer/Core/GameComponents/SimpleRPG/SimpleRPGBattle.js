@@ -238,6 +238,7 @@ export class SimpleRPGBattle extends React.Component {
                 null,
                 {
                     [battleConstants.gameComponents[graphicElement]]:{
+                        framesPerChar:20,
                         fill:gameConstants.colors[battleEntity],
                         value
                     }
