@@ -9,11 +9,11 @@ import rootReducer from "./stores";
 import {Game} from "./renderer/Game";
 import Preloader from "./renderer/Preloader/Preloader";
 
+
 const store = createStore(
     rootReducer /* preloadedState, */,
     process.env.NODE_ENV === "development" && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
-
 class App extends Component {
   render() {
       const title= store.getState().mainReducer.title;

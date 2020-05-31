@@ -19,7 +19,7 @@ export class Camera extends React.Component {
         aspect || availableComponent.renderer.getAspect(),
         near,
         far);
-    console.log(this.camera);
+    // console.log(this.camera);
     this.camera.zoom=5;
     // this.camera.updateProjectionMatrix();
     const { renderer } = availableComponent;

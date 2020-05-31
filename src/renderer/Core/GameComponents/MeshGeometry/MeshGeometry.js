@@ -37,9 +37,8 @@ export class MeshGeometry extends React.Component {
             this.modelToUse.material.side = this.props.doubleSide ? THREE.DoubleSide : this.modelToUse.material.side;
             this.modelToUse.material.transparent = this.props.transparent ? THREE.DoubleSide : this.modelToUse.material.transparent;
             this.modelToUse.material.needsUpdate = true;
-            console.log(this.modelToUse);
+            // console.log(this.modelToUse);
 
-            console.log(this.modelToUse);
             this.modelToUse.geometry.center();
         }
         transform.add(this.modelToUse);

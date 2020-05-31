@@ -29,19 +29,22 @@ export class TETSUOTextComponent extends React.Component {
         //END
 
 
-        this.tetsuoObject.prepare();
+        this.tetsuoObject.prepare().then(mesh=>{
 
-        this.props.transform.add(this.tetsuoObject.quad);
+            this.props.transform.add(this.tetsuoObject.quad);
 
-        this.tetsuoObject.quad.material.transparent = true;
+            this.tetsuoObject.quad.material.transparent = true;
 
-        if (this.props.value){
-            this.tetsuoObject.addText(this.props.value);
-        }
+            if (this.props.value){
+                this.tetsuoObject.addText(this.props.value);
+            }
+            this.ready=true;
+        });
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.value !== prevProps.value){
+        if (this.props.value !== prevProps.value && this.ready){
             this.tetsuoObject.addText(this.props.value,{
                 fontSize: 32,
                 fill: this.props.fill || 0x3cdc7c,
@@ -54,7 +57,9 @@ export class TETSUOTextComponent extends React.Component {
     };
 
     update = (time, deltaTime) => {
+        if (this.ready){
         this.tetsuoObject.update(deltaTime);
+        }
     };
 
 }

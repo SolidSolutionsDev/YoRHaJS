@@ -5,7 +5,7 @@ import {uniqueId} from "lodash";
 import {instantiateFromPrefab} from "../../../../stores/scene/actions";
 
 export class TETSUOCounterComponent extends React.Component {
-
+    ready = false;
     tetsuoObject = new window.TETSUO.Premade.TimeCounter({
         width: 860,
         height: 360,
@@ -25,14 +25,19 @@ export class TETSUOCounterComponent extends React.Component {
     });
 
     initTetsuo = () => {
-        this.tetsuoObject.prepare();
-        this.props.transform.add(this.tetsuoObject.quad);
-        this.tetsuoObject.quad.material.transparent = true;
+        this.tetsuoObject.prepare().then(mesh => {
+            this.props.transform.add(this.tetsuoObject.quad);
+            this.tetsuoObject.quad.material.transparent = true;
+            this.ready = true;
+        });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.value !== prevProps.value){
-            this.tetsuoObject.setTime(this.props.value);
+        if (this.props.value !== prevProps.value) {
+
+            if (this.ready) {
+                this.tetsuoObject.setTime(this.props.value);
+            }
         }
     }
 
@@ -41,7 +46,9 @@ export class TETSUOCounterComponent extends React.Component {
     };
 
     update = (time, deltaTime) => {
-        this.tetsuoObject.update(deltaTime);
+        if (this.ready) {
+            this.tetsuoObject.update(deltaTime);
+        }
     };
 
 }

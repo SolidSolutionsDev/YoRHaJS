@@ -446,10 +446,10 @@ export const initialScene = {
                     Camera: {
                         orthographic: true,
                         // cameraSoundPath: "./assets/sound/camera_change.mp3",
-                        cameraAngle: "front",
+                        cameraAngle: "loneMatrix",
                         // cameraAutoRotate: true,
                         cameraAutoRotateSpeed: 3,
-                        // cameraMinDistance: 10,
+                        cameraMinDistance: 10,
                         cameraPanLock: false,
                         // lookAt: { x: 0, y: 0, z: 0 },
                         animatedTransformations: true,
@@ -460,6 +460,7 @@ export const initialScene = {
                         fov: 45,
                         unspecified_supportedCameraAngles: [
                             "",
+                            "loneMatrix",
                             "left",
                             "right",
                             "front",
@@ -478,6 +479,9 @@ export const initialScene = {
                             },
                             front: {
                                 position: {x: 0, y: 0, z: 2}
+                            },
+                            loneMatrix: {
+                                position: {x: -.2, y: -.2, z: 2}
                             },
                             back: {
                                 position: {x: 0, y: 0, z: -10}
@@ -501,7 +505,7 @@ export const initialScene = {
                                 position: {x: 0, y: 10, z: -10}
                             },
                             "top-left": {
-                                position: {x: -10, y: 10, z: 0}
+                                position: {x: -1, y: 1, z: -1}
                             },
                             nier: {
                                 position: {x: 0, y: -55, z: 35}

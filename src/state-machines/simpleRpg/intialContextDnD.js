@@ -1,4 +1,5 @@
 export const initialContext = {
+    // initialStep:"text1",
     initialStep:"backgroundCityIntro",
     stepsQueue:[],
     gameOverStep:"gameOverText",
@@ -81,30 +82,39 @@ export const initialContext = {
             },
             textApproaches: {
                 type: "text",
-                text:["An enemy approaches"],
+                text:["The bad data transforms...","Shaped into it's real form...","Shaped into it's real form..."],
             },
             text1: {
                 type: "text",
-                text:["Once...", "there was nothing..",""],
+                text:["A while ago...", "I was nothing..",""],
                 goTo: ["musicFariaDemo","text2"]
             },
             text2: {
                 type: "text",
-                text:["Then...", "there was the grid.",""],
+                text:["Then...", "there was the grid infection.",""],
                 goTo: ["text3"]
             },
             text3: {
                 type: "text",
-                text:["Something approaches.", "It seems some form of bad data."],
+                text:["I was activated...", "My sole function is to clean the infection and go back to idle.",""],
+                goTo: ["text4"]
+            },
+            text4: {
+                type: "text",
+                text:["Something approaches.", "It seems some form of infected data."],
                 goTo: ["option2"]
+            },
+            textGiveUp: {
+                type: "text",
+                text:["You submit.", "The virus takes you.", "You became a puppet of it's system."],
             },
             winText: {
                 type: "text",
-                text:["You won the matrix","A Game POC by SOLID:","J.Faria","R.Esteves","R.Orey"]
+                text:["You cleared the matrix of infections. Terminating functions...","A Proof of concept for NEOC#01 by SOLID:","J.Faria: Music Shaders & Graphics","R.Esteves: Game & Logic","R.Orey: Game & Logic"]
             },
             gameOverText: {
                 type: "text",
-                text:["You lost the matrix","A Game POC by SOLID:\n"]
+                text:["Game Over. The matrix has become infected.","A Proof of concept for NEOC#01 by SOLID:","J.Faria: Music Shaders & Graphics","R.Esteves: Game & Logic","R.Orey: Game & Logic"]
             },
             backgroundCity: {
                 type: "backgroundChange",
@@ -156,8 +166,8 @@ export const initialContext = {
                 type: "textOption",
                 question:{text:["Bad data: This system is ours. Are you with or without us?\n"],questionStyle:{fill:0xdc1111}},
                 options: [
-                    {text:"With, of course",goTo:["backgroundNone","musicFariaDemo","backgroundWater","backgroundExplode","enemyShooterBattle"]},
-                    {text:"Without. Prepare for deletion.",goTo:["emptyText","enemyHeadBattle","textApproaches","enemyCylinderBattle","textApproaches"]},
+                    {text:"With, of course",goTo:["textGiveUp"]},
+                    {text:"Without. Prepare for deletion.",goTo:["emptyText","enemyHeadBattle","textApproaches","enemyCylinderBattle"]},
                     ],
             },
             enemyHeadBattle: {
@@ -171,7 +181,7 @@ export const initialContext = {
 
         },
         player:{
-            name: "Blue White Mouse",
+            name: "Cleaner",
             prefab: "TestCube",
             hp: 300,
             maxHp:300,
@@ -197,7 +207,7 @@ export const initialContext = {
                 minAttack:3
             },
             enemyCylinder: {
-                introMessage:"Rogues will face immediate deletion.",
+                introMessage:"R0gU3s w1Ll f4c3 1mm3d1at3 d3L3T10N.",
                 winMessage:"The AI has been destroyed.",
                 loseMessage:"You've been destroyed.",
                 name: "Dark Mouse",

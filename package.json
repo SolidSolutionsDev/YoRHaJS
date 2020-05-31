@@ -4,7 +4,7 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
-    "@SolidSolutionsDev/tetsuo": "^1.0.11",
+    "@SolidSolutionsDev/tetsuo": "^1.0.10",
     "@tweenjs/tween.js": "^17.2.0",
     "cannon": "github:schteppe/cannon.js",
     "lodash": "^4.17.11",
