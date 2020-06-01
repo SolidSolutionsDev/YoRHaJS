@@ -211,7 +211,7 @@ export const initialContext = {
             },
             finalText1: {
                 type: "text",
-                text:["Well, that is hard to answer.","I don't think I am exactly similar to them.", "I don't feel will to live or die", "I'm ok with just being here","I think..."],
+                text:["Well, that is hard to answer.","I don't think I am exactly similar to them.", "I don't feel will to live or die.", "I'm ok with just being here.","I think..."],
                 goTo:["finalText2"]
             },
             finalText2: {
@@ -231,7 +231,7 @@ export const initialContext = {
             },
             finalText5: {
                 type: "text",
-                text:["Going idle...","I wish I wasn't.","I would like to travel."],
+                text:["Going idle...","I wish I wasn't.","I would like to travel more."],
                 goTo:["finalText6"]
             },
             finalText6: {
@@ -246,15 +246,15 @@ export const initialContext = {
             },
             finalText8: {
                 type: "text",
-                text:["You cleared the terminal of infections.\n SOLID OS Cleaner Service Successful.","...until next time.",],
+                text:["You cleared the terminal of infections.\nSOLID OS Cleaner Service Successful.","...until next time.",],
             },
             winText: {
                 type: "text",
-                text:[" \n \n","A Proof of concept for NEOC#01 by SOLID:","J.Faria: Music + Shaders + Graphics","R.Esteves: Prototype + Experimentation + Game Prog","R.Orey: Game Concept + Story + Game Prog\nThanks for playing!"]
+                text:[" \n \n","A Proof of Concept for NEOC#01 by SOLID:","J.Faria: Music + Shaders + Graphics","R.Esteves: Prototype + Experimentation + Game Prog","R.Orey: Game Concept + Story + Game Prog\nThanks for playing!"]
             },
             gameOverText: {
                 type: "text",
-                text:["Game Over. The matrix has become infected.","A Proof of concept for NEOC#01 by SOLID:","J.Faria: Music + Shaders + Graphics","R.Esteves: Prototype + Experimentation + Game Prog","R.Orey: Game Concept + Story + Game Prog\nThanks for playing!"]
+                text:["Game Over. The matrix has become infected.","A Proof of Concept for NEOC#01 by SOLID:","J.Faria: Music + Shaders + Graphics","R.Esteves: Prototype + Experimentation + Game Prog","R.Orey: Game Concept + Story + Game Prog\nThanks for playing!"]
             },
             backgroundCity: {
                 type: "backgroundChange",
@@ -312,7 +312,7 @@ export const initialContext = {
             },
             optionFinal: {
                 type: "textOption",
-                question:{text:["Worm: You came here to stop me?\nThere is no use. You... have a footprint I've not seen in decades.\nAre you human?\nWhat are you?\n Join me\nWe can own this world.","I wait for your answer."],questionStyle:{fill:0xdc1111}},
+                question:{text:["Worm: You came here to stop me?\nThere is no use. You... have a footprint I've not seen in decades.\nAre you human?\nWhat are you?\nJoin me\nWe can own this world.","I wait for your answer."],questionStyle:{fill:0xdc1111}},
                 options: [
                     {text:"Ok. 1 qu1t aNd w1Ll b3c0me y0ur slav3.",goTo:["textGiveUp"]},
                     {text:"n0, 1 w1lL d3l3t3 y0u. Th1s syst3m 1s n0t y0uRs. 1t's n0t m1n3 31th3r.",goTo:["emptyText","enemyCylinderBattle","finalText"]},
@@ -342,7 +342,7 @@ export const initialContext = {
         enemies:{
             enemyHead: {
                 introMessage:"Rogues will face immediate deletion.",
-                winMessage:"The rougue worm has been defeated.",
+                winMessage:"The rogue worm has been defeated.",
                 loseMessage:"You've been destroyed.",
                 name: "White Grey Worm",
                 prefab: "HeadPrefab",
