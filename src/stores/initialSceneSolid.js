@@ -8,7 +8,7 @@ import {sphereOptions} from "../solid-solutions-backend/constants/states";
 export const initialScene = {
     title: {
         color: "#000000",
-        subText: "Keys: SPACE, W and Z",
+        subText: "SPACE to select and move forward. W and Z for selecting options.",
         subTextColor: "#ffffff"
     },
     // TODO: split data in a better high level state strucuture (game, engine)
@@ -20,7 +20,7 @@ export const initialScene = {
         activeScenes: ["main"],
         preloadWaitToStart: false,
         assets: {
-            sephirothPMXModel: "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
+            // sephirothPMXModel: "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
             everestOBJ: "./assets/models/64-everest/everest.obj",
             TETSUOHeadModel: "./assets/models/head/face.json",
             TETSUOMonitor: "./assets/models/monitor/monitor.mesh.json",
@@ -29,8 +29,8 @@ export const initialScene = {
             sandsFragShader: "./assets/shaders/fragment/anticore_raymarching_sands.glsl",
             marchingCubesSpheresFragShader: "./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl",
             laserShot: "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
-            menuMove: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Health Heart.wav",
-            menuSelect: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Power Zap.wav",
+            // menuMove: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Health Heart.wav",
+            // menuSelect: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Power Zap.wav",
             fariaDemoMP3: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
         },
         levels: {
@@ -48,7 +48,7 @@ export const initialScene = {
             postprocessing: true,
             backgroundColor: {
                 clearColor: 0x222222,
-                alpha: 0.9
+                alpha: 0
             }
         },
         allCameras: []
@@ -86,7 +86,8 @@ export const initialScene = {
                 //   "pokemonLogic",
                 "simpleRPGIntro",
                 "solidLogo",
-                "monitor"
+                "monitor",
+                "simplePlane"
             ]
         }
     },
@@ -105,6 +106,9 @@ export const initialScene = {
             // },
             simpleRPGIntro: {
                 prefab: "SimpleRPGIntroPrefab"
+            },
+            simplePlane: {
+                prefab: "SimplePlanePrefab"
             },
             pokemonLogic: {
                 prefab: "PokemonGameLogicPrefab",
@@ -325,7 +329,7 @@ export const initialScene = {
             },
             solidLogo: {
                 transform: {
-                    position:{x:.7,y:-.87,z:0.5},
+                    position:{x:.7,y:-.87,z:0.45},
                     rotation: {x: Math.PI / 2, y: -Math.PI / 4}
                 },
                 prefab: "SolidLogoPrefab",
@@ -355,6 +359,19 @@ export const initialScene = {
     },
     prefabs: {
         byId: {
+            SimplePlanePrefab: {
+                transform:{
+                    // position:{x:0,y:0,z:3},
+                    rotation:{}
+                },
+                components: {
+                    SimplePlane:{
+                        width:1.8,
+                        height:1.8,
+                        offSetZ:0.17
+                    }
+                }
+            },
             SimpleRPGIntroPrefab: {
                 components: {
                     SimpleRPGIntro: {debug: false},
@@ -450,7 +467,7 @@ export const initialScene = {
                         // cameraAutoRotate: true,
                         cameraAutoRotateSpeed: 3,
                         cameraMinDistance: 10,
-                        cameraPanLock: false,
+                        cameraPanLock: true,
                         // lookAt: { x: 0, y: 0, z: 0 },
                         animatedTransformations: true,
                         animatedIntroTime: 100,
@@ -851,7 +868,7 @@ export const initialScene = {
             TETSUOCityPrefab: {
                 transform: {
                     // rotation: { x:-Math.PI/2 },
-                    position: {x: 0, y: 0, z: 0}
+                    position: {x: 0, y: 0, z: .18}
                 },
                 debug: true,
                 components: {

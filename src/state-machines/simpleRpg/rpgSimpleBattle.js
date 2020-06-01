@@ -19,7 +19,7 @@ const rand = (min, max)=> {
 
 const idleMessage = assign({
     statusMessage:(ctx) =>{
-        return "Enemy:"+ctx.enemy.introMessage;
+        return "Cleaner:"+ctx.enemy.introMessage;
     }
 });
 const computeDamageMessage = assign({
