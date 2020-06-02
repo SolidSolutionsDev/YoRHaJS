@@ -177,7 +177,7 @@ export const initialContext = {
             },
             "text3-2": {
                 type: "text",
-                text:["Not able to logically understand why there has been no human activity in this terminal.","Also not able to query the grid for information.","This system security policy only allows incomming cyberspace communications when in auto mode."],
+                text:["Not able to logically understand why there has been no human activity in this terminal.","Also not able to query the grid for information.","This system security policy does not allow incomming cyberspace communications when in auto mode."],
                 goTo: ["text3-3"]
             },
             "text3-3": {
