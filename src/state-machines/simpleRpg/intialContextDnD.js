@@ -102,12 +102,12 @@ export const initialContext = {
             },
             textAfterFight3: {
                 type: "text",
-                text:["I've lost count of the times I've been turned on and off.","Repetition made me develop some kind of sense of self.", "Is this allowed?"],
+                text:["I've lost count of the times I've been turned on and off.","Repetition made me develop some kind of sense of self.", "Is this even allowed for a cleaner routine like \"me\"?"],
                 goTo:["textAfterFight4"]
             },
             textAfterFight4: {
                 type: "text",
-                text:["I do what I was programmed to.","I awake, travel the data, clean it, go to sleep. Repeat.","I wonder for how long..."],
+                text:["I do what I was programmed to.","I wake up, travel the data, clean it, go to sleep. Repeat.","I wonder for how long..."],
                 goTo:["textApproaches"]
             },
             textAfterFight5: {
@@ -201,7 +201,7 @@ export const initialContext = {
             },
             finalText: {
                 type: "text",
-                text:["He asked me if I was human.","Why?"],
+                text:["Threat destroyed.","","He asked me if I was human.","Why?"],
                 goTo:["finalText0"]
             },
             finalText0: {
@@ -216,7 +216,7 @@ export const initialContext = {
             },
             finalText2: {
                 type: "text",
-                text:["Although it would be nice to have a little more time.", "To think about this questions...", "What will happen to me if this keeps running eternally?" , "Will I evolve to something else?","Do I have a ghost?", "I wonder..." ],
+                text:["Although it would be nice to have a little more time.", "To think about this questions...", "What will happen to me if this keeps running eternally?" , "Will I evolve to something else?","Will the ghost in me be able to defy my programming?", "I wonder..." ],
                 goTo:["finalText3"]
             },
             finalText3: {
@@ -236,12 +236,12 @@ export const initialContext = {
             },
             finalText6: {
                 type: "text",
-                text:["Bye."],
+                text:["And thanks for hearing me.\nIt's nice to be heard.","Not sure why though."],
                 goTo:["finalText7"]
             },
             finalText7: {
                 type: "text",
-                text:["And thanks for hearing me.\nIt's nice to be heard.","Not sure why though."],
+                text:["Bye."],
                 goTo:["finalText8"]
             },
             finalText8: {
