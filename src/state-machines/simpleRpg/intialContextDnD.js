@@ -370,4 +370,5 @@ export const initialContext = {
             },
         },
     }
-}
+  }
+};
