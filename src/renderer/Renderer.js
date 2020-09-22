@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Stats from "stats.js";
+import TETSUO from "@SolidSolutionsDev/tetsuo";
 
 import * as THREE from "three";
 import {
@@ -12,18 +13,13 @@ import {
 } from "postprocessing";
 
 export class Renderer extends React.Component {
-  renderer = new THREE.WebGLRenderer({
-    antialias: this.props.antialias,
-    shadowMap: true,
-    alpha: this.props.alpha,
-    preserveDrawingBuffer: true
-  });
-
   stats = new Stats();
 
   composer;
 
-  canvas = this.renderer.domElement;
+  // canvas = this.renderer.domElement;
+  viewportElement = document.createElement("div");
+  // canvas = this.renderer.domElement;
 
   aspect = window.innerWidth / window.innerHeight;
 
@@ -36,8 +32,26 @@ export class Renderer extends React.Component {
   init = () => {
     THREE.Cache.enabled = true;
 
-    ReactDOM.findDOMNode(this).appendChild(this.canvas);
-    document.body.appendChild( this.stats.dom );
+    console.log(this.viewportElement);
+
+    ReactDOM.findDOMNode(this).appendChild(this.viewportElement);
+
+    this.tetsuoRenderer = new TETSUO.NodeRenderer({
+      antialias: this.props.antialias,
+      shadowMap: true,
+      alpha: this.props.alpha,
+      preserveDrawingBuffer: true,
+      viewportElement: this.viewportElement
+    });
+    this.renderer = this.tetsuoRenderer.glRenderer;
+    this.threeNode = new TETSUO.THREENode("threeSceneAndCamera", {});
+    this.tetsuoRenderer.connectToScreen(this.threeNode);
+    this.threeNode.onUpdate(() => {
+      console.log("render");
+    });
+
+    document.body.appendChild(this.stats.dom);
+    this.canvas = this.renderer.domElement;
     this.setupRendererDefaults();
     this.setupCanvasDefaults();
     this.registerEventListeners();
@@ -46,7 +60,6 @@ export class Renderer extends React.Component {
     window.THREE = THREE;
     this.onWindowResize();
   };
-
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { assetsLoadState, loadedCallback, availableComponent } = this.props;
@@ -107,18 +120,21 @@ export class Renderer extends React.Component {
     this.composer.addPass(this.effectPass);
   };
 
-
   update = time => {
     this.stats.begin();
     const { backgroundColor, availableComponent, postprocessing } = this.props;
     const mainCameraReady = availableComponent.scene.camera._main;
     if (this.state.ready && mainCameraReady) {
+      this.threeNode.camera = availableComponent.scene.camera._main;
+      this.threeNode.scene = availableComponent.scene.scene;
+      this.tetsuoRenderer.update(time, time - this.timePreviousFrame);
+      this.tetsuoRenderer.render();
       if (!postprocessing) {
-        this.renderer.render(
-          //TODO rename scene.scene to scene.transform
-          availableComponent.scene.scene,
-          availableComponent.scene.camera._main
-        );
+        // this.renderer.render(
+        //   //TODO rename scene.scene to scene.transform
+        //   availableComponent.scene.scene,
+        //   availableComponent.scene.camera._main
+        // );
       } else {
         // TODO: add post processing manager that reacts to redux state and make it optional between regular render
         this.effectPass || this.setPostProcessing();
@@ -127,7 +143,10 @@ export class Renderer extends React.Component {
       this.timePreviousFrame = time;
 
       if (backgroundColor) {
-        this.renderer.setClearColor(backgroundColor.clearColor, backgroundColor.alpha);
+        this.renderer.setClearColor(
+          backgroundColor.clearColor,
+          backgroundColor.alpha
+        );
       }
     }
     this.stats.end();
@@ -194,7 +213,6 @@ export class Renderer extends React.Component {
   //     }
   // }
 
-
   subscribeResize = onResizeFunction => {
     this.resizeFunctions.push(onResizeFunction);
   };
@@ -217,7 +235,7 @@ export class Renderer extends React.Component {
 
 Renderer.propTypes = {
   availableWidth: PropTypes.number,
-  availableHeight: PropTypes.number,
+  availableHeight: PropTypes.number
   // assetsLoadState: PropTypes.object
   // backgroundColor: PropTypes.string.isRequired,
   // availableComponent: PropTypes.object.isRequired,
