@@ -1,9 +1,28 @@
 import * as THREE from "three";
 import * as PIXI from "pixi.js";
 import TETSUO from "@SolidSolutionsDev/tetsuo";
+import { any } from "prop-types";
 
 export class TextScreen {
-  constructor(options) {
+  _elapsedTime: any;
+  _entries: any;
+  _width: any;
+  _height: any;
+  _backgroundColor: any;
+  _marginTop: any;
+  _marginLeft: any;
+  _paddingBottom: any;
+  _paddingLeft: any;
+  _spaceBetweenEntries: any;
+  _defaultTextStyle: any;
+  _background: any;
+  _foreground: any;
+  _currentAnimation: any;
+  _currentQuestion: any;
+  _outputNodes: any;
+  _outputNode: any;
+  _subscribers: any;
+  constructor(options: any) {
     // set default values
     this._elapsedTime = 0;
     this._entries = [];
@@ -71,7 +90,7 @@ export class TextScreen {
    * @param newEntry
    * @param height
    */
-  _addEntry(newEntry, height) {
+  _addEntry(newEntry: any, height?: any) {
     if (!this._foreground) return;
 
     height = height || newEntry.height;
@@ -118,7 +137,7 @@ export class TextScreen {
    * @param options - Extra animation options
    * @param callback - Callback when animation finishes
    */
-  addText(textContent, textStyle, options, callback) {
+  addText(textContent: any, textStyle: any, options: any, callback: any) {
     let block = "█";
 
     let text = new PIXI.Text(textContent, {
@@ -134,7 +153,7 @@ export class TextScreen {
     let elapsedTime = 0;
     let framesPerChar = options?.framesPerChar || 60;
 
-    this._trigger(EventTypes.newTextAnimation, {
+    this._trigger("newTextAnimation", {
       textContent,
       textStyle,
       options
@@ -146,7 +165,7 @@ export class TextScreen {
       this._currentAnimation = undefined;
     }
 
-    let animation = (timeDelta, forceEnd) => {
+    let animation = (timeDelta: any, forceEnd: any) => {
       // animation is forcefully ended
       if (forceEnd) {
         // display all text and callback
@@ -163,7 +182,7 @@ export class TextScreen {
         // if a new character was added to the screen
         if (text.text !== textContent.slice(0, elapsedChars) + block) {
           text.text = textContent.slice(0, elapsedChars) + block;
-          this._trigger(EventTypes.newCharacter, {
+          this._trigger("newCharacter", {
             character: text.text[elapsedChars - 1]
           });
         }
@@ -172,11 +191,11 @@ export class TextScreen {
       // if animation is over
       else {
         text.text = textContent;
-        this._trigger(EventTypes.newCharacter, {
+        this._trigger("newCharacter", {
           character: text.text[text.text.length - 1]
         });
         setTimeout(() => callback && callback(), 0);
-        this._trigger(EventTypes.textAnimationOver, {});
+        this._trigger("textAnimationOver", {});
         return true;
       }
     };
@@ -193,8 +212,8 @@ export class TextScreen {
    * @param answers - List of answers to be presented
    * @param options - Extra animation options
    */
-  addQuestion(questionText, answers, options) {
-    this._trigger(EventTypes.newQuestion, {
+  addQuestion(questionText: any, answers: any, options: any) {
+    this._trigger("newQuestion", {
       questionText,
       answers,
       options
@@ -210,7 +229,7 @@ export class TextScreen {
       () => {
         let selected = answers[0].id;
 
-        let question = {
+        let question: any = {
           selected,
           container: new PIXI.Container(),
           answers: []
@@ -232,8 +251,8 @@ export class TextScreen {
           let answerSelector = new PIXI.Graphics();
           answerSelector.beginFill(
             answers[i].textStyle?.fill ||
-              options?.questionStyle?.fill ||
-              this._defaultTextStyle.fill
+            options?.questionStyle?.fill ||
+            this._defaultTextStyle.fill
           );
           answerSelector.drawRect(0, 0, 10, 10);
           answerSelector.endFill();
@@ -270,15 +289,15 @@ export class TextScreen {
    *
    * @param answerId
    */
-  selectAnswer(answerId) {
+  selectAnswer(answerId: any) {
     if (this._currentQuestion) {
       this._currentQuestion.answers.forEach(
-        answer => (answer.selector.visible = answerId === answer.id)
+        (answer: any) => (answer.selector.visible = answerId === answer.id)
       );
 
       this._currentQuestion.selected = answerId;
 
-      this._trigger(EventTypes.answerSelected, { answerId });
+      this._trigger("answerSelected", { answerId });
     }
   }
 
@@ -286,7 +305,7 @@ export class TextScreen {
    * Confirms the currently selected answer
    */
   confirmAnswer() {
-    this._trigger(EventTypes.answerConfirmed, {
+    this._trigger("answerConfirmed", {
       answerId: this._currentQuestion?.selected
     });
     this._currentQuestion = undefined;
@@ -359,7 +378,7 @@ export class TextScreen {
    * @param time - Current animation time
    * @param updateOptions - Update options to override defaults
    */
-  update(deltaTime, updateOptions) {
+  update(deltaTime: any, updateOptions?: any) {
     if (!this._currentAnimation || this._currentAnimation(deltaTime)) {
       this._currentAnimation = undefined;
     }
@@ -372,7 +391,7 @@ export class TextScreen {
    *
    * @param subscriber
    */
-  subscribe(subscriber) {
+  subscribe(subscriber: any) {
     this._subscribers.push(subscriber);
   }
 
@@ -386,7 +405,7 @@ export class TextScreen {
    * @param eventType
    * @param eventData
    */
-  _trigger(eventType, eventData) {
-    this._subscribers.forEach(subscriber => subscriber(eventType, eventData));
+  _trigger(eventType: any, eventData: any) {
+    this._subscribers.forEach((subscriber: any) => subscriber(eventType, eventData));
   }
 }
