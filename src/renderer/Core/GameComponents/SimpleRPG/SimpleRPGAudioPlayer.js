@@ -89,7 +89,9 @@ export class SimpleRPGAudioPlayer extends React.Component {
     };
 
     render() {
-        if (!this.props.debug) { return null; }
+        if (!this.props.debug) {
+            return null;
+        }
         return <div id={"rpgAudio"}>
             <h2>SimpleRPGAudioPlayer</h2>
             <div>playing: {JSON.stringify(this.state.soundPlaying)}</div>

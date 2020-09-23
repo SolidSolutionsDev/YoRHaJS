@@ -4,7 +4,7 @@ import "./RPGBattleScenario.css";
 
 export class RPGBattleScenario extends React.Component {
     // load scenario
-    render = ()=> {
+    render = () => {
         return <div className={"battle-scenario"}>RPGBattleScenario {JSON.stringify(JSON.stringify(this.props))}</div>
     }
 }

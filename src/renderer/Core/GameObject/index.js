@@ -1,46 +1,46 @@
-import { connect } from "react-redux";
-import { GameObject } from "./GameObject";
+import {connect} from "react-redux";
+import {GameObject} from "./GameObject";
 
 const getGameObjects = state => {
-  // console.log("child test0",state.mainReducer.scene.gameObjects);
-  return state.mainReducer.gameObjects;
+    // console.log("child test0",state.mainReducer.scene.gameObjects);
+    return state.mainReducer.gameObjects;
 };
 
 const getSelf = (state, id) => {
-  const self = state.mainReducer.gameObjects.byId[id];
-  if (!self) {
-    alert(`Error: Trying to initialize GameObject with id ${id} that does not exist!`);
-  }
-  return state.mainReducer.gameObjects.byId[id];
+    const self = state.mainReducer.gameObjects.byId[id];
+    if (!self) {
+        alert(`Error: Trying to initialize GameObject with id ${id} that does not exist!`);
+    }
+    return state.mainReducer.gameObjects.byId[id];
 };
 
 const getSelfPrefab = (state, id) => {
-  const _prefabId = getSelf(state, id).prefab;
-  if (!_prefabId) {
-    return null;
-  }
-  const _prefab = getPrefabs(state).byId[_prefabId];
-  return _prefab;
+    const _prefabId = getSelf(state, id).prefab;
+    if (!_prefabId) {
+        return null;
+    }
+    const _prefab = getPrefabs(state).byId[_prefabId];
+    return _prefab;
 };
 
 const getPrefabs = state => {
-  return state.mainReducer.prefabs;
+    return state.mainReducer.prefabs;
 };
 
 const mapStateToProps = (state, props) => ({
-  ...props,
-  objects: getGameObjects(state),
-  selfSettings: getSelf(state, props.id),
-  transform: getSelf(state, props.id)
-    ? getSelf(state, props.id).transform
-    : undefined,
-  enabled: getSelf(state, props.id)
-    ? getSelf(state, props.id).enabled
-    : undefined,
-  debug: getSelf(state, props.id) ? getSelf(state, props.id).debug : undefined,
-  prefabs: getPrefabs(state),
-  prefabSettings: getSelfPrefab(state, props.id)
-  // ...state.mainReducer.scene,
+    ...props,
+    objects: getGameObjects(state),
+    selfSettings: getSelf(state, props.id),
+    transform: getSelf(state, props.id)
+        ? getSelf(state, props.id).transform
+        : undefined,
+    enabled: getSelf(state, props.id)
+        ? getSelf(state, props.id).enabled
+        : undefined,
+    debug: getSelf(state, props.id) ? getSelf(state, props.id).debug : undefined,
+    prefabs: getPrefabs(state),
+    prefabSettings: getSelfPrefab(state, props.id)
+    // ...state.mainReducer.scene,
 });
 
 //const mapDispatchToProps = (dispatch) => ({
@@ -48,9 +48,9 @@ const mapStateToProps = (state, props) => ({
 //});
 
 export default connect(
-  mapStateToProps,
-  // mapDispatchToProps,
-  null,
-  null,
-  { forwardRef: true }
+    mapStateToProps,
+    // mapDispatchToProps,
+    null,
+    null,
+    {forwardRef: true}
 )(GameObject);

@@ -15,4 +15,4 @@ export const mainReducer = (state = initialScene, action) => {
                 }
             };
     }
-}
+};

@@ -14,37 +14,36 @@ export class SimpleRPGBattle extends React.Component {
 
     battleGroup = new THREE.Group();
 
-    state = {
-    };
+    state = {};
 
-    entitiesIds= {
+    entitiesIds = {
         player: {
-            model:null,
-            text:null,
-            counter:null,
+            model: null,
+            text: null,
+            counter: null,
         },
         enemy: {
-            model:null,
-            text:null,
-            counter:null,
+            model: null,
+            text: null,
+            counter: null,
         },
-        gameMessages:{text:null}
+        gameMessages: {text: null}
     };
 
-    persistentObjects=[];
+    persistentObjects = [];
 
-    graphicElements= {
+    graphicElements = {
         player: {
-            model:null,
-            text:null,
-            counter:null,
+            model: null,
+            text: null,
+            counter: null,
         },
         enemy: {
-            model:null,
-            text:null,
-            counter:null,
+            model: null,
+            text: null,
+            counter: null,
         },
-        gameMessages:null
+        gameMessages: null
     }
 
 
@@ -53,7 +52,7 @@ export class SimpleRPGBattle extends React.Component {
         const {stateMachine} = availableService;
         const {game} = stateMachine.stateMachines;
         console.log(this.state);
-        if (this.state.active ) {
+        if (this.state.active) {
             const commandToSend = this.state.gameCurrent.value === "playBattle" ? "INPUT" : "NEXT_STEP"
             game.service.send(commandToSend)
         }
@@ -73,35 +72,43 @@ export class SimpleRPGBattle extends React.Component {
             const active = state === "playBattle" || state === "resolveBattle";
             if (active) {
                 const battleMachineService = game.service.children.get("battle");
-                if (game.service && this.battleService!== battleMachineService){
-                    this.battleService= battleMachineService;
+                if (game.service && this.battleService !== battleMachineService) {
+                    this.battleService = battleMachineService;
                     console.log("shouldnt be here n times");
                     console.log(this.battleService);
                     if (battleMachineService) {
                         this.activateTextElements();
                         this.updateEntitiesTexts();
-                        this.updateMessagesText(this.battleService.state.context.statusMessage,current.context);
+                        this.updateMessagesText(this.battleService.state.context.statusMessage, current.context);
                     }
                     console.log(this.battleService);
-                    const a = this.battleService ? this.battleService.onTransition(newBattleState=> {
-                        // console.log("battletransition",newBattleState);
-                            const counterExists = this.entitiesIds.player.counter!== null;
+                    const a = this.battleService ? this.battleService.onTransition(newBattleState => {
+                            // console.log("battletransition",newBattleState);
+                            const counterExists = this.entitiesIds.player.counter !== null;
                             if (newBattleState.context.statusMessage) {
-                                this.updateMessagesText(newBattleState.context.statusMessage,current.context);
+                                this.updateMessagesText(newBattleState.context.statusMessage, current.context);
                             }
-                        const turnHasChanged = this.state.battleCtx && this.state.battleCtx.currentTurn !==newBattleState.context.currentTurn && newBattleState.context.currentTurn;
+                            const turnHasChanged = this.state.battleCtx && this.state.battleCtx.currentTurn !== newBattleState.context.currentTurn && newBattleState.context.currentTurn;
                             // console.log("currentTurn"+newBattleState.context.currentTurn);
                             if (counterExists && turnHasChanged) {
-                                    this.activateTextElements();
-                                    this.updateEntitiesTexts();
+                                this.activateTextElements();
+                                this.updateEntitiesTexts();
                             }
-                            this.setState({active, gameCurrent:current, gameCtx: current.context,battleService:this.battleService,battleCurrent:newBattleState, battleValue: newBattleState.value,battleCtx:newBattleState.context});
+                            this.setState({
+                                active,
+                                gameCurrent: current,
+                                gameCtx: current.context,
+                                battleService: this.battleService,
+                                battleCurrent: newBattleState,
+                                battleValue: newBattleState.value,
+                                battleCtx: newBattleState.context
+                            });
                         })
                         : null;
                 }
-                this.setState({active, gameCtx: current.context, init: true, gameCurrent:current});
+                this.setState({active, gameCtx: current.context, init: true, gameCurrent: current});
             } else {
-                this.setState({active, init: true,gameCurrent:current});
+                this.setState({active, init: true, gameCurrent: current});
             }
         });
         document.addEventListener("shoot_keydown", () => {
@@ -118,49 +125,49 @@ export class SimpleRPGBattle extends React.Component {
             this.cleanBattle();
         }
 
-        if (this.state.battleCtx){
-            if (this.state.battleValue !== prevState.battleValue){
+        if (this.state.battleCtx) {
+            if (this.state.battleValue !== prevState.battleValue) {
                 // this.updateMessagesText();
             }
 
-        const {scene} = this.props.availableComponent;
-        if (this.persistentObjects.length && this.state.battleCtx.diceValue && this.state.battleCtx.diceValue!== prevState.battleCtx.diceValue) {
-            const battleConstants = this.state.gameCtx.constants.battle;
-            const {currentTurn} = this.state.battleCtx;
-            scene.enqueueAction(
-                updateGameObjectComponent(
-                    this.entitiesIds[currentTurn].counter,
-                    battleConstants.gameComponents.counter,
-                    {value:this.state.battleCtx.diceValue}
+            const {scene} = this.props.availableComponent;
+            if (this.persistentObjects.length && this.state.battleCtx.diceValue && this.state.battleCtx.diceValue !== prevState.battleCtx.diceValue) {
+                const battleConstants = this.state.gameCtx.constants.battle;
+                const {currentTurn} = this.state.battleCtx;
+                scene.enqueueAction(
+                    updateGameObjectComponent(
+                        this.entitiesIds[currentTurn].counter,
+                        battleConstants.gameComponents.counter,
+                        {value: this.state.battleCtx.diceValue}
+                    )
                 )
-            )
-            // counterToUse.counter.update(deltaTime);
-        }
+                // counterToUse.counter.update(deltaTime);
+            }
         }
 
     }
 
-    updateEntitiesTexts = ()=>{
+    updateEntitiesTexts = () => {
         this.updateEntityText("player");
         this.updateEntityText("enemy");
     }
 
 
-    updateMessagesText = (message="",gameContext = this.state.gameCtx) => {
+    updateMessagesText = (message = "", gameContext = this.state.gameCtx) => {
         const battleConstants = gameContext.constants.battle;
         const {scene} = this.props.availableComponent;
         scene.enqueueAction(
             updateGameObjectComponent(
                 this.entitiesIds.gameMessages.text,
                 battleConstants.gameComponents.text,
-                {value:message}
+                {value: message}
             )
         )
     }
 
     updateEntityText = (entity) => {
         const entityData = this.battleService.state.context[entity];
-        const text = entityData.name + "\nHP:"+entityData.hp+"/"+entityData.maxHp+"\nDefense:"+entityData.defense;
+        const text = entityData.name + "\nHP:" + entityData.hp + "/" + entityData.maxHp + "\nDefense:" + entityData.defense;
         const battleConstants = this.gameService.context.constants.battle;
         const {scene} = this.props.availableComponent;
 
@@ -168,34 +175,33 @@ export class SimpleRPGBattle extends React.Component {
             updateGameObjectComponent(
                 this.entitiesIds[entity].text,
                 battleConstants.gameComponents.text,
-                {value:text}
+                {value: text}
             )
         )
     }
 
-    activateTextElements = ()=> {
+    activateTextElements = () => {
         if (this.persistentObjects.length) {
-            this.persistentObjects.forEach((persistentObjectId)=>this.showObject(persistentObjectId));
-    }
-        else {
+            this.persistentObjects.forEach((persistentObjectId) => this.showObject(persistentObjectId));
+        } else {
             this.instantiateTextualGraphicElements();
             this.updateEntitiesTexts();
         }
     }
 
-    getText = (entity)=> {
+    getText = (entity) => {
         let _text, _data;
-        switch (entity){
-        case "gameMessages":
-            _text = this.battleService.state.context.statusMessage
-            break;
+        switch (entity) {
+            case "gameMessages":
+                _text = this.battleService.state.context.statusMessage
+                break;
             case "player":
                 _data = this.battleService.state.context[entity];
-                _text = _data.name + "\nHP:"+_data.hp+"/"+_data.maxHp+"\nDefense:"+_data.defense
+                _text = _data.name + "\nHP:" + _data.hp + "/" + _data.maxHp + "\nDefense:" + _data.defense
                 break;
             case "enemy":
                 _data = this.battleService.state.context[entity];
-                _text = _data.name + "\nHP:"+_data.hp+"/"+_data.maxHp+"\nDefense:"+_data.defense
+                _text = _data.name + "\nHP:" + _data.hp + "/" + _data.maxHp + "\nDefense:" + _data.defense
                 break;
             default:
                 break;
@@ -203,15 +209,15 @@ export class SimpleRPGBattle extends React.Component {
         return _text;
     }
 
-    instantiateTextualGraphicElements = ()=> {
-        this.instantiateTextualGraphicElement("player","counter");
-        this.instantiateTextualGraphicElement("player","text", this.getText("player"));
-        this.instantiateTextualGraphicElement("enemy","counter");
-        this.instantiateTextualGraphicElement("enemy","text", this.getText("enemy"));
-        this.instantiateTextualGraphicElement("gameMessages","text", this.getText("gameMessages"));
+    instantiateTextualGraphicElements = () => {
+        this.instantiateTextualGraphicElement("player", "counter");
+        this.instantiateTextualGraphicElement("player", "text", this.getText("player"));
+        this.instantiateTextualGraphicElement("enemy", "counter");
+        this.instantiateTextualGraphicElement("enemy", "text", this.getText("enemy"));
+        this.instantiateTextualGraphicElement("gameMessages", "text", this.getText("gameMessages"));
     }
 
-    instantiateTextualGraphicElement = (battleEntity = "player", graphicElement="counter", value="") => {
+    instantiateTextualGraphicElement = (battleEntity = "player", graphicElement = "counter", value = "") => {
 
         const battleConstants = this.gameService.context.constants.battle;
         const gameConstants = this.gameService.context.constants;
@@ -220,7 +226,7 @@ export class SimpleRPGBattle extends React.Component {
         const graphicElementScale = battleConstants.graphicElementsScales[battleEntity][graphicElement];
         const {scene} = this.props.availableComponent;
 
-        console.log("instantiateTextualGraphicElement",battleEntity,graphicElement);
+        console.log("instantiateTextualGraphicElement", battleEntity, graphicElement);
         const newId = uniqueId(battleConstants.prefabs[graphicElement]);
         this.entitiesIds[battleEntity][graphicElement] = newId;
         scene.enqueueAction(
@@ -229,17 +235,18 @@ export class SimpleRPGBattle extends React.Component {
                 newId,
                 {
                     position: {
-                        x:graphicElementPosition[0], y:graphicElementPosition[1], z:graphicElementPosition[2]},
-                    scale:{
-                        x:graphicElementScale,y:graphicElementScale,z:graphicElementScale
+                        x: graphicElementPosition[0], y: graphicElementPosition[1], z: graphicElementPosition[2]
                     },
+                    scale: {
+                        x: graphicElementScale, y: graphicElementScale, z: graphicElementScale
                     },
+                },
                 this.props.gameObject.id,
                 null,
                 {
-                    [battleConstants.gameComponents[graphicElement]]:{
-                        framesPerChar:20,
-                        fill:gameConstants.colors[battleEntity],
+                    [battleConstants.gameComponents[graphicElement]]: {
+                        framesPerChar: 20,
+                        fill: gameConstants.colors[battleEntity],
                         value
                     }
                 }
@@ -255,15 +262,15 @@ export class SimpleRPGBattle extends React.Component {
         const {model} = constantsData.graphicElementsPositions[character];
         const {scene} = this.props.availableComponent;
 
-            const newId = uniqueId(character+characterGameData.prefab);
-            scene.enqueueAction(
-                instantiateFromPrefab(
-                    characterGameData.prefab,
-                    newId,
-                    {position: { x:model[0], y:model[1], z:model[2]}},
-                    this.props.gameObject.id,
-                )
-            );
+        const newId = uniqueId(character + characterGameData.prefab);
+        scene.enqueueAction(
+            instantiateFromPrefab(
+                characterGameData.prefab,
+                newId,
+                {position: {x: model[0], y: model[1], z: model[2]}},
+                this.props.gameObject.id,
+            )
+        );
         this.graphicElements[character].model = newId;
         return newId;
     }
@@ -275,7 +282,7 @@ export class SimpleRPGBattle extends React.Component {
     };
 
     destroyModel = (modelType = "player") => {
-        const { scene } = this.props.availableComponent;
+        const {scene} = this.props.availableComponent;
         scene.enqueueAction(
             destroyGameObjectById(
                 this.graphicElements[modelType].model, this.props.gameObject.id)
@@ -283,27 +290,27 @@ export class SimpleRPGBattle extends React.Component {
     }
 
     cleanBattle = () => {
-        const { scene } = this.props.availableComponent;
+        const {scene} = this.props.availableComponent;
 
-        this.persistentObjects.forEach(persistentObjectId=>this.hideObject(persistentObjectId));
+        this.persistentObjects.forEach(persistentObjectId => this.hideObject(persistentObjectId));
 
         this.destroyModel("player");
         this.destroyModel("enemy");
     }
 
-    hideObject= (objectId)=>{
-        const { scene } = this.props.availableComponent;
+    hideObject = (objectId) => {
+        const {scene} = this.props.availableComponent;
         scene.enqueueAction(updateGameObject(
             objectId,
-            {enabled:false}
+            {enabled: false}
         ))
     }
 
-    showObject= (objectId)=>{
-        const { scene } = this.props.availableComponent;
+    showObject = (objectId) => {
+        const {scene} = this.props.availableComponent;
         scene.enqueueAction(updateGameObject(
             objectId,
-            {enabled:true}
+            {enabled: true}
         ))
     }
 
@@ -317,15 +324,17 @@ export class SimpleRPGBattle extends React.Component {
 
     render() {
 
-        if (!this.props.debug) { return null; }
-        const {gameCurrent,battleCtx,battleCurrent} = this.state;
-        const battleUI = gameCurrent && gameCurrent.value==="playBattle"? <div>BATTLE!
-        <div>{gameCurrent.value+" -> "+battleCurrent.value}</div>
-        <div style={{color:battleCtx.currentTurn === "player" ? "green" : "red"}}>Dice:{battleCtx.diceValue}</div>
-        <div>Damage Done {battleCtx.damageDone}</div>
-        <div>Player {`${battleCtx.player.name} hp:${battleCtx.player.hp} defense:${battleCtx.player.defense} `}</div>
-        <div>Enemy {`${battleCtx.enemy.name} hp:${battleCtx.enemy.hp} defense:${battleCtx.enemy.defense} `}</div>
-    </div>:null;
+        if (!this.props.debug) {
+            return null;
+        }
+        const {gameCurrent, battleCtx, battleCurrent} = this.state;
+        const battleUI = gameCurrent && gameCurrent.value === "playBattle" ? <div>BATTLE!
+            <div>{gameCurrent.value + " -> " + battleCurrent.value}</div>
+            <div style={{color: battleCtx.currentTurn === "player" ? "green" : "red"}}>Dice:{battleCtx.diceValue}</div>
+            <div>Damage Done {battleCtx.damageDone}</div>
+            <div>Player {`${battleCtx.player.name} hp:${battleCtx.player.hp} defense:${battleCtx.player.defense} `}</div>
+            <div>Enemy {`${battleCtx.enemy.name} hp:${battleCtx.enemy.hp} defense:${battleCtx.enemy.defense} `}</div>
+        </div> : null;
         return <div id={"rpgBattle"}>
             <h2>SimpleRPGBattle</h2>
             {battleUI}
@@ -336,5 +345,4 @@ export class SimpleRPGBattle extends React.Component {
     }
 }
 
-SimpleRPGBattle.propTypes = {
-};
+SimpleRPGBattle.propTypes = {};

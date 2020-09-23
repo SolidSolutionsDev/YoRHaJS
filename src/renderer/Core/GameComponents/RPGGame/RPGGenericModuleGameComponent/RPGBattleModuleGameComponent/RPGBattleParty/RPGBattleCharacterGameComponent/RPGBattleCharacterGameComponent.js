@@ -8,5 +8,5 @@ export class RPGBattleCharacterGameComponent extends React.Component {
 }
 
 RPGBattleCharacterGameComponent.propTypes = {
-    type:PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
 };

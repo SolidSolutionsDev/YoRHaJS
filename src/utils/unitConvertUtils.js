@@ -1,4 +1,3 @@
-
 // [0,255] to [00, FF]
 export const componentToHex = (c) => {
     var hex = c.toString(16);
@@ -34,7 +33,7 @@ export const rgb2xy = (r, g, b) => {
 
     let position = polar2xy(distance2center, theta);
 
-    return { x: Math.floor(position.x), y: Math.floor(position.y) };
+    return {x: Math.floor(position.x), y: Math.floor(position.y)};
 };
 
 //degrees to radians
@@ -49,7 +48,7 @@ export function polar2xy(distance, theta) {
     // Convert polar to cartesian
     let posX = distance * Math.cos(theta);
     let posY = distance * Math.sin(theta);
-    return { x: posX, y: posY };
+    return {x: posX, y: posY};
 }
 
 // hue in range [0, 360]

@@ -5,21 +5,24 @@ import * as _ from "lodash";
 
 export class AutoRotate extends React.Component {
 
-    speed= {
-        x:0,
-        y:0,
-        z:0
+    speed = {
+        x: 0,
+        y: 0,
+        z: 0
     };
 
-    acceleration= {
-        x:0,
-        y:0,
-        z:0
+    acceleration = {
+        x: 0,
+        y: 0,
+        z: 0
     };
 
     updateSpeed = () => {
         const {speed} = this.props;
-        if (!speed) {return};
+        if (!speed) {
+            return
+        }
+        ;
         Object.keys(speed).forEach((key) => {
             this.speed[key] = speed[key];
         })
@@ -27,7 +30,10 @@ export class AutoRotate extends React.Component {
 
     updateAcceleration = () => {
         const {acceleration} = this.props;
-      if (!acceleration) {return};
+        if (!acceleration) {
+            return
+        }
+        ;
         Object.keys(acceleration).forEach((key) => {
             this.acceleration[key] = acceleration[key];
         })
@@ -65,8 +71,8 @@ export class AutoRotate extends React.Component {
     };
 
     start = () => {
-      this.updateSpeed();
-      this.updateAcceleration();
+        this.updateSpeed();
+        this.updateAcceleration();
     };
 
     update = () => {

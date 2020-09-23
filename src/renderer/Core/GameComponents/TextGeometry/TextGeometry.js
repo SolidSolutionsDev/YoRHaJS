@@ -200,7 +200,7 @@ export class TextGeometry extends React.Component {
 
         this.group.add(this.textMesh1);
 
-         this.textMesh1.rotation.x = Math.PI / 2;
+        this.textMesh1.rotation.x = Math.PI / 2;
 
         if (this.mirror) {
 
@@ -274,7 +274,7 @@ export class TextGeometry extends React.Component {
         this.loadFont();
     };
 
-    startRandomGeneration = ()=> {
+    startRandomGeneration = () => {
         setInterval(() => {
             const randomString = this.randomString(Math.abs(Math.random() * 10));
 
@@ -287,7 +287,7 @@ export class TextGeometry extends React.Component {
                 this.props.gameObject.id,
                 "textGeometry", {
                     text: randomString,
-                    colors:[ "#" + Math.floor(Math.random()*16777215).toString(16) ],
+                    colors: ["#" + Math.floor(Math.random() * 16777215).toString(16)],
                     height: Math.random() * 2,
                     size: Math.random() * 7,
                     hover: Math.random() * 30,

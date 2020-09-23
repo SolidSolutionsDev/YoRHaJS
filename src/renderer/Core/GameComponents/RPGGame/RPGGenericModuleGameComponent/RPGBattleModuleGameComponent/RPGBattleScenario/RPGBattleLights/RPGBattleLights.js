@@ -4,8 +4,9 @@ import "./RPGBattleLights.css";
 
 export class RPGBattleLights extends React.Component {
     // load scenario
-    render = ()=> {
-        return <div className={"battle-lights"}>RPGBattleLights should render ui with battle lights {JSON.stringify(this.props.playerIds)}</div>
+    render = () => {
+        return <div className={"battle-lights"}>RPGBattleLights should render ui with battle
+            lights {JSON.stringify(this.props.playerIds)}</div>
     }
 }
 

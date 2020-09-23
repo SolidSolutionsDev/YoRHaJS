@@ -17,7 +17,7 @@ export class MeshGeometry extends React.Component {
     materialInstance;
 
     modelLoad = () => {
-        const {transform, scale, materialType, materialParameters, availableService, assetId,doubleSide} = this.props;
+        const {transform, scale, materialType, materialParameters, availableService, assetId, doubleSide} = this.props;
         const {assetsProvider} = availableService;
         this.modelToUse = assetsProvider.getAssetById(assetId);
 

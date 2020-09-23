@@ -103,7 +103,7 @@ export class GameObject extends React.Component {
     componentDidUpdate(prevProps) {
         const transformChanged = this._checkTransformChanged(prevProps);
         if (transformChanged) {
-             return;
+            return;
             this.updateTransform();
         }
     }
@@ -207,7 +207,7 @@ export class GameObject extends React.Component {
         this.transform.add(_wrappedGameObject.transform);
         _wrappedGameObject.registerParent(this.transform);
         this.childGameObjects.push(gameObject);
-        gameObject.registered=true;
+        gameObject.registered = true;
     };
 
 

@@ -1,15 +1,15 @@
 #rpgAudio {
-  position: absolute;
-  top: 70%;
-  width: 20%;
-  left: 0%;
-  text-align: center;
-  opacity: 0.9;
-  color: green;
-  transition:opacity 0.5s linear;
-  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    position: absolute;
+    top: 70%;
+    width: 20%;
+    left: 0%;
+    text-align: center;
+    opacity: 0.9;
+    color: green;
+    transition: opacity 0.5s linear;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
 #rpgAudio.inactive {
-  color: red;
+    color: red;
 }

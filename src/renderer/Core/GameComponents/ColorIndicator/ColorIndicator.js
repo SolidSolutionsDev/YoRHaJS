@@ -25,19 +25,19 @@ export class ColorIndicator extends React.Component {
 
     initColorCircleCanvas = () => {
         const id = this.props.gameObject.id;
-        this.canvas =  document.createElement("canvas");
-        this.canvas.width ="100";
-        this.canvas.height ="100";
-        this.canvas.id=`${id}_colorCanvas`;
+        this.canvas = document.createElement("canvas");
+        this.canvas.width = "100";
+        this.canvas.height = "100";
+        this.canvas.id = `${id}_colorCanvas`;
         this.mainDiv.appendChild(this.canvas);
         this.canvas = drawCircleOnCanvas(this.canvas);
     };
 
     initColorCircleIndicator = () => {
         const id = this.props.gameObject.id;
-        this.indicator =  document.createElement("div");
-        this.indicator.id=`${id}indicator`;
-        this.indicator.className=`indicator`;
+        this.indicator = document.createElement("div");
+        this.indicator.id = `${id}indicator`;
+        this.indicator.className = `indicator`;
         this.indicator.innerHTML = "O";
         this.mainDiv.appendChild(this.indicator);
         this.updateIndicator();
@@ -72,5 +72,5 @@ export class ColorIndicator extends React.Component {
 }
 
 ColorIndicator.propTypes = {
-    color:PropTypes.shape({r:PropTypes.number,g:PropTypes.number,b:PropTypes.number}),
+    color: PropTypes.shape({r: PropTypes.number, g: PropTypes.number, b: PropTypes.number}),
 };

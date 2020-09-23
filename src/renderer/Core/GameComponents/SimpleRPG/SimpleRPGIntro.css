@@ -1,13 +1,13 @@
 #rpgIntro {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  text-align: center;
-  opacity: 0.9;
-  color: #1ed36f;
-  transition:opacity 0.5s linear;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    opacity: 0.9;
+    color: #1ed36f;
+    transition: opacity 0.5s linear;
 }
 
 #rpgIntro.inactive {
-  opacity:0;
+    opacity: 0;
 }

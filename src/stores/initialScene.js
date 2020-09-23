@@ -42,8 +42,6 @@ export const initialScene = {
   },
   gameObjects: {
     byId: {
-
-
       camera1: {
         prefab: "DynamicCamera"
       },
@@ -59,25 +57,25 @@ export const initialScene = {
         transform: {
           position: { x: 0, y: 0, z: 4 }
         },
-        components:{
+        components: {
           textGeometry: {
-            randomColors:false,
-            colors:[0xffaaaa],
+            randomColors: false,
+            colors: [0xffaaaa],
             text: "SOLID",
             height: 2,
             size: 7,
             hover: 30,
-            curveSegments:  4,
-            bevelThickness: .2,
-            bevelSize: .15,
+            curveSegments: 4,
+            bevelThickness: 0.2,
+            bevelSize: 0.15,
             bevelEnabled: true,
             fontName: "opensans", // helvetiker, optimer, gentilis, droid sans, droid seri,
-            fontWeight: "bold",// normal bol,
-            mirror:  false,
-          },
+            fontWeight: "bold", // normal bol,
+            mirror: false
+          }
         },
         tags: ["playerShooter"],
-        prefab: "TestShooter",
+        prefab: "TestShooter"
       },
       testBoss0: {
         debug: true,
@@ -90,7 +88,7 @@ export const initialScene = {
         debug: true,
         transform: {
           position: { x: -30, y: 30, z: 10 }
-        },
+        }
         /// sprefab: "EnemySphereBoss"
       },
       testEnemy2: {
@@ -274,23 +272,22 @@ export const initialScene = {
         components: {
           sphereGeometry: {
             basicMaterial: true,
-            castShadow:false,
-          },
+            castShadow: false
+          }
         },
         children: []
       },
       TestShooter: {
         debug: true,
         components: {
-          playerControls: {
-          },
+          playerControls: {},
           shooter: {
             soundLocation:
               "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
             moveRatio: 7,
             displacementRatio: 5,
             bulletPrefab: "PlayerBullet",
-            selfDestructTime: 2000,
+            selfDestructTime: 2000
           },
           shooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
@@ -306,7 +303,7 @@ export const initialScene = {
           enemyMovementControls: {
             type: "follow",
             speed: 50,
-            rotationSpeed: 10,
+            rotationSpeed: 10
           },
           shooter: {
             shooting: true,
@@ -320,7 +317,7 @@ export const initialScene = {
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
             mass: 1,
-            tip: true,
+            tip: true
           }
         },
         children: []
@@ -331,22 +328,21 @@ export const initialScene = {
           enemyMovementControls: {
             type: "rotate",
             speed: 50,
-            rotationSpeed: 2,
+            rotationSpeed: 2
           },
           shooter: {
             shooting: true,
             moveRatio: 2,
-            displacementRatio:1,
+            displacementRatio: 1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
-            aroundBullets: 1,
-
+            aroundBullets: 1
           },
           sphereGeometry: {
-            radius:1.4,
+            radius: 1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
-            castShadow:true,
+            castShadow: true
           }
         },
         children: []

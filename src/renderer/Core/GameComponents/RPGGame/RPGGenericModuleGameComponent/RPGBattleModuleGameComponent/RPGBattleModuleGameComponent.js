@@ -8,8 +8,8 @@ export class RPGBattleModuleGameComponent extends RPGGenericModuleGameComponent 
     party1; // party can have target party
     party2;
 
-    render =()=> {
-        return  <div>RPGBattleModuleGameComponent</div>;
+    render = () => {
+        return <div>RPGBattleModuleGameComponent</div>;
     }
 
 }

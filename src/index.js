@@ -7,6 +7,6 @@ import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(
     <App key={"app"}/>,
-  document.getElementById("root")
+    document.getElementById("root")
 );
 registerServiceWorker();

@@ -47,7 +47,7 @@ export class Renderer extends React.Component {
     this.threeNode = new TETSUO.THREENode("threeSceneAndCamera", {});
     this.tetsuoRenderer.connectToScreen(this.threeNode);
     this.threeNode.onUpdate(() => {
-      console.log("render");
+    //  console.log("render");
     });
 
     document.body.appendChild(this.stats.dom);

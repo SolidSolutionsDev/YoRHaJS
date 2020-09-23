@@ -195,9 +195,9 @@ export class EnemyMovementControls extends React.Component {
         const maxRotateValue = .05;
         const rotationToLookAtPlayer = Math.asin(vPlayerPositionRelativeToLocalEnemyPositionAndRotation.x);
         const rotateAbsoluteValue = Math.min(Math.abs(rotationToLookAtPlayer), maxRotateValue);
-        const orientedRotationValue =  -Math.sign(rotationToLookAtPlayer) * rotateAbsoluteValue;
+        const orientedRotationValue = -Math.sign(rotationToLookAtPlayer) * rotateAbsoluteValue;
 
-        transform.rotateZ( orientedRotationValue );
+        transform.rotateZ(orientedRotationValue);
     };
 
     updateAutoRotateEnemy = (time, deltaTime) => {

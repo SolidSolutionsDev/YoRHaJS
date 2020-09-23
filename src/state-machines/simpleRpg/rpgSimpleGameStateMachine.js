@@ -10,9 +10,9 @@ const updateCharactersData = assign({
             return event.data.player;
         },
         enemies: (context, event) => {
-            const enemyId= context.constants.steps[context.stepsQueue[0]].enemy;
+            const enemyId = context.constants.steps[context.stepsQueue[0]].enemy;
             return {
-                ...context.enemies,[enemyId]:event.data.enemy
+                ...context.enemies, [enemyId]: event.data.enemy
             };
         }
     }
@@ -122,7 +122,7 @@ const nextQueuedStepDoesNotExist = (ctx) => {
 };
 
 const playerIsAlive = (ctx) => {
-    return ctx.player.hp >0 ;
+    return ctx.player.hp > 0;
 };
 
 
@@ -239,9 +239,9 @@ export const rpgSimpleGameStateMachine = Machine({
                 data: {
                     player: (context) => context.player,
                     enemy: (context) => {
-                        const enemyId= context.constants.steps[context.stepsQueue[0]].enemy;
+                        const enemyId = context.constants.steps[context.stepsQueue[0]].enemy;
                         return context.enemies[enemyId];
-                        },
+                    },
                 },
                 onDone: {
                     target: 'resolveBattle',
@@ -249,11 +249,11 @@ export const rpgSimpleGameStateMachine = Machine({
                 }
             },
             on: {
-                INPUT:{
-                    actions:send('PLAYER_INPUT',{to:"battle"})
+                INPUT: {
+                    actions: send('PLAYER_INPUT', {to: "battle"})
                 },
-                UPDATE_PLAYER:{
-                    actions:updateCharactersData
+                UPDATE_PLAYER: {
+                    actions: updateCharactersData
                 },
             }
         },
@@ -261,13 +261,13 @@ export const rpgSimpleGameStateMachine = Machine({
             on: {
                 "NEXT_STEP": [
                     {
-                    target: "incrementAndNextStep",
-                        cond:playerIsAlive,
+                        target: "incrementAndNextStep",
+                        cond: playerIsAlive,
                     },
                     {
                         target: "nextStep",
                         actions: setGameOverStep,
-                        cond:currentStepIsNotGameOverStep
+                        cond: currentStepIsNotGameOverStep
                     }
                 ],
             }
@@ -281,7 +281,7 @@ export const rpgSimpleGameStateMachine = Machine({
                 "GAME_OVER": {
                     target: "nextStep",
                     actions: setGameOverStep,
-                    cond:currentStepIsNotGameOverStep
+                    cond: currentStepIsNotGameOverStep
                 }
             }
         },
@@ -312,7 +312,7 @@ export const rpgSimpleGameStateMachine = Machine({
                 "GAME_OVER": {
                     target: "nextStep",
                     actions: setGameOverStep,
-                    cond:currentStepIsNotGameOverStep
+                    cond: currentStepIsNotGameOverStep
                 }
             }
         },
@@ -324,7 +324,6 @@ export const rpgSimpleGameStateMachine = Machine({
         }
     }
 });
-
 
 
 // export const dynamicSimpleGameStateMachine = rpgSimpleGameStateMachine.withContext(initialContext);

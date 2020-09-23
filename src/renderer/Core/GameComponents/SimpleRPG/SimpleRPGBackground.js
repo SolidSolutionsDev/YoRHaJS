@@ -94,7 +94,9 @@ export class SimpleRPGBackground extends React.Component {
     };
 
     render() {
-        if (!this.props.debug) { return null; }
+        if (!this.props.debug) {
+            return null;
+        }
         return <div id={"rpgBackground"}>
             <h2>SimpleRPGBackground</h2>
             <div>active: {JSON.stringify(this.state.active)}</div>
@@ -105,5 +107,4 @@ export class SimpleRPGBackground extends React.Component {
     }
 }
 
-SimpleRPGBackground.propTypes = {
-};
+SimpleRPGBackground.propTypes = {};

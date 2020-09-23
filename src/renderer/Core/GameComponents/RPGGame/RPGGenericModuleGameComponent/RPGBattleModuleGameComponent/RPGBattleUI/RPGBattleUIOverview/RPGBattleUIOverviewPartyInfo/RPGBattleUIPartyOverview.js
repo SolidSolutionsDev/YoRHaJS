@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./RPGBattleUIPartyOverviewPartyInfo.css";
 
 export class RPGBattleUIPartyOverviewPartyInfo extends React.Component {
-    render = ()=> {
+    render = () => {
         return <div className={"battle-party-overview"}>RPGBattleUIOverview </div>
     }
 }

@@ -254,7 +254,6 @@ const moduleScenes = {
 };
 
 
-
 export const kernelConstants = {
     menuCommands,
     attackData,

@@ -4,7 +4,7 @@ import "./RPGBattleUIOverview.css";
 
 export class RPGBattleUIOverview extends React.Component {
     // load scenario
-    render = ()=> {
+    render = () => {
         return <div className={"battle-overview"}>RPGBattleOverview </div>
     }
 }

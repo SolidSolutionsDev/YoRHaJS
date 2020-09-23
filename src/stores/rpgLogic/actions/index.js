@@ -1,4 +1,3 @@
-
 const START_BATTLE = "START_BATTLE";
 const BATTLE_COMMAND = "BATTLE_COMMAND";
 const BATTLE_EVENT = "BATTLE_EVENT";
@@ -9,14 +8,14 @@ const END_BATTLE = "END_BATTLE";
 const HIT_STORY_POINT = "HIT_STORY_POINT";
 const STORY_EVENT = "STORY_EVENT";
 
-export const startBattle = (scenario,attacker, targets) => ({
+export const startBattle = (scenario, attacker, targets) => ({
     type: START_BATTLE,
     scenario,
     attacker,
     targets,
 });
 
-export const battleCommand = (command,attacker, targets) => ({
+export const battleCommand = (command, attacker, targets) => ({
     type: BATTLE_COMMAND,
     command,
     attacker,

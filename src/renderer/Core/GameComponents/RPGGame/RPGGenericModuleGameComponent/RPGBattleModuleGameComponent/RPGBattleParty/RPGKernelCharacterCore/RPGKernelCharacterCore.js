@@ -35,7 +35,7 @@ export class RPGKernelCharacterCore extends React.Component {
 
     };
 
-    launchAttachTo = (target,attack) => {
+    launchAttachTo = (target, attack) => {
     };
 
     sufferAttack = () => {
@@ -51,14 +51,13 @@ export class RPGKernelCharacterCore extends React.Component {
     };
 
 
-
     timePass = (deltaTime) => {
-      const _newTime = this.time + deltaTime * this.speed;
-      this.time = Math.min(_newTime,1.0);
+        const _newTime = this.time + deltaTime * this.speed;
+        this.time = Math.min(_newTime, 1.0);
     };
 
     update = (time, deltaTime) => {
-      this.timePass(deltaTime);
+        this.timePass(deltaTime);
     };
     start = () => {
     };

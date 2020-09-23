@@ -25,7 +25,7 @@ class Preloader extends Component {
     };
 
     load = () => {
-        const {preloadWaitToStart,markAssetsAsLoaded} = this.props;
+        const {preloadWaitToStart, markAssetsAsLoaded} = this.props;
 
         this.manager.onStart = (url, itemsLoaded, itemsTotal) => {
 
@@ -43,9 +43,9 @@ class Preloader extends Component {
             // everything is loaded
             // call your other function
             //
-            this.setState({ready:true});
+            this.setState({ready: true});
             console.log("[LoaderManager] Preload complete", this);
-            if (!preloadWaitToStart){
+            if (!preloadWaitToStart) {
                 markAssetsAsLoaded();
             }
         };
@@ -62,14 +62,14 @@ class Preloader extends Component {
             const currentLoader = this.manager.getHandler(this.props.assets[assetTag]);
             currentLoader.load(assetFileURL, (loadedAsset) => {
                 let asset = loadedAsset;
-                if (asset.isMesh){
+                if (asset.isMesh) {
                     // console.log("mesh",loadedAsset,asset);
                 }
-                if (asset.isGroup){
+                if (asset.isGroup) {
                     asset = loadedAsset.children[0];
                     // console.log("group",loadedAsset,asset);
                 }
-                if (asset.scene){
+                if (asset.scene) {
                     asset = loadedAsset.scene;
                     // console.log("group",loadedAsset,asset);
                 }
@@ -110,15 +110,18 @@ class Preloader extends Component {
                 className={"preloader"}>
                 Loading...
                 {
-                Object.keys(this.state.loaded).map((item,index)=>{
-                return <div
-                key={`preloader_${index}`}
-                >
-                {`${item}:`} <br/> {`${assets[item].toUpperCase()}`}
-                </div>}
-                )}
+                    Object.keys(this.state.loaded).map((item, index) => {
+                            return <div
+                                key={`preloader_${index}`}
+                            >
+                                {`${item}:`} <br/> {`${assets[item].toUpperCase()}`}
+                            </div>
+                        }
+                    )}
                 {}
-                {ready ?<div key={"preloader_ready"}> READY! <br/> <button className="full" onClick={this.props.markAssetsAsLoaded}>Start</button></div>:null}
+                {ready ? <div key={"preloader_ready"}> READY! <br/>
+                    <button className="full" onClick={this.props.markAssetsAsLoaded}>Start</button>
+                </div> : null}
             </div>
         } else {
             return this.props.children;

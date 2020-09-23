@@ -34,7 +34,7 @@ export class RPGBattleUIPlayerControls extends React.Component {
     initSound = (soundId) => {
         //menuMoveSoundId
         //menuSelectSoundId
-        const { transform, availableService, selfSettings } = this.props;
+        const {transform, availableService, selfSettings} = this.props;
         if (!selfSettings[soundId]) {
             return;
         }
@@ -52,9 +52,11 @@ export class RPGBattleUIPlayerControls extends React.Component {
         return _sound;
     };
 
-    moveLeft = () => { };
+    moveLeft = () => {
+    };
 
-    moveRight = () => { };
+    moveRight = () => {
+    };
 
     moveUp = () => {
         let _currentCommandIndex = this.state.selectedCommand;
@@ -68,7 +70,7 @@ export class RPGBattleUIPlayerControls extends React.Component {
     moveDown = () => {
         let _currentCommandIndex = this.state.selectedCommand;
         _currentCommandIndex++;
-        if (_currentCommandIndex > Object.keys(this.availableCommands).length -1) {
+        if (_currentCommandIndex > Object.keys(this.availableCommands).length - 1) {
             _currentCommandIndex = 0;
         }
         this.setState({selectedCommand: _currentCommandIndex});
@@ -113,13 +115,13 @@ export class RPGBattleUIPlayerControls extends React.Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.selectedCommand !== prevState.selectedCommand ){
+        if (this.state.selectedCommand !== prevState.selectedCommand) {
             if (!this.menuMoveSound) {
                 return;
             }
             if (this.menuMoveSound.isPlaying) {
-            this.menuMoveSound.stop();
-        }
+                this.menuMoveSound.stop();
+            }
             this.menuMoveSound.play();
         }
     }
@@ -176,7 +178,7 @@ export class RPGBattleUIPlayerControls extends React.Component {
                     const attackData = this.commandsDetails[commandId];
                     const currentActive = this.state.selectedCommand === index;
                     return `<li
-                                class="${`battle-menu-option ${ currentActive ? "battle-menu-option-selected" : ""}`}"
+                                class="${`battle-menu-option ${currentActive ? "battle-menu-option-selected" : ""}`}"
                             >
                                 ${attackData.label}
                             </li>`;
@@ -197,7 +199,7 @@ export class RPGBattleUIPlayerControls extends React.Component {
         this.initMenuDiv();
 
         this.menuMoveSound = this.initSound("menuMoveSoundId");
-        this.menuMoveSelectSound =this.initSound("menuSelectSoundId");
+        this.menuMoveSelectSound = this.initSound("menuSelectSoundId");
         this.registerEvents();
         // transform.add( this.mesh );
         // this.addMouseDebugMesh();
