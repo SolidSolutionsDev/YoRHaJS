@@ -8,7 +8,7 @@ import {sphereOptions} from "../solid-solutions-backend/constants/states";
 export const initialScene = {
     title: {
         color: "#000000",
-        subText: "SPACE to select and move forward. W and Z for selecting options.",
+        subText: "SPACE to advance text and select options. W and S for selecting options.",
         subTextColor: "#ffffff"
     },
     // TODO: split data in a better high level state strucuture (game, engine)
