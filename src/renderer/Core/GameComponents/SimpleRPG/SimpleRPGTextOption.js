@@ -44,9 +44,12 @@ export class SimpleRPGTextOption extends React.Component {
 
     // build and prepare for render
     this.textScreen.prepare().then((mesh) => {
+        const {renderer} = this.props.availableComponent;
       console.log("___ after prepare", this.textScreen, this.materialNode);
       // this.materialNode.addItem("textScreen", this.textScreen.getNode());
-      this.textScreen.getNode().connectTo(this.materialNode);
+      this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
+      console.log(renderer.tetsuoRenderer);
+        renderer.tetsuoRenderer.connectNonRootNode(this.materialNode);
       // this.textScreen.quad.material.transparent = true;
       // // this.textScreen.quad.material.opacity = 0.6;
       // // add the output quad to the scene
