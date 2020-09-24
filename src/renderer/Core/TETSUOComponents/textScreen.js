@@ -333,7 +333,10 @@ export class TextScreen {
    */
   prepare() {
     return new Promise((resolve, reject) => {
-      let pixi = new TETSUO.PIXINode("pixi");
+      let pixi = new TETSUO.PIXINode("pixi", {
+        width: this._width,
+        height: this._height,
+      });
 
       this._generateBackground();
       this._background && pixi.add(this._background);

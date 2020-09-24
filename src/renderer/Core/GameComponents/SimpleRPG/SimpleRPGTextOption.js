@@ -26,8 +26,8 @@ export class SimpleRPGTextOption extends React.Component {
     // init the text screen
     console.log("before new TextScreen");
     this.textScreen = new TextScreen({
-      width: 1720,
-      height: 720,
+      width: 1500,
+      height: 1500,
 
       // optional options
       backgroundColor: 0x1c1e1c,
@@ -51,14 +51,14 @@ export class SimpleRPGTextOption extends React.Component {
       // this.materialNode.addItem("textScreen", this.textScreen.getNode());
       this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
         renderer.tetsuoRenderer.connectNonRootNode(this.materialNode);
-        this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(2,2),this.materialNode.material);
+        this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9,1.9),this.materialNode.material);
         
       // this.textScreen.quad.material.transparent = true;
       this.textMesh.material.opacity = 0.6;
       // // add the output quad to the scene
       // // quad = textScreen.quad;
       this.textMesh.position.z = 0.2;
-      this.textMesh.position.z = .5;
+    //   this.textMesh.position.z = .5;
       this.textMesh.material.transparent = true;
        this.props.transform.add(this.textMesh);
       this.ready = true;
