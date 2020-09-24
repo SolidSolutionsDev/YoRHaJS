@@ -1,28 +1,36 @@
 import React from "react";
 import * as THREE from "three";
+
+import { BackgroundCity } from "../../TETSUOComponents/backgroundCity";
 import TETSUO from "@SolidSolutionsDev/tetsuo";
 
 export class TETSUOCity extends React.Component {
 
-    tetsuoBackgroundObject = new window.TETSUO.Premade.BackgroundCity({
+    materialNode = new TETSUO.MaterialNode();
+    tetsuoBackgroundObject = new BackgroundCity({
         width: 1280,
-        height: 720,
+        height: 1280,
     });
     mesh;
-    geometry = new THREE.PlaneGeometry(1.8, 1.8, 32);
+    geometry = new THREE.PlaneBufferGeometry(2,2);
     ready = false;
 
     initTetsuoBackground = () => {
 
         const {transform} = this.props;
         this.tetsuoBackgroundObject.prepare().then(mesh => {
-            this.material = new THREE.MeshBasicMaterial({
-                transparent: true,
-                map: new THREE.Texture(this.tetsuoBackgroundObject.texture),
-                // side: THREE.DoubleSide
-            });
-            this.mesh = new THREE.Mesh(this.geometry, this.material);
-            this.quadToUse = this.tetsuoBackgroundObject.quad.clone();
+            const { renderer } = this.props.availableComponent;
+            // this.materialNode.addItem("textScreen", this.textScreen.getNode());
+            this.tetsuoBackgroundObject.getNode().connectTo(this.materialNode, "inputTex");
+            renderer.tetsuoRenderer.connectNonRootNode(this.materialNode);
+
+            // this.material = new THREE.MeshBasicMaterial({
+            //     transparent: true,
+            //     map: new THREE.Texture(this.tetsuoBackgroundObject.texture),
+            //     // side: THREE.DoubleSide
+            // });
+            this.mesh = new THREE.Mesh(this.geometry, this.materialNode.material);
+        
             transform.add(this.mesh);
             this.mesh.material.transparent = false;
             // this.mesh.position.x += 2;
@@ -39,9 +47,9 @@ export class TETSUOCity extends React.Component {
         if (this.ready) {
             this.tetsuoBackgroundObject.update(deltaTime);
 
-            if (this.tetsuoBackgroundObject) {
-                this.mesh.material.map = new THREE.CanvasTexture(this.tetsuoBackgroundObject._renderer.renderer.domElement);
-            }
+            // if (this.tetsuoBackgroundObject) {
+            //     this.mesh.material.map = new THREE.CanvasTexture(this.tetsuoBackgroundObject._renderer.renderer.domElement);
+            // }
         }
     };
 
