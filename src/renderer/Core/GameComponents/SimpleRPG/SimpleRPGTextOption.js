@@ -9,6 +9,7 @@ export class SimpleRPGTextOption extends React.Component {
   debug = true;
   textScreen;
   ready = false;
+  materialNode = new TETSUO.MaterialNode();
 
   state = {
     init: false,
@@ -43,15 +44,17 @@ export class SimpleRPGTextOption extends React.Component {
 
     // build and prepare for render
     this.textScreen.prepare().then((mesh) => {
-      console.log("___ after prepare", this.textScreen.quad);
-      this.textScreen.quad.material.transparent = true;
-      // this.textScreen.quad.material.opacity = 0.6;
-      // add the output quad to the scene
-      // quad = textScreen.quad;
-      this.textScreen.quad.position.z = 0.2;
-      this.textScreen.quad.material.transparent = true;
-      this.props.transform.add(this.textScreen.quad);
-      this.ready = true;
+      console.log("___ after prepare", this.textScreen, this.materialNode);
+      // this.materialNode.addItem("textScreen", this.textScreen.getNode());
+      this.textScreen.getNode().connectTo(this.materialNode);
+      // this.textScreen.quad.material.transparent = true;
+      // // this.textScreen.quad.material.opacity = 0.6;
+      // // add the output quad to the scene
+      // // quad = textScreen.quad;
+      // this.textScreen.quad.position.z = 0.2;
+      // this.textScreen.quad.material.transparent = true;
+      // this.props.transform.add(this.textScreen.quad);
+      // this.ready = true;
     });
   };
 
