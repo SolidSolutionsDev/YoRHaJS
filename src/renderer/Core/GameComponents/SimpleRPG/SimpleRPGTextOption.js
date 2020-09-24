@@ -10,6 +10,7 @@ export class SimpleRPGTextOption extends React.Component {
   textScreen;
   ready = false;
   materialNode = new TETSUO.MaterialNode();
+  textMesh;
 
   state = {
     init: false,
@@ -45,19 +46,21 @@ export class SimpleRPGTextOption extends React.Component {
     // build and prepare for render
     this.textScreen.prepare().then((mesh) => {
         const {renderer} = this.props.availableComponent;
-      console.log("___ after prepare", this.textScreen, this.materialNode);
       // this.materialNode.addItem("textScreen", this.textScreen.getNode());
       this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
-      console.log(renderer.tetsuoRenderer);
         renderer.tetsuoRenderer.connectNonRootNode(this.materialNode);
+        this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry,this.materialNode.material);
+        
       // this.textScreen.quad.material.transparent = true;
-      // // this.textScreen.quad.material.opacity = 0.6;
+      this.textMesh.material.opacity = 0.6;
       // // add the output quad to the scene
       // // quad = textScreen.quad;
-      // this.textScreen.quad.position.z = 0.2;
-      // this.textScreen.quad.material.transparent = true;
-      // this.props.transform.add(this.textScreen.quad);
-      // this.ready = true;
+      this.textMesh.position.z = 0.2;
+      this.textMesh.material.transparent = true;
+       this.props.transform.add(this.textMesh);
+      this.ready = true;
+
+        console.log("___ after prepare", this.textScreen, this.materialNode,this.textMesh,this.props.transform);
     });
   };
 
@@ -181,7 +184,7 @@ export class SimpleRPGTextOption extends React.Component {
     this.initTetsuoScreen();
   };
 
-  updated = (time, deltaTime) => {
+  update = (time, deltaTime) => {
     if (this.ready) {
       this.initListenToStateTransitions();
       this.textScreen.update(deltaTime);
