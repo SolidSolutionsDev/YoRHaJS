@@ -11,7 +11,20 @@ export class SimpleRPGTextOption extends React.Component {
   debug = true;
   textScreen;
   ready = false;
-  materialNode = new TETSUO.MaterialNode();
+    materialNode = new TETSUO.MaterialNode({
+        transparent:true,
+        fragmentShader: `varying vec2 vUv;
+varying vec3 vPosition;
+varying vec3 vNormal;
+
+uniform sampler2D inputTex;
+uniform vec3 color;
+
+void main() {
+    vec4 tex = texture2D(inputTex, vUv);
+
+    gl_FragColor = tex;
+}`});
   textMesh;
 
   state = {
@@ -49,11 +62,14 @@ export class SimpleRPGTextOption extends React.Component {
     this.textScreen.prepare().then((mesh) => {
         const {renderer} = this.props.availableComponent;
       // this.materialNode.addItem("textScreen", this.textScreen.getNode());
-      this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
-        renderer.tetsuoRenderer.connectNonRootNode(this.materialNode);
-        this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9,1.9),this.materialNode.material);
+    //   this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
+        renderer.tetsuoRenderer.connectNonRootNode(this.textScreen.getNode());
+        const texture = this.textScreen.getNode().output.value;
+        console.error(texture);
+
+        this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9,1.9),new THREE.MeshLambertMaterial({map:texture}));
         
-      // this.textScreen.quad.material.transparent = true;
+      this.textMesh.material.transparent = true;
       this.textMesh.material.opacity = 0.6;
       // // add the output quad to the scene
       // // quad = textScreen.quad;
@@ -190,7 +206,7 @@ export class SimpleRPGTextOption extends React.Component {
   update = (time, deltaTime) => {
     if (this.ready) {
       this.initListenToStateTransitions();
-      this.textScreen.update(deltaTime);
+        this.textScreen.update(deltaTime );
     }
   };
 

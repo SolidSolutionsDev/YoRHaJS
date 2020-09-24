@@ -127,7 +127,7 @@ export class Renderer extends React.Component {
     if (this.state.ready && mainCameraReady) {
       this.threeNode.camera = availableComponent.scene.camera._main;
       this.threeNode.scene = availableComponent.scene.scene;
-      this.tetsuoRenderer.update(time, time - this.timePreviousFrame);
+      this.tetsuoRenderer.update(time/1000, (time - this.timePreviousFrame)/1000);
       this.tetsuoRenderer.render();
       if (!postprocessing) {
         // this.renderer.render(

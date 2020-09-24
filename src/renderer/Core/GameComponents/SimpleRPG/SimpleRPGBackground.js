@@ -5,6 +5,9 @@ import * as THREE from "three";
 import {destroyGameObjectById, instantiateFromPrefab} from "../../../../stores/scene/actions";
 import {uniqueId} from "lodash";
 
+import { BackgroundCity } from "../../TETSUOComponents/backgroundCity";
+import TETSUO from "@SolidSolutionsDev/tetsuo";
+
 export class SimpleRPGBackground extends React.Component {
 
     state = {
