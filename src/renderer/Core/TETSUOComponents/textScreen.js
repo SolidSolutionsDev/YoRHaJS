@@ -41,6 +41,7 @@ export class TextScreen {
   constructor(options = {}) {
     // set default values
     this._elapsedTime = 0;
+    this._subscribers = [];
     this._entries = [];
     this._width = options.width;
     this._height = options.height;

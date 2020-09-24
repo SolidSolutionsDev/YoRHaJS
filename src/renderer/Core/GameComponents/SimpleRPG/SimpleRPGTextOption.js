@@ -1,6 +1,8 @@
 import React from "react";
 
 import { TextScreen } from "../../TETSUOComponents/textScreen";
+import TETSUO from "@SolidSolutionsDev/tetsuo";
+import * as THREE from "three";
 
 import "./SimpleRPGTextOption.css";
 
