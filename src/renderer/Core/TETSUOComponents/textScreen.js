@@ -267,9 +267,9 @@ export class TextScreen {
 
           let answerSelector = new PIXI.Graphics();
           answerSelector.beginFill(
-            answers[i].textStyle.fill ||
-              options.questionStyle.fill ||
-              this._defaultTextStyle.fill
+            (answers[i].textStyle && answers[i].textStyle.fill) ||
+            options.questionStyle.fill ||
+            this._defaultTextStyle.fill
           );
           answerSelector.drawRect(0, 0, 10, 10);
           answerSelector.endFill();
