@@ -3,17 +3,18 @@ import PropTypes from "prop-types"; // ES6
 
 import Renderer from "./RendererContainer";
 import Scene from "./Core/Scene/SceneContainer";
-import {PhysicsService} from "./Services/PhysicsService";
-import {AudioService} from "./Services/AudioService";
-import {AnimationService} from "./Services/AnimationService";
-import {InputService} from "./Services/InputService";
-import {ShaderUtilsService} from "./Services/ShaderUtilsService";
+import { PhysicsService } from "./Services/PhysicsService";
+import { AudioService } from "./Services/AudioService";
+import { AnimationService } from "./Services/AnimationService";
+import { InputService } from "./Services/InputService";
+import { ShaderUtilsService } from "./Services/ShaderUtilsService";
+import { NodesService } from "./Services/NodesService";
 
 import * as GameContext from "./GameContext";
-import {GeometryUtilsService} from "./Services/GeometryUtilsService";
+import { GeometryUtilsService } from "./Services/GeometryUtilsService";
 import Preloader from "./Preloader/Preloader";
-import {Provider} from "react-redux";
-import {SimpleRPGStateMachineService} from "./Services/SimpleRPGStateMachineService";
+import { Provider } from "react-redux";
+import { SimpleRPGStateMachineService } from "./Services/SimpleRPGStateMachineService";
 
 export class Game extends React.Component {
     frame = null;
@@ -38,7 +39,7 @@ export class Game extends React.Component {
             return;
         }
         // console.log(gameService);
-        this.setState({[gameService.props.id]: gameService});
+        this.setState({ [gameService.props.id]: gameService });
         this.availableService[gameService.props.id] = gameService;
         this.registerUpdate(this.availableService[gameService.props.id].update);
     };
@@ -58,12 +59,12 @@ export class Game extends React.Component {
     };
 
     start = () => {
-        const {renderer, scene} = this.state;
+        const { renderer, scene } = this.state;
         renderer.init();
         scene.init();
         this.setActiveWatcher();
         this.animate(performance.now());
-        this.setState({started: true});
+        this.setState({ started: true });
     };
 
     setActiveWatcher = () => {
@@ -124,13 +125,13 @@ export class Game extends React.Component {
     };
 
     componentDidUpdate = () => {
-        const {scene, renderer, started, ready} = this.state;
+        const { scene, renderer, started, ready } = this.state;
         if (!started && ready) {
             this.start();
             return;
         }
         if (!ready && renderer && scene) {
-            this.setState({ready: true});
+            this.setState({ ready: true });
         }
     };
 
@@ -146,7 +147,7 @@ export class Game extends React.Component {
             loadedCallback: this.props.loadedCallback
         };
         return (
-            <GameContext.Provider value={{..._propsList}}>
+            <GameContext.Provider value={{ ..._propsList }}>
                 <Preloader
                     {..._propsList}
                     ref={this.addGameService}
@@ -178,6 +179,12 @@ export class Game extends React.Component {
                         key="audio"
                         id="audio"
                     />
+                    <NodesService
+                        {..._propsList}
+                        ref={this.addGameService}
+                        key="nodeService"
+                        id="nodeService"
+                    />
                     <AnimationService
                         {..._propsList}
                         ref={this.addGameService}
@@ -185,13 +192,13 @@ export class Game extends React.Component {
                         id="animation"
                     />
                     <InputService
-                        {..._propsList} ref={this.addGameService} key="input" id="input"/>
+                        {..._propsList} ref={this.addGameService} key="input" id="input" />
                     <ShaderUtilsService
-                        {..._propsList} ref={this.addGameService} key="shader" id="shader"/>
+                        {..._propsList} ref={this.addGameService} key="shader" id="shader" />
                     <GeometryUtilsService
-                        {..._propsList} ref={this.addGameService} key="geometry" id="geometry"/>
+                        {..._propsList} ref={this.addGameService} key="geometry" id="geometry" />
                     <SimpleRPGStateMachineService
-                        {..._propsList} ref={this.addGameService} key="stateMachine" id="stateMachine"/>
+                        {..._propsList} ref={this.addGameService} key="stateMachine" id="stateMachine" />
                 </Preloader>
             </GameContext.Provider>
         );

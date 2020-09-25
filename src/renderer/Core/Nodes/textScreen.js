@@ -5,7 +5,7 @@ import TETSUO from "@SolidSolutionsDev/tetsuo";
 /**
  * Enum of all the events the text screen can fire
  */
-export const EventTypes = {
+const EventTypes = {
   /**
    * When a new text line has been added to the screen
    */

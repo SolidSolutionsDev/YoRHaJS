@@ -316,7 +316,7 @@ export const initialContext = {
                         text: "With, of course. I have no intention of fighting more worms. There is no point. I quit.",
                         goTo: ["textGiveUp"]
                     },
-                    { text: "Without. Prepare for deletion.", goTo: ["emptyText", "enemyHeadBattle", "textAfterFight"] },
+                    { text: "Without. Prepare for deletion.", goTo: ["emptyText", "backgroundCity", "enemyHeadBattle", "textAfterFight"] },
                 ],
             },
             optionFinal: {

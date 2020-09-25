@@ -1,6 +1,5 @@
 import React from "react";
 
-import { TextScreen } from "../../TETSUOComponents/textScreen";
 import TETSUO from "@SolidSolutionsDev/tetsuo";
 import * as THREE from "three";
 
@@ -11,20 +10,7 @@ export class SimpleRPGTextOption extends React.Component {
   debug = true;
   textScreen;
   ready = false;
-  materialNode = new TETSUO.MaterialNode({
-    transparent: true,
-    fragmentShader: `varying vec2 vUv;
-varying vec3 vPosition;
-varying vec3 vNormal;
 
-uniform sampler2D inputTex;
-uniform vec3 color;
-
-void main() {
-    vec4 tex = texture2D(inputTex, vUv);
-
-    gl_FragColor = tex;
-}`});
   textMesh;
 
   state = {
@@ -38,6 +24,8 @@ void main() {
   initTetsuoScreen = () => {
     // init the text screen
     console.log("before new TextScreen");
+
+    const { TextScreen } = this.props.availableService.nodeService.nodes;
     this.textScreen = new TextScreen({
       width: 1500,
       height: 1500,
@@ -60,11 +48,9 @@ void main() {
 
     // build and prepare for render
     this.textScreen.prepare().then((mesh) => {
-      const { renderer } = this.props.availableComponent;
-      // this.materialNode.addItem("textScreen", this.textScreen.getNode());
-      //   this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
-      renderer.tetsuoRenderer.connectNonRootNode(this.textScreen.getNode());
-      const texture = this.textScreen.getNode().output.value;
+
+      const { getTextureFromPremade } = this.props.availableService.nodeService;
+      const texture = getTextureFromPremade(this.textScreen);
       console.error(texture);
 
       this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshLambertMaterial({ map: texture }));

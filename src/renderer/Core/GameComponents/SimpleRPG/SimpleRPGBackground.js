@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./SimpleRPGBackground.css";
 import * as THREE from "three";
-import {destroyGameObjectById, instantiateFromPrefab} from "../../../../stores/scene/actions";
-import {uniqueId} from "lodash";
+import { destroyGameObjectById, instantiateFromPrefab } from "../../../../stores/scene/actions";
+import { uniqueId } from "lodash";
 
-import { BackgroundCity } from "../../TETSUOComponents/backgroundCity";
-import TETSUO from "@SolidSolutionsDev/tetsuo";
+// import { BackgroundCity } from "../../Nodes/backgroundCity";
+// import TETSUO from "@SolidSolutionsDev/tetsuo";
 
 export class SimpleRPGBackground extends React.Component {
 
@@ -18,9 +18,9 @@ export class SimpleRPGBackground extends React.Component {
 
 
     advance = () => {
-        const {availableService} = this.props;
-        const {stateMachine} = availableService;
-        const {game} = stateMachine.stateMachines;
+        const { availableService } = this.props;
+        const { stateMachine } = availableService;
+        const { game } = stateMachine.stateMachines;
         if (this.state.active) {
             game.service.send("NEXT_STEP")
         }
@@ -30,18 +30,18 @@ export class SimpleRPGBackground extends React.Component {
         if (this.state.init) {
             return;
         }
-        const {availableService} = this.props;
-        const {stateMachine} = availableService;
-        const {game} = stateMachine.stateMachines;
+        const { availableService } = this.props;
+        const { stateMachine } = availableService;
+        const { game } = stateMachine.stateMachines;
         game.service.onTransition(current => {
             const stepId = current.context.stepsQueue[0];
             const stepData = current.context.constants.steps[stepId];
             const state = current.value;
             const active = current.value === "changeBackground";
             if (active) {
-                this.setState({active, stepId, data: stepData, init: true});
+                this.setState({ active, stepId, data: stepData, init: true });
             } else {
-                this.setState({active: active, init: true});
+                this.setState({ active: active, init: true });
             }
         });
         document.addEventListener("shoot_keydown", () => {
@@ -58,19 +58,19 @@ export class SimpleRPGBackground extends React.Component {
     }
 
     cleanBackgrounds = () => {
-        const {scene} = this.props.availableComponent;
+        const { scene } = this.props.availableComponent;
         this.state.backgroundObjects.forEach(backgroundGameObjectId => {
-                scene.enqueueAction(
-                    destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
-                );
-            }
+            scene.enqueueAction(
+                destroyGameObjectById(backgroundGameObjectId, this.props.gameObject.id)
+            );
+        }
         );
         // this.setState({backgroundObjects: []});
     }
 
     changeBackground = () => {
-        const {scene} = this.props.availableComponent;
-        const {backGroundPrefabs} = this.state.data;
+        const { scene } = this.props.availableComponent;
+        const { backGroundPrefabs } = this.state.data;
         const newBackgroundObjectIds = backGroundPrefabs.map(backgroundPrefabId => {
             const newId = uniqueId(backgroundPrefabId);
             scene.enqueueAction(
@@ -83,7 +83,7 @@ export class SimpleRPGBackground extends React.Component {
             );
             return newId;
         });
-        this.setState({backgroundObjects: newBackgroundObjectIds});
+        this.setState({ backgroundObjects: newBackgroundObjectIds });
     };
 
     start = () => {

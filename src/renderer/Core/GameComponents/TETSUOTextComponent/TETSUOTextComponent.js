@@ -3,38 +3,37 @@ import * as THREE from "three";
 import TETSUO from "@SolidSolutionsDev/tetsuo";
 import { uniqueId } from "lodash";
 import { instantiateFromPrefab } from "../../../../stores/scene/actions";
-import { TextScreen } from "../../TETSUOComponents/textScreen";
+
 
 export class TETSUOTextComponent extends React.Component {
 
-    tetsuoObject = new TextScreen({
-        width: 860,
-        height: 360,
-
-        // optional options
-        backgroundColor: 0x1c1e1c,
-        marginTop: 0,
-        marginLeft: 0,
-        paddingBottom: 0,
-        paddingLeft: 0,
-        opacity: .01,
-        //
-        defaultTextStyle: {
-            fontSize: 32,
-            fill: this.props.fill || 0x3cdc7c,
-        },
-    });
+    tetsuoObject;
 
     initTetsuo = () => {
 
         //END
+        const { TextScreen } = this.props.availableService.nodeService.nodes;
+        this.tetsuoObject = new TextScreen({
+            width: 860,
+            height: 360,
 
+            // optional options
+            backgroundColor: 0x1c1e1c,
+            marginTop: 0,
+            marginLeft: 0,
+            paddingBottom: 0,
+            paddingLeft: 0,
+            opacity: .01,
+            //
+            defaultTextStyle: {
+                fontSize: 32,
+                fill: this.props.fill || 0x3cdc7c,
+            },
+        })
 
         this.tetsuoObject.prepare().then(mesh => {
-            const { renderer } = this.props.availableComponent;
-
-            renderer.tetsuoRenderer.connectNonRootNode(this.tetsuoObject.getNode());
-            const texture = this.tetsuoObject.getNode().output.value;
+            const { getTextureFromPremade } = this.props.availableService.nodeService;
+            const texture = getTextureFromPremade(this.tetsuoObject);
 
             this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshLambertMaterial({ map: texture }));
             this.mesh.material.transparent = true;
