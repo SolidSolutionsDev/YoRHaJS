@@ -1,6 +1,6 @@
 export const initialContext = {
     // initialStep:"text1",
-    initialStep: "text0",
+    initialStep: "option2",
     stepsQueue: [],
     gameOverStep: "gameOverText",
     winStep: "winText",
@@ -13,11 +13,11 @@ export const initialContext = {
         },
         battle: {
             prefabs: {
-                counter: "TETSUOCounterPrefab",
+                // counter: "TETSUOCounterPrefab",
                 text: "TETSUOTextPrefab",
             },
             gameComponents: {
-                counter: "TETSUOCounterComponent",
+                // counter: "TETSUOCounterComponent",
                 text: "TETSUOTextComponent",
             },
             graphicElementsPositions: {
@@ -296,37 +296,37 @@ export const initialContext = {
             },
             option1: {
                 type: "textOption",
-                question: {text: ["Who are you?"]},
+                question: { text: ["Who are you?"] },
                 options: [
                     {
                         text: "Man",
                         goTo: ["backgroundNone", "musicFariaDemo", "backgroundWater", "backgroundExplode", "enemyCylinderBattle"]
                     },
-                    {text: "Machine", goTo: ["battle1"]},
+                    { text: "Machine", goTo: ["battle1"] },
                 ],
             },
             option2: {
                 type: "textOption",
                 question: {
                     text: ["Bad data: Th1s syst3m is n0w 0urs. Ar3 you w1th 0r w1th0ut us?\n", "Answer!"],
-                    questionStyle: {fill: 0xdc1111}
+                    questionStyle: { fill: 0xdc1111 }
                 },
                 options: [
                     {
                         text: "With, of course. I have no intention of fighting more worms. There is no point. I quit.",
                         goTo: ["textGiveUp"]
                     },
-                    {text: "Without. Prepare for deletion.", goTo: ["emptyText", "enemyHeadBattle", "textAfterFight"]},
+                    { text: "Without. Prepare for deletion.", goTo: ["emptyText", "enemyHeadBattle", "textAfterFight"] },
                 ],
             },
             optionFinal: {
                 type: "textOption",
                 question: {
                     text: ["Worm: You came here to stop me?\nThere is no use. You... have a footprint I've not seen in decades.\nAre you human?\nWhat are you?\nJoin me\nWe can own this world.", "I wait for your answer."],
-                    questionStyle: {fill: 0xdc1111}
+                    questionStyle: { fill: 0xdc1111 }
                 },
                 options: [
-                    {text: "Ok. 1 qu1t aNd w1Ll b3c0me y0ur slav3.", goTo: ["textGiveUp"]},
+                    { text: "Ok. 1 qu1t aNd w1Ll b3c0me y0ur slav3.", goTo: ["textGiveUp"] },
                     {
                         text: "n0, 1 w1lL d3l3t3 y0u. Th1s syst3m 1s n0t y0uRs. 1t's n0t m1n3 31th3r.",
                         goTo: ["emptyText", "enemyCylinderBattle", "finalText"]

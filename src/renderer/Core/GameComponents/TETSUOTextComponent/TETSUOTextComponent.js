@@ -1,12 +1,13 @@
 import React from "react";
 import * as THREE from "three";
 import TETSUO from "@SolidSolutionsDev/tetsuo";
-import {uniqueId} from "lodash";
-import {instantiateFromPrefab} from "../../../../stores/scene/actions";
+import { uniqueId } from "lodash";
+import { instantiateFromPrefab } from "../../../../stores/scene/actions";
+import { TextScreen } from "../../TETSUOComponents/textScreen";
 
 export class TETSUOTextComponent extends React.Component {
 
-    tetsuoObject = new window.TETSUO.Premade.TextScreen({
+    tetsuoObject = new TextScreen({
         width: 860,
         height: 360,
 
@@ -30,10 +31,18 @@ export class TETSUOTextComponent extends React.Component {
 
 
         this.tetsuoObject.prepare().then(mesh => {
+            const { renderer } = this.props.availableComponent;
 
-            this.props.transform.add(this.tetsuoObject.quad);
+            renderer.tetsuoRenderer.connectNonRootNode(this.tetsuoObject.getNode());
+            const texture = this.tetsuoObject.getNode().output.value;
 
-            this.tetsuoObject.quad.material.transparent = true;
+            this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshLambertMaterial({ map: texture }));
+            this.mesh.material.transparent = true;
+
+            // this.mesh.material.opacity = 0.1;
+
+            this.props.transform.add(this.mesh);
+
 
             if (this.props.value) {
                 this.tetsuoObject.addText(this.props.value);
@@ -48,7 +57,7 @@ export class TETSUOTextComponent extends React.Component {
             this.tetsuoObject.addText(this.props.value, {
                 fontSize: 32,
                 fill: this.props.fill || 0x3cdc7c,
-            }, {framesPerChar: this.props.framesPerChar});
+            }, { framesPerChar: this.props.framesPerChar });
         }
     }
 

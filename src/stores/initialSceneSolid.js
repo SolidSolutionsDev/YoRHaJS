@@ -380,7 +380,7 @@ export const initialScene = {
           SimpleRPGTextOption: { debug: true },
           SimpleRPGBackground: { debug: false },
           SimpleRPGBattle: {
-            debug: false
+            debug: true
           }
         }
       },
@@ -396,7 +396,7 @@ export const initialScene = {
       },
       TETSUOCounterPrefab: {
         components: {
-          TETSUOCounterComponent: {}
+          // TETSUOCounterComponent: {}
         }
       },
       TETSUOTextPrefab: {
@@ -917,7 +917,7 @@ export const initialScene = {
           // position: { x: 220, y: -120, z: 990},
         },
         components: {
-          TETSUOHeadComponent: {}
+          // TETSUOHeadComponent: {}
         }
       },
       ExplodeShaderPlanePrefab: {

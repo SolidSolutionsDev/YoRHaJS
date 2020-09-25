@@ -11,9 +11,9 @@ export class SimpleRPGTextOption extends React.Component {
   debug = true;
   textScreen;
   ready = false;
-    materialNode = new TETSUO.MaterialNode({
-        transparent:true,
-        fragmentShader: `varying vec2 vUv;
+  materialNode = new TETSUO.MaterialNode({
+    transparent: true,
+    fragmentShader: `varying vec2 vUv;
 varying vec3 vPosition;
 varying vec3 vNormal;
 
@@ -60,26 +60,26 @@ void main() {
 
     // build and prepare for render
     this.textScreen.prepare().then((mesh) => {
-        const {renderer} = this.props.availableComponent;
+      const { renderer } = this.props.availableComponent;
       // this.materialNode.addItem("textScreen", this.textScreen.getNode());
-    //   this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
-        renderer.tetsuoRenderer.connectNonRootNode(this.textScreen.getNode());
-        const texture = this.textScreen.getNode().output.value;
-        console.error(texture);
+      //   this.textScreen.getNode().connectTo(this.materialNode, "inputTex");
+      renderer.tetsuoRenderer.connectNonRootNode(this.textScreen.getNode());
+      const texture = this.textScreen.getNode().output.value;
+      console.error(texture);
 
-        this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9,1.9),new THREE.MeshLambertMaterial({map:texture}));
-        
+      this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshLambertMaterial({ map: texture }));
+
       this.textMesh.material.transparent = true;
       this.textMesh.material.opacity = 0.6;
       // // add the output quad to the scene
       // // quad = textScreen.quad;
       this.textMesh.position.z = 0.2;
-    //   this.textMesh.position.z = .5;
+      //   this.textMesh.position.z = .5;
       this.textMesh.material.transparent = true;
-       this.props.transform.add(this.textMesh);
+      this.props.transform.add(this.textMesh);
       this.ready = true;
 
-        console.log("___ after prepare", this.textScreen, this.materialNode,this.textMesh,this.props.transform);
+      console.log("___ after prepare", this.textScreen, this.materialNode, this.textMesh, this.props.transform);
     });
   };
 
@@ -206,7 +206,7 @@ void main() {
   update = (time, deltaTime) => {
     if (this.ready) {
       this.initListenToStateTransitions();
-        this.textScreen.update(deltaTime );
+      this.textScreen.update(deltaTime);
     }
   };
 
