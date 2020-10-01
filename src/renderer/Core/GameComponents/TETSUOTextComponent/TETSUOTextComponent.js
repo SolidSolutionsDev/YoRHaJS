@@ -12,7 +12,7 @@ export class TETSUOTextComponent extends React.Component {
     initTetsuo = () => {
 
         //END
-        const { TextScreen } = this.props.availableService.nodeService.nodes;
+        const { TextScreen } = this.props.availableService.nodeService.premades;
         this.tetsuoObject = new TextScreen({
             width: 860,
             height: 360,

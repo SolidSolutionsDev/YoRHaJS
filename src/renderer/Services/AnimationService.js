@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 import TWEEN from "@tweenjs/tween.js";
 import * as THREE from "three";
@@ -27,7 +27,7 @@ export class AnimationService extends Component {
                 ? parameters.easing
                 : TWEEN.Easing.Linear.None;
         const _target = parameters && parameters.target ? parameters.target : false;
-        const _onStart = parameters && parameters.onStart ? null.onStart : null;
+        const _onStart = parameters && parameters.onStart ? parameters.onStart : null;
 
         const tween = new TWEEN.Tween(_from)
             .to(_to, time)

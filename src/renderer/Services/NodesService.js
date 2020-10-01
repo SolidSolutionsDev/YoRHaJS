@@ -7,25 +7,25 @@ import { nodes } from "../Core/Nodes";
 
 export class NodesService extends Component {
 
-    nodes = nodes;
+    premades = nodes;
 
-    getTextureFromPremade = (node) => {
+    getTextureFromPremade = (premade) => {
 
         const { renderer } = this.props.availableComponent;
 
-        renderer.tetsuoRenderer.connectNonRootNode(node.getNode());
+        renderer.tetsuoRenderer.connectNonRootNode(premade.getNode());
 
-        const texture = node.getNode().output.value;
+        const texture = premade.getNode().output.value;
         return texture;
     }
 
-    getMaterialFromPremade = (node) => {
+    getMaterialFromPremade = (premade) => {
 
         const materialNode = new TETSUO.MaterialNode();
         const { renderer } = this.props.availableComponent;
 
 
-        node.getNode().connectTo(materialNode, "inputTex");
+        premade.getNode().connectTo(materialNode, "inputTex");
         renderer.tetsuoRenderer.connectNonRootNode(materialNode);
 
         return materialNode.material;

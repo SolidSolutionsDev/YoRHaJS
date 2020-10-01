@@ -25,7 +25,7 @@ export class SimpleRPGTextOption extends React.Component {
     // init the text screen
     console.log("before new TextScreen");
 
-    const { TextScreen } = this.props.availableService.nodeService.nodes;
+    const { TextScreen } = this.props.availableService.nodeService.premades;
     this.textScreen = new TextScreen({
       width: 1500,
       height: 1500,

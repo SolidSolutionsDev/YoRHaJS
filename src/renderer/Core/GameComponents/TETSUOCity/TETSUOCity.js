@@ -11,7 +11,7 @@ export class TETSUOCity extends React.Component {
     ready = false;
 
     initTetsuoBackground = () => {
-        const { BackgroundCity } = this.props.availableService.nodeService.nodes;
+        const { BackgroundCity } = this.props.availableService.nodeService.premades;
         this.tetsuoBackgroundObject = new BackgroundCity({
             width: 1280,
             height: 720,

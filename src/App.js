@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import logo from "./yorha-black.png";
 import "./App.css";
 
-import { createStore } from "redux";
+import { createStore, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./stores";
 import { Game } from "./renderer/Game";
