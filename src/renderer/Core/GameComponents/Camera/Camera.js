@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const THREE = require("three");
 
@@ -25,7 +25,7 @@ export class Camera extends React.Component {
         // console.log(this.camera);
         this.camera.zoom = 5;
         // this.camera.updateProjectionMatrix();
-        const {renderer} = availableComponent;
+        const { renderer } = availableComponent;
         this.controls = new OrbitControls(
             this.camera,
             renderer.renderer.domElement
@@ -41,17 +41,17 @@ export class Camera extends React.Component {
         // this.controls.enableRotate = false;
         renderer.subscribeResize(this.cameraOnResize);
         // updateSceneObject({
-        updateSelf({cameraReady: true});
+        updateSelf({ cameraReady: true });
         // });
 
         this.cameraOnResize();
 
-        document.addEventListener("camera_change", this.randomTravel);
+        document.addEventListener("camera_change_keydown", this.randomTravel);
     };
 
     setDomElementReadyToEvents = () => {
-        const {availableComponent} = this.props;
-        const {renderer} = availableComponent;
+        const { availableComponent } = this.props;
+        const { renderer } = availableComponent;
         const element = renderer.renderer.domElement;
         element.style.pointerEvents = "all";
         element.style.userSelect = "all";
@@ -61,7 +61,7 @@ export class Camera extends React.Component {
     getObject = () => this.camera;
 
     orthographicResize = () => {
-        const {availableComponent} = this.props;
+        const { availableComponent } = this.props;
         const aspect = availableComponent.renderer.getAspect();
 
         this.camera.aspect = 0.5 * aspect;
@@ -76,7 +76,7 @@ export class Camera extends React.Component {
     };
 
     perspectiveResize = () => {
-        const {availableComponent} = this.props;
+        const { availableComponent } = this.props;
         const aspect = availableComponent.renderer.getAspect();
 
         this.camera.aspect = aspect;
@@ -99,7 +99,7 @@ export class Camera extends React.Component {
     };
 
     update = () => {
-        const {cameraAutoRotate, cameraAutoRotateSpeed, cameraMinDistance, cameraPanLock} = this.props;
+        const { cameraAutoRotate, cameraAutoRotateSpeed, cameraMinDistance, cameraPanLock } = this.props;
         this.controls.enablePan = !cameraPanLock;
         this.controls.autoRotate = cameraAutoRotate;
         this.controls.autoRotateSpeed = cameraAutoRotateSpeed || this.controls.autoRotateSpeed;
@@ -132,7 +132,7 @@ export class Camera extends React.Component {
             animatedIntroTime,
             availableService
         } = this.props;
-        const {scene} = availableComponent;
+        const { scene } = availableComponent;
         const cameraPositionData = cameraAllowedPositions[cameraAngle];
 
         // alert(cameraPositionData);
@@ -178,7 +178,7 @@ export class Camera extends React.Component {
             animatedTransformations,
             animatedRegularTransitionTime
         } = this.props;
-        const {scene} = availableComponent;
+        const { scene } = availableComponent;
         availableService.animation.travelTo(
             this.camera,
             new THREE.Vector3(

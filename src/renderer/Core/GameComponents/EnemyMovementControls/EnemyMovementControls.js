@@ -3,7 +3,7 @@ import * as CANNON from "cannon";
 import * as _ from "lodash";
 // mousedebug
 import * as THREE from "three";
-import {Vector2} from "three";
+import { Vector2 } from "three";
 
 export class EnemyMovementControls extends React.Component {
     shootIntervalCallback;
@@ -36,14 +36,14 @@ export class EnemyMovementControls extends React.Component {
     };
 
     lookDown = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             Math.PI / 2
         );
     };
     lookUp = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             -Math.PI / 2
@@ -51,21 +51,21 @@ export class EnemyMovementControls extends React.Component {
     };
 
     lookLeft = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             Math.PI
         );
     };
     lookRight = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             0
         );
     };
     moveLeft = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveLeft');
         // this.activeMovements.left=true;
         transform.physicsBody.position.x -= this.moveRatio;
@@ -74,7 +74,7 @@ export class EnemyMovementControls extends React.Component {
     };
 
     moveRight = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveRight');
         transform.physicsBody.position.x += this.moveRatio;
         // let forwardVector = new CANNON.Vec3(1,0, 0);
@@ -82,7 +82,7 @@ export class EnemyMovementControls extends React.Component {
     };
 
     moveUp = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveUp');
         transform.physicsBody.position.y += this.moveRatio;
 
@@ -91,7 +91,7 @@ export class EnemyMovementControls extends React.Component {
     };
 
     moveDown = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveDown',transform.physicsBody);
         transform.physicsBody.position.y -= this.moveRatio;
         // let forwardVector = new CANNON.Vec3(0, -1, 0);
@@ -116,7 +116,7 @@ export class EnemyMovementControls extends React.Component {
     };
 
     initSound = () => {
-        const {transform, availableService} = this.props;
+        const { transform, availableService } = this.props;
         const _sound = availableService.audio.buildPositionalSound(
             this.props.selfSettings.soundLocation
         ).sound;
@@ -142,7 +142,7 @@ export class EnemyMovementControls extends React.Component {
     };
 
     updateMouseLook = () => {
-        const {transform, availableComponent} = this.props;
+        const { transform, availableComponent } = this.props;
 
         if (!availableComponent.scene.camera._main) {
             return;
@@ -167,13 +167,13 @@ export class EnemyMovementControls extends React.Component {
             gameObject,
             availableComponent
         } = this.props;
-        const {scene} = availableComponent;
+        const { scene } = availableComponent;
         const shooterById = gameObject.getChildGameObjectByTag("playerShooter", scene);
         return shooterById;
     }
 
     updateFollowPlayerEnemy = (time, deltaTime) => {
-        const {transform} = this.props;
+        const { transform } = this.props;
 
         // player world position
         const vPlayerPositionRelativeToWorld = new THREE.Vector3().copy(this.shooter.transform.position);

@@ -1,4 +1,4 @@
-import {Component} from "react";
+import { Component } from "react";
 import * as CANNON from "cannon";
 
 export class PhysicsService extends Component {
@@ -46,11 +46,11 @@ export class PhysicsService extends Component {
                     return;
                 }
                 e.bodyA &&
-                e.bodyA.endContactFunction &&
-                e.bodyA.endContactFunction(e.bodyB);
+                    e.bodyA.endContactFunction &&
+                    e.bodyA.endContactFunction(e.bodyB);
                 e.bodyB &&
-                e.bodyB.endContactFunction &&
-                e.bodyB.endContactFunction(e.bodyA);
+                    e.bodyB.endContactFunction &&
+                    e.bodyB.endContactFunction(e.bodyA);
             } catch (error) {
                 console.log(error, e.bodyA, e.bodyB);
             }
@@ -162,7 +162,7 @@ export class PhysicsService extends Component {
         }
         let thisSphereParameters = {
             mass: 5,
-            position: {x: 0, y: 0, z: 0},
+            position: { x: 0, y: 0, z: 0 },
             radius: 1,
             linearFactor: new CANNON.Vec3(1, 1, 1),
             angularFactor: new CANNON.Vec3(1, 1, 1),
@@ -236,8 +236,8 @@ export class PhysicsService extends Component {
         }
         let thisBoxParameters = {
             mass: 1,
-            position: {x: 0, y: 0, z: 0},
-            dimensions: {x: 1, y: 1, z: 1},
+            position: { x: 0, y: 0, z: 0 },
+            dimensions: { x: 1, y: 1, z: 1 },
             linearFactor: new CANNON.Vec3(1, 1, 1),
             angularFactor: new CANNON.Vec3(1, 1, 1),
             material: this.groundMaterial
@@ -291,7 +291,7 @@ export class PhysicsService extends Component {
             _boxBody
         );
 
-        return {body: _boxBody, update: _updateFunction, parameters: _parameters};
+        return { body: _boxBody, update: _updateFunction, parameters: _parameters };
     }
 
     purgeTransformOfEventualBodies = transform => {

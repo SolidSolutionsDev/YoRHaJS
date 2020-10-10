@@ -1,6 +1,6 @@
 import React from "react";
 import * as _ from "lodash";
-import {Vector3} from "three";
+import { Vector3 } from "three";
 import {
     instantiateFromPrefab,
     updateGameObject,
@@ -25,7 +25,7 @@ export class Shooter extends React.Component {
     };
     bulletComponentName = this.bulletComponentNameFromPrefabName[
         this.bulletPrefab
-        ];
+    ];
 
     availableBullets = [];
     availableBulletsForUpdateCycle = [];
@@ -65,10 +65,10 @@ export class Shooter extends React.Component {
                 totalShotBulletsTime +
                 bulletIndex * this.shootTimeInterval;
 
-            const {transform, selfSettings, availableComponent} = this.props;
-            const {scene} = availableComponent;
-            const {moveRatio, displacementRatio} = selfSettings;
-            const {position, rotation, scale} = transform;
+            const { transform, selfSettings, availableComponent } = this.props;
+            const { scene } = availableComponent;
+            const { moveRatio, displacementRatio } = selfSettings;
+            const { position, rotation, scale } = transform;
             const bullet = this.availableBullets.pop();
             this.movingBullets.push(bullet);
             const currentBulletId = bullet.props.id;
@@ -160,9 +160,9 @@ export class Shooter extends React.Component {
                 availableComponent,
                 gameObject
             } = this.props;
-            const {scene} = availableComponent;
-            const {moveRatio, displacementRatio} = selfSettings;
-            const {position, rotation, scale} = transform;
+            const { scene } = availableComponent;
+            const { moveRatio, displacementRatio } = selfSettings;
+            const { position, rotation, scale } = transform;
             const startTimeForThisBullet = -1; // to be inactive
 
             const angleChange = (2 * Math.PI) / this.aroundBullets;
@@ -185,7 +185,7 @@ export class Shooter extends React.Component {
                         null,
                         null,
                         {
-                            bulletMovement: {
+                            BulletMovement: {
                                 around: this.aroundBullets > 1,
                                 initTime: startTimeForThisBullet,
                                 bulletIndex,
@@ -215,10 +215,10 @@ export class Shooter extends React.Component {
             timePassedFromLastShot / this.shootTimeInterval
         );
 
-        const {transform, selfSettings, availableComponent} = this.props;
-        const {scene} = availableComponent;
-        const {moveRatio, displacementRatio} = selfSettings;
-        const {position, rotation, scale} = transform;
+        const { transform, selfSettings, availableComponent } = this.props;
+        const { scene } = availableComponent;
+        const { moveRatio, displacementRatio } = selfSettings;
+        const { position, rotation, scale } = transform;
 
 
         const angleChange = (2 * Math.PI) / this.aroundBullets;
@@ -295,7 +295,7 @@ export class Shooter extends React.Component {
     };
 
     initSound = () => {
-        const {transform, availableService, selfSettings} = this.props;
+        const { transform, availableService, selfSettings } = this.props;
         if (!selfSettings.soundLocation) {
             return;
         }

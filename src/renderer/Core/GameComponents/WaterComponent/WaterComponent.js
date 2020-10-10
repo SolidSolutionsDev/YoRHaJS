@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import * as THREE from "three";
-import {Water} from "three/examples/jsm/objects/Water";
+import { Water } from "three/examples/jsm/objects/Water";
 
 export class WaterComponent extends React.Component {
     waterGeometry;
     water;
     start = () => {
-        const {availableComponent} = this.props;
-        const {scene} = availableComponent;
+        const { availableComponent } = this.props;
+        const { scene } = availableComponent;
         const lightPosition = this.props.gameObjects["directionalLight1"].transform.position;
         const normalizedLightPosition = new THREE.Vector3(lightPosition.x, lightPosition.y, lightPosition.z).normalize();
         this.waterGeometry = new THREE.PlaneBufferGeometry(10000, 10000);
@@ -23,12 +23,13 @@ export class WaterComponent extends React.Component {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
                 }),
-                alpha: 1.0,
+                alpha: 0.1,
+                transparent: true,
                 sunDirection: normalizedLightPosition,
                 sunColor: 0xaa0000,
                 waterColor: 0x0000aa,
                 distortionScale: 1.7,
-                fog: scene.scene.fog !== undefined
+                // fog: scene.scene.fog !== undefined
             }
         );
 

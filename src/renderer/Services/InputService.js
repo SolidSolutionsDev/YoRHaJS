@@ -1,4 +1,4 @@
-import {Component} from "react";
+import { Component } from "react";
 
 export class InputService extends Component {
     keysToEventMap = {
@@ -26,7 +26,7 @@ export class InputService extends Component {
                 z: 0.5
             };
             document.dispatchEvent(
-                new CustomEvent("mouseM", {detail: {coordinates: _mouse3D}})
+                new CustomEvent("mouseM", { detail: { coordinates: _mouse3D } })
             );
         });
         window.addEventListener("mousedown", (event) => {
@@ -36,7 +36,7 @@ export class InputService extends Component {
                 z: 0.5
             };
             document.dispatchEvent(
-                new CustomEvent("mouseClickingStart", {detail: {coordinates: _mouse3D}})
+                new CustomEvent("mouseClickingStart", { detail: { coordinates: _mouse3D } })
             );
         });
         window.addEventListener("mousemove", (event) => {
@@ -46,7 +46,7 @@ export class InputService extends Component {
                 z: 0.5
             };
             document.dispatchEvent(
-                new CustomEvent("mouseClickingEnd", {detail: {coordinates: _mouse3D}})
+                new CustomEvent("mouseClickingEnd", { detail: { coordinates: _mouse3D } })
             );
         });
 
@@ -55,6 +55,7 @@ export class InputService extends Component {
             const eventType = this.keysToEventMap[event.key];
             if (eventType) {
                 const _eventTypeToLaunch = event.repeat ? eventType : eventType + "_keydown";
+                console.log(_eventTypeToLaunch);
                 document.dispatchEvent(new Event(_eventTypeToLaunch));
             }
         });

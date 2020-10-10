@@ -34,14 +34,14 @@ export class PlayerControls extends React.Component {
     };
 
     lookDown = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             Math.PI / 2
         );
     };
     lookUp = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             -Math.PI / 2
@@ -49,21 +49,21 @@ export class PlayerControls extends React.Component {
     };
 
     lookLeft = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             Math.PI
         );
     };
     lookRight = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         transform.physicsBody.quaternion.setFromAxisAngle(
             new CANNON.Vec3(0, 0, 1),
             0
         );
     };
     moveLeft = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveLeft');
         // this.activeMovements.left=true;
         transform.physicsBody.position.x -= this.moveRatio * this.deltaUpdate;
@@ -72,7 +72,7 @@ export class PlayerControls extends React.Component {
     };
 
     moveRight = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveRight');
         transform.physicsBody.position.x += this.moveRatio * this.deltaUpdate;
         // let forwardVector = new CANNON.Vec3(1,0, 0);
@@ -80,7 +80,7 @@ export class PlayerControls extends React.Component {
     };
 
     moveUp = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveUp');
         transform.physicsBody.position.y += this.moveRatio * this.deltaUpdate;
 
@@ -89,7 +89,7 @@ export class PlayerControls extends React.Component {
     };
 
     moveDown = () => {
-        const {transform} = this.props;
+        const { transform } = this.props;
         // console.log('moveDown',transform.physicsBody);
         transform.physicsBody.position.y -= this.moveRatio * this.deltaUpdate;
         // let forwardVector = new CANNON.Vec3(0, -1, 0);
@@ -119,15 +119,15 @@ export class PlayerControls extends React.Component {
     };
 
     updateMouseLook = () => {
-        const {transform, availableComponent} = this.props;
+        const { transform, availableComponent } = this.props;
 
         if (!availableComponent.scene.camera._main) {
             return;
         }
 
         if (this.coords) {
-            const {availableService} = this.props;
-            const {physicsService} = availableService;
+            const { availableService } = this.props;
+            const { physicsService } = availableService;
             // TODO: move this to physics service as lookAt function
             // Compute direction to target
             let lookAtVector = this.getPositionFromMouse(
@@ -154,23 +154,23 @@ export class PlayerControls extends React.Component {
     };
 
     eventsMap = {
-        moveLeft: () => this.setState({activeLeft: true}),
-        moveRight: () => this.setState({activeRight: true}),
-        moveUp: () => this.setState({activeUp: true}),
-        moveDown: () => this.setState({activeDown: true}),
-        moveLeft_keyup: () => this.setState({activeLeft: false}),
-        moveRight_keyup: () => this.setState({activeRight: false}),
-        moveUp_keyup: () => this.setState({activeUp: false}),
-        moveDown_keyup: () => this.setState({activeDown: false}),
-        lookup: () => this.setState({activeLookUp: true}),
-        lookup_keyup: () => this.setState({activeLookUp: false}),
-        lookdown: () => this.setState({activeLookDown: true}),
-        lookdown_keyup: () => this.setState({activeLookDown: false}),
-        lookleft: () => this.setState({activeLookLeft: true}),
-        lookleft_keyup: () => this.setState({activeLookLeft: false}),
-        lookright: () => this.setState({activeLookRight: true}),
-        lookright_keyup: () => this.setState({activeLookRight: false}),
-        shoot: this.startShooting,
+        moveLeft_keydown: () => this.setState({ activeLeft: true }),
+        moveRight_keydown: () => this.setState({ activeRight: true }),
+        moveUp_keydown: () => this.setState({ activeUp: true }),
+        moveDown_keydown: () => this.setState({ activeDown: true }),
+        moveLeft_keyup: () => this.setState({ activeLeft: false }),
+        moveRight_keyup: () => this.setState({ activeRight: false }),
+        moveUp_keyup: () => this.setState({ activeUp: false }),
+        moveDown_keyup: () => this.setState({ activeDown: false }),
+        lookup_keydown: () => this.setState({ activeLookUp: true }),
+        lookup_keyup: () => this.setState({ activeLookUp: false }),
+        lookdown_keydown: () => this.setState({ activeLookDown: true }),
+        lookdown_keyup: () => this.setState({ activeLookDown: false }),
+        lookleft_keydown: () => this.setState({ activeLookLeft: true }),
+        lookleft_keyup: () => this.setState({ activeLookLeft: false }),
+        lookright_keydown: () => this.setState({ activeLookRight: true }),
+        lookright_keyup: () => this.setState({ activeLookRight: false }),
+        shoot_keydown: this.startShooting,
         shoot_keyup: this.stopShooting,
         mouseM: this.mouseLook
     };
@@ -184,9 +184,9 @@ export class PlayerControls extends React.Component {
 
     // todo: convert this to gameObject?
     addMouseDebugMesh = () => {
-        const {availableComponent} = this.props;
+        const { availableComponent } = this.props;
         const geometry = new THREE.SphereGeometry(1, 32, 32);
-        const material = new THREE.MeshBasicMaterial({color: 0xfa7911});
+        const material = new THREE.MeshBasicMaterial({ color: 0xfa7911 });
         this.mouseDebugMesh = new THREE.Mesh(geometry, material);
         this.mouseDebugMesh.castShadow = true;
         availableComponent.scene.scene.add(this.mouseDebugMesh);
@@ -199,7 +199,7 @@ export class PlayerControls extends React.Component {
 
     // TODO: maybe this should be an inputService function?
     getPositionFromMouse = (targetZ = 0) => {
-        const {availableComponent} = this.props;
+        const { availableComponent } = this.props;
         const camera = availableComponent.scene.camera._main;
 
         let vec = new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z); // create once and reuse

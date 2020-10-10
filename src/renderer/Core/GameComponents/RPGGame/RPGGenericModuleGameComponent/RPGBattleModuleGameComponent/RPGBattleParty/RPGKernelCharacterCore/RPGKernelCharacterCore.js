@@ -2,67 +2,56 @@ import React from "react";
 import * as CANNON from "cannon";
 import * as _ from "lodash";
 import * as THREE from "three";
-import {kernelConstants} from "../../../../../../../../stores/rpgLogic/rpgConstants";
+import { kernelConstants } from "../../../../../../../../stores/rpgLogic/rpgConstants";
 import PropTypes from "prop-types";
 
 export class RPGKernelCharacterCore extends React.Component {
-// character base shared by all
-// launch events?
+  // character base shared by all
+  // launch events?
 
-    availableStatuses = kernelConstants.battleCharacterState;
-    currentStatus = this.availableStatuses["ready"];
-    time = .5;
-    defaultSpeed = 0.4;
-    speed = 0.2;
-    hp = 321;
-    maxHp = 1000;
-    magic = 101;
-    maxMagic = 200;
-    experience = 1000;
-    level = 1;
+  availableStatuses = kernelConstants.battleCharacterState;
+  currentStatus = this.availableStatuses["ready"];
+  time = 0.5;
+  defaultSpeed = 0.4;
+  speed = 0.2;
+  hp = 321;
+  maxHp = 1000;
+  magic = 101;
+  maxMagic = 200;
+  experience = 1000;
+  level = 1;
 
-    registeredStatusEffects = [];
+  registeredStatusEffects = [];
 
-    registerStatusEffect = (statusEffect) => {
+  registerStatusEffect = (statusEffect) => {};
 
-    };
+  removeStatusEffect = (statusEffect) => {};
 
-    removeStatusEffect = (statusEffect) => {
+  checkStatusEffects = () => {};
 
-    };
+  launchAttachTo = (target, attack) => {};
 
-    checkStatusEffects = () => {
+  sufferAttack = () => {};
 
-    };
+  kill = () => {
+    this.currentStatus = this.availableStatuses.dead;
+  };
 
-    launchAttachTo = (target, attack) => {
-    };
+  reset = () => {
+    this.currentStatus = this.availableStatuses.idle;
+  };
 
-    sufferAttack = () => {
+  timePass = (deltaTime) => {
+    const _newTime = this.time + deltaTime * this.speed;
+    this.time = Math.min(_newTime, 1.0);
+  };
 
-    };
-
-    kill = () => {
-        this.currentStatus = this.availableStatuses.dead;
-    };
-
-    reset = () => {
-        this.currentStatus = this.availableStatuses.idle;
-    };
-
-
-    timePass = (deltaTime) => {
-        const _newTime = this.time + deltaTime * this.speed;
-        this.time = Math.min(_newTime, 1.0);
-    };
-
-    update = (time, deltaTime) => {
-        this.timePass(deltaTime);
-    };
-    start = () => {
-    };
+  update = (time, deltaTime) => {
+    this.timePass(deltaTime);
+  };
+  start = () => {};
 }
 
 RPGKernelCharacterCore.propTypes = {
-    name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
 };

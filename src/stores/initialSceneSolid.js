@@ -20,7 +20,7 @@ export const initialScene = {
     activeScenes: ["main"],
     preloadWaitToStart: false,
     assets: {
-      // sephirothPMXModel: "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
+      sephirothPMXModel: "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
       everestOBJ: "./assets/models/64-everest/everest.obj",
       TETSUOHeadModel: "./assets/models/head/face.json",
       TETSUOMonitor: "./assets/models/monitor/monitor.mesh.json",
@@ -61,37 +61,37 @@ export const initialScene = {
     main: {
       fog: {
         color: 0x222222,
-        near: 10,
-        far: 400
+        // near: 10,
+        far: 4000
       },
       camera: {
         main: null
       },
       children: [
         "lightGroup",
-        // "board1",
+        "board1",
         // "testCubeGameObject1",
-        // "testShooter1",
+        "testShooter1",
         // "testBoss0",
         "testBoss1",
         // "testEnemy2",
         // "testEnemy3",
         // "testEnemy4",
         "camera1",
-        // "mountainSolid",
-        // "water1",
+        "mountainSolid",
+        "water1",
         // "sephiroth1",
         // "shaderPlane1",
-        // "backgroundMusicPlayer1",
+        "backgroundMusicPlayer1",
         // "rpgGame",
-        //"rpgTestPlayer1",
-        //   "colorSphere",
-        //   "pokemon",
-        //   "pokemonLogic",
-        "simpleRPGIntro",
+        // "rpgTestPlayer1",
+        // "colorSphere1",
+        // "pokemon",
+        // "pokemonLogic",
+        // "simpleRPGIntro",
         "solidLogo",
-        "monitor",
-        "simplePlane"
+        // "monitor",
+        // "simplePlane"
       ]
     }
   },
@@ -179,6 +179,13 @@ export const initialScene = {
         }
       },
       mountainSolid: {
+        transform: {
+          position: {},
+          rotation: {
+            x: Math.PI / 2
+          },
+          position: { z: 15 }
+        },
         prefab: "MountainPrefab"
       },
       testCubeGameObject1: {
@@ -250,24 +257,28 @@ export const initialScene = {
       },
       board1: {
         debug: true,
+        // transform: { position: { z: -10 } },
         components: {
           BoardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 500, y: 500, z: 0.1 },
-            position: { z: -3 },
+            dimensions: { x: 500, y: 500, z: .1 },
+            position: { z: -8 },
             mass: 0
           }
         },
         prefab: "Board"
       },
       water1: {
+        transform: {
+          position: { x: 0, y: 0, z: -8 }
+        },
         prefab: "WaterPrefab"
       },
       shaderPlane1: {
         prefab: "ExplodeShaderPlanePrefab",
         debug: true,
         transform: {
-          position: { x: 5, y: 5, z: -10 }
+          // position: { x: 5, y: 5, z: -10 },
         },
         components: {
           PlaneShaderMaterial: {
@@ -294,16 +305,16 @@ export const initialScene = {
         components: {},
         children: [
           "directionalLight1",
-          "ambientLight1"
-          // "pointLight1"
+          "ambientLight1",
+          "pointLight1"
         ]
       },
       directionalLight1: {
         transform: {
           position: {
             x: 10,
-            y: -70,
-            z: 100
+            y: 70,
+            z: -100
           }
         },
         components: {},
@@ -466,9 +477,9 @@ export const initialScene = {
           //     lookAt:{x:0,y: 0,z: 0},
           // },
           Camera: {
-            orthographic: true,
+            // orthographic: true,
             // cameraSoundPath: "./assets/sound/camera_change.mp3",
-            cameraAngle: "loneMatrix",
+            cameraAngle: "nier",
             // cameraAutoRotate: true,
             cameraAutoRotateSpeed: 3,
             cameraMinDistance: 10,
@@ -478,7 +489,7 @@ export const initialScene = {
             animatedIntroTime: 100,
             animatedRegularTransitionTime: 100,
             near: 0.1,
-            far: 5000,
+            far: 50000,
             fov: 45,
             unspecified_supportedCameraAngles: [
               "",
@@ -567,7 +578,7 @@ export const initialScene = {
             dimensions: [5, 5, 5],
             color: 0xff2222
           },
-          bulletMovement: {
+          BulletMovement: {
             // debug:true,
           }
         },
@@ -587,14 +598,14 @@ export const initialScene = {
       TestShooter: {
         debug: true,
         components: {
-          PlaneShader: {
-            position: { x: 0, y: 0, z: 100 },
-            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
-            // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
-            shaderId: "marchingCubesSpheresFragShader"
-          },
-          playerControls: {},
-          shooter: {
+          // PlaneShader: {
+          //   position: { x: 0, y: 0, z: 100 },
+          //   // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands.glsl",
+          //   // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
+          //   shaderId: "marchingCubesSpheresFragShader"
+          // },
+          PlayerControls: {},
+          Shooter: {
             // soundLocation:
             //   "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
             soundId: "laserShot",
@@ -603,7 +614,7 @@ export const initialScene = {
             bulletPrefab: "PlayerBullet",
             selfDestructTime: 2000
           },
-          shooterGeometry: {
+          PlayerShooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             mass: 1
@@ -854,15 +865,13 @@ export const initialScene = {
         },
         transform: {
           position: { x: 0, y: -30, z: -100 },
-          rotation: {
-            // x:Math.PI/2
-          }
+
         }
       },
       WaterPrefab: {
         transform: {
-          rotation: { x: -Math.PI / 2 },
-          position: { x: 0, y: -1, z: 0 }
+          // rotation: { x: Math.PI / 2, y: Math.PI / 2, z: Math.PI / 2 },
+          // position: { x: 0, y: -30, z: 5 }
         },
         debug: true,
         components: {
