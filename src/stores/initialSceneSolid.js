@@ -9,18 +9,19 @@ export const initialScene = {
   title: {
     color: "#000000",
     subText: "SPACE to select and move forward. W and Z for selecting options.",
-    subTextColor: "#ffffff"
+    subTextColor: "#ffffff",
   },
   // TODO: split data in a better high level state strucuture (game, engine)
   game: {
     settings: {
       speed: 1,
-      current_level: 0
+      current_level: 0,
     },
     activeScenes: ["main"],
     preloadWaitToStart: false,
     assets: {
-      sephirothPMXModel: "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
+      sephirothPMXModel:
+        "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
       everestOBJ: "./assets/models/64-everest/everest.obj",
       TETSUOHeadModel: "./assets/models/head/face.json",
       TETSUOMonitor: "./assets/models/monitor/monitor.mesh.json",
@@ -35,16 +36,16 @@ export const initialScene = {
       // menuMove: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Health Heart.wav",
       // menuSelect: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Power Zap.wav",
       fariaDemoMP3:
-        "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3"
+        "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
     },
     levels: {
       byId: {
         zero: {
           walls: {},
-          groups: {}
-        }
+          groups: {},
+        },
       },
-      allIds: ["zero"]
+      allIds: ["zero"],
     },
     renderer: {
       alpha: true,
@@ -52,20 +53,20 @@ export const initialScene = {
       postprocessing: false,
       backgroundColor: {
         clearColor: 0x222222,
-        alpha: 0
-      }
+        alpha: 0,
+      },
     },
-    allCameras: []
+    allCameras: [],
   },
   scenes: {
     main: {
       fog: {
         color: 0x222222,
         // near: 10,
-        far: 4000
+        far: 4000,
       },
       camera: {
-        main: null
+        main: null,
       },
       children: [
         "lightGroup",
@@ -92,8 +93,8 @@ export const initialScene = {
         "solidLogo",
         // "monitor",
         // "simplePlane"
-      ]
-    }
+      ],
+    },
   },
   gameObjects: {
     byId: {
@@ -109,10 +110,10 @@ export const initialScene = {
       //   prefab:"RPGKernelCharacterCorePrefab"
       // },
       simpleRPGIntro: {
-        prefab: "SimpleRPGIntroPrefab"
+        prefab: "SimpleRPGIntroPrefab",
       },
       simplePlane: {
-        prefab: "SimplePlanePrefab"
+        prefab: "SimplePlanePrefab",
       },
       pokemonLogic: {
         prefab: "PokemonGameLogicPrefab",
@@ -120,23 +121,23 @@ export const initialScene = {
         components: {
           PokemonColorGameBattleLogic: {
             player1: "pokemon",
-            player2: "badPokemon"
-          }
-        }
+            player2: "badPokemon",
+          },
+        },
       },
       pokemon: {
         tags: ["pokemon"],
         prefab: "PokemonPrefab",
         components: {
           ColorPokemonLogic: {
-            opponentId: "badPokemon"
-          }
+            opponentId: "badPokemon",
+          },
         },
-        children: ["colorSphere1"]
+        children: ["colorSphere1"],
       },
       badPokemon: {
         transform: {
-          position: { x: 20, y: 0, z: 0 }
+          position: { x: 20, y: 0, z: 0 },
         },
         tags: ["badPokemon"],
         prefab: "PokemonPrefab",
@@ -147,22 +148,22 @@ export const initialScene = {
             myTurn: false,
             meshComponentNames: ["SphereGeometry", "ColorIndicator"],
             bot: true,
-            opponentId: "pokemon"
-          }
+            opponentId: "pokemon",
+          },
         },
-        children: ["colorSphere2"]
+        children: ["colorSphere2"],
       },
       colorSphere2: {
-        prefab: "ColorSpherePrefab"
+        prefab: "ColorSpherePrefab",
       },
       colorSphere1: {
-        prefab: "ColorSpherePrefab"
+        prefab: "ColorSpherePrefab",
       },
       camera1: {
-        prefab: "DynamicCameraPrefab"
+        prefab: "DynamicCameraPrefab",
       },
       sephiroth1: {
-        prefab: "SephirothPrefab"
+        prefab: "SephirothPrefab",
       },
       backgroundMusicPlayer1: {
         components: {
@@ -173,32 +174,32 @@ export const initialScene = {
             tag: "backgroundMusic",
             analyser: true,
             autoPlay: true,
-            loop: true
+            loop: true,
             // path: "./assets/sounds/stereo-left-and-right-test.mp3",
-          }
-        }
+          },
+        },
       },
       mountainSolid: {
         transform: {
           position: {},
           rotation: {
-            x: Math.PI / 2
+            x: Math.PI / 2,
           },
-          position: { z: 15 }
+          position: { z: 15 },
         },
-        prefab: "MountainPrefab"
+        prefab: "MountainPrefab",
       },
       testCubeGameObject1: {
         debug: true,
         prefab: "TestCube",
         transform: {
-          position: { x: 10, y: 0, z: 4 }
-        }
+          position: { x: 10, y: 0, z: 4 },
+        },
       },
       testShooter1: {
         debug: true,
         transform: {
-          position: { x: 0, y: 0, z: 4 }
+          position: { x: 0, y: 0, z: 4 },
         },
         components: {
           TextGeometry: {
@@ -214,46 +215,46 @@ export const initialScene = {
             bevelEnabled: true,
             fontName: "opensans", // helvetiker, optimer, gentilis, droid sans, droid seri,
             fontWeight: "bold", // normal bol,
-            mirror: false
-          }
+            mirror: false,
+          },
         },
         tags: ["playerShooter"],
-        prefab: "TestShooter"
+        prefab: "TestShooter",
       },
       testBoss0: {
         debug: true,
         transform: {
-          position: { x: 30, y: -30, z: 3 }
+          position: { x: 30, y: -30, z: 3 },
         },
-        prefab: "EnemySphereBoss"
+        prefab: "EnemySphereBoss",
       },
       testBoss1: {
         debug: true,
         transform: {
-          position: { x: -30, y: 30, z: 10 }
-        }
+          position: { x: -30, y: 30, z: 10 },
+        },
         /// sprefab: "EnemySphereBoss"
       },
       testEnemy2: {
         debug: true,
         transform: {
-          position: { x: 12, y: -12, z: 3 }
+          position: { x: 12, y: -12, z: 3 },
         },
-        prefab: "EnemyFollower"
+        prefab: "EnemyFollower",
       },
       testEnemy3: {
         debug: true,
         transform: {
-          position: { x: -12, y: -12, z: 3 }
+          position: { x: -12, y: -12, z: 3 },
         },
-        prefab: "EnemyFollower"
+        prefab: "EnemyFollower",
       },
       testEnemy4: {
         debug: true,
         transform: {
-          position: { x: 12, y: 12, z: 3 }
+          position: { x: 12, y: 12, z: 3 },
         },
-        prefab: "EnemyFollower"
+        prefab: "EnemyFollower",
       },
       board1: {
         debug: true,
@@ -261,18 +262,18 @@ export const initialScene = {
         components: {
           BoardPlaneGeometry: {
             rotationX: 0.01,
-            dimensions: { x: 500, y: 500, z: .1 },
+            dimensions: { x: 500, y: 500, z: 0.1 },
             position: { z: -8 },
-            mass: 0
-          }
+            mass: 0,
+          },
         },
-        prefab: "Board"
+        prefab: "Board",
       },
       water1: {
         transform: {
-          position: { x: 0, y: 0, z: -8 }
+          position: { x: 0, y: 0, z: -8 },
         },
-        prefab: "WaterPrefab"
+        prefab: "WaterPrefab",
       },
       shaderPlane1: {
         prefab: "ExplodeShaderPlanePrefab",
@@ -288,71 +289,67 @@ export const initialScene = {
               timeScale: 0.0005,
               audioTag: "backgroundMusic",
               maxEdgeLength: 5,
-              tessellateIterations: 12
+              tessellateIterations: 12,
             },
             hardLookAtCamera: false,
             width: 2900,
             height: 2600,
             audioTag: "backgroundMusic",
-            shaderAssetID: "worleyTunnelVertShader"
+            shaderAssetID: "worleyTunnelVertShader",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
-          }
-        }
+          },
+        },
       },
       lightGroup: {
         transform: {},
         components: {},
-        children: [
-          "directionalLight1",
-          "ambientLight1",
-          "pointLight1"
-        ]
+        children: ["directionalLight1", "ambientLight1", "pointLight1"],
       },
       directionalLight1: {
         transform: {
           position: {
             x: 10,
             y: 70,
-            z: -100
-          }
+            z: -100,
+          },
         },
         components: {},
         prefab: "DirectionalLight",
-        parentId: "lightGroup"
+        parentId: "lightGroup",
       },
       ambientLight1: {
         transform: {},
         components: {},
         prefab: "AmbientLight",
-        parentId: "lightGroup"
+        parentId: "lightGroup",
       },
       pointLight1: {
         transform: {
           position: {
             x: 10,
             y: 7,
-            z: 5
-          }
+            z: 5,
+          },
         },
         components: {},
         prefab: "PointLight",
-        parentId: "lightGroup"
+        parentId: "lightGroup",
       },
       solidLogo: {
         transform: {
           position: { x: 0.7, y: -0.87, z: 0.45 },
-          rotation: { x: Math.PI / 2, y: -Math.PI / 4 }
+          rotation: { x: Math.PI / 2, y: -Math.PI / 4 },
         },
-        prefab: "SolidLogoPrefab"
+        prefab: "SolidLogoPrefab",
       },
       monitor: {
         transform: {
           position: { z: -1 },
-          rotation: { y: -Math.PI / 2 }
+          rotation: { y: -Math.PI / 2 },
         },
-        prefab: "TETSUOMonitor"
-      }
+        prefab: "TETSUOMonitor",
+      },
     },
     allIds: [
       // "Camera",
@@ -366,23 +363,23 @@ export const initialScene = {
       "mountainSolid",
       "water1",
       "shaderPlane1",
-      "sephiroth1"
-    ]
+      "sephiroth1",
+    ],
   },
   prefabs: {
     byId: {
       SimplePlanePrefab: {
         transform: {
           // position:{x:0,y:0,z:3},
-          rotation: {}
+          rotation: {},
         },
         components: {
           SimplePlane: {
             width: 1.8,
             height: 1.8,
-            offSetZ: 0.17
-          }
-        }
+            offSetZ: 0.17,
+          },
+        },
       },
       SimpleRPGIntroPrefab: {
         components: {
@@ -391,9 +388,9 @@ export const initialScene = {
           SimpleRPGTextOption: { debug: true },
           SimpleRPGBackground: { debug: false },
           SimpleRPGBattle: {
-            debug: true
-          }
-        }
+            debug: true,
+          },
+        },
       },
       TETSUOMonitor: {
         components: {
@@ -401,24 +398,24 @@ export const initialScene = {
             assetId: "TETSUOMonitor",
             scale: 1,
             doubleSide: true,
-            transparent: false
-          }
-        }
+            transparent: false,
+          },
+        },
       },
       TETSUOCounterPrefab: {
         components: {
           // TETSUOCounterComponent: {}
-        }
+        },
       },
       TETSUOTextPrefab: {
         components: {
-          TETSUOTextComponent: {}
-        }
+          TETSUOTextComponent: {},
+        },
       },
       PokemonGameLogicPrefab: {
         components: {
-          PokemonColorGameBattleLogic: {}
-        }
+          PokemonColorGameBattleLogic: {},
+        },
       },
       PokemonPrefab: {
         components: {
@@ -430,27 +427,27 @@ export const initialScene = {
             meshComponentNames: [
               "SphereGeometry",
               "ColorIndicator",
-              "ColorPokemonBattleMenu"
+              "ColorPokemonBattleMenu",
             ],
             colorAttachementPrefab: "ColorSpherePrefab",
-            colorAttachementLogicComponent: "ColorSphereLogic"
+            colorAttachementLogicComponent: "ColorSphereLogic",
           },
           CSSLabelTo3D: {},
           ColorIndicator: {
-            attachDivComponent: "CSSLabelTo3D"
+            attachDivComponent: "CSSLabelTo3D",
           },
           ColorPokemonBattleMenu: {
-            attachDivComponent: "CSSLabelTo3D"
+            attachDivComponent: "CSSLabelTo3D",
           },
           SphereGeometry: {
-            radius: 1
-          }
-        }
+            radius: 1,
+          },
+        },
       },
       ColorSpherePrefab: {
         components: {
           SphereGeometry: {
-            radius: 1
+            radius: 1,
           },
           ColorSphereLogic: {
             initing: true,
@@ -462,10 +459,10 @@ export const initialScene = {
             sizeChangeRatio: 0.01,
             meshComponentName: "SphereGeometry",
             sphereSpeedIndex: 0.5,
-            opponentId: "null"
+            opponentId: "null",
             // color:{ r: 100, g: 100, b: 100 }
-          }
-        }
+          },
+        },
       },
       DynamicCameraPrefab: {
         components: {
@@ -501,62 +498,62 @@ export const initialScene = {
               "top",
               "bottom",
               "isometric",
-              "nier"
+              "nier",
             ],
             cameraAllowedPositions: {
               left: {
-                position: { x: -10, y: 0, z: 0 }
+                position: { x: -10, y: 0, z: 0 },
               },
               right: {
-                position: { x: 10, y: 0, z: 0 }
+                position: { x: 10, y: 0, z: 0 },
               },
               front: {
-                position: { x: 0, y: 0, z: 2 }
+                position: { x: 0, y: 0, z: 2 },
               },
               loneMatrix: {
-                position: { x: -0.2, y: -0.2, z: 2 }
+                position: { x: -0.2, y: -0.2, z: 2 },
               },
               back: {
-                position: { x: 0, y: 0, z: -10 }
+                position: { x: 0, y: 0, z: -10 },
               },
               top: {
-                position: { x: 0, y: 50, z: -1 }
+                position: { x: 0, y: 50, z: -1 },
               },
               bottom: {
-                position: { x: 0, y: -10, z: 0 }
+                position: { x: 0, y: -10, z: 0 },
               },
               isometric: {
-                position: { x: 10, y: 10, z: 10 }
+                position: { x: 10, y: 10, z: 10 },
               },
               "top-front": {
-                position: { x: 0, y: 10, z: 10 }
+                position: { x: 0, y: 10, z: 10 },
               },
               "top-right": {
-                position: { x: 10, y: 10, z: 0 }
+                position: { x: 10, y: 10, z: 0 },
               },
               "top-back": {
-                position: { x: 0, y: 10, z: -10 }
+                position: { x: 0, y: 10, z: -10 },
               },
               "top-left": {
-                position: { x: -1, y: 1, z: -1 }
+                position: { x: -1, y: 1, z: -1 },
               },
               nier: {
-                position: { x: 0, y: -55, z: 35 }
+                position: { x: 0, y: -55, z: 35 },
               },
               solid: {
-                position: { x: 0, y: -155, z: 35 }
+                position: { x: 0, y: -155, z: 35 },
               },
               custom: {
                 position: {
                   x: 21.57972466572975,
                   y: 21.0286001424227,
-                  z: 84.80632912348827
-                }
-              }
-            }
-          }
+                  z: 84.80632912348827,
+                },
+              },
+            },
+          },
         },
-        children: []
+        children: [],
       },
       TestCube: {
         debug: true,
@@ -565,10 +562,10 @@ export const initialScene = {
           TestCube: {
             rotationX: 0.01,
             rotationZ: 0.01,
-            opacity: 0.9
-          }
+            opacity: 0.9,
+          },
         },
-        children: []
+        children: [],
       },
       PlayerBullet: {
         debug: true,
@@ -576,13 +573,13 @@ export const initialScene = {
         components: {
           PlayerBulletGeometry: {
             dimensions: [5, 5, 5],
-            color: 0xff2222
+            color: 0xff2222,
           },
           BulletMovement: {
             // debug:true,
-          }
+          },
         },
-        children: []
+        children: [],
       },
       EnemyBullet: {
         debug: true,
@@ -590,10 +587,10 @@ export const initialScene = {
         components: {
           SphereGeometry: {
             basicMaterial: true,
-            castShadow: false
-          }
+            castShadow: false,
+          },
         },
-        children: []
+        children: [],
       },
       TestShooter: {
         debug: true,
@@ -612,15 +609,15 @@ export const initialScene = {
             moveRatio: 7,
             displacementRatio: 5,
             bulletPrefab: "PlayerBullet",
-            selfDestructTime: 2000
+            selfDestructTime: 2000,
           },
           PlayerShooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
-            mass: 1
-          }
+            mass: 1,
+          },
         },
-        children: []
+        children: [],
       },
       EnemyFollower: {
         debug: true,
@@ -628,24 +625,24 @@ export const initialScene = {
           EnemyMovementControls: {
             type: "follow",
             speed: 50,
-            rotationSpeed: 10
+            rotationSpeed: 10,
           },
           Shooter: {
             shooting: true,
             moveRatio: 2,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 2000,
-            aroundBullets: 1
+            aroundBullets: 1,
           },
           EnemyCubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
             mass: 1,
-            tip: true
-          }
+            tip: true,
+          },
         },
-        children: []
+        children: [],
       },
       EnemySphereBoss: {
         debug: true,
@@ -653,7 +650,7 @@ export const initialScene = {
           EnemyMovementControls: {
             type: "rotate",
             speed: 50,
-            rotationSpeed: 2
+            rotationSpeed: 2,
           },
           Shooter: {
             shooting: true,
@@ -661,16 +658,16 @@ export const initialScene = {
             displacementRatio: 1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
-            aroundBullets: 1
+            aroundBullets: 1,
           },
           SphereGeometry: {
             radius: 1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
-            castShadow: true
-          }
+            castShadow: true,
+          },
         },
-        children: []
+        children: [],
       },
       Board: {
         debug: true,
@@ -680,10 +677,10 @@ export const initialScene = {
             rotationX: 0.01,
             dimensions: { x: 500, y: 500, z: 0.1 },
             position: { z: -3 },
-            mass: 0
-          }
+            mass: 0,
+          },
         },
-        children: []
+        children: [],
       },
       DirectionalLight: {
         transform: {},
@@ -691,35 +688,35 @@ export const initialScene = {
           DirectionalLight: {
             castShadow: true,
             color: 0xffffff,
-            intensity: 0.9
-          }
-        }
+            intensity: 0.9,
+          },
+        },
       },
       PointLight: {
         transform: {
           position: {
             x: 0,
             y: 0,
-            z: 0
-          }
+            z: 0,
+          },
         },
         components: {
           PointLight: {
             castShadow: true,
             color: 0xffffff,
             intensity: 1,
-            distance: 100
-          }
-        }
+            distance: 100,
+          },
+        },
       },
       AmbientLight: {
         transform: {},
         components: {
           AmbientLight: {
             // color: 0x222222
-          }
+          },
         },
-        children: []
+        children: [],
       },
       // RPGGamePrefab: {
       //   debug: true,
@@ -849,8 +846,8 @@ export const initialScene = {
           // },
           AutoRotate: {
             speed: {
-              y: 0.0001
-            }
+              y: 0.0001,
+            },
           },
           MeshGeometry: {
             // assetURL: "./assets/models/64-everest/everest.obj",
@@ -858,15 +855,14 @@ export const initialScene = {
             scale: 100,
             materialParameters: {
               color: 0x777777,
-              wireframe: true
+              wireframe: true,
             },
-            materialType: "basic"
-          }
+            materialType: "basic",
+          },
         },
         transform: {
           position: { x: 0, y: -30, z: -100 },
-
-        }
+        },
       },
       WaterPrefab: {
         transform: {
@@ -875,64 +871,64 @@ export const initialScene = {
         },
         debug: true,
         components: {
-          WaterComponent: {}
-        }
+          WaterComponent: {},
+        },
       },
       TETSUOCityPrefab: {
         transform: {
           // rotation: { x:-Math.PI/2 },
-          position: { x: 0, y: 0, z: 0.18 }
+          position: { x: 0, y: 0, z: 0.18 },
         },
         debug: true,
         components: {
-          TETSUOCity: {}
-        }
+          TETSUOCity: {},
+        },
       },
       CylinderPrefab: {
         transform: {
           scale: { x: 0.1, y: 0.1, z: 0.1 },
-          position: { y: -0.5 }
+          position: { y: -0.5 },
         },
         debug: true,
         components: {
-          TETSUOParticlesGeometryTest: {}
+          TETSUOParticlesGeometryTest: {},
         },
-        children: []
+        children: [],
       },
       SephirothPrefab: {
         transform: {
-          scale: { x: 0.03, y: 0.03, z: 0.03 }
+          scale: { x: 0.03, y: 0.03, z: 0.03 },
           // position: { x: 220, y: -120, z: 990},
         },
         components: {
           MeshGeometry: {
             assetId: "sephirothPMXModel",
             materialType: "basic",
-            materialParameters: { color: 0xff0000 }
-          }
-        }
+            materialParameters: { color: 0xff0000 },
+          },
+        },
       },
       SolidLogoPrefab: {
         components: {
           MeshGeometry: {
             assetId: "solidLogo",
-            scale: 0.025
-          }
-        }
+            scale: 0.025,
+          },
+        },
       },
       HeadPrefab: {
         transform: {
-          scale: { x: 0.3, y: 0.3, z: 0.3 }
+          scale: { x: 0.3, y: 0.3, z: 0.3 },
           // position: { x: 220, y: -120, z: 990},
         },
         components: {
           // TETSUOHeadComponent: {}
-        }
+        },
       },
       ExplodeShaderPlanePrefab: {
         debug: true,
         transform: {
-          position: { x: 0, y: 0, z: -1 }
+          position: { x: 0, y: 0, z: -1 },
         },
         components: {
           PlaneShaderMaterial: {
@@ -949,12 +945,12 @@ export const initialScene = {
             width: 9,
             height: 6,
             // audioTag: "backgroundMusic",
-            shaderAssetID: "worleyTunnelVertShader"
+            shaderAssetID: "worleyTunnelVertShader",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_sands_sound_test.glsl",
             // shaderURL:"./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl"
-          }
-        }
-      }
+          },
+        },
+      },
     },
     allIds: [
       // "Camera",
@@ -969,9 +965,9 @@ export const initialScene = {
       "TestShooter",
       "PlayerBullet",
       "EnemyBullet",
-      "DynamicCameraPrefab"
+      "DynamicCameraPrefab",
       // "RPGGamePrefab",
       // "RPGKernelCharacterCorePrefab"
-    ]
-  }
+    ],
+  },
 };

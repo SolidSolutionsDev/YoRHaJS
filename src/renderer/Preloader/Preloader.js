@@ -60,7 +60,7 @@ class Preloader extends Component {
     };
     this.initHandlers();
     if (!Object.keys(this.props.assets).length) {
-      this.setState({ ready: true });
+      this.manager.onLoad();
       return;
     }
     Object.keys(this.props.assets).forEach((assetTag) => {
