@@ -41,14 +41,13 @@ class Preloader extends Component {
     this.manager.onProgress = (item, loaded, total) => {
       // this gets called after an object has been loaded
       this.setState({ loading: [...this.state.loading, item] });
-      // console.log("[LoaderManager] loaded item:", item, loaded, total);
+      console.log("[LoaderManager] loaded item:", item, loaded, total);
     };
 
     this.manager.onLoad = () => {
       // everything is loaded
       // call your other function
       //
-      this.setState({ ready: true });
       console.log("[LoaderManager] Preload complete", this);
       if (!preloadWaitToStart) {
         markAssetsAsLoaded();
@@ -69,6 +68,7 @@ class Preloader extends Component {
         this.props.assets[assetTag]
       );
       currentLoader.load(assetFileURL, loadedAsset => {
+        // console.log("loaded", loadedAsset);
         let asset = loadedAsset;
         if (asset.isMesh) {
           // console.log("mesh",loadedAsset,asset);
@@ -106,6 +106,21 @@ class Preloader extends Component {
 
   componentDidMount() {
     this.load();
+  }
+
+  componentDidUpdate() {
+    this.checkIfReady();
+  }
+  checkIfReady() {
+    if (this.state.ready) {
+      return;
+    }
+    // console.log(this.props.assets);
+    const ready = Object.keys(this.props.assets).every(
+      assetId => this.state.loaded[assetId] !== undefined
+    );
+    if (!ready) return;
+    this.setState({ ready: true });
   }
 
   render() {

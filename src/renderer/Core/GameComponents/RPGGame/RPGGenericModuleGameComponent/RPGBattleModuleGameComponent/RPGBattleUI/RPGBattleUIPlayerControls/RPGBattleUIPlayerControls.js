@@ -29,29 +29,6 @@ export class RPGBattleUIPlayerControls extends React.Component {
   menuDiv;
   cssGameComponent;
 
-  //TODO: Move to sound player component - also used in shooter
-  // initSound = soundId => {
-  //   //menuMoveSoundId
-  //   //menuSelectSoundId
-  //   const { transform, availableService, selfSettings } = this.props;
-  //   if (!selfSettings[soundId]) {
-  //     return;
-  //   }
-  //   const _menuMoveSoundObject = availableService.audio.buildNonPositionalSound(
-  //     selfSettings[soundId],
-  //     selfSettings[soundId]
-  //   );
-  //   const _sound = _menuMoveSoundObject.sound;
-  //
-  //   _sound.setLoop(false);
-  //   _sound.loop = false;
-  //   transform.add(_sound);
-  //   if (_sound.isPlaying) {
-  //     _sound.stop();
-  //   }
-  //   return _sound;
-  // };
-
   moveLeft = () => {};
 
   moveRight = () => {};
