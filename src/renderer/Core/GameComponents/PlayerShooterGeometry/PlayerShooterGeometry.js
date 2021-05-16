@@ -36,7 +36,7 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0, 3);
 
     let extrudeSettings = {
-      amount: 0.75,
+      depth: 0.75,
       bevelEnabled: false,
       bevelSegments: 2,
       steps: 1,
@@ -63,7 +63,7 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(-0.1, -1);
 
     extrudeSettings = {
-      amount: 0.75,
+      depth: 0.75,
       bevelEnabled: false,
       bevelSegments: 2,
       steps: 1,
@@ -90,7 +90,7 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0.1, -1);
 
     extrudeSettings = {
-      amount: 0.75,
+      depth: 0.75,
       bevelEnabled: false,
       bevelSegments: 2,
       steps: 1,
