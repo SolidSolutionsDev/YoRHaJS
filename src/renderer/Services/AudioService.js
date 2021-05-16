@@ -71,6 +71,37 @@ export class AudioService extends Component {
     return analyser;
   };
 
+  initSoundAndMapItToTransform = (soundId, selfSettings, transform) => {
+    if (!selfSettings[soundId]) {
+      return;
+    }
+    const _soundObject = this.buildPositionalSound(
+      selfSettings[soundId],
+      selfSettings[soundId]
+    );
+    const _sound = _soundObject.sound;
+
+    _sound.setLoop(false);
+    _sound.loop = false;
+    if (transform) {
+      transform.add(_sound);
+    }
+    if (_sound.isPlaying) {
+      _sound.stop();
+    }
+    return _sound;
+  };
+
+  playSound = sound => {
+    if (!sound) {
+      return;
+    }
+    if (sound.isPlaying) {
+      sound.stop();
+    }
+    sound.play();
+  };
+
   update = time => {};
 
   render() {

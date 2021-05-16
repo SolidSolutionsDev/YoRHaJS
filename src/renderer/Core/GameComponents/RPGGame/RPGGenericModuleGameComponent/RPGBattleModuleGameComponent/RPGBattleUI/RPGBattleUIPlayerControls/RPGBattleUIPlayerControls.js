@@ -30,27 +30,27 @@ export class RPGBattleUIPlayerControls extends React.Component {
   cssGameComponent;
 
   //TODO: Move to sound player component - also used in shooter
-  initSound = soundId => {
-    //menuMoveSoundId
-    //menuSelectSoundId
-    const { transform, availableService, selfSettings } = this.props;
-    if (!selfSettings[soundId]) {
-      return;
-    }
-    const _menuMoveSoundObject = availableService.audio.buildNonPositionalSound(
-      selfSettings[soundId],
-      selfSettings[soundId]
-    );
-    const _sound = _menuMoveSoundObject.sound;
-
-    _sound.setLoop(false);
-    _sound.loop = false;
-    transform.add(_sound);
-    if (_sound.isPlaying) {
-      _sound.stop();
-    }
-    return _sound;
-  };
+  // initSound = soundId => {
+  //   //menuMoveSoundId
+  //   //menuSelectSoundId
+  //   const { transform, availableService, selfSettings } = this.props;
+  //   if (!selfSettings[soundId]) {
+  //     return;
+  //   }
+  //   const _menuMoveSoundObject = availableService.audio.buildNonPositionalSound(
+  //     selfSettings[soundId],
+  //     selfSettings[soundId]
+  //   );
+  //   const _sound = _menuMoveSoundObject.sound;
+  //
+  //   _sound.setLoop(false);
+  //   _sound.loop = false;
+  //   transform.add(_sound);
+  //   if (_sound.isPlaying) {
+  //     _sound.stop();
+  //   }
+  //   return _sound;
+  // };
 
   moveLeft = () => {};
 
@@ -75,7 +75,7 @@ export class RPGBattleUIPlayerControls extends React.Component {
   };
 
   selectMenu = () => {
-    this.menuMoveSelectSound.play();
+    this.props.availableService.audio.playSound(this.menuMoveSelectSound);
   };
 
   backMenu = () => {};
@@ -113,13 +113,7 @@ export class RPGBattleUIPlayerControls extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.selectedCommand !== prevState.selectedCommand) {
-      if (!this.menuMoveSound) {
-        return;
-      }
-      if (this.menuMoveSound.isPlaying) {
-        this.menuMoveSound.stop();
-      }
-      this.menuMoveSound.play();
+      this.props.availableService.audio.playSound(this.menuMoveSound);
     }
   }
 
@@ -202,10 +196,19 @@ export class RPGBattleUIPlayerControls extends React.Component {
   };
 
   start = () => {
+    const { transform, availableService, selfSettings } = this.props;
     this.initMenuDiv();
 
-    this.menuMoveSound = this.initSound("menuMoveSoundId");
-    this.menuMoveSelectSound = this.initSound("menuSelectSoundId");
+    this.menuMoveSound = availableService.audio.initSoundAndMapItToTransform(
+      "menuMoveSoundId",
+      selfSettings,
+      transform
+    );
+    this.menuMoveSelectSound = availableService.audio.initSoundAndMapItToTransform(
+      "menuSelectSoundId",
+      selfSettings,
+      transform
+    );
     this.registerEvents();
     // transform.add( this.mesh );
     // this.addMouseDebugMesh();

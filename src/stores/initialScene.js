@@ -13,8 +13,27 @@ export const initialScene = {
       current_level: 0
     },
     activeScenes: ["main"],
-    preloadWaitToStart: false,
-    assets: {},
+    preloadWaitToStart: true,
+    assets: {
+      // sephirothPMXModel:
+      //   "./assets/models/SAFER Sephiroth/SAFER Sephiroth V.01.pmx",
+      // everestOBJ: "./assets/models/64-everest/everest.obj",
+      // TETSUOHeadModel: "./assets/models/head/face.json",
+      // TETSUOMonitor: "./assets/models/monitor/monitor.mesh.json",
+      // solidLogo: "./assets/models/logo/logo.glb",
+      // worleyTunnelVertShader:
+      //   "./assets/shaders/fragment/anticore_worley_tunnel.glsl",
+      // sandsFragShader:
+      //   "./assets/shaders/fragment/anticore_raymarching_sands.glsl",
+      // marchingCubesSpheresFragShader:
+      //   "./assets/shaders/fragment/anticore_raymarching_cubes_spheres.glsl",
+      // menuMove: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Health Heart.wav",
+      // menuSelect: "./assets/sounds/The Legend of Zelda Cartoon Sound Effects Power Zap.wav",
+      // fariaDemoMP3:
+      //   "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
+      fariaDemoMP3: "./assets/sounds/01 City Ruins - Ding.mp3",
+      laserShot: "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav"
+    },
     levels: {
       byId: {
         zero: {
@@ -26,8 +45,8 @@ export const initialScene = {
     },
     renderer: {
       alpha: true,
-      antialias: false,
-      //    postprocessing: true,
+      // antialias: true,
+      postprocessing: true,
       backgroundColor: {
         clearColor: 0x222222,
         alpha: 0
@@ -58,12 +77,27 @@ export const initialScene = {
         "testEnemy2",
         // "testEnemy3",
         // "testEnemy4",
-        "camera1"
+        "camera1",
+        "backgroundMusicPlayer1"
       ]
     }
   },
   gameObjects: {
     byId: {
+      backgroundMusicPlayer1: {
+        components: {
+          SoundPlayer: {
+            positional: false,
+            // path: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
+            assetId: "fariaDemoMP3",
+            tag: "backgroundMusic",
+            analyser: true,
+            autoPlay: true,
+            loop: true
+            // path: "./assets/sounds/stereo-left-and-right-test.mp3",
+          }
+        }
+      },
       camera1: {
         prefab: "DynamicCamera"
       },
@@ -149,8 +183,8 @@ export const initialScene = {
         transform: {},
         components: {},
         children: [
-          "directionalLight1",
-          "ambientLight1"
+          "directionalLight1"
+          // "ambientLight1"
           // "pointLight1"
         ]
       },
@@ -181,7 +215,8 @@ export const initialScene = {
       "board1",
       "lightGroup",
       "directionalLight1",
-      "ambientLight1"
+      "ambientLight1",
+      "backgroundMusicPlayer1"
     ]
   },
   prefabs: {
@@ -304,8 +339,9 @@ export const initialScene = {
         components: {
           PlayerControls: {},
           Shooter: {
-            soundLocation:
-              "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+            // soundLocation:
+            //   "./assets/sounds/348162__djfroyd__laser-one-shot-3.wav",
+            soundId: "laserShot",
             moveRatio: 7,
             displacementRatio: 5,
             bulletPrefab: "PlayerBullet",
@@ -332,7 +368,8 @@ export const initialScene = {
             moveRatio: 2,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 2000,
-            aroundBullets: 1
+            aroundBullets: 1,
+            soundId: "laserShot"
           },
           EnemyCubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
@@ -358,7 +395,8 @@ export const initialScene = {
             displacementRatio: 1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
-            aroundBullets: 1
+            aroundBullets: 1,
+            soundId: "laserShot"
           },
           SphereGeometry: {
             radius: 1.4,
@@ -383,11 +421,11 @@ export const initialScene = {
           DirectionalLight: {
             castShadow: true,
             color: 0xffffff,
-            intensity: 0.9,
+            intensity: 0.1,
             position: {
               x: 0,
-              y: -70,
-              z: 100
+              y: 7,
+              z: 10
             }
           }
         }
