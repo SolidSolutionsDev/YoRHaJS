@@ -16,10 +16,10 @@ class Preloader extends Component {
 
   state = {
     loading: [],
-    loaded: {},
+    loaded: {}
   };
 
-  getAssetById = (assetId) => {
+  getAssetById = assetId => {
     return this.state.loaded[assetId];
   };
 
@@ -55,7 +55,7 @@ class Preloader extends Component {
       }
     };
 
-    this.manager.onError = (url) => {
+    this.manager.onError = url => {
       alert("[LoaderManager] There was an error loading " + url);
     };
     this.initHandlers();
@@ -63,12 +63,12 @@ class Preloader extends Component {
       this.manager.onLoad();
       return;
     }
-    Object.keys(this.props.assets).forEach((assetTag) => {
+    Object.keys(this.props.assets).forEach(assetTag => {
       const assetFileURL = this.props.assets[assetTag];
       const currentLoader = this.manager.getHandler(
         this.props.assets[assetTag]
       );
-      currentLoader.load(assetFileURL, (loadedAsset) => {
+      currentLoader.load(assetFileURL, loadedAsset => {
         let asset = loadedAsset;
         if (asset.isMesh) {
           // console.log("mesh",loadedAsset,asset);
@@ -85,8 +85,8 @@ class Preloader extends Component {
         this.setState({
           loaded: {
             ...this.state.loaded,
-            [assetTag]: asset,
-          },
+            [assetTag]: asset
+          }
         });
       });
     });
@@ -140,7 +140,7 @@ class Preloader extends Component {
   }
 }
 
-const getAssetLoadState = (state) => {
+const getAssetLoadState = state => {
   return state.mainReducer.game.assetsLoadState;
 };
 
@@ -148,16 +148,16 @@ const mapStateToProps = (state, ownProps) => {
   return {
     assetsLoadState: getAssetLoadState(state),
     assets: state.mainReducer.game.assets,
-    preloadWaitToStart: state.mainReducer.game.preloadWaitToStart,
+    preloadWaitToStart: state.mainReducer.game.preloadWaitToStart
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   markAssetsAsLoaded: () => {
     dispatch(updateMainGameObject({ assetsLoadState: true }));
-  },
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
+  forwardRef: true
 })(Preloader);

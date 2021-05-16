@@ -4,52 +4,54 @@ import * as THREE from "three";
 import { Water } from "three/examples/jsm/objects/Water";
 
 export class WaterComponent extends React.Component {
-    waterGeometry;
-    water;
-    start = () => {
-        const { availableComponent } = this.props;
-        const { scene } = availableComponent;
-        const lightPosition = this.props.gameObjects["directionalLight1"].transform.position;
-        const normalizedLightPosition = new THREE.Vector3(lightPosition.x, lightPosition.y, lightPosition.z).normalize();
-        this.waterGeometry = new THREE.PlaneBufferGeometry(10000, 10000);
-        this.water = new Water(
-            this.waterGeometry,
-            {
-                time: 0,
-                textureWidth: 512,
-                textureHeight: 512,
-                waterNormals: new THREE.TextureLoader().load('./assets/textures/waternormals.jpg', function (texture) {
+  waterGeometry;
+  water;
+  start = () => {
+    const { availableComponent } = this.props;
+    const { scene } = availableComponent;
+    const lightPosition = this.props.gameObjects["directionalLight1"].transform
+      .position;
+    const normalizedLightPosition = new THREE.Vector3(
+      lightPosition.x,
+      lightPosition.y,
+      lightPosition.z
+    ).normalize();
+    this.waterGeometry = new THREE.PlaneBufferGeometry(10000, 10000);
+    this.water = new Water(this.waterGeometry, {
+      time: 0,
+      textureWidth: 512,
+      textureHeight: 512,
+      waterNormals: new THREE.TextureLoader().load(
+        "./assets/textures/waternormals.jpg",
+        function(texture) {
+          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+        }
+      ),
+      alpha: 0.1,
+      transparent: true,
+      sunDirection: normalizedLightPosition,
+      sunColor: 0xaa0000,
+      waterColor: 0x0000aa,
+      distortionScale: 1.7
+      // fog: scene.scene.fog !== undefined
+    });
 
-                    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    // this.water.rotation.x = - Math.PI / 2;
 
-                }),
-                alpha: 0.1,
-                transparent: true,
-                sunDirection: normalizedLightPosition,
-                sunColor: 0xaa0000,
-                waterColor: 0x0000aa,
-                distortionScale: 1.7,
-                // fog: scene.scene.fog !== undefined
-            }
-        );
+    // this.water.position.z+=.2;
+    // this.water.material.wireframe = true;
+    this.props.transform.add(this.water);
+  };
 
-        // this.water.rotation.x = - Math.PI / 2;
+  update = () => {
+    this.water.material.uniforms["time"].value += 1.0 / 60.0;
+  };
 
-        // this.water.position.z+=.2;
-        // this.water.material.wireframe = true;
-        this.props.transform.add(this.water);
-
-    };
-
-    update = () => {
-        this.water.material.uniforms['time'].value += 1.0 / 60.0;
-    };
-
-    render() {
-        return null;
-    }
+  render() {
+    return null;
+  }
 }
 
 WaterComponent.propTypes = {
-    transform: PropTypes.object.isRequired
+  transform: PropTypes.object.isRequired
 };

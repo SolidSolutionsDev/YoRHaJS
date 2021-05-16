@@ -4,69 +4,68 @@ import PropTypes from "prop-types";
 import * as GameObject from "../../GameObject";
 
 export class ShoeGroup extends React.Component {
-    // getShoes = () => {
-    //   const { shoes, availableComponent, registerChildEntity } = this.props;
-    //   return shoes.allIds.map((shoeId) => {
-    //     const shoeData = shoes.byId[shoeId];
-    //     const objectProps = {
-    //       id: shoeData.id,
-    //       key: shoeData.objectType + shoeData.id,
-    //       availableComponent,
-    //     };
-    //
-    //     const ShoeEntity = EntityFactory.create(shoeData.objectType);
-    //
-    //     return <ShoeEntity ref={registerChildEntity} {...objectProps} />;
-    //   });
-    // };
+  // getShoes = () => {
+  //   const { shoes, availableComponent, registerChildEntity } = this.props;
+  //   return shoes.allIds.map((shoeId) => {
+  //     const shoeData = shoes.byId[shoeId];
+  //     const objectProps = {
+  //       id: shoeData.id,
+  //       key: shoeData.objectType + shoeData.id,
+  //       availableComponent,
+  //     };
+  //
+  //     const ShoeEntity = EntityFactory.create(shoeData.objectType);
+  //
+  //     return <ShoeEntity ref={registerChildEntity} {...objectProps} />;
+  //   });
+  // };
 
-    getShoes = () => {
-        const {
-            user_shoes,
-            availableComponent,
-            registerChildGameObject
-        } = this.props;
-        // const _shoeData = user_shoes.byId[current_selected_shoe]
-        return user_shoes.allIds.map(shoeId => {
-            const shoeData = user_shoes.byId[shoeId];
-            const objectProps = {
-                id: shoeId,
-                key: shoeData.type + shoeId,
-                availableComponent
-            };
+  getShoes = () => {
+    const {
+      user_shoes,
+      availableComponent,
+      registerChildGameObject
+    } = this.props;
+    // const _shoeData = user_shoes.byId[current_selected_shoe]
+    return user_shoes.allIds.map(shoeId => {
+      const shoeData = user_shoes.byId[shoeId];
+      const objectProps = {
+        id: shoeId,
+        key: shoeData.type + shoeId,
+        availableComponent
+      };
 
-            // const ShoeGameObject = GameObject.create("shoe");
+      // const ShoeGameObject = GameObject.create("shoe");
 
-            return (
-                <GameObject
-                    id={"shoe"}
-                    ref={registerChildGameObject}
-                    {...objectProps}
-                />
-            );
-        });
-    };
+      return (
+        <GameObject
+          id={"shoe"}
+          ref={registerChildGameObject}
+          {...objectProps}
+        />
+      );
+    });
+  };
 
-    start = () => {
-    };
+  start = () => {};
 
-    update = () => {
-        const {shoesActive, transform} = this.props;
-        transform.visible = shoesActive;
-    };
+  update = () => {
+    const { shoesActive, transform } = this.props;
+    transform.visible = shoesActive;
+  };
 
-    render() {
-        return this.getShoes();
-    }
+  render() {
+    return this.getShoes();
+  }
 }
 
 ShoeGroup.propTypes = {
-    shoesActive: PropTypes.bool,
-    objects: PropTypes.array,
-    transform: PropTypes.object
+  shoesActive: PropTypes.bool,
+  objects: PropTypes.array,
+  transform: PropTypes.object
 };
 
 ShoeGroup.defaultProps = {
-    shoesActive: true,
-    objects: []
+  shoesActive: true,
+  objects: []
 };

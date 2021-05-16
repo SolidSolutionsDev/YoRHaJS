@@ -34,7 +34,7 @@ const EventTypes = {
   /**
    * When the answer that's currently selected is confirmed (end of question)
    */
-  answerConfirmed: "answerConfirmed",
+  answerConfirmed: "answerConfirmed"
 };
 
 export class TextScreen {
@@ -58,7 +58,7 @@ export class TextScreen {
       wordWrap: true,
       wordWrapWidth: this._width - 2 * this._marginLeft - 2 * this._paddingLeft,
       fill: 0x3cdc7c,
-      ...options.defaultTextStyle,
+      ...options.defaultTextStyle
     };
   }
 
@@ -159,7 +159,7 @@ export class TextScreen {
 
     let text = new PIXI.Text(textContent, {
       ...this._defaultTextStyle,
-      ...textStyle,
+      ...textStyle
     });
     let height = text.height;
 
@@ -173,7 +173,7 @@ export class TextScreen {
     this._trigger(EventTypes.newTextAnimation, {
       textContent,
       textStyle,
-      options,
+      options
     });
 
     // check if theres a previous animation running and finish it
@@ -200,7 +200,7 @@ export class TextScreen {
         if (text.text !== textContent.slice(0, elapsedChars) + block) {
           text.text = textContent.slice(0, elapsedChars) + block;
           this._trigger(EventTypes.newCharacter, {
-            character: text.text[elapsedChars - 1],
+            character: text.text[elapsedChars - 1]
           });
         }
         return false;
@@ -209,7 +209,7 @@ export class TextScreen {
       else {
         text.text = textContent;
         this._trigger(EventTypes.newCharacter, {
-          character: text.text[text.text.length - 1],
+          character: text.text[text.text.length - 1]
         });
         setTimeout(() => callback && callback(), 0);
         this._trigger(EventTypes.textAnimationOver, {});
@@ -233,7 +233,7 @@ export class TextScreen {
     this._trigger(EventTypes.newQuestion, {
       questionText,
       answers,
-      options,
+      options
     });
 
     // first ask the question
@@ -249,7 +249,7 @@ export class TextScreen {
         let question = {
           selected,
           container: new PIXI.Container(),
-          answers: [],
+          answers: []
         };
 
         for (let i = 0; i < answers.length; i++) {
@@ -260,7 +260,7 @@ export class TextScreen {
 
           let answerText = new PIXI.Text(answers[i].textContent, {
             ...this._defaultTextStyle,
-            ...answers[i].textStyle,
+            ...answers[i].textStyle
           });
           answerText.position.set(40, 10);
           answerContainer.addChild(answerText);
@@ -268,8 +268,8 @@ export class TextScreen {
           let answerSelector = new PIXI.Graphics();
           answerSelector.beginFill(
             (answers[i].textStyle && answers[i].textStyle.fill) ||
-            options.questionStyle.fill ||
-            this._defaultTextStyle.fill
+              options.questionStyle.fill ||
+              this._defaultTextStyle.fill
           );
           answerSelector.drawRect(0, 0, 10, 10);
           answerSelector.endFill();
@@ -280,7 +280,7 @@ export class TextScreen {
           question.answers.push({
             id: answers[i].id,
             container: answerContainer,
-            selector: answerSelector,
+            selector: answerSelector
           });
 
           if (i > 0) {
@@ -309,7 +309,7 @@ export class TextScreen {
   selectAnswer(answerId) {
     if (this._currentQuestion) {
       this._currentQuestion.answers.forEach(
-        (answer) => (answer.selector.visible = answerId === answer.id)
+        answer => (answer.selector.visible = answerId === answer.id)
       );
 
       this._currentQuestion.selected = answerId;
@@ -323,7 +323,7 @@ export class TextScreen {
    */
   confirmAnswer() {
     this._trigger(EventTypes.answerConfirmed, {
-      answerId: this._currentQuestion.selected,
+      answerId: this._currentQuestion.selected
     });
     this._currentQuestion = undefined;
   }
@@ -335,7 +335,7 @@ export class TextScreen {
     return new Promise((resolve, reject) => {
       let pixi = new TETSUO.PIXINode("pixi", {
         width: this._width,
-        height: this._height,
+        height: this._height
       });
 
       this._generateBackground();
@@ -376,13 +376,13 @@ export class TextScreen {
                             gl_FragColor = mix(t, (t  + scanline(p) * 0.02 - smallline(p) * 0.02) * gradient((p - 0.5) * 2.), t.a);
                         }
                     `
-        ),
+        )
       })
         .addInput(pixi, "inputTex")
         .addInput(
           new TETSUO.UniformNode("texSize", {
             value: new THREE.Vector2(this._width, this._height),
-            gui: { hide: true },
+            gui: { hide: true }
           })
         );
 
@@ -428,6 +428,6 @@ export class TextScreen {
    * @param eventData
    */
   _trigger(eventType, eventData) {
-    this._subscribers.forEach((subscriber) => subscriber(eventType, eventData));
+    this._subscribers.forEach(subscriber => subscriber(eventType, eventData));
   }
 }

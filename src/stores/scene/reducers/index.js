@@ -12,14 +12,14 @@ const instantiateFromPrefabReducer = (state, action) => {
     }
     const _transform = {
       ...state.prefabs.byId[prefabId].transform,
-      ...transform,
+      ...transform
     };
     temp.newGameObject = {
       debug: false,
       prefab: prefabId,
       transform: _transform,
       parentId: parentId,
-      components,
+      components
     };
     temp.state = {
       ...temp.state,
@@ -27,11 +27,11 @@ const instantiateFromPrefabReducer = (state, action) => {
         byId: {
           ...temp.state.gameObjects.byId,
           [newId]: {
-            ...temp.newGameObject,
-          },
+            ...temp.newGameObject
+          }
         },
-        allIds: [...temp.state.gameObjects.allIds, newId],
-      },
+        allIds: [...temp.state.gameObjects.allIds, newId]
+      }
     };
     if (parentId) {
       temp.parent = temp.state.gameObjects.byId[parentId];
@@ -40,7 +40,7 @@ const instantiateFromPrefabReducer = (state, action) => {
     } else {
       temp.state.scenes[temp.state.game.activeScenes[0]].children = [
         ...temp.state.scenes[temp.state.game.activeScenes[0]].children,
-        newId,
+        newId
       ];
     }
   }
@@ -58,16 +58,16 @@ export const mainReducer = (state = initialScene, action) => {
         ...state,
         game: {
           ...state.game,
-          ...action.parametersObject,
-        },
+          ...action.parametersObject
+        }
       };
     case "UPDATE_SCENE_PARAMETERS":
       return {
         ...state,
         scene: {
           ...state.scene,
-          ...action.parametersObject,
-        },
+          ...action.parametersObject
+        }
       };
     case "UPDATE_GAMEOBJECT_PARAMETERS":
       temp.state = state;
@@ -86,11 +86,11 @@ export const mainReducer = (state = initialScene, action) => {
             ...accumulator,
             [componentId]: {
               ...temp.components[componentId],
-              ...temp.actionComponents[componentId],
-            },
+              ...temp.actionComponents[componentId]
+            }
           }),
           {
-            ...temp.components,
+            ...temp.components
           }
         );
       }
@@ -98,8 +98,8 @@ export const mainReducer = (state = initialScene, action) => {
         ...temp.gameObject,
         ...action.gameObjectParameters,
         components: {
-          ...temp.components,
-        },
+          ...temp.components
+        }
       };
       temp.state = {
         ...state,
@@ -107,9 +107,9 @@ export const mainReducer = (state = initialScene, action) => {
           ...temp.state.gameObjects,
           byId: {
             ...temp.state.gameObjects.byId,
-            [action.gameObjectId]: temp.gameObject,
-          },
-        },
+            [action.gameObjectId]: temp.gameObject
+          }
+        }
       };
       return temp.state;
     //TODO: flatter the state (gameComponents at the same level as gameObjects)
@@ -129,9 +129,9 @@ export const mainReducer = (state = initialScene, action) => {
           ...temp.components,
           [action.gameComponentId]: {
             ...temp.components[action.gameComponentId],
-            ...action.componentParameters,
-          },
-        },
+            ...action.componentParameters
+          }
+        }
       };
       temp.state = {
         ...state,
@@ -139,20 +139,20 @@ export const mainReducer = (state = initialScene, action) => {
           ...temp.state.gameObjects,
           byId: {
             ...temp.state.gameObjects.byId,
-            [action.gameObjectId]: temp.gameObject,
-          },
-        },
+            [action.gameObjectId]: temp.gameObject
+          }
+        }
       };
       return temp.state;
     case "EMIT_LOADING_ASSET":
       _oldAssetLoadState = state.assetsLoadState ? state.assetsLoadState : {};
       assetsLoadState = {
         ..._oldAssetLoadState,
-        [action.filename]: action.total,
+        [action.filename]: action.total
       };
       return {
         ...state,
-        assetsLoadState,
+        assetsLoadState
       };
     // TODO: refactor this and prefab as they share same logic with var name changes (attention to newId)
     case "INSTANTIATE_FROM_GAMEOBJ":
@@ -164,7 +164,7 @@ export const mainReducer = (state = initialScene, action) => {
         if (transform) {
           temp.gameObjectToClone.transform = {
             ...temp.state.gameObjects.byId[gameObjectId].transform,
-            ...transform,
+            ...transform
           };
         }
         if (instantiationTime) {
@@ -176,10 +176,10 @@ export const mainReducer = (state = initialScene, action) => {
           gameObjects: {
             byId: {
               ...temp.state.gameObjects.byId,
-              [temp.newId]: temp.gameObjectToClone,
+              [temp.newId]: temp.gameObjectToClone
             },
-            allIds: [...temp.state.gameObjects.allIds, temp.newId],
-          },
+            allIds: [...temp.state.gameObjects.allIds, temp.newId]
+          }
         };
         //this is not being used
         if (parentId) {
@@ -189,7 +189,7 @@ export const mainReducer = (state = initialScene, action) => {
         } else {
           temp.state.scene.children = [
             ...temp.state.scene.children,
-            temp.newId,
+            temp.newId
           ];
         }
       }
@@ -203,7 +203,7 @@ export const mainReducer = (state = initialScene, action) => {
       }
       temp.allCameras = [...state.game.allCameras, action.cameraId];
       temp.scenes = _.cloneDeep(state.scenes);
-      Object.keys(temp.scenes).forEach((sceneId) => {
+      Object.keys(temp.scenes).forEach(sceneId => {
         temp.scenes[sceneId].camera.main = temp.scenes[sceneId].camera.main
           ? temp.scenes[sceneId].camera.main
           : action.cameraId;
@@ -216,11 +216,11 @@ export const mainReducer = (state = initialScene, action) => {
         return state;
       }
       temp.allCameras = _.cloneDeep(state.game.allCameras);
-      temp.allCameras = temp.allCameras.filter((cameraId) => {
+      temp.allCameras = temp.allCameras.filter(cameraId => {
         return cameraId !== action.cameraId;
       });
       temp.scenes = _.cloneDeep(state.scenes);
-      temp.scenes = Object.keys(temp.scenes).forEach((sceneId) => {
+      temp.scenes = Object.keys(temp.scenes).forEach(sceneId => {
         if (temp.scenes[sceneId].camera.main === action.cameraId) {
           temp.scenes[sceneId].camera.main = temp.allCameras[0]
             ? temp.allCameras[0]
@@ -241,8 +241,8 @@ export const mainReducer = (state = initialScene, action) => {
         ...state.scenes,
         [action.sceneId]: {
           ...state.scenes[action.sceneId],
-          camera: temp.camera,
-        },
+          camera: temp.camera
+        }
       };
       temp.state = { ...state, scenes: { ...temp.scenes } };
       return temp.state;
@@ -261,24 +261,24 @@ export const mainReducer = (state = initialScene, action) => {
         } else {
           _parent = temp.scene;
         }
-        _parent.children = _parent.children.filter((childrenId) => {
+        _parent.children = _parent.children.filter(childrenId => {
           return childrenId !== action.gameObjectId;
         });
         delete temp.gameObjects.byId[action.gameObjectId];
-        temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id) => {
+        temp.gameObjects.allIds = temp.gameObjects.allIds.filter(id => {
           return id !== action.gameObjectId;
         });
         temp.gameObjects = {
           ...state.gameObjects,
           byId: temp.gameObjects.byId,
-          allIds: temp.gameObjects.allIds,
+          allIds: temp.gameObjects.allIds
         };
       }
 
       temp.state = {
         ...state,
         gameObjects: temp.gameObjects,
-        scene: temp.scene,
+        scene: temp.scene
       };
       return temp.state;
     default:

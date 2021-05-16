@@ -5,225 +5,223 @@ import * as _ from "lodash";
 import * as THREE from "three";
 
 export class PlayerControls extends React.Component {
-    shootTimeInterval = 1000;
-    mouseDebugMesh;
-    currentShooterDirection = new THREE.Vector3(0, 1, 0);
+  shootTimeInterval = 1000;
+  mouseDebugMesh;
+  currentShooterDirection = new THREE.Vector3(0, 1, 0);
 
-    shootLastTime = 0;
+  shootLastTime = 0;
 
-    // new shoot logic
-    bulletId = 0;
-    shooting = false;
-    shootingStartTime = null;
+  // new shoot logic
+  bulletId = 0;
+  shooting = false;
+  shootingStartTime = null;
 
-    moveRatio = this.props.moveRatio || 0.3;
+  moveRatio = this.props.moveRatio || 0.3;
 
-    moveVelocity = {
-        value: 0,
-        max: 1,
-        min: 1,
-        variation: 0.01
-    };
+  moveVelocity = {
+    value: 0,
+    max: 1,
+    min: 1,
+    variation: 0.01
+  };
 
-    state = {
-        activeLeft: false,
-        activeRight: false,
-        activeUp: false,
-        activeDown: false,
-        movementCallback: null
-    };
+  state = {
+    activeLeft: false,
+    activeRight: false,
+    activeUp: false,
+    activeDown: false,
+    movementCallback: null
+  };
 
-    lookDown = () => {
-        const { transform } = this.props;
-        transform.physicsBody.quaternion.setFromAxisAngle(
-            new CANNON.Vec3(0, 0, 1),
-            Math.PI / 2
-        );
-    };
-    lookUp = () => {
-        const { transform } = this.props;
-        transform.physicsBody.quaternion.setFromAxisAngle(
-            new CANNON.Vec3(0, 0, 1),
-            -Math.PI / 2
-        );
-    };
+  lookDown = () => {
+    const { transform } = this.props;
+    transform.physicsBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(0, 0, 1),
+      Math.PI / 2
+    );
+  };
+  lookUp = () => {
+    const { transform } = this.props;
+    transform.physicsBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(0, 0, 1),
+      -Math.PI / 2
+    );
+  };
 
-    lookLeft = () => {
-        const { transform } = this.props;
-        transform.physicsBody.quaternion.setFromAxisAngle(
-            new CANNON.Vec3(0, 0, 1),
-            Math.PI
-        );
-    };
-    lookRight = () => {
-        const { transform } = this.props;
-        transform.physicsBody.quaternion.setFromAxisAngle(
-            new CANNON.Vec3(0, 0, 1),
-            0
-        );
-    };
-    moveLeft = () => {
-        const { transform } = this.props;
-        // console.log('moveLeft');
-        // this.activeMovements.left=true;
-        transform.physicsBody.position.x -= this.moveRatio * this.deltaUpdate;
-        // let forwardVector = new CANNON.Vec3(-1, 0, 0);
-        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
-    };
+  lookLeft = () => {
+    const { transform } = this.props;
+    transform.physicsBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(0, 0, 1),
+      Math.PI
+    );
+  };
+  lookRight = () => {
+    const { transform } = this.props;
+    transform.physicsBody.quaternion.setFromAxisAngle(
+      new CANNON.Vec3(0, 0, 1),
+      0
+    );
+  };
+  moveLeft = () => {
+    const { transform } = this.props;
+    // console.log('moveLeft');
+    // this.activeMovements.left=true;
+    transform.physicsBody.position.x -= this.moveRatio * this.deltaUpdate;
+    // let forwardVector = new CANNON.Vec3(-1, 0, 0);
+    // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+  };
 
-    moveRight = () => {
-        const { transform } = this.props;
-        // console.log('moveRight');
-        transform.physicsBody.position.x += this.moveRatio * this.deltaUpdate;
-        // let forwardVector = new CANNON.Vec3(1,0, 0);
-        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
-    };
+  moveRight = () => {
+    const { transform } = this.props;
+    // console.log('moveRight');
+    transform.physicsBody.position.x += this.moveRatio * this.deltaUpdate;
+    // let forwardVector = new CANNON.Vec3(1,0, 0);
+    // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+  };
 
-    moveUp = () => {
-        const { transform } = this.props;
-        // console.log('moveUp');
-        transform.physicsBody.position.y += this.moveRatio * this.deltaUpdate;
+  moveUp = () => {
+    const { transform } = this.props;
+    // console.log('moveUp');
+    transform.physicsBody.position.y += this.moveRatio * this.deltaUpdate;
 
-        // let forwardVector = new CANNON.Vec3(0, 1, 0);
-        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
-    };
+    // let forwardVector = new CANNON.Vec3(0, 1, 0);
+    // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+  };
 
-    moveDown = () => {
-        const { transform } = this.props;
-        // console.log('moveDown',transform.physicsBody);
-        transform.physicsBody.position.y -= this.moveRatio * this.deltaUpdate;
-        // let forwardVector = new CANNON.Vec3(0, -1, 0);
-        // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
-    };
+  moveDown = () => {
+    const { transform } = this.props;
+    // console.log('moveDown',transform.physicsBody);
+    transform.physicsBody.position.y -= this.moveRatio * this.deltaUpdate;
+    // let forwardVector = new CANNON.Vec3(0, -1, 0);
+    // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
+  };
 
-    startShooting = () => {
-        this.props.gameObject.getComponent("Shooter").startShooting();
-    };
+  startShooting = () => {
+    this.props.gameObject.getComponent("Shooter").startShooting();
+  };
 
+  stopShooting = () => {
+    this.props.gameObject.getComponent("Shooter").stopShooting();
+  };
 
-    stopShooting = () => {
-        this.props.gameObject.getComponent("Shooter").stopShooting();
-    };
+  mouseLook = e => {
+    // console.log('mouseLook',e);
+    const _coords = e.detail.coordinates;
+    this.coords = _coords;
 
+    this.updateMouseLookDebugMesh();
 
-    mouseLook = e => {
-        // console.log('mouseLook',e);
-        const _coords = e.detail.coordinates;
-        this.coords = _coords;
+    this.updateMouseLook();
 
-        this.updateMouseLookDebugMesh();
+    this.updateMovement();
+  };
 
-        this.updateMouseLook();
+  updateMouseLook = () => {
+    const { transform, availableComponent } = this.props;
 
-        this.updateMovement();
-    };
+    if (!availableComponent.scene.camera._main) {
+      return;
+    }
 
-    updateMouseLook = () => {
-        const { transform, availableComponent } = this.props;
+    if (this.coords) {
+      const { availableService } = this.props;
+      const { physicsService } = availableService;
+      // TODO: move this to physics service as lookAt function
+      // Compute direction to target
+      let lookAtVector = this.getPositionFromMouse(
+        transform.physicsBody.position.z
+      );
 
-        if (!availableComponent.scene.camera._main) {
-            return;
-        }
+      this.currentShooterDirection = transform.physicsBody.lookAt(lookAtVector);
 
-        if (this.coords) {
-            const { availableService } = this.props;
-            const { physicsService } = availableService;
-            // TODO: move this to physics service as lookAt function
-            // Compute direction to target
-            let lookAtVector = this.getPositionFromMouse(
-                transform.physicsBody.position.z
-            );
+      // this can be used to make bullets or enemies follow player but disables gravity
+      // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
+    }
+  };
 
-            this.currentShooterDirection = transform.physicsBody.lookAt(lookAtVector);
+  updateMovement = () => {
+    // transform.rotation.y += 0.01;s
+    if (this.state.activeLeft) this.moveLeft();
+    if (this.state.activeRight) this.moveRight();
+    if (this.state.activeUp) this.moveUp();
+    if (this.state.activeDown) this.moveDown();
+    if (this.state.activeLookUp) this.lookUp();
+    if (this.state.activeLookDown) this.lookDown();
+    if (this.state.activeLookLeft) this.lookLeft();
+    if (this.state.activeLookRight) this.lookRight();
+  };
 
-            // this can be used to make bullets or enemies follow player but disables gravity
-            // currentShooterDirection.scale(fixedSpeed,transform.physicsBody.velocity);
-        }
-    };
+  eventsMap = {
+    moveLeft_keydown: () => this.setState({ activeLeft: true }),
+    moveRight_keydown: () => this.setState({ activeRight: true }),
+    moveUp_keydown: () => this.setState({ activeUp: true }),
+    moveDown_keydown: () => this.setState({ activeDown: true }),
+    moveLeft_keyup: () => this.setState({ activeLeft: false }),
+    moveRight_keyup: () => this.setState({ activeRight: false }),
+    moveUp_keyup: () => this.setState({ activeUp: false }),
+    moveDown_keyup: () => this.setState({ activeDown: false }),
+    lookup_keydown: () => this.setState({ activeLookUp: true }),
+    lookup_keyup: () => this.setState({ activeLookUp: false }),
+    lookdown_keydown: () => this.setState({ activeLookDown: true }),
+    lookdown_keyup: () => this.setState({ activeLookDown: false }),
+    lookleft_keydown: () => this.setState({ activeLookLeft: true }),
+    lookleft_keyup: () => this.setState({ activeLookLeft: false }),
+    lookright_keydown: () => this.setState({ activeLookRight: true }),
+    lookright_keyup: () => this.setState({ activeLookRight: false }),
+    shoot_keydown: this.startShooting,
+    shoot_keyup: this.stopShooting,
+    mouseM: this.mouseLook
+  };
 
-    updateMovement = () => {
-        // transform.rotation.y += 0.01;s
-        if (this.state.activeLeft) this.moveLeft();
-        if (this.state.activeRight) this.moveRight();
-        if (this.state.activeUp) this.moveUp();
-        if (this.state.activeDown) this.moveDown();
-        if (this.state.activeLookUp) this.lookUp();
-        if (this.state.activeLookDown) this.lookDown();
-        if (this.state.activeLookLeft) this.lookLeft();
-        if (this.state.activeLookRight) this.lookRight();
-    };
+  registerEvents = () => {
+    Object.keys(this.eventsMap).forEach(event => {
+      // console.log(`here ${event.toString()}`, this.eventsMap[event]);
+      document.addEventListener(event, this.eventsMap[event]);
+    });
+  };
 
-    eventsMap = {
-        moveLeft_keydown: () => this.setState({ activeLeft: true }),
-        moveRight_keydown: () => this.setState({ activeRight: true }),
-        moveUp_keydown: () => this.setState({ activeUp: true }),
-        moveDown_keydown: () => this.setState({ activeDown: true }),
-        moveLeft_keyup: () => this.setState({ activeLeft: false }),
-        moveRight_keyup: () => this.setState({ activeRight: false }),
-        moveUp_keyup: () => this.setState({ activeUp: false }),
-        moveDown_keyup: () => this.setState({ activeDown: false }),
-        lookup_keydown: () => this.setState({ activeLookUp: true }),
-        lookup_keyup: () => this.setState({ activeLookUp: false }),
-        lookdown_keydown: () => this.setState({ activeLookDown: true }),
-        lookdown_keyup: () => this.setState({ activeLookDown: false }),
-        lookleft_keydown: () => this.setState({ activeLookLeft: true }),
-        lookleft_keyup: () => this.setState({ activeLookLeft: false }),
-        lookright_keydown: () => this.setState({ activeLookRight: true }),
-        lookright_keyup: () => this.setState({ activeLookRight: false }),
-        shoot_keydown: this.startShooting,
-        shoot_keyup: this.stopShooting,
-        mouseM: this.mouseLook
-    };
+  // todo: convert this to gameObject?
+  addMouseDebugMesh = () => {
+    const { availableComponent } = this.props;
+    const geometry = new THREE.SphereGeometry(1, 32, 32);
+    const material = new THREE.MeshBasicMaterial({ color: 0xfa7911 });
+    this.mouseDebugMesh = new THREE.Mesh(geometry, material);
+    this.mouseDebugMesh.castShadow = true;
+    availableComponent.scene.scene.add(this.mouseDebugMesh);
+  };
 
-    registerEvents = () => {
-        Object.keys(this.eventsMap).forEach(event => {
-            // console.log(`here ${event.toString()}`, this.eventsMap[event]);
-            document.addEventListener(event, this.eventsMap[event]);
-        });
-    };
+  updateMouseLookDebugMesh = () => {
+    const coords = this.getPositionFromMouse(3);
+    this.mouseDebugMesh.position.set(coords.x, coords.y, coords.z);
+  };
 
-    // todo: convert this to gameObject?
-    addMouseDebugMesh = () => {
-        const { availableComponent } = this.props;
-        const geometry = new THREE.SphereGeometry(1, 32, 32);
-        const material = new THREE.MeshBasicMaterial({ color: 0xfa7911 });
-        this.mouseDebugMesh = new THREE.Mesh(geometry, material);
-        this.mouseDebugMesh.castShadow = true;
-        availableComponent.scene.scene.add(this.mouseDebugMesh);
-    };
+  // TODO: maybe this should be an inputService function?
+  getPositionFromMouse = (targetZ = 0) => {
+    const { availableComponent } = this.props;
+    const camera = availableComponent.scene.camera._main;
 
-    updateMouseLookDebugMesh = () => {
-        const coords = this.getPositionFromMouse(3);
-        this.mouseDebugMesh.position.set(coords.x, coords.y, coords.z);
-    };
+    let vec = new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z); // create once and reuse
+    let pos = new THREE.Vector3(); // create once and reuse
 
-    // TODO: maybe this should be an inputService function?
-    getPositionFromMouse = (targetZ = 0) => {
-        const { availableComponent } = this.props;
-        const camera = availableComponent.scene.camera._main;
+    vec.unproject(camera);
 
-        let vec = new THREE.Vector3(this.coords.x, this.coords.y, this.coords.z); // create once and reuse
-        let pos = new THREE.Vector3(); // create once and reuse
+    vec.sub(camera.position).normalize();
 
-        vec.unproject(camera);
+    let distance = (targetZ - camera.position.z) / vec.z;
 
-        vec.sub(camera.position).normalize();
+    pos.copy(camera.position).add(vec.multiplyScalar(distance));
+    return pos;
+  };
 
-        let distance = (targetZ - camera.position.z) / vec.z;
+  start = () => {
+    this.registerEvents();
+    // transform.add( this.mesh );
+    this.addMouseDebugMesh();
+  };
 
-        pos.copy(camera.position).add(vec.multiplyScalar(distance));
-        return pos;
-    };
-
-    start = () => {
-        this.registerEvents();
-        // transform.add( this.mesh );
-        this.addMouseDebugMesh();
-    };
-
-    update = (time, deltaTime) => {
-        this.deltaUpdate = deltaTime / 10;
-        this.updateMovement();
-        this.updateMouseLook();
-    };
+  update = (time, deltaTime) => {
+    this.deltaUpdate = deltaTime / 10;
+    this.updateMovement();
+    this.updateMouseLook();
+  };
 }

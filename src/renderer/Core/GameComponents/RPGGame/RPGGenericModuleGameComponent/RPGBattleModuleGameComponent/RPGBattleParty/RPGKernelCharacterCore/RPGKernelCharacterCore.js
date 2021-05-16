@@ -23,9 +23,9 @@ export class RPGKernelCharacterCore extends React.Component {
 
   registeredStatusEffects = [];
 
-  registerStatusEffect = (statusEffect) => {};
+  registerStatusEffect = statusEffect => {};
 
-  removeStatusEffect = (statusEffect) => {};
+  removeStatusEffect = statusEffect => {};
 
   checkStatusEffects = () => {};
 
@@ -41,7 +41,7 @@ export class RPGKernelCharacterCore extends React.Component {
     this.currentStatus = this.availableStatuses.idle;
   };
 
-  timePass = (deltaTime) => {
+  timePass = deltaTime => {
     const _newTime = this.time + deltaTime * this.speed;
     this.time = Math.min(_newTime, 1.0);
   };
@@ -53,5 +53,5 @@ export class RPGKernelCharacterCore extends React.Component {
 }
 
 RPGKernelCharacterCore.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
 };

@@ -3,18 +3,15 @@ import PropTypes from "prop-types";
 import * as THREE from "three";
 
 export class BaseComponent extends React.Component {
+  start = () => {};
 
-    start = () => {
-    };
+  update = () => {};
 
-    update = () => {
-    };
-
-    render() {
-        return null;
-    }
+  render() {
+    return null;
+  }
 }
 
 BaseComponent.propTypes = {
-    transform: PropTypes.object.isRequired
+  transform: PropTypes.object.isRequired
 };

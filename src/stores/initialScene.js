@@ -4,13 +4,13 @@ export const initialScene = {
   title: {
     color: "#000000",
     subText: "SPACE to select and move forward. W and Z for selecting options.",
-    subTextColor: "#ffffff",
+    subTextColor: "#ffffff"
   },
   // TODO: split data in a better high level state strucuture (game, engine)
   game: {
     settings: {
       speed: 1,
-      current_level: 0,
+      current_level: 0
     },
     activeScenes: ["main"],
     preloadWaitToStart: false,
@@ -19,10 +19,10 @@ export const initialScene = {
       byId: {
         zero: {
           walls: {},
-          groups: {},
-        },
+          groups: {}
+        }
       },
-      allIds: ["zero"],
+      allIds: ["zero"]
     },
     renderer: {
       alpha: true,
@@ -30,11 +30,11 @@ export const initialScene = {
       //    postprocessing: true,
       backgroundColor: {
         clearColor: 0x222222,
-        alpha: 0,
-      },
+        alpha: 0
+      }
     },
 
-    allCameras: [],
+    allCameras: []
   },
 
   scenes: {
@@ -42,11 +42,11 @@ export const initialScene = {
       fog: {
         color: 0x222222,
         // near: 10,
-        far: 4000,
+        far: 4000
       },
       camera: {
         main: null,
-        allCameras: [],
+        allCameras: []
       },
       children: [
         "lightGroup",
@@ -58,26 +58,26 @@ export const initialScene = {
         "testEnemy2",
         // "testEnemy3",
         // "testEnemy4",
-        "camera1",
-      ],
-    },
+        "camera1"
+      ]
+    }
   },
   gameObjects: {
     byId: {
       camera1: {
-        prefab: "DynamicCamera",
+        prefab: "DynamicCamera"
       },
       testCubeGameObject1: {
         debug: true,
         prefab: "TestCube",
         transform: {
-          position: { x: 10, y: 0, z: 4 },
-        },
+          position: { x: 10, y: 0, z: 4 }
+        }
       },
       testShooter1: {
         debug: true,
         transform: {
-          position: { x: 0, y: 0, z: 4 },
+          position: { x: 0, y: 0, z: 4 }
         },
         components: {
           /*   TextGeometry: {
@@ -97,42 +97,42 @@ export const initialScene = {
           }, */
         },
         tags: ["playerShooter"],
-        prefab: "TestShooter",
+        prefab: "TestShooter"
       },
       testBoss0: {
         debug: true,
         transform: {
-          position: { x: 30, y: -30, z: 3 },
+          position: { x: 30, y: -30, z: 3 }
         },
-        prefab: "EnemySphereBoss",
+        prefab: "EnemySphereBoss"
       },
       testBoss1: {
         debug: true,
         transform: {
-          position: { x: -30, y: 30, z: 10 },
-        },
+          position: { x: -30, y: 30, z: 10 }
+        }
         /// sprefab: "EnemySphereBoss"
       },
       testEnemy2: {
         debug: true,
         transform: {
-          position: { x: 12, y: -12, z: 3 },
+          position: { x: 12, y: -12, z: 3 }
         },
-        prefab: "EnemyFollower",
+        prefab: "EnemyFollower"
       },
       testEnemy3: {
         debug: true,
         transform: {
-          position: { x: -12, y: -12, z: 3 },
+          position: { x: -12, y: -12, z: 3 }
         },
-        prefab: "EnemyFollower",
+        prefab: "EnemyFollower"
       },
       testEnemy4: {
         debug: true,
         transform: {
-          position: { x: 12, y: 12, z: 3 },
+          position: { x: 12, y: 12, z: 3 }
         },
-        prefab: "EnemyFollower",
+        prefab: "EnemyFollower"
       },
       board1: {
         debug: true,
@@ -140,38 +140,38 @@ export const initialScene = {
           BoardPlaneGeometry: {
             rotationX: 0.01,
             dimensions: { x: 100, y: 100, z: 2 },
-            mass: 0,
-          },
+            mass: 0
+          }
         },
-        prefab: "Board",
+        prefab: "Board"
       },
       lightGroup: {
         transform: {},
         components: {},
         children: [
           "directionalLight1",
-          "ambientLight1",
+          "ambientLight1"
           // "pointLight1"
-        ],
+        ]
       },
       directionalLight1: {
         transform: {},
         components: {},
         prefab: "DirectionalLight",
-        parentId: "lightGroup",
+        parentId: "lightGroup"
       },
       ambientLight1: {
         transform: {},
         components: {},
         prefab: "AmbientLight",
-        parentId: "lightGroup",
+        parentId: "lightGroup"
       },
       pointLight1: {
         transform: {},
         components: {},
         prefab: "PointLight",
-        parentId: "lightGroup",
-      },
+        parentId: "lightGroup"
+      }
     },
     allIds: [
       // "Camera",
@@ -181,8 +181,8 @@ export const initialScene = {
       "board1",
       "lightGroup",
       "directionalLight1",
-      "ambientLight1",
-    ],
+      "ambientLight1"
+    ]
   },
   prefabs: {
     byId: {
@@ -215,56 +215,56 @@ export const initialScene = {
               "top",
               "bottom",
               "isometric",
-              "nier",
+              "nier"
             ],
             cameraAllowedPositions: {
               left: {
-                position: { x: -10, y: 0, z: 0 },
+                position: { x: -10, y: 0, z: 0 }
               },
               right: {
-                position: { x: 10, y: 0, z: 0 },
+                position: { x: 10, y: 0, z: 0 }
               },
               front: {
-                position: { x: 0, y: 0, z: 10 },
+                position: { x: 0, y: 0, z: 10 }
               },
               back: {
-                position: { x: 0, y: 0, z: -10 },
+                position: { x: 0, y: 0, z: -10 }
               },
               top: {
-                position: { x: 0, y: 10, z: 0 },
+                position: { x: 0, y: 10, z: 0 }
               },
               bottom: {
-                position: { x: 0, y: -10, z: 0 },
+                position: { x: 0, y: -10, z: 0 }
               },
               isometric: {
-                position: { x: 10, y: 10, z: 10 },
+                position: { x: 10, y: 10, z: 10 }
               },
               "top-front": {
-                position: { x: 0, y: 10, z: 10 },
+                position: { x: 0, y: 10, z: 10 }
               },
               "top-right": {
-                position: { x: 10, y: 10, z: 0 },
+                position: { x: 10, y: 10, z: 0 }
               },
               "top-back": {
-                position: { x: 0, y: 10, z: -10 },
+                position: { x: 0, y: 10, z: -10 }
               },
               "top-left": {
-                position: { x: -10, y: 10, z: 0 },
+                position: { x: -10, y: 10, z: 0 }
               },
               nier: {
-                position: { x: 0, y: -550, z: 350 },
+                position: { x: 0, y: -550, z: 350 }
               },
               custom: {
                 position: {
                   x: 21.57972466572975,
                   y: 21.0286001424227,
-                  z: 84.80632912348827,
-                },
-              },
-            },
-          },
+                  z: 84.80632912348827
+                }
+              }
+            }
+          }
         },
-        children: [],
+        children: []
       },
       TestCube: {
         debug: true,
@@ -272,10 +272,10 @@ export const initialScene = {
         components: {
           testCube: {
             rotationX: 0.01,
-            opacity: 0.9,
-          },
+            opacity: 0.9
+          }
         },
-        children: [],
+        children: []
       },
       PlayerBullet: {
         debug: true,
@@ -283,10 +283,10 @@ export const initialScene = {
         components: {
           PlayerBulletGeometry: {},
           BulletMovement: {
-            debug: true,
-          },
+            debug: true
+          }
         },
-        children: [],
+        children: []
       },
       EnemyBullet: {
         debug: true,
@@ -294,10 +294,10 @@ export const initialScene = {
         components: {
           SphereGeometry: {
             basicMaterial: true,
-            castShadow: false,
-          },
+            castShadow: false
+          }
         },
-        children: [],
+        children: []
       },
       TestShooter: {
         debug: true,
@@ -309,15 +309,15 @@ export const initialScene = {
             moveRatio: 7,
             displacementRatio: 5,
             bulletPrefab: "PlayerBullet",
-            selfDestructTime: 2000,
+            selfDestructTime: 2000
           },
           PlayerShooterGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
-            mass: 1,
-          },
+            mass: 1
+          }
         },
-        children: [],
+        children: []
       },
       EnemyFollower: {
         debug: true,
@@ -325,24 +325,24 @@ export const initialScene = {
           EnemyMovementControls: {
             type: "follow",
             speed: 50,
-            rotationSpeed: 10,
+            rotationSpeed: 10
           },
           Shooter: {
             shooting: true,
             moveRatio: 2,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 2000,
-            aroundBullets: 1,
+            aroundBullets: 1
           },
           EnemyCubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
             mass: 1,
-            tip: true,
-          },
+            tip: true
+          }
         },
-        children: [],
+        children: []
       },
       EnemySphereBoss: {
         debug: true,
@@ -350,7 +350,7 @@ export const initialScene = {
           EnemyMovementControls: {
             type: "rotate",
             speed: 50,
-            rotationSpeed: 2,
+            rotationSpeed: 2
           },
           Shooter: {
             shooting: true,
@@ -358,24 +358,24 @@ export const initialScene = {
             displacementRatio: 1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
-            aroundBullets: 1,
+            aroundBullets: 1
           },
           SphereGeometry: {
             radius: 1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
-            castShadow: true,
-          },
+            castShadow: true
+          }
         },
-        children: [],
+        children: []
       },
       Board: {
         debug: true,
         transform: {},
         components: {
-          BoardPlaneGeometry: {},
+          BoardPlaneGeometry: {}
         },
-        children: [],
+        children: []
       },
       DirectionalLight: {
         transform: {},
@@ -387,37 +387,37 @@ export const initialScene = {
             position: {
               x: 0,
               y: -70,
-              z: 100,
-            },
-          },
-        },
+              z: 100
+            }
+          }
+        }
       },
       PointLight: {
         transform: {
           position: {
             x: 10,
             y: 7,
-            z: 5,
-          },
+            z: 5
+          }
         },
         components: {
           PointLight: {
             castShadow: true,
             color: 0xffffff,
             intensity: 1,
-            distance: 100,
-          },
-        },
+            distance: 100
+          }
+        }
       },
       AmbientLight: {
         transform: {},
         components: {
           AmbientLight: {
-            color: 0x222222,
-          },
+            color: 0x222222
+          }
         },
-        children: [],
-      },
+        children: []
+      }
     },
     allIds: [
       // "Camera",
@@ -432,7 +432,7 @@ export const initialScene = {
       "TestShooter",
       "PlayerBullet",
       "EnemyBullet",
-      "DynamicCamera",
-    ],
-  },
+      "DynamicCamera"
+    ]
+  }
 };

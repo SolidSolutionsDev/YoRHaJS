@@ -47,7 +47,7 @@ export class Renderer extends React.Component {
     this.threeNode = new TETSUO.THREENode("threeSceneAndCamera", {});
     this.tetsuoRenderer.connectToScreen(this.threeNode);
     this.threeNode.onUpdate(() => {
-    //  console.log("render");
+      //  console.log("render");
     });
 
     document.body.appendChild(this.stats.dom);
@@ -127,7 +127,10 @@ export class Renderer extends React.Component {
     if (this.state.ready && mainCameraReady) {
       this.threeNode.camera = availableComponent.scene.camera._main;
       this.threeNode.scene = availableComponent.scene.scene;
-      this.tetsuoRenderer.update(time/1000, (time - this.timePreviousFrame)/1000);
+      this.tetsuoRenderer.update(
+        time / 1000,
+        (time - this.timePreviousFrame) / 1000
+      );
       this.tetsuoRenderer.render();
       if (!postprocessing) {
         // this.renderer.render(

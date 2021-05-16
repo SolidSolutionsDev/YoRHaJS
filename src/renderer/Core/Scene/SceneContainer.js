@@ -3,7 +3,7 @@ import { Scene } from "./Scene";
 import {
   registerCamera,
   removeCamera,
-  setMainCamera,
+  setMainCamera
 } from "../../../stores/scene/actions";
 // const getObjects = (state) => {
 //     return state.scene.objects;
@@ -15,20 +15,20 @@ const mapStateToProps = (state, ownProps) => ({
   scene: state.mainReducer.scenes[ownProps.activeSceneId],
   camera: state.mainReducer.scenes[ownProps.activeSceneId].camera,
   gameObjects: state.mainReducer.gameObjects,
-  prefabs: state.mainReducer.prefabs.byId,
+  prefabs: state.mainReducer.prefabs.byId
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  registerCamera: (gameObjectId) => {
+  registerCamera: gameObjectId => {
     dispatch(registerCamera(gameObjectId));
   },
-  removeCamera: (gameObjectId) => {
+  removeCamera: gameObjectId => {
     dispatch(removeCamera(gameObjectId));
   },
-  setMainCamera: (gameObjectId) => {
+  setMainCamera: gameObjectId => {
     dispatch(setMainCamera(gameObjectId, ownProps.activeSceneId));
   },
-  dequeueActions: (enqueuedActionsArray) => {
+  dequeueActions: enqueuedActionsArray => {
     if (enqueuedActionsArray.length) {
       const actionsArray = enqueuedActionsArray.splice(
         0,
@@ -40,9 +40,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         }
       });
     }
-  },
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps, null, {
-  forwardRef: true,
+  forwardRef: true
 })(Scene);

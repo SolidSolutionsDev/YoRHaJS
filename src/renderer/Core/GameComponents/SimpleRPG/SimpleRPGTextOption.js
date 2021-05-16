@@ -18,7 +18,7 @@ export class SimpleRPGTextOption extends React.Component {
     selectedCommand: this.defaultCommandIndex,
     activeShoot: false,
     activeUp: false,
-    activeDown: false,
+    activeDown: false
   };
 
   initTetsuoScreen = () => {
@@ -40,20 +40,22 @@ export class SimpleRPGTextOption extends React.Component {
 
       defaultTextStyle: {
         fontSize: 24,
-        fill: 0x3cdc7c,
-      },
+        fill: 0x3cdc7c
+      }
     });
 
     console.log("___ after new TextScreen", this.textScreen);
 
     // build and prepare for render
-    this.textScreen.prepare().then((mesh) => {
-
+    this.textScreen.prepare().then(mesh => {
       const { getTextureFromPremade } = this.props.availableService.nodeService;
       const texture = getTextureFromPremade(this.textScreen);
       console.error(texture);
 
-      this.textMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshLambertMaterial({ map: texture }));
+      this.textMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.9, 1.9),
+        new THREE.MeshLambertMaterial({ map: texture })
+      );
 
       this.textMesh.material.transparent = true;
       this.textMesh.material.opacity = 0.6;
@@ -65,7 +67,13 @@ export class SimpleRPGTextOption extends React.Component {
       this.props.transform.add(this.textMesh);
       this.ready = true;
 
-      console.log("___ after prepare", this.textScreen, this.materialNode, this.textMesh, this.props.transform);
+      console.log(
+        "___ after prepare",
+        this.textScreen,
+        this.materialNode,
+        this.textMesh,
+        this.props.transform
+      );
     });
   };
 
@@ -107,7 +115,7 @@ export class SimpleRPGTextOption extends React.Component {
     const { stateMachine } = availableService;
     // console.log(availableService);
     const { game } = stateMachine.stateMachines;
-    game.service.onTransition((current) => {
+    game.service.onTransition(current => {
       // console.log("transition", current);
       const stepId = current.context.stepsQueue[0];
       const stepData = current.context.constants.steps[stepId];
@@ -122,7 +130,7 @@ export class SimpleRPGTextOption extends React.Component {
           data: stepData,
           init: true,
           value: current.value,
-          selectedCommand: currentTextOption,
+          selectedCommand: currentTextOption
         });
       } else {
         this.setState({ active, init: true, value: current.value });
@@ -168,7 +176,7 @@ export class SimpleRPGTextOption extends React.Component {
   }
 
   registerEvents = () => {
-    Object.keys(this.eventsMap).forEach((event) => {
+    Object.keys(this.eventsMap).forEach(event => {
       document.addEventListener(event, this.eventsMap[event]);
     });
   };
@@ -182,7 +190,7 @@ export class SimpleRPGTextOption extends React.Component {
     },
     moveDown_keydown: () => {
       this.selectNextOption();
-    },
+    }
   };
 
   start = () => {

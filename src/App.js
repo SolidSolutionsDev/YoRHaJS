@@ -11,10 +11,10 @@ import Preloader from "./renderer/Preloader/Preloader";
 
 console.log(window.__REDUX_DEVTOOLS_EXTENSION__);
 const store = createStore(
-  rootReducer /* preloadedState, */,
-  process.env.NODE_ENV === "development" &&
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-    window.__REDUX_DEVTOOLS_EXTENSION__()
+  rootReducer /* preloadedState, */
+  // process.env.NODE_ENV === "development" &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  //   window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 class App extends Component {

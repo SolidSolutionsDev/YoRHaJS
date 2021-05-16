@@ -4,72 +4,73 @@ import TETSUO from "@SolidSolutionsDev/tetsuo";
 import { uniqueId } from "lodash";
 import { instantiateFromPrefab } from "../../../../stores/scene/actions";
 
-
 export class TETSUOTextComponent extends React.Component {
+  tetsuoObject;
 
-    tetsuoObject;
+  initTetsuo = () => {
+    //END
+    const { TextScreen } = this.props.availableService.nodeService.premades;
+    this.tetsuoObject = new TextScreen({
+      width: 860,
+      height: 360,
 
-    initTetsuo = () => {
+      // optional options
+      backgroundColor: 0x1c1e1c,
+      marginTop: 0,
+      marginLeft: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      opacity: 0.01,
+      //
+      defaultTextStyle: {
+        fontSize: 32,
+        fill: this.props.fill || 0x3cdc7c
+      }
+    });
 
-        //END
-        const { TextScreen } = this.props.availableService.nodeService.premades;
-        this.tetsuoObject = new TextScreen({
-            width: 860,
-            height: 360,
+    this.tetsuoObject.prepare().then(mesh => {
+      const { getTextureFromPremade } = this.props.availableService.nodeService;
+      const texture = getTextureFromPremade(this.tetsuoObject);
 
-            // optional options
-            backgroundColor: 0x1c1e1c,
-            marginTop: 0,
-            marginLeft: 0,
-            paddingBottom: 0,
-            paddingLeft: 0,
-            opacity: .01,
-            //
-            defaultTextStyle: {
-                fontSize: 32,
-                fill: this.props.fill || 0x3cdc7c,
-            },
-        })
+      this.mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(1.9, 1.9),
+        new THREE.MeshLambertMaterial({ map: texture })
+      );
+      this.mesh.material.transparent = true;
 
-        this.tetsuoObject.prepare().then(mesh => {
-            const { getTextureFromPremade } = this.props.availableService.nodeService;
-            const texture = getTextureFromPremade(this.tetsuoObject);
+      // this.mesh.material.opacity = 0.1;
 
-            this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshLambertMaterial({ map: texture }));
-            this.mesh.material.transparent = true;
+      this.props.transform.add(this.mesh);
 
-            // this.mesh.material.opacity = 0.1;
+      if (this.props.value) {
+        this.tetsuoObject.addText(this.props.value);
+      }
+      this.ready = true;
+    });
+  };
 
-            this.props.transform.add(this.mesh);
-
-
-            if (this.props.value) {
-                this.tetsuoObject.addText(this.props.value);
-            }
-            this.ready = true;
-        });
-
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.value !== prevProps.value && this.ready) {
+      this.tetsuoObject.addText(
+        this.props.value,
+        {
+          fontSize: 32,
+          fill: this.props.fill || 0x3cdc7c
+        },
+        { framesPerChar: this.props.framesPerChar }
+      );
     }
+  }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.value !== prevProps.value && this.ready) {
-            this.tetsuoObject.addText(this.props.value, {
-                fontSize: 32,
-                fill: this.props.fill || 0x3cdc7c,
-            }, { framesPerChar: this.props.framesPerChar });
-        }
+  start = () => {
+    this.initTetsuo();
+  };
+
+  update = (time, deltaTime) => {
+    if (this.ready) {
+      this.tetsuoObject.update(deltaTime);
     }
-
-    start = () => {
-        this.initTetsuo();
-    };
-
-    update = (time, deltaTime) => {
-        if (this.ready) {
-            this.tetsuoObject.update(deltaTime);
-        }
-    };
-
+  };
 }
 
 TETSUOTextComponent.propTypes = {};
