@@ -272,7 +272,8 @@ export const initialScene = {
             selfDestructTime: 2000,
           },
           shooterGeometry: {
-            dimensions: { x: 2, y: 2, z: 2 },
+            shooterThickness: 0.5,
+            dimensions: { x: 2, y: 2, z: 1 },
             // position:{ x: 0, y: 0, z: 4 },
             mass: 1
           }
