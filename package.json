@@ -6,7 +6,7 @@
     "@tweenjs/tween.js": "^17.2.0",
     "cannon": "github:schteppe/cannon.js",
     "lodash": "^4.17.11",
-    "postprocessing": "^6.9.0",
+    "postprocessing": "6.9.0",
     "prop-types": "^15.6.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -20,8 +20,8 @@
     "yorha": "^1.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

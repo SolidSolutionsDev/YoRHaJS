@@ -8750,7 +8750,7 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-postprocessing@^6.9.0:
+postprocessing@6.9.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.9.0.tgz#e664a4df895a1b0a38efbcdf0bcb4962faed16c1"
   integrity sha512-MBagzxYzvn53eG5HguMycr5DE2sKw8Jg9rEaeslVZHiz7M/wn8+Yvi8W2hlIypQG+0PlADJoksAUY9vTkKUdPQ==
@@ -10266,6 +10266,11 @@ static-extend@^0.1.1:
   dependencies:
     define-property "^0.2.5"
     object-copy "^0.1.0"
+
+stats.js@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/stats.js/-/stats.js-0.17.0.tgz#b1c3dc46d94498b578b7fd3985b81ace7131cc7d"
+  integrity sha512-hNKz8phvYLPEcRkeG1rsGmV5ChMjKDAWU7/OJJdDErPBNChQXxCo3WZurGpnWc6gZhAzEPFad1aVgyOANH1sMw==
 
 "statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"
