@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Stats from "stats.js";
-import TETSUO from "@SolidSolutionsDev/tetsuo";
-
 import * as THREE from "three";
 import {
   BloomEffect,
@@ -27,7 +25,7 @@ export class Renderer extends React.Component {
 
   state = {};
 
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   init = () => {
     THREE.Cache.enabled = true;
@@ -36,19 +34,13 @@ export class Renderer extends React.Component {
 
     ReactDOM.findDOMNode(this).appendChild(this.viewportElement);
 
-    this.tetsuoRenderer = new TETSUO.NodeRenderer({
+    this.renderer = new THREE.WebGLRenderer({
       antialias: this.props.antialias,
-      shadowMap: true,
       alpha: this.props.alpha,
-      preserveDrawingBuffer: true,
-      viewportElement: this.viewportElement
+      preserveDrawingBuffer: true
     });
-    this.renderer = this.tetsuoRenderer.glRenderer;
-    this.threeNode = new TETSUO.THREENode("threeSceneAndCamera", {});
-    this.tetsuoRenderer.connectToScreen(this.threeNode);
-    this.threeNode.onUpdate(() => {
-      //  console.log("render");
-    });
+    this.renderer.shadowMap.enabled = true;
+    this.viewportElement.appendChild(this.renderer.domElement);
 
     document.body.appendChild(this.stats.dom);
     this.canvas = this.renderer.domElement;
@@ -62,7 +54,7 @@ export class Renderer extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { assetsLoadState, loadedCallback, availableComponent } = this.props;
+    const { assetsLoadState, loadedCallback } = this.props;
 
     const prevScene = prevProps.availableComponent.scene;
 
@@ -125,13 +117,10 @@ export class Renderer extends React.Component {
     const { backgroundColor, availableComponent, postprocessing } = this.props;
     const mainCameraReady = availableComponent.scene.camera._main;
     if (this.state.ready && mainCameraReady) {
-      this.threeNode.camera = availableComponent.scene.camera._main;
-      this.threeNode.scene = availableComponent.scene.scene;
-      this.tetsuoRenderer.update(
-        time / 1000,
-        (time - this.timePreviousFrame) / 1000
+      this.renderer.render(
+        availableComponent.scene.scene,
+        availableComponent.scene.camera._main
       );
-      this.tetsuoRenderer.render();
       if (!postprocessing) {
         // this.renderer.render(
         //   //TODO rename scene.scene to scene.transform
@@ -157,7 +146,8 @@ export class Renderer extends React.Component {
 
   setupCanvasDefaults() {
     this.canvas.parentNode.style.position = "absolute";
-    this.canvas.parentElement.style.heigh = "100%";
+    this.canvas.parentElement.style.width = "100%";
+    this.canvas.parentElement.style.height = "100%";
     this.canvas.parentElement.style.left = 0;
     this.canvas.parentElement.style.top = 0;
     this.canvas.parentElement.style.zIndex = -1;
@@ -188,8 +178,8 @@ export class Renderer extends React.Component {
       return;
     }
 
-    const SCREEN_WIDTH = this.renderer.domElement.parentElement.clientWidth;
-    const SCREEN_HEIGHT = this.renderer.domElement.parentElement.clientHeight;
+    const SCREEN_WIDTH = this.renderer.domElement.parentElement.clientWidth || window.innerWidth;
+    const SCREEN_HEIGHT = this.renderer.domElement.parentElement.clientHeight || window.innerHeight;
     this.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 
     this.renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -231,7 +221,7 @@ export class Renderer extends React.Component {
       key="renderer"
       id="renderer"
       className="scene"
-      style={{ width: "100%", height: "100%", position: "relative" }}
+      style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}
     />
   );
 }

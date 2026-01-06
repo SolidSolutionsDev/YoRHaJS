@@ -209,12 +209,12 @@ export class Game extends React.Component {
             key="geometry"
             id="geometry"
           />
-          <SimpleRPGStateMachineService
+          {/* <SimpleRPGStateMachineService
             {..._propsList}
             ref={this.addGameService}
             key="stateMachine"
             id="stateMachine"
-          />
+          /> */}
         </Preloader>
       </GameContext.Provider>
     );

@@ -15,7 +15,7 @@ export class SphereGeometry extends React.Component {
     const { selfSettings } = this.props;
     const { color } = this.props;
     // TODO: this random is to test for Yorha bullets, remove later
-    let _color = Math.random() > 0.5 ? 0xfa7911 : 0x290642;
+    let _color = color;
     if (color) {
       color.r !== undefined
         ? this.color.setRGB(color.r, color.g, color.b)
@@ -32,18 +32,30 @@ export class SphereGeometry extends React.Component {
     const { transform, opacity, selfSettings } = this.props;
     const geometry = new THREE.SphereGeometry(this.radius, 32, 32);
     this.updateColor();
+
+    const materialConfig = {
+      color: this.color,
+      wireframe: selfSettings.wireframe || false
+    };
+
     const material = selfSettings.basicMaterial
-      ? new THREE.MeshBasicMaterial({
-          color: this.color
-        })
-      : new THREE.MeshLambertMaterial({
-          color: this.color
-        });
+      ? new THREE.MeshBasicMaterial(materialConfig)
+      : new THREE.MeshLambertMaterial(materialConfig);
+
     opacity && (material.opacity = opacity);
     this.mesh = new THREE.Mesh(geometry, material);
     this.mesh.castShadow = this.props.castShadow;
-    // this.color = this.mesh.material.color;
     transform.add(this.mesh);
+
+    if (selfSettings.dualShell) {
+      const wireframeMaterial = new THREE.MeshBasicMaterial({
+        color: selfSettings.shellColor || 0xffffff,
+        wireframe: true
+      });
+      const shell = new THREE.Mesh(geometry, wireframeMaterial);
+      shell.scale.set(1.05, 1.05, 1.05);
+      transform.add(shell);
+    }
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {

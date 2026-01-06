@@ -15,7 +15,8 @@ export class BoardPlaneGeometry extends React.Component {
       this.props.dimensions.z
     );
     let material = new THREE.MeshPhysicalMaterial({
-      emissive: 0xd1cdb7,
+      color: this.props.color || 0x222222,
+      emissive: this.props.emissive || 0x000000,
       side: THREE.DoubleSide
     });
     this.mesh = new THREE.Mesh(geometry, material);

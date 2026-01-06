@@ -25,8 +25,19 @@ export class PlayerBulletGeometry extends React.Component {
     transform.add(this.cube);
   };
 
+  update = () => {
+    if (this.cube) {
+      this.cube.material.opacity = 0.6 + Math.random() * 0.4;
+      this.cube.scale.x = 0.8 + Math.random() * 0.4;
+      this.cube.scale.z = 0.8 + Math.random() * 0.4;
+    }
+  };
+
   start = () => {
     this.initBulletGeometry();
+    if (this.cube) {
+      this.cube.material.transparent = true;
+    }
   };
 
   render() {

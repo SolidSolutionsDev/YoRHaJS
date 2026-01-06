@@ -1,8 +1,4 @@
 import React from "react";
-
-import TETSUO from "@SolidSolutionsDev/tetsuo";
-import * as THREE from "three";
-
 import "./SimpleRPGTextOption.css";
 
 export class SimpleRPGTextOption extends React.Component {
@@ -22,59 +18,8 @@ export class SimpleRPGTextOption extends React.Component {
   };
 
   initTetsuoScreen = () => {
-    // init the text screen
-    console.log("before new TextScreen");
-
-    const { TextScreen } = this.props.availableService.nodeService.premades;
-    this.textScreen = new TextScreen({
-      width: 1500,
-      height: 1500,
-
-      // optional options
-      backgroundColor: 0x1c1e1c,
-      marginTop: 20,
-      marginLeft: 6,
-      paddingBottom: 400,
-      paddingLeft: 400,
-      opacity: 0.9,
-
-      defaultTextStyle: {
-        fontSize: 24,
-        fill: 0x3cdc7c
-      }
-    });
-
-    console.log("___ after new TextScreen", this.textScreen);
-
-    // build and prepare for render
-    this.textScreen.prepare().then(mesh => {
-      const { getTextureFromPremade } = this.props.availableService.nodeService;
-      const texture = getTextureFromPremade(this.textScreen);
-      console.error(texture);
-
-      this.textMesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(1.9, 1.9),
-        new THREE.MeshLambertMaterial({ map: texture })
-      );
-
-      this.textMesh.material.transparent = true;
-      this.textMesh.material.opacity = 0.6;
-      // // add the output quad to the scene
-      // // quad = textScreen.quad;
-      this.textMesh.position.z = 0.2;
-      //   this.textMesh.position.z = .5;
-      this.textMesh.material.transparent = true;
-      this.props.transform.add(this.textMesh);
-      this.ready = true;
-
-      console.log(
-        "___ after prepare",
-        this.textScreen,
-        this.materialNode,
-        this.textMesh,
-        this.props.transform
-      );
-    });
+    // Stubbed: TextScreen was a Tetsuo component
+    this.ready = true;
   };
 
   advance = () => {
@@ -82,7 +27,6 @@ export class SimpleRPGTextOption extends React.Component {
     const { stateMachine } = availableService;
     const { game } = stateMachine.stateMachines;
     if (this.state.active) {
-      // console.log("text advance");
       game.service.send("NEXT_STEP");
     }
   };
@@ -92,7 +36,6 @@ export class SimpleRPGTextOption extends React.Component {
     const { stateMachine } = availableService;
     const { game } = stateMachine.stateMachines;
     if (this.state.active && this.state.value === "playTextOption") {
-      // console.log("text selectPreviousOption");
       game.service.send("SELECT_PREVIOUS_OPTION");
     }
   };
@@ -102,7 +45,6 @@ export class SimpleRPGTextOption extends React.Component {
     const { stateMachine } = availableService;
     const { game } = stateMachine.stateMachines;
     if (this.state.active && this.state.value === "playTextOption") {
-      // console.log("text selectNextOption");
       game.service.send("SELECT_NEXT_OPTION");
     }
   };
@@ -113,14 +55,11 @@ export class SimpleRPGTextOption extends React.Component {
     }
     const { availableService } = this.props;
     const { stateMachine } = availableService;
-    // console.log(availableService);
     const { game } = stateMachine.stateMachines;
     game.service.onTransition(current => {
-      // console.log("transition", current);
       const stepId = current.context.stepsQueue[0];
       const stepData = current.context.constants.steps[stepId];
       const currentTextOption = current.context.currentTextOption;
-      const state = current.value;
       const active =
         current.value === "playText" || current.value === "playTextOption";
       if (active) {
@@ -136,43 +75,11 @@ export class SimpleRPGTextOption extends React.Component {
         this.setState({ active, init: true, value: current.value });
       }
     });
-    // console.log("here", this.state.init);
     this.registerEvents();
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.ready) {
-      // console.log("componentDidUpdate ready");
-      if (this.state.active) {
-        const textData = this.state.data;
-        if (textData.text && textData.text.length === 0) {
-          this.textScreen.clear();
-          this.advance();
-          return;
-        }
-        if (this.state.value === "playText") {
-          const text = textData.text.join("\n");
-          this.textScreen.addText(text);
-        }
-        if (this.state.value === "playTextOption") {
-          const text = textData.question.text.join("\n");
-          if (textData === prevState.data) {
-            this.textScreen.selectAnswer(this.state.selectedCommand.toString());
-          } else {
-            const answers = textData.options.map((textOption, index) => {
-              return { id: index.toString(), textContent: textOption.text };
-            });
-            this.textScreen.addQuestion(text, answers, textData.question);
-          }
-        }
-      } else {
-        if (this.state.value === "playBattle") {
-          this.textScreen.clear();
-        }
-      }
-    }
-
-    // console.log("componentDidUpdate exit");
+    // Stubbed: No longer updating Tetsuo text screen
   }
 
   registerEvents = () => {
@@ -200,14 +107,12 @@ export class SimpleRPGTextOption extends React.Component {
   update = (time, deltaTime) => {
     if (this.ready) {
       this.initListenToStateTransitions();
-      this.textScreen.update(deltaTime);
     }
   };
 
   buildCommandList = () => {
     if (this.state.value === "playTextOption") {
       return this.state.data.options.map((option, index) => {
-        const textToFill = option.text;
         const selected = index === this.state.selectedCommand;
         const className = selected ? "selectedOption" : "";
         return (
@@ -239,7 +144,4 @@ export class SimpleRPGTextOption extends React.Component {
   }
 }
 
-SimpleRPGTextOption.propTypes = {
-  // transform: PropTypes.object.isRequired,
-  // assetId: PropTypes.string.isRequired
-};
+SimpleRPGTextOption.propTypes = {};

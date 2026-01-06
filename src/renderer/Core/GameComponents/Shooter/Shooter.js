@@ -20,8 +20,8 @@ export class Shooter extends React.Component {
   type = this.props.type || "forward";
   bulletPrefab = this.props.bulletPrefab || "PlayerBullet";
   bulletComponentNameFromPrefabName = {
-    EnemyBullet: "enemyBulletGeometry",
-    PlayerBullet: "playerBulletGeometry"
+    EnemyBullet: "SphereGeometry",
+    PlayerBullet: "PlayerBulletGeometry"
   };
   bulletComponentName = this.bulletComponentNameFromPrefabName[
     this.bulletPrefab
@@ -74,6 +74,18 @@ export class Shooter extends React.Component {
       const currentBulletGameObjectId = bullet.props.gameObject.id;
 
       this.playBulletSound();
+      const bulletConfig = {
+        initTime: startTimeForThisBullet,
+        bulletIndex,
+        moveRatio,
+        displacementRatio
+      };
+
+      if (selfSettings.bulletColorArray) {
+        const colorIndex = this.bulletId % selfSettings.bulletColorArray.length;
+        bulletConfig.color = selfSettings.bulletColorArray[colorIndex];
+      }
+
       scene.enqueueAction(
         updateGameObject(currentBulletGameObjectId, {
           transform: {
@@ -82,14 +94,7 @@ export class Shooter extends React.Component {
             scale: scale.clone()
           },
           components: {
-            [currentBulletId]: {
-              initTime: startTimeForThisBullet,
-              bulletIndex,
-              moveRatio,
-              displacementRatio
-              // shooterId: gameObject.id,
-              // shooterTag: gameObject._tags[0],
-            }
+            [currentBulletId]: bulletConfig
           }
         })
       );
@@ -241,6 +246,19 @@ export class Shooter extends React.Component {
         const currentBulletGameObjectId = bullet.props.gameObject.id;
 
         this.playBulletSound();
+        const bulletConfig = {
+          initTime: startTimeForThisBullet,
+          bulletIndex,
+          moveRatio,
+          displacementRatio,
+          shooterComponentId: this.props.id
+        };
+
+        if (selfSettings.bulletColorArray) {
+          const colorIndex = (this.bulletId + i) % selfSettings.bulletColorArray.length;
+          bulletConfig.color = selfSettings.bulletColorArray[colorIndex];
+        }
+
         scene.enqueueAction(
           updateGameObject(currentBulletGameObjectId, {
             transform: {
@@ -249,15 +267,7 @@ export class Shooter extends React.Component {
               scale: scale.clone()
             },
             components: {
-              [currentBulletId]: {
-                initTime: startTimeForThisBullet,
-                bulletIndex,
-                moveRatio,
-                displacementRatio,
-                shooterComponentId: this.props.id
-                // shooterId: gameObject.id,
-                // shooterTag: gameObject._tags[0],
-              }
+              [currentBulletId]: bulletConfig
             }
           })
         );
@@ -285,11 +295,10 @@ export class Shooter extends React.Component {
     if (!this.sound) {
       return;
     }
-    setTimeout(() => {
-      // eslint-disable-next-line no-unused-expressions
-      this.sound.isPlaying ? this.sound.stop() : null;
-      this.sound.play();
-    }, 50);
+    if (this.sound.isPlaying) {
+      this.sound.stop();
+    }
+    this.sound.play();
   };
 
   initSound = () => {

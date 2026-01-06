@@ -46,7 +46,7 @@ export const initialScene = {
     renderer: {
       alpha: true,
       // antialias: true,
-      postprocessing: true,
+      postprocessing: false,
       backgroundColor: {
         clearColor: 0x222222,
         alpha: 0
@@ -60,7 +60,6 @@ export const initialScene = {
     main: {
       fog: {
         color: 0x222222,
-        // near: 10,
         far: 4000
       },
       camera: {
@@ -70,13 +69,9 @@ export const initialScene = {
       children: [
         "lightGroup",
         "board1",
-        // "testCubeGameObject1",
         "testShooter1",
-        // "testBoss0",
         "testBoss1",
         "testEnemy2",
-        // "testEnemy3",
-        // "testEnemy4",
         "camera1",
         "backgroundMusicPlayer1"
       ]
@@ -88,13 +83,11 @@ export const initialScene = {
         components: {
           SoundPlayer: {
             positional: false,
-            // path: "./assets/sounds/demo_  [demo] - Ableton Live 9 Suite 2020-04-10 15-00-21.mp3",
             assetId: "fariaDemoMP3",
             tag: "backgroundMusic",
             analyser: true,
             autoPlay: true,
             loop: true
-            // path: "./assets/sounds/stereo-left-and-right-test.mp3",
           }
         }
       },
@@ -109,72 +102,36 @@ export const initialScene = {
         }
       },
       testShooter1: {
-        debug: true,
+        debug: false,
         transform: {
           position: { x: 0, y: 0, z: 4 }
-        },
-        components: {
-          /*   TextGeometry: {
-            randomColors: false,
-            colors: [0xffaaaa],
-            text: "SOLID",
-            height: 2,
-            size: 7,
-            hover: 30,
-            curveSegments: 4,
-            bevelThickness: 0.2,
-            bevelSize: 0.15,
-            bevelEnabled: true,
-            fontName: "opensans", // helvetiker, optimer, gentilis, droid sans, droid seri,
-            fontWeight: "bold", // normal bol,
-            mirror: false,
-          }, */
         },
         tags: ["playerShooter"],
         prefab: "TestShooter"
       },
-      testBoss0: {
-        debug: true,
+      testBoss1: {
+        debug: false,
         transform: {
-          position: { x: 30, y: -30, z: 3 }
+          position: { x: -30, y: 30, z: 3 }
         },
         prefab: "EnemySphereBoss"
       },
-      testBoss1: {
-        debug: true,
-        transform: {
-          position: { x: -30, y: 30, z: 10 }
-        }
-        /// sprefab: "EnemySphereBoss"
-      },
       testEnemy2: {
-        debug: true,
+        debug: false,
         transform: {
           position: { x: 12, y: -12, z: 3 }
         },
         prefab: "EnemyFollower"
       },
-      testEnemy3: {
-        debug: true,
-        transform: {
-          position: { x: -12, y: -12, z: 3 }
-        },
-        prefab: "EnemyFollower"
-      },
-      testEnemy4: {
-        debug: true,
-        transform: {
-          position: { x: 12, y: 12, z: 3 }
-        },
-        prefab: "EnemyFollower"
-      },
       board1: {
-        debug: true,
+        debug: false,
         components: {
           BoardPlaneGeometry: {
             rotationX: 0.01,
             dimensions: { x: 100, y: 100, z: 2 },
-            mass: 0
+            mass: 0,
+            color: 0xe5e1d1,
+            emissive: 0x111108
           }
         },
         prefab: "Board"
@@ -183,9 +140,8 @@ export const initialScene = {
         transform: {},
         components: {},
         children: [
-          "directionalLight1"
-          // "ambientLight1"
-          // "pointLight1"
+          "directionalLight1",
+          "ambientLight1"
         ]
       },
       directionalLight1: {
@@ -199,24 +155,16 @@ export const initialScene = {
         components: {},
         prefab: "AmbientLight",
         parentId: "lightGroup"
-      },
-      pointLight1: {
-        transform: {},
-        components: {},
-        prefab: "PointLight",
-        parentId: "lightGroup"
       }
     },
     allIds: [
-      // "Camera",
       "testCubeGameObject1",
       "testShooter1",
-      "testEnemy1",
+      "testEnemy2",
       "board1",
       "lightGroup",
       "directionalLight1",
-      "ambientLight1",
-      "backgroundMusicPlayer1"
+      "ambientLight1"
     ]
   },
   prefabs: {
@@ -302,7 +250,7 @@ export const initialScene = {
         children: []
       },
       TestCube: {
-        debug: true,
+        debug: false,
         transform: {},
         components: {
           testCube: {
@@ -313,21 +261,25 @@ export const initialScene = {
         children: []
       },
       PlayerBullet: {
-        debug: true,
+        debug: false,
         transform: {},
         components: {
-          PlayerBulletGeometry: {},
+          PlayerBulletGeometry: {
+            color: 0xffffee,
+            dimensions: [0.5, 2, 0.5]
+          },
           BulletMovement: {
-            debug: true
+            // debug: true
           }
         },
         children: []
       },
       EnemyBullet: {
-        debug: true,
+        debug: false,
         transform: {},
         components: {
           SphereGeometry: {
+            color: 0xfa7911,
             basicMaterial: true,
             castShadow: false
           }
@@ -335,7 +287,7 @@ export const initialScene = {
         children: []
       },
       TestShooter: {
-        debug: true,
+        debug: false,
         components: {
           PlayerControls: {},
           Shooter: {
@@ -351,12 +303,19 @@ export const initialScene = {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
             mass: 1
+          },
+          RingGeometry: {
+            innerRadius: 4,
+            outerRadius: 4.1,
+            color: 0x000000,
+            opacity: 0.3,
+            rotation: { x: -Math.PI / 2 }
           }
         },
         children: []
       },
       EnemyFollower: {
-        debug: true,
+        debug: false,
         components: {
           EnemyMovementControls: {
             type: "follow",
@@ -369,12 +328,13 @@ export const initialScene = {
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 2000,
             aroundBullets: 1,
-            soundId: "laserShot"
+            soundId: "laserShot",
+            bulletColorArray: [0xfa7911, 0x290642]
           },
           EnemyCubeGeometry: {
             dimensions: { x: 2, y: 2, z: 2 },
             // position:{ x: 0, y: 0, z: 4 },
-            color: 0xaaaaaa,
+            color: 0xfa7911,
             mass: 1,
             tip: true
           }
@@ -382,7 +342,7 @@ export const initialScene = {
         children: []
       },
       EnemySphereBoss: {
-        debug: true,
+        debug: false,
         components: {
           EnemyMovementControls: {
             type: "rotate",
@@ -396,19 +356,22 @@ export const initialScene = {
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
             aroundBullets: 1,
-            soundId: "laserShot"
+            soundId: "laserShot",
+            bulletColorArray: [0xfa7911, 0x290642]
           },
           SphereGeometry: {
             radius: 1.4,
             // position:{ x: 0, y: 0, z: 4 },
-            color: 0xaaaaaa,
-            castShadow: true
+            color: 0x111111,
+            castShadow: true,
+            dualShell: true,
+            shellColor: 0xeeeeee
           }
         },
         children: []
       },
       Board: {
-        debug: true,
+        debug: false,
         transform: {},
         components: {
           BoardPlaneGeometry: {}
@@ -421,7 +384,7 @@ export const initialScene = {
           DirectionalLight: {
             castShadow: true,
             color: 0xffffff,
-            intensity: 0.1,
+            intensity: 1.2,
             position: {
               x: 0,
               y: 7,
@@ -442,8 +405,8 @@ export const initialScene = {
           PointLight: {
             castShadow: true,
             color: 0xffffff,
-            intensity: 1,
-            distance: 100
+            intensity: 0.5,
+            distance: 50
           }
         }
       },
@@ -451,7 +414,7 @@ export const initialScene = {
         transform: {},
         components: {
           AmbientLight: {
-            color: 0x222222
+            color: 0xaaaaaa
           }
         },
         children: []

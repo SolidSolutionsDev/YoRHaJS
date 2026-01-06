@@ -8,9 +8,6 @@ import {
 } from "../../../../stores/scene/actions";
 import { uniqueId } from "lodash";
 
-// import { BackgroundCity } from "../../Nodes/backgroundCity";
-// import TETSUO from "@SolidSolutionsDev/tetsuo";
-
 export class SimpleRPGBackground extends React.Component {
   state = {
     init: false,
@@ -86,7 +83,7 @@ export class SimpleRPGBackground extends React.Component {
     this.setState({ backgroundObjects: newBackgroundObjectIds });
   };
 
-  start = () => {};
+  start = () => { };
 
   update = () => {
     this.initListenToStateTransitions();
