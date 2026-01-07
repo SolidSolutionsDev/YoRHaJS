@@ -1,4 +1,6 @@
-export const initialScene = {
+import { RootState } from "../types/Store";
+
+export const initialScene: RootState = {
   // TODO: split data in a better high level state strucuture (game, engine)
   game: {
     settings: {
@@ -253,7 +255,7 @@ export const initialScene = {
         components: {
           sphereGeometry: {
             basicMaterial: true,
-            castShadow:false,
+            castShadow: false,
           },
         },
         children: []
@@ -315,17 +317,17 @@ export const initialScene = {
           shooter: {
             shooting: true,
             moveRatio: 2,
-            displacementRatio:1,
+            displacementRatio: 1,
             bulletPrefab: "EnemyBullet",
             shootTimeInterval: 50,
             aroundBullets: 1,
 
           },
           sphereGeometry: {
-            radius:1.4,
+            radius: 1.4,
             // position:{ x: 0, y: 0, z: 4 },
             color: 0xaaaaaa,
-            castShadow:true,
+            castShadow: true,
           }
         },
         children: []

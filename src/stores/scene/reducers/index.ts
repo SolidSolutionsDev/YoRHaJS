@@ -1,8 +1,11 @@
 import { initialScene } from "../../initialScene";
 import * as _ from "lodash";
+import { RootState } from "../../../types/Store";
 
-const instantiateFromPrefabReducer = (state, action) => {
-  let temp = {};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const instantiateFromPrefabReducer = (state: RootState, action: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let temp: any = {};
   temp.state = state;
   const { prefabId, newId, transform, parentId, components } = action;
   if (prefabId && newId) {
@@ -39,9 +42,11 @@ const instantiateFromPrefabReducer = (state, action) => {
   return temp.state;
 };
 
-export const mainReducer = (state = initialScene, action) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const mainReducer = (state: RootState = initialScene, action: any) => {
   let _oldAssetLoadState;
-  let temp = {};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let temp: any = {};
   let assetsLoadState;
   const { gameObjectId, transform, parentId, instantiationTime } = action;
   switch (action.type) {
@@ -196,7 +201,7 @@ export const mainReducer = (state = initialScene, action) => {
         return state;
       }
       temp.camera = _.cloneDeep(state.scene.camera);
-      temp.camera.allCameras = temp.camera.allCameras.filter(cameraId => {
+      temp.camera.allCameras = temp.camera.allCameras.filter((cameraId: string) => {
         return cameraId !== action.cameraId;
       });
       if (temp.camera.main === action.cameraId) {
@@ -231,11 +236,11 @@ export const mainReducer = (state = initialScene, action) => {
         } else {
           _parent = temp.scene;
         }
-        _parent.children = _parent.children.filter(childrenId => {
+        _parent.children = _parent.children.filter((childrenId: string) => {
           return childrenId !== action.gameObjectId;
         });
         delete temp.gameObjects.byId[action.gameObjectId];
-        temp.gameObjects.allIds = temp.gameObjects.allIds.filter(id => {
+        temp.gameObjects.allIds = temp.gameObjects.allIds.filter((id: string) => {
           return id !== action.gameObjectId;
         });
         temp.gameObjects = {

@@ -9,7 +9,7 @@ import * as _ from 'lodash';
  */
 export const useGameStore = create(
     devtools(
-        (set, get) => ({
+        (set, _get) => ({
             // ===== STATE =====
             gameObjects: initialScene.gameObjects,
             scene: initialScene.scene,
@@ -17,8 +17,8 @@ export const useGameStore = create(
             assetsLoadState: {},
 
             // ===== SCENE ACTIONS =====
-            updateSceneParameters: (parametersObject) =>
-                set((state) => ({
+            updateSceneParameters: (parametersObject: any) =>
+                set((state: any) => ({
                     scene: {
                         ...state.scene,
                         ...parametersObject,
@@ -26,8 +26,8 @@ export const useGameStore = create(
                 })),
 
             // ===== GAMEOBJECT ACTIONS =====
-            updateGameObjectParameters: (gameObjectId, gameObjectParameters) =>
-                set((state) => {
+            updateGameObjectParameters: (gameObjectId: string, gameObjectParameters: any) =>
+                set((state: any) => {
                     if (!state.gameObjects.byId[gameObjectId]) {
                         console.log('gameobject not found');
                         return state;
@@ -72,11 +72,11 @@ export const useGameStore = create(
                 }),
 
             updateComponentParameters: (
-                gameObjectId,
-                gameComponentId,
-                componentParameters
+                gameObjectId: string,
+                gameComponentId: string,
+                componentParameters: any
             ) =>
-                set((state) => {
+                set((state: any) => {
                     if (!state.gameObjects.byId[gameObjectId]) {
                         console.log('gameobject not found');
                         return state;
@@ -109,40 +109,40 @@ export const useGameStore = create(
 
             // ===== INSTANTIATION ACTIONS =====
             instantiateFromPrefab: (
-                prefabId,
-                newId,
-                transform = null,
-                parentId = null,
-                components = null
+                prefabId: string,
+                newId: string,
+                transform: any = null,
+                parentId: string | null = null,
+                components: any = null
             ) =>
-                set((state) => {
+                set((state: any) => {
                     if (!prefabId || !newId) return state;
                     if (state.gameObjects.allIds.includes(newId)) return state;
 
-                    const newGameObject = {
+                    const newGameObject: any = {
                         debug: false,
                         prefab: prefabId,
-                        transform,
+                        transform: transform,
                         parentId: parentId,
-                        components,
+                        components: components || {},
                     };
 
                     let updatedScene = state.scene;
-                    let updatedGameObjects = {
-                        byId: {
-                            ...state.gameObjects.byId,
-                            [newId]: newGameObject,
-                        },
-                        allIds: [...state.gameObjects.allIds, newId],
+                    const updatedGameObjectsById = {
+                        ...state.gameObjects.byId,
+                        [newId]: newGameObject,
                     };
+                    let updatedGameObjectsAllIds = [...state.gameObjects.allIds, newId];
 
                     if (parentId) {
-                        const parent = updatedGameObjects.byId[parentId];
-                        const currentChildren = parent.children || [];
-                        updatedGameObjects.byId[parentId] = {
-                            ...parent,
-                            children: [...currentChildren, newId],
-                        };
+                        const parent = updatedGameObjectsById[parentId];
+                        if (parent) { // Ensure parent exists before modifying
+                            const currentChildren = parent.children || [];
+                            updatedGameObjectsById[parentId] = {
+                                ...parent,
+                                children: [...currentChildren, newId],
+                            };
+                        }
                     } else {
                         updatedScene = {
                             ...state.scene,
@@ -151,21 +151,24 @@ export const useGameStore = create(
                     }
 
                     return {
-                        gameObjects: updatedGameObjects,
+                        gameObjects: {
+                            byId: updatedGameObjectsById,
+                            allIds: updatedGameObjectsAllIds,
+                        },
                         scene: updatedScene,
                     };
                 }),
 
             instantiateFromGameObject: (
-                gameObjectId,
-                transform = null,
-                parentId = null,
-                instantiationTime = null
+                gameObjectId: string,
+                transform: any = null,
+                parentId: string | null = null,
+                instantiationTime: number | null = null
             ) =>
-                set((state) => {
+                set((state: any) => {
                     if (!gameObjectId) return state;
 
-                    const gameObjectToClone = _.cloneDeep(
+                    const gameObjectToClone: any = _.cloneDeep(
                         state.gameObjects.byId[gameObjectId]
                     );
 
@@ -211,8 +214,8 @@ export const useGameStore = create(
                     };
                 }),
 
-            destroyGameObjectById: (gameObjectId) =>
-                set((state) => {
+            destroyGameObjectById: (gameObjectId: string) =>
+                set((state: any) => {
                     if (!state.gameObjects.allIds.includes(gameObjectId)) {
                         console.log('GameObject does not exist ', gameObjectId);
                         return state;
@@ -230,12 +233,12 @@ export const useGameStore = create(
                     }
 
                     parent.children = parent.children.filter(
-                        (childrenId) => childrenId !== gameObjectId
+                        (childrenId: string) => childrenId !== gameObjectId
                     );
 
                     delete gameObjects.byId[gameObjectId];
                     gameObjects.allIds = gameObjects.allIds.filter(
-                        (id) => id !== gameObjectId
+                        (id: string) => id !== gameObjectId
                     );
 
                     return {
@@ -249,8 +252,8 @@ export const useGameStore = create(
                 }),
 
             // ===== CAMERA ACTIONS =====
-            registerCamera: (cameraId) =>
-                set((state) => {
+            registerCamera: (cameraId: string) =>
+                set((state: any) => {
                     if (!state.gameObjects.byId[cameraId]) {
                         alert('CAMERA ID NOT FOUND');
                         return state;
@@ -265,15 +268,15 @@ export const useGameStore = create(
                     };
                 }),
 
-            removeCamera: (cameraId) =>
-                set((state) => {
+            removeCamera: (cameraId: string) =>
+                set((state: any) => {
                     if (!state.scene.camera.allCameras.includes(cameraId)) {
                         return state;
                     }
 
                     const camera = _.cloneDeep(state.scene.camera);
                     camera.allCameras = camera.allCameras.filter(
-                        (id) => id !== cameraId
+                        (id: string) => id !== cameraId
                     );
 
                     if (camera.main === cameraId) {
@@ -285,8 +288,8 @@ export const useGameStore = create(
                     };
                 }),
 
-            setMainCamera: (cameraId) =>
-                set((state) => {
+            setMainCamera: (cameraId: string) =>
+                set((state: any) => {
                     if (!state.scene.camera.allCameras.includes(cameraId)) {
                         return state;
                     }
@@ -300,8 +303,8 @@ export const useGameStore = create(
                 }),
 
             // ===== ASSET LOADING =====
-            emitLoadingAsset: (filename, total) =>
-                set((state) => ({
+            emitLoadingAsset: (filename: string, total: number) =>
+                set((state: any) => ({
                     assetsLoadState: {
                         ...state.assetsLoadState,
                         [filename]: total,
