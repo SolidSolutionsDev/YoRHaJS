@@ -1,0 +1,160 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { makeGameComponent } from '../../HOC/GameComponentHOC';
+import {
+    instantiateFromGameObject,
+    instantiateFromPrefab,
+    destroyGameObjectById,
+    updateGameObjectComponent,
+    updateGameObject,
+} from '../../../../stores/scene/actions';
+import { components } from '../../GameComponents';
+
+/**
+ * Redux root state interface
+ */
+interface RootState {
+    mainReducer: {
+        gameObjects: {
+            byId: Record<string, any>;
+            allIds: string[];
+        };
+        prefabs: {
+            byId: Record<string, any>;
+            allIds: string[];
+        };
+    };
+}
+
+/**
+ * Props passed from GameObject
+ */
+interface OwnProps {
+    id: string;
+    _parentId: string;
+    [key: string]: any;
+}
+
+/**
+ * Get component settings from parent GameObject
+ */
+const getSelf = (state: RootState, id: string, parentId: string): Record<string, any> => {
+    const components = state.mainReducer.gameObjects.byId[parentId]?.components;
+    return components?.[id] || {};
+};
+
+/**
+ * Get component settings from prefab definition
+ */
+const getSelfPrefab = (state: RootState, id: string, parentId: string): Record<string, any> => {
+    const prefabId = state.mainReducer.gameObjects.byId[parentId]?.prefab;
+    if (!prefabId) {
+        return {};
+    }
+    const prefab = state.mainReducer.prefabs.byId[prefabId];
+    return prefab?.components?.[id] || {};
+};
+
+/**
+ * Map Redux actions to props
+ */
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: OwnProps) => ({
+    instantiateFromGameObject: (
+        gameObjectId: string,
+        transform?: any,
+        parentId?: string
+    ) => {
+        dispatch(
+            instantiateFromGameObject(gameObjectId, transform, parentId) as any
+        );
+    },
+    instantiateFromPrefab: (
+        prefabId: string,
+        newId: string,
+        transform?: any,
+        parentId?: string,
+        instantiationTime?: number,
+        components?: any
+    ) => {
+        dispatch(
+            instantiateFromPrefab(
+                prefabId,
+                newId,
+                transform,
+                parentId,
+                instantiationTime,
+                components
+            ) as any
+        );
+    },
+    destroyGameObjectById: (gameObjectId: string) => {
+        dispatch(destroyGameObjectById(gameObjectId) as any);
+    },
+    updateGameObjectComponent: (
+        gameObjectId: string,
+        gameComponentId: string,
+        componentParameters: any
+    ) => {
+        dispatch(
+            updateGameObjectComponent(
+                gameObjectId,
+                gameComponentId,
+                componentParameters
+            ) as any
+        );
+    },
+    updateGameObject: (gameObjectId: string, gameObjectParameters: any) => {
+        dispatch(updateGameObject(gameObjectId, gameObjectParameters) as any);
+    },
+    updateSelf: (componentParameters: any) => {
+        dispatch(
+            updateGameObjectComponent(
+                ownProps._parentId,
+                ownProps.id,
+                componentParameters
+            ) as any
+        );
+    },
+});
+
+/**
+ * Map Redux state to props
+ */
+const mapStateToProps = (state: RootState, props: OwnProps) => ({
+    ...props,
+    gameObjects: state.mainReducer.gameObjects.byId,
+    prefabs: state.mainReducer.prefabs,
+    selfSettings: {
+        ...getSelfPrefab(state, props.id, props._parentId),
+        ...getSelf(state, props.id, props._parentId),
+    },
+});
+
+/**
+ * Create a GameComponent with Redux connection
+ * @param type - Component type identifier
+ * @returns Connected React component or null
+ */
+export const create = (type: string): React.ComponentType<any> | null => {
+    // Type assertion for components dictionary
+    const componentsDict = components as Record<string, any>;
+    let component = componentsDict[type];
+
+    if (!component) {
+        alert(`Requested component '${type}' is non-existant!`);
+        return null;
+    }
+
+    // Wrap with game component lifecycle
+    component = makeGameComponent(component, type);
+
+    // Connect to Redux
+    const connector = connect(mapStateToProps, mapDispatchToProps, null, {
+        forwardRef: true,
+    });
+
+    component = connector(component as any);
+
+    return component;
+};

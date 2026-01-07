@@ -181,11 +181,6 @@ export class Camera extends React.Component {
     );
   };
 
-  componentWillUnmount = () => {
-    if (this.controls) {
-      this.controls.dispose();
-    }
-  };
 
   controls;
 
