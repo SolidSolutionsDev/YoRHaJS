@@ -3,14 +3,28 @@ import React, { Component } from "react";
 import logo from "./yorha-black.png";
 import "./App.css";
 
-import { createStore } from "redux";
+import { createStore, Store } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./stores";
-import {Game} from "./renderer/Game";
+import { Game } from "./renderer/Game";
 
-const store = createStore(
-    rootReducer /* preloadedState, */,
-    process.env.NODE_ENV === "development" && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION__?: any;
+  }
+}
+
+declare var process: {
+  env: {
+    NODE_ENV: string;
+  };
+};
+
+const store: Store = createStore(
+  rootReducer /* preloadedState, */,
+  process.env.NODE_ENV === "development" &&
+  window.__REDUX_DEVTOOLS_EXTENSION__ &&
+  window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 class App extends Component {
@@ -22,9 +36,9 @@ class App extends Component {
           <h1 className="App-title">Glory to Mankind</h1>
         </header>
         <p className="App-intro">Hacking mini game </p>
-          <Provider store={store} key={"provider"}>
-            <Game key={"game"}/>
-          </Provider>
+        <Provider store={store} key={"provider"}>
+          <Game />
+        </Provider>
       </div>
     );
   }
