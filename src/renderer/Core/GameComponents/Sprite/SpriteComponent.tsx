@@ -1,10 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import * as THREE from "three";
 
-export class SpriteComponent extends React.Component {
-  sprite;
+interface SpriteComponentProps {
+  spriteUrl: string;
+  transform: any; // THREE.Object3D
+}
+
+export class SpriteComponent extends React.Component<SpriteComponentProps> {
+  sprite: THREE.Sprite | undefined;
 
   loadSprite = () => {
     const { spriteUrl, transform } = this.props;
@@ -22,14 +25,10 @@ export class SpriteComponent extends React.Component {
     this.loadSprite();
   };
 
-  update = () => {};
+  update = () => { };
 
   render() {
     return null;
   }
 }
 
-SpriteComponent.propTypes = {
-  spriteUrl: PropTypes.string.isRequired,
-  transform: PropTypes.object.isRequired
-};

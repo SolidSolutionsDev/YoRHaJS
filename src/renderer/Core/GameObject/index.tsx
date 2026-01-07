@@ -1,17 +1,23 @@
 import { connect } from "react-redux";
 import { GameObject } from "./GameObject";
+import { RootState } from "../../../types/Store";
 
-const getGameObjects = state => {
+interface AppState {
+  mainReducer: RootState;
+}
+
+const getGameObjects = (state: AppState) => {
   // console.log("child test0",state.mainReducer.scene.gameObjects);
   return state.mainReducer.gameObjects;
 };
 
-const getSelf = (state, id) => {
+const getSelf = (state: AppState, id: string) => {
   return state.mainReducer.gameObjects.byId[id];
 };
 
-const getSelfPrefab = (state, id) => {
-  const _prefabId = getSelf(state, id).prefab;
+const getSelfPrefab = (state: AppState, id: string) => {
+  const self = getSelf(state, id);
+  const _prefabId = self ? self.prefab : null;
   if (!_prefabId) {
     return null;
   }
@@ -19,11 +25,11 @@ const getSelfPrefab = (state, id) => {
   return _prefab;
 };
 
-const getPrefabs = state => {
+const getPrefabs = (state: AppState) => {
   return state.mainReducer.prefabs;
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state: AppState, props: any) => ({
   ...props,
   objects: getGameObjects(state),
   selfSettings: getSelf(state, props.id),

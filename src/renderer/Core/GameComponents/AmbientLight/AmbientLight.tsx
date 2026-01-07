@@ -1,10 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import * as THREE from "three";
 
-export class AmbientLight extends React.Component {
-  light;
+interface AmbientLightProps {
+  transform: THREE.Object3D;
+  color?: number | string;
+  intensity?: number;
+}
+
+export class AmbientLight extends React.Component<AmbientLightProps> {
+  light: THREE.AmbientLight | undefined;
 
   initLight = () => {
     const { transform } = this.props;
@@ -20,22 +24,19 @@ export class AmbientLight extends React.Component {
   updateLight = () => {
     const { color, intensity } = this.props;
 
-    if (color) {
-      this.light.color.setHex(color);
+    if (this.light && color) {
+      this.light.color.setHex(color as number);
     }
 
-    if (intensity) {
+    if (this.light && intensity) {
       this.light.intensity = intensity;
     }
   };
 
-  update = () => {};
+  update = () => { };
 
   render() {
     return null;
   }
 }
 
-AmbientLight.propTypes = {
-  transform: PropTypes.object.isRequired
-};

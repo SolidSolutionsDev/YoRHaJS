@@ -1,17 +1,28 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import "./CSSLabelTo3D.css";
-
 import * as THREE from "three";
 
-export class CSSLabelTo3D extends React.Component {
+interface CSSLabelTo3DProps {
+  transform?: THREE.Object3D;
+  availableComponent: any;
+  objectInputData: {
+    id: string;
+    objectType: string;
+  };
+  registerUpdate?: any;
+}
+
+export class CSSLabelTo3D extends React.Component<CSSLabelTo3DProps> {
   position = new THREE.Vector3(0, 0, 0);
 
-  text;
+  text: HTMLDivElement | undefined;
 
-  setHTML = html => {
-    this.text.dangerouslySetInnerHtml = html;
+  setHTML = (html: string) => {
+    // Original code had text.dangerouslySetInnerHtml = html which is invalid on DOM element.
+    // It should be innerHTML on the DOM element.
+    if (this.text) {
+      this.text.innerHTML = html;
+    }
   };
 
   start = () => {
@@ -22,11 +33,13 @@ export class CSSLabelTo3D extends React.Component {
   };
 
   onDestroy = () => {
-    this.text.parentNode.removeChild(this.text);
+    if (this.text && this.text.parentNode) {
+      this.text.parentNode.removeChild(this.text);
+    }
   };
 
-  get2DCoords = (position, camera) => {
-    const vector = position.project(camera);
+  get2DCoords = (position: THREE.Vector3, camera: THREE.Camera) => {
+    const vector = position.clone().project(camera);
     vector.x = ((vector.x + 1) / 2) * window.innerWidth;
     vector.y = (-(vector.y - 1) / 2) * window.innerHeight;
     return vector;
@@ -35,8 +48,8 @@ export class CSSLabelTo3D extends React.Component {
   createTextLabel = () => {
     const div = document.createElement("div");
     div.className = "text-label";
-    div.style.width = 100;
-    div.style.height = 100;
+    div.style.width = "100px"; // Added px
+    div.style.height = "100px"; // Added px
     document.body.appendChild(div);
     return div;
   };
@@ -50,9 +63,12 @@ export class CSSLabelTo3D extends React.Component {
       transform.getWorldPosition(this.position);
     }
 
+    const camera = availableComponent.scene.camera._main;
+    if (!camera || !this.text) return;
+
     const coords2d = this.get2DCoords(
       this.position,
-      availableComponent.scene.camera._main
+      camera
     );
     this.text.style.left = `${coords2d.x}px`;
     this.text.style.top = `${coords2d.y}px`;
@@ -63,9 +79,3 @@ export class CSSLabelTo3D extends React.Component {
   render = () => null;
 }
 
-CSSLabelTo3D.propTypes = {
-  objectInputData: PropTypes.object,
-  availableComponent: PropTypes.object,
-  registerUpdate: PropTypes.func,
-  transform: PropTypes.object
-};

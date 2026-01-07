@@ -1,26 +1,37 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import * as THREE from "three";
 
-export class ObjectLoaderMesh extends React.Component {
+interface ObjectLoaderMeshProps {
+  assetURL: string;
+  transform: any;
+  normalizeSize?: boolean;
+  centerGeometry?: boolean;
+  emitLoadingAsset?: (filename: string, progress: number) => void;
+}
+
+export class ObjectLoaderMesh extends React.Component<ObjectLoaderMeshProps> {
   transform = new THREE.Object3D();
 
   startedLoading = false;
   loaded = false;
+  filename: string = "";
 
   // TODO: Create geometry uniformize component
   // TODO2: compute groups scale
-  _centerGeometry = modelToResetScale => {
+  _centerGeometry = (modelToResetScale: any) => {
     // Set the current center
-    modelToResetScale.geometry.center();
-
+    // Check if it's geometry or bufferGeometry
+    if (modelToResetScale.geometry) {
+      modelToResetScale.geometry.center();
+    }
     return modelToResetScale;
   };
 
   // TODO: Create geometry uniformize component
   // TODO2: compute groups scale
-  _resetGeometryScale = modelToResetScale => {
+  _resetGeometryScale = (modelToResetScale: any) => {
+    if (!modelToResetScale.geometry) return modelToResetScale;
+
     // Compute and Get the Bounding Box
     modelToResetScale.geometry.computeBoundingBox();
     const boundingBox = modelToResetScale.geometry.boundingBox.clone();
@@ -47,7 +58,7 @@ export class ObjectLoaderMesh extends React.Component {
     return modelToResetScale;
   };
 
-  modelLoadedCallback = loadedModel => {
+  modelLoadedCallback = (loadedModel: THREE.Object3D) => {
     const { normalizeSize, centerGeometry, emitLoadingAsset } = this.props;
     const modelsToUse = loadedModel.children;
     let models = normalizeSize
@@ -63,17 +74,17 @@ export class ObjectLoaderMesh extends React.Component {
     emitLoadingAsset ? emitLoadingAsset(this.filename, 1.0) : null;
   };
 
-  modelLoadingCallback = xhr => {
+  modelLoadingCallback = (_xhr: ProgressEvent) => {
     // const { emitLoadingAsset } = this.props;
     // emitLoadingAsset ? emitLoadingAsset(this.filename, xhr.loaded / xhr.total):null ;
     // console.log(`${this.filename} ${(xhr.loaded / xhr.total) * 100}% loaded`);
   };
 
-  modelErrorCallback = err => {
+  modelErrorCallback = (err: any) => {
     console.error("An error happened", err);
   };
 
-  _loadObject = assetURL => {
+  _loadObject = (assetURL: string) => {
     if (!assetURL) {
       return;
     }
@@ -125,10 +136,3 @@ export class ObjectLoaderMesh extends React.Component {
   }
 }
 
-ObjectLoaderMesh.propTypes = {
-  assetURL: PropTypes.string.isRequired,
-  transform: PropTypes.object.isRequired,
-  normalizeSize: PropTypes.bool,
-  centerGeometry: PropTypes.bool,
-  emitLoadingAsset: PropTypes.func
-};

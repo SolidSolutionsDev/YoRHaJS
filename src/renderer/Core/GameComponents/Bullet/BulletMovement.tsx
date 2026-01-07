@@ -1,17 +1,31 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import * as CANNON from "cannon";
 
+interface BulletMovementProps {
+  selfDestructTime?: number;
+  moveRatio?: number;
+  displacementRatio?: number;
+  bulletIndex: number;
+  transform: any;
+  gameObject: any;
+  availableService: any;
+  availableComponent: any;
+  initTime: number;
+  selfSettings: any;
+  shooterId: string;
+}
+
 // TODO: split into components to travel, create geometry, play sound, self destroy, etc (take init functions as hints)
-export class BulletMovement extends React.Component {
+export class BulletMovement extends React.Component<BulletMovementProps> {
   selfDestructTime = this.props.selfDestructTime || 2000;
   moveRatio = this.props.moveRatio || 0.03;
   displacementRatio = this.props.displacementRatio || 3;
   selfDestructing = false;
-  shooter = null;
+  shooter: any = null;
   active = true;
   zCoord = 6 + this.props.bulletIndex * 1.3;
+  initialPosition: any = null;
+  timeToEnd: number | null = null;
 
   initPhysics = () => {
     const { transform, gameObject, availableService } = this.props;
@@ -59,14 +73,14 @@ export class BulletMovement extends React.Component {
     this.shooter.announceAvailableBullet(this);
   };
 
-  start = time => {
+  start = (time: number) => {
     this.initPhysics();
     this.initShooter();
     this.checkIfIsInactive(time);
   };
 
-  checkIfIsInactive = time => {
-    if (this.timeToEnd < time && !this.selfDestructing) {
+  checkIfIsInactive = (time: number) => {
+    if (this.timeToEnd && this.timeToEnd < time && !this.selfDestructing) {
       this.selfDestruct();
       this.active = false;
     }
@@ -86,7 +100,7 @@ export class BulletMovement extends React.Component {
   };
 
   // TODO: move this to physics?
-  moveForwardManual = time => {
+  moveForwardManual = (time: number) => {
     const { transform } = this.props;
     const timePassed = time - this.props.initTime;
 
@@ -143,7 +157,7 @@ export class BulletMovement extends React.Component {
     this.props.transform.visible = true;
   };
 
-  update = time => {
+  update = (time: number) => {
     const { transform, initTime } = this.props;
 
     const isBulletStillWithTimeOfLife =
@@ -173,13 +187,10 @@ export class BulletMovement extends React.Component {
     }
   };
 
-  onDestroy = () => {};
+  onDestroy = () => { };
 
   render() {
     return null;
   }
 }
 
-BulletMovement.propTypes = {
-  transform: PropTypes.object.isRequired
-};

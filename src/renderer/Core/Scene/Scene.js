@@ -2,7 +2,6 @@ import React from "react";
 import * as THREE from "three";
 
 import GameObject from "../GameObject";
-
 import * as GameContext from "../../GameContext";
 
 export class Scene extends React.Component {
@@ -16,11 +15,11 @@ export class Scene extends React.Component {
     // loaded: false,
   };
 
-  init = () => {};
+  init = () => { };
 
 
 
-//TODO: replace enqueue and dequeue actions with thunks, sagas or observable
+  //TODO: replace enqueue and dequeue actions with thunks, sagas or observable
   enqueuedActionsArray = [];
   nonImmediateenqueuedActionsArray = [];
   nonImmediateenqueuedActionsInterval = 2000;
@@ -33,13 +32,13 @@ export class Scene extends React.Component {
     this.enqueuedActionsArray.push(action);
   };
 
-  update = ( time, deltaTime )=> {
+  update = (time, deltaTime) => {
     this.childGameObjects.forEach(child => {
       // eslint-disable-next-line no-unused-expressions
       child._update ? child._update(time, deltaTime) : null;
     });
     this.props.dequeueActions(this.enqueuedActionsArray);
-    if (!this.lastDequeuedTime || (time-this.lastDequeuedTime > this.nonImmediateenqueuedActionsInterval)){
+    if (!this.lastDequeuedTime || (time - this.lastDequeuedTime > this.nonImmediateenqueuedActionsInterval)) {
       this.lastDequeuedTime = time;
       this.props.dequeueActions(this.nonImmediateenqueuedActionsArray);
     }
@@ -84,21 +83,21 @@ export class Scene extends React.Component {
     const gameObjects =
       scene && scene.children
         ? scene.children.map(gameObjectId => {
-            return (
-              <GameContext.Consumer key={gameObjectId + "_consumer"}>
-                {context => {
-                  return (
-                    <GameObject
-                      {...context}
-                      {..._gameObjectProps}
-                      key={gameObjectId}
-                      id={gameObjectId}
-                    />
-                  );
-                }}
-              </GameContext.Consumer>
-            );
-          })
+          return (
+            <GameContext.Consumer key={gameObjectId + "_consumer"}>
+              {context => {
+                return (
+                  <GameObject
+                    {...context}
+                    {..._gameObjectProps}
+                    key={gameObjectId}
+                    id={gameObjectId}
+                  />
+                );
+              }}
+            </GameContext.Consumer>
+          );
+        })
         : [];
 
     return gameObjects;

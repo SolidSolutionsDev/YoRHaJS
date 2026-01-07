@@ -1,14 +1,26 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-export class ShoeController extends React.Component {
-  shoeModelSiblingComponent;
+interface ShoeControllerProps {
+  transform: any;
+  isSelected: boolean;
+  shoeData: any;
+  shoeTypeData: any;
+  shoeMaterialSet?: any;
+  shoeColorOptions: any;
+}
 
-  state = {
+interface ShoeControllerState {
+  initialized: boolean;
+}
+
+export class ShoeController extends React.Component<ShoeControllerProps, ShoeControllerState> {
+  shoeModelSiblingComponent: any;
+
+  state: ShoeControllerState = {
     initialized: false
   };
 
-  previousSelectedObject;
+  previousSelectedObject: any;
 
   update = () => {
     const { initialized } = this.state;
@@ -49,8 +61,13 @@ export class ShoeController extends React.Component {
       shoeTypeData.meshName
     );
 
-    const _currentMeshMaterialDictionary = _shoe3dModel.material.reduce(
-      (acc, material) => ({ ...acc, [material.name]: material }),
+    if (!_shoe3dModel) return;
+
+    // shoe3dModel.material is likely an array if multi-material, or single material
+    const materials = Array.isArray(_shoe3dModel.material) ? _shoe3dModel.material : [_shoe3dModel.material];
+
+    const _currentMeshMaterialDictionary = materials.reduce(
+      (acc: any, material: any) => ({ ...acc, [material.name]: material }),
       {}
     );
     const _currentMeshCustomMaterialDictionary = shoeData.custom_materials;
@@ -62,9 +79,11 @@ export class ShoeController extends React.Component {
 
     // update colors
     Object.keys(_materialSetToApply).forEach(materialId => {
-      _currentMeshMaterialDictionary[materialId].color.setHex(
-        _materialSetToApply[materialId].color
-      );
+      if (_currentMeshMaterialDictionary[materialId]) {
+        _currentMeshMaterialDictionary[materialId].color.setHex(
+          _materialSetToApply[materialId].color
+        );
+      }
     });
   };
 
@@ -89,11 +108,3 @@ export class ShoeController extends React.Component {
   }
 }
 
-ShoeController.propTypes = {
-  transform: PropTypes.object.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  shoeData: PropTypes.object.isRequired,
-  shoeTypeData: PropTypes.object.isRequired,
-  // shoeMaterialSet: PropTypes.object.isRequired,
-  shoeColorOptions: PropTypes.object.isRequired
-};

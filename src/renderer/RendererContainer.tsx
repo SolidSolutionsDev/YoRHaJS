@@ -1,11 +1,16 @@
 import { connect } from "react-redux";
 import { Renderer } from "./Renderer";
+import { RootState } from "../types/Store";
 
-const getAssetLoadState = state => {
-  return state.mainReducer.game.assetsLoadState;
+interface AppState {
+  mainReducer: RootState;
+}
+
+const getAssetLoadState = (state: AppState) => {
+  return state.mainReducer.assetsLoadState;
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state: AppState) => {
   return {
     assetsLoadState: getAssetLoadState(state),
     ...state.mainReducer.game.renderer

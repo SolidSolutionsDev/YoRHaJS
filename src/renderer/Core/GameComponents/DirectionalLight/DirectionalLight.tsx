@@ -1,10 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
-
 import * as THREE from "three";
 
-export class DirectionalLight extends React.Component {
-  light;
+interface DirectionalLightProps {
+  transform: THREE.Object3D;
+  castShadow?: boolean;
+  color?: number | string;
+  intensity?: number;
+  position?: { x?: number; y?: number; z?: number };
+}
+
+export class DirectionalLight extends React.Component<DirectionalLightProps> {
+  light: THREE.DirectionalLight | undefined;
 
   initLight = () => {
     const { transform } = this.props;
@@ -20,11 +26,14 @@ export class DirectionalLight extends React.Component {
   updateLight = () => {
     const { castShadow, color, intensity, position } = this.props;
 
+    if (!this.light) return;
+
     if (castShadow) {
       this.light.castShadow = true;
       this.light.shadow.mapSize = new THREE.Vector2(2048, 2048);
-      this.light.shadow.darkness = 0.5;
-      console.log(this.light);
+      // @ts-ignore
+      this.light.shadow.darkness = 0.5; // Deprecated property
+      // console.log(this.light);
 
       this.light.shadow.camera.left = -130;
       this.light.shadow.camera.right = 130;
@@ -33,7 +42,7 @@ export class DirectionalLight extends React.Component {
     }
 
     if (color) {
-      this.light.color.setHex(color);
+      this.light.color.setHex(color as number);
     }
 
     if (intensity) {
@@ -47,13 +56,10 @@ export class DirectionalLight extends React.Component {
     }
   };
 
-  update = () => {};
+  update = () => { };
 
   render() {
     return null;
   }
 }
 
-DirectionalLight.propTypes = {
-  transform: PropTypes.object.isRequired
-};

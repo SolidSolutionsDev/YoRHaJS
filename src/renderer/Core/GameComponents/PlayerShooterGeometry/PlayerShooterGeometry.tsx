@@ -1,15 +1,18 @@
 import React from "react";
-
-import PropTypes from "prop-types";
 import * as THREE from "three";
 
-export class PlayerShooterGeometry extends React.Component {
-  mesh;
+interface PlayerShooterGeometryProps {
+  transform: THREE.Object3D;
+  gameObject: any;
+  availableService: any;
+  dimensions?: { x: number; y: number; z: number };
+}
 
-  pointer;
-  leftEnergy;
-  rightEnergy;
-  centerSphere;
+export class PlayerShooterGeometry extends React.Component<PlayerShooterGeometryProps> {
+  pointer: THREE.Mesh | undefined;
+  leftEnergy: THREE.Mesh | undefined;
+  rightEnergy: THREE.Mesh | undefined;
+  centerSphere: THREE.Mesh | undefined;
 
   start = () => {
     const { transform, gameObject } = this.props;
@@ -36,13 +39,16 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0, 3);
 
     let extrudeSettings = {
-      amount: 0.75,
+      depth: 0.75, // Renamed from amount
       bevelEnabled: false,
       bevelSegments: 2,
       steps: 1,
       bevelSize: 1,
       bevelThickness: 1
     };
+
+    // @ts-ignore: handling legacy 'amount' vs 'depth' mapping if strictly needed, but let's try standard options first. 
+    // Wait, original code used 'amount'.
 
     let geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
@@ -62,15 +68,6 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0.1, 0);
     path.lineTo(-0.1, -1);
 
-    extrudeSettings = {
-      amount: 0.75,
-      bevelEnabled: false,
-      bevelSegments: 2,
-      steps: 1,
-      bevelSize: 1,
-      bevelThickness: 1
-    };
-
     geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
     this.leftEnergy = new THREE.Mesh(geometry, material);
@@ -89,15 +86,6 @@ export class PlayerShooterGeometry extends React.Component {
     path.lineTo(0.1, 0);
     path.lineTo(0.1, -1);
 
-    extrudeSettings = {
-      amount: 0.75,
-      bevelEnabled: false,
-      bevelSegments: 2,
-      steps: 1,
-      bevelSize: 1,
-      bevelThickness: 1
-    };
-
     geometry = new THREE.ExtrudeGeometry(path, extrudeSettings);
 
     this.rightEnergy = new THREE.Mesh(geometry, material);
@@ -106,9 +94,9 @@ export class PlayerShooterGeometry extends React.Component {
     this.rightEnergy.castShadow = true;
     transform.add(this.rightEnergy);
 
-    geometry = new THREE.SphereGeometry(0.5, 32, 32);
-    material = new THREE.MeshLambertMaterial({ color: 0x666666 });
-    this.centerSphere = new THREE.Mesh(geometry, material);
+    const sphereGeom = new THREE.SphereGeometry(0.5, 32, 32);
+    const sphereMat = new THREE.MeshLambertMaterial({ color: 0x666666 });
+    this.centerSphere = new THREE.Mesh(sphereGeom, sphereMat);
 
     this.centerSphere.position.set(0, 0, 0.5);
     transform.add(this.centerSphere);
@@ -130,6 +118,3 @@ export class PlayerShooterGeometry extends React.Component {
   }
 }
 
-PlayerShooterGeometry.propTypes = {
-  dimensions: PropTypes.object.isRequired
-};

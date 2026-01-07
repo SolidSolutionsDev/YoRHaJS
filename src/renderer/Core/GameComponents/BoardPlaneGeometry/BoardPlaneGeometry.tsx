@@ -1,10 +1,16 @@
 import React from "react";
-
-import PropTypes from "prop-types";
 import * as THREE from "three";
 
-export class BoardPlaneGeometry extends React.Component {
-  mesh;
+interface BoardPlaneGeometryProps {
+  transform: THREE.Object3D;
+  gameObject: any;
+  dimensions: { x: number; y: number; z: number };
+  availableService: any; // Ideally this should be typed with IPhysicsService
+  // pivot?: THREE.Object3D; // inferred from update method in original JS, seemingly unused though
+}
+
+export class BoardPlaneGeometry extends React.Component<BoardPlaneGeometryProps> {
+  mesh: THREE.Mesh | undefined;
 
   initBoard = () => {
     const { transform, gameObject } = this.props;
@@ -22,11 +28,13 @@ export class BoardPlaneGeometry extends React.Component {
     this.mesh.receiveShadow = true;
     transform.add(this.mesh);
 
-    this.props.availableService.physics.addNewBoxBody(
-      gameObject.transform,
-      this.props,
-      this
-    );
+    if (this.props.availableService && this.props.availableService.physics) {
+      this.props.availableService.physics.addNewBoxBody(
+        gameObject.transform,
+        this.props,
+        this
+      );
+    }
   };
 
   start = () => {
@@ -43,6 +51,3 @@ export class BoardPlaneGeometry extends React.Component {
   }
 }
 
-BoardPlaneGeometry.propTypes = {
-  dimensions: PropTypes.object.isRequired
-};

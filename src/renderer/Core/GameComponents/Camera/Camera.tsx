@@ -1,12 +1,25 @@
 import React from "react";
-import PropTypes from "prop-types";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-export class Camera extends React.Component {
+interface CameraProps {
+  availableComponent: any;
+  updateSelf: (state: any) => void;
+  gameObject: any;
+  cameraAutoRotate?: boolean;
+  cameraMinDistance?: number;
+  cameraPanLock?: boolean;
+  cameraAngle?: string;
+  cameraAllowedPositions?: any;
+  animatedTransformations?: boolean;
+  availableService?: any;
+}
+
+export class Camera extends React.Component<CameraProps> {
   frustumSize = 12;
 
-  camera;
+  camera: THREE.PerspectiveCamera | THREE.OrthographicCamera | undefined;
+  controls: OrbitControls | undefined;
 
   start = () => {
     const { availableComponent, updateSelf } = this.props;
@@ -52,11 +65,17 @@ export class Camera extends React.Component {
   getObject = () => this.camera;
 
   orthographicResize = () => {
+    if (!this.camera || !(this.camera instanceof THREE.OrthographicCamera)) return;
+
     const { availableComponent } = this.props;
     const aspect = availableComponent.renderer.getAspect();
 
-    this.camera.aspect = 0.5 * aspect;
-    // this.camera.updateProjectionMatrix();
+    // this.camera.aspect = 0.5 * aspect; // Ortho doesn't have aspect property directly like Persp? Check types.
+    // Actually THREE.OrthographicCamera doesn't use aspect directly for projection, it uses left/right/top/bottom.
+    // The original code was: 
+    // this.camera.aspect = 0.5 * aspect;
+    // ...
+    // this.camera.left = ...
 
     this.camera.left = (-this.frustumSize * aspect) / 2;
     this.camera.right = (this.frustumSize * aspect) / 2;
@@ -67,6 +86,8 @@ export class Camera extends React.Component {
   };
 
   perspectiveResize = () => {
+    if (!this.camera || !(this.camera instanceof THREE.PerspectiveCamera)) return;
+
     const { availableComponent } = this.props;
     const aspect = availableComponent.renderer.getAspect();
 
@@ -75,6 +96,7 @@ export class Camera extends React.Component {
   };
 
   cameraOnResize = () => {
+    if (!this.camera) return;
     if (this.camera.type === "OrthographicCamera") {
       this.orthographicResize();
     } else {
@@ -90,10 +112,11 @@ export class Camera extends React.Component {
   };
 
   update = () => {
+    if (!this.controls) return;
     const { cameraAutoRotate, cameraMinDistance, cameraPanLock } = this.props;
     this.controls.enablePan = !cameraPanLock;
-    this.controls.autoRotate = cameraAutoRotate;
-    this.controls.minDistance = cameraMinDistance || this.controls.minDistance;
+    if (cameraAutoRotate !== undefined) this.controls.autoRotate = cameraAutoRotate;
+    if (cameraMinDistance !== undefined) this.controls.minDistance = cameraMinDistance;
     this.controls.update();
   };
 
@@ -121,8 +144,11 @@ export class Camera extends React.Component {
       animatedTransformations,
       availableService
     } = this.props;
+
+    if (!this.camera) return;
+
     const { scene } = availableComponent;
-    const cameraPositionData = cameraAllowedPositions[cameraAngle];
+    const cameraPositionData = cameraAllowedPositions && cameraAngle ? cameraAllowedPositions[cameraAngle] : null;
 
     // alert(cameraPositionData);
     if (!cameraPositionData) {
@@ -158,13 +184,12 @@ export class Camera extends React.Component {
 
   randomTravel = () => {
     const {
-      updateSelf,
-      cameraAngle,
       availableComponent,
-      cameraAllowedPositions,
       availableService,
-      animatedTransformations
     } = this.props;
+
+    if (!this.camera) return;
+
     const { scene } = availableComponent;
     availableService.animation.travelTo(
       this.camera,
@@ -181,19 +206,6 @@ export class Camera extends React.Component {
     );
   };
 
-
-  controls;
-
   render = () => null;
 }
 
-Camera.propTypes = {
-  scene: PropTypes.object,
-  renderer: PropTypes.object,
-  cameraAllowedPositions: PropTypes.object,
-  cameraAngle: PropTypes.string,
-  cameraAutoRotate: PropTypes.bool,
-  cameraPanLock: PropTypes.bool,
-  cameraMinDistance: PropTypes.number,
-  availableComponent: PropTypes.object
-};

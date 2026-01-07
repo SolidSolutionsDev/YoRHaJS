@@ -1,12 +1,30 @@
 import React from "react";
 import * as CANNON from "cannon";
-import * as _ from "lodash";
-// mousedebug
 import * as THREE from "three";
 
-export class PlayerControls extends React.Component {
+interface PlayerControlsProps {
+  transform: any; // Should be ISharedGameObject['transform'] but keeping any for now
+  availableComponent: any;
+  availableService: any;
+  gameObject: any;
+  moveRatio?: number;
+}
+
+interface PlayerControlsState {
+  activeLeft: boolean;
+  activeRight: boolean;
+  activeUp: boolean;
+  activeDown: boolean;
+  activeLookUp?: boolean;
+  activeLookDown?: boolean;
+  activeLookLeft?: boolean;
+  activeLookRight?: boolean;
+  movementCallback: any;
+}
+
+export class PlayerControls extends React.Component<PlayerControlsProps, PlayerControlsState> {
   shootTimeInterval = 1000;
-  mouseDebugMesh;
+  mouseDebugMesh: THREE.Mesh | undefined;
   currentShooterDirection = new THREE.Vector3(0, 1, 0);
 
   shootLastTime = 0;
@@ -14,9 +32,9 @@ export class PlayerControls extends React.Component {
   // new shoot logic
   bulletId = 0;
   shooting = false;
-  shootingStartTime = null;
+  shootingStartTime: number | null = null;
 
-  moveRatio = this.props.moveRatio || 0.3;
+  moveRatio: number = this.props.moveRatio || 0.3;
 
   moveVelocity = {
     value: 0,
@@ -25,13 +43,16 @@ export class PlayerControls extends React.Component {
     variation: 0.01
   };
 
-  state = {
+  state: PlayerControlsState = {
     activeLeft: false,
     activeRight: false,
     activeUp: false,
     activeDown: false,
     movementCallback: null
   };
+
+  coords: any;
+  deltaUpdate: number = 0;
 
   lookDown = () => {
     const { transform } = this.props;
@@ -97,16 +118,18 @@ export class PlayerControls extends React.Component {
   };
 
   startShooting = () => {
-    this.props.gameObject.getComponent("shooter").startShooting();
+    const shooter = this.props.gameObject.getComponent("shooter");
+    if (shooter) shooter.startShooting();
   };
 
 
   stopShooting = () => {
-    this.props.gameObject.getComponent("shooter").stopShooting();
+    const shooter = this.props.gameObject.getComponent("shooter");
+    if (shooter) shooter.stopShooting();
   };
 
 
-  mouseLook = e => {
+  mouseLook = (e: any) => {
     // console.log('mouseLook',e);
     const _coords = e.detail.coordinates;
     this.coords = _coords;
@@ -126,14 +149,15 @@ export class PlayerControls extends React.Component {
     }
 
     if (this.coords) {
-      const { availableService } = this.props;
-      const { physicsService } = availableService;
+      // const { availableService } = this.props;
+      // const { physicsService } = availableService;
       // TODO: move this to physics service as lookAt function
       // Compute direction to target
       let lookAtVector = this.getPositionFromMouse(
         transform.physicsBody.position.z
       );
 
+      // @ts-ignore
       this.currentShooterDirection = transform.physicsBody.lookAt(lookAtVector);
 
       // this can be used to make bullets or enemies follow player but disables gravity
@@ -153,7 +177,7 @@ export class PlayerControls extends React.Component {
     if (this.state.activeLookRight) this.lookRight();
   };
 
-  eventsMap = {
+  eventsMap: { [key: string]: (e?: any) => void } = {
     moveleft: () => this.setState({ activeLeft: true }),
     moveright: () => this.setState({ activeRight: true }),
     moveup: () => this.setState({ activeUp: true }),
@@ -193,6 +217,7 @@ export class PlayerControls extends React.Component {
   };
 
   updateMouseLookDebugMesh = () => {
+    if (!this.mouseDebugMesh) return;
     const coords = this.getPositionFromMouse(3);
     this.mouseDebugMesh.position.set(coords.x, coords.y, coords.z);
   };
@@ -221,11 +246,12 @@ export class PlayerControls extends React.Component {
     this.addMouseDebugMesh();
   };
 
-  update = ( time, deltaTime ) => {
-    this.deltaUpdate = deltaTime/10;
+  update = (_time: number, deltaTime: number) => {
+    this.deltaUpdate = deltaTime / 10;
     this.updateMovement();
     this.updateMouseLook();
   };
 
   render = () => null;
 }
+

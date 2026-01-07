@@ -1,7 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-export class TransformUpdate extends React.Component {
+interface TransformUpdateProps {
+  transform: any;
+  objectInputData: any;
+}
+
+export class TransformUpdate extends React.Component<TransformUpdateProps> {
   ignoreTransformUpdate = false;
 
   ignoreTransformScaleUpdate = false;
@@ -66,8 +70,3 @@ export class TransformUpdate extends React.Component {
   render = () => null;
 }
 
-TransformUpdate.propTypes = {
-  transform: PropTypes.object,
-  objectInputData: PropTypes.object,
-  ignoreTransformUpdate: PropTypes.bool
-};
