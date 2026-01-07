@@ -34,8 +34,8 @@ export class GameObject extends React.Component {
     this._tags = selfSettings.tags
       ? selfSettings.tags
       : prefabSettings && prefabSettings.tags
-      ? prefabSettings.tags
-      : [];
+        ? prefabSettings.tags
+        : [];
 
     this.displayName = id;
     this.id = id;
@@ -208,8 +208,7 @@ export class GameObject extends React.Component {
   };
 
 
-  getChildGameObjectById = (wantedId, optionalParentGameObject = this) =>
-  {
+  getChildGameObjectById = (wantedId, optionalParentGameObject = this) => {
     const _gameObject = optionalParentGameObject.childGameObjects.find(
       childGameObject =>
         this.getWrappedGameObject(childGameObject).id === wantedId
