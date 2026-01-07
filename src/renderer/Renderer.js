@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Stats from "stats.js";
 
@@ -28,6 +27,9 @@ export class Renderer extends React.Component {
   aspect = window.innerWidth / window.innerHeight;
 
   resizeFunctions = [];
+
+  // Create a ref for the container div
+  containerRef = React.createRef();
 
   state = {};
 
@@ -90,11 +92,14 @@ export class Renderer extends React.Component {
     this.composer.addPass(this.effectPass);
   };
 
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   init = () => {
-    ReactDOM.findDOMNode(this).appendChild(this.canvas);
-    document.body.appendChild( this.stats.dom );
+    // Use the ref instead of findDOMNode
+    if (this.containerRef.current) {
+      this.containerRef.current.appendChild(this.canvas);
+    }
+    document.body.appendChild(this.stats.dom);
     this.setupRendererDefaults();
     this.setupCanvasDefaults();
     this.registerEventListeners();
@@ -206,6 +211,7 @@ export class Renderer extends React.Component {
 
   render = () => (
     <div
+      ref={this.containerRef}
       key="renderer"
       id="renderer"
       className="scene"

@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import * as THREE from "three";
 
 import OBJLoader from "three-obj-loader";
+import FBXLoader from "three-fbx-loader";
 
-const FBXLoader = require("three-fbx-loader");
 OBJLoader(THREE);
 
 export class OBJMeshGeometry extends React.Component {
@@ -85,7 +85,7 @@ export class OBJMeshGeometry extends React.Component {
     transform.add(this.transform);
   };
 
-  update = () => {};
+  update = () => { };
 
   render() {
     return null;
