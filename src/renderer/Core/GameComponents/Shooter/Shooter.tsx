@@ -292,6 +292,9 @@ export class Shooter extends React.Component<ShooterProps> {
   update = (time: number) => {
     this.updateTime = time;
     if (this.shooting) {
+      if (this.shootingStartTime === null) {
+        this.shootingStartTime = time;
+      }
       this.garbageCollectBullets();
       this.shootAroundBullet(time);
     }

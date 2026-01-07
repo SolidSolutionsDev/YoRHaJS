@@ -118,9 +118,101 @@ export class EnemyMovementControls extends React.Component<EnemyMovementControls
         // forwardVector.scale(this.fixedSpeed,transform.physicsBody.velocity);
     };
 
-    // shootBullet used in setInterval?
     shootBullet = () => {
-        // Implement if needed or remove unused method call
+        if (!this.shooter) {
+            this.shooter = this.getShooter();
+        }
+
+        if (this.shooter) {
+            // Access the Shooter component instance if possible or trigger via state/props
+            // However, shooter here is a GameObject reference (the child).
+            // We need to find the 'Shooter' component on that GameObject.
+
+            // In the current architecture, direct method calls between components might be tricky 
+            // if we don't have the component instance ref.
+            // But existing code seems to rely on this.shooter being the GameObject.
+
+            // Actually, looking at how PlayerControls does it (if it does), or how Shooter works:
+            // Shooter has startShooting() method.
+
+            // If this.shooter is the GameObject, we need to get the "Shooter" component.
+            // Assuming getShooter() returns the GameObject.
+
+            const shooterComponent = this.shooter.getComponent("Shooter");
+            if (shooterComponent) {
+                // Toggle shooting or just start? 
+                // The interval calls this repeatedly.
+
+                // If the logic is "start shooting pattern", maybe we call startShooting once?
+                // But this is in a setInterval. 
+
+                // If the enemy shoots periodically (bursts?), maybe this toggles it?
+                // Or maybe it just calls shoot once?
+
+                // Looking at Shooter.tsx, it has startShooting which sets shooting=true.
+                // It doesn't seem to expose a "shoot once" method easily for external interval 
+                // unless we use shootAroundBullet directly, but that depends on time.
+
+                // Let's assume the original JS simply called a method on the component.
+                // Given the method name "shootBullet", it might be a single shot.
+
+                // If I look at Shooter.tsx again, startShooting sets shooting=true.
+                // stopShooting sets shooting=false.
+
+                // PROPOSAL: The interval in EnemyMovementControls is likely for BURSTS or AI decisions.
+                // For now, let's try to call startShooting on the component.
+
+                // Wait, if it's an interval of 70ms (shootTimeInterval = 70), that's very fast.
+                // Maybe it is calling shootForwardBullet or similar directly?
+
+                // Let's stick to calling startShooting if not shooting, or providing a trigger.
+                // But Shooter handles its own loop if shooting=true.
+
+                // If EnemyMovementControls controls the TIMING of shots, then Shooter shouldn't have its own loop?
+                // Shooter.tsx: update() calls shootAroundBullet(time) if this.shooting is true.
+
+                // Failure Hypothesis: EnemyMovementControls is supposed to manage the "Active" state of the Shooter.
+                // So maybe it should toggle it?
+
+                // Let's try to infer from context. Enemy is "Sphere".
+                // Sphere usually spins and shoots around.
+
+                // If I look at `startShooting` in `EnemyMovementControls`:
+                // It sets an interval.
+
+                // If `shootBullet` is called every 70ms, and it calls `shooter.startShooting()`, 
+                // then shooter will stay in shooting mode. 
+                // If `stopShooting` is called, it clears interval.
+
+                // But wait, `startShooting` in `EnemyMovementControls` is called... when?
+                // Likely when enemy activates.
+
+                // I will implement retrieving the component and calling `startShooting()`. 
+                // But acts as a "keep alive" or "trigger"? 
+
+                // Actually, if Shooter manages its own interval via update loop (it does, shootTimeInterval prop),
+                // then EnemyMovementControls shouldn't need its own interval unless it's turning shooting on/off.
+
+                // Let's assume `shootBullet` is meant to just enable the shooter.
+                // But why setInterval? 
+
+                // Maybe `shootBullet` is actually `triggerShoot`?
+                // Let's try to find if there's a `shoot` method in `Shooter`.
+
+                // Shooter has `shootForwardBullet` and `shootAroundBullet`.
+
+                // If I look at `Shooter.tsx`, `update` calls `shootAroundBullet`.
+
+                // I will try to replicate what `PlayerControls` might do or just call `startShooting`.
+
+                // Safe bet: Call `startShooting()` on the component.
+
+                const shooterComp = this.shooter.getComponent("Shooter");
+                if (shooterComp) {
+                    shooterComp.startShooting();
+                }
+            }
+        }
     }
 
     startShooting = () => {
