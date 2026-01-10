@@ -12,6 +12,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "redux": "^4.0.5",
+    "socketcluster-client": "^20.0.1",
     "stats.js": "^0.17.0",
     "three": "0.110.0",
     "three-fbx-loader": "^1.0.3",
@@ -26,31 +27,22 @@
     "preview": "vite preview",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "type-check": "tsc --noEmit",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.21",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@types/three": "^0.182.0",
     "@vitejs/plugin-react": "^4.2.0",
-    "babel-plugin-import-directory": "^1.0.3",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^3.1.0",
-    "eslint-loader": "^2.1.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "prettier": "^1.14.3",
     "typescript": "^5.9.3",
-    "vite": "^5.0.0"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "vite": "^5.0.0",
+    "vite-plugin-eslint": "^1.8.1"
+  }
 }
